@@ -122,6 +122,7 @@ export default function Message (props) {
   useEffect(() => {
     setId(urlHandle('id'))
     setType(urlHandle('type'))
+    console.log(urlHandle("id"),"",urlHandle("type"))
   }, [props])// 初始化一级页面和二级页面标记   这里监控props的变化了  可能会有bug！！！！！！！
   return (
     <div className='message'>
@@ -131,7 +132,7 @@ export default function Message (props) {
         <Link to='/'>
                         首页&nbsp;>
         </Link>
-        <Link to={`/message?type=${type}`}>
+        <Link to={`/message?type=`/*${type}*/}>
           {messageData[type - 1].title}>
         </Link>
         <span>

@@ -15,7 +15,7 @@ const HomeCarousel = (props) => {
     })
   }, [])
   return (
-    <Carousel effect='fade' style={{ width: '540px', height: '374px' }} autoplay dotPosition='left'>
+    <Carousel effect='fade' style={{ width: '540px', height: '374px' }} autoplay dotPosition='bottom'>
       {
         data.map((item, index) => {
           console.log(item.picUrl)
