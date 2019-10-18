@@ -30,17 +30,11 @@ const routers= [
 		key: 2
 	},
 	{
-		name: "社会化服务",
-		path: "/society",
-		component: SocietyMessage,
-		key: 3
+		name: "栏目",
+		path: "/message",
+		component: Message,
+		key: 2
 	},
-	{
-		name: "文章",
-		path: "/cp",
-		component: CpMessage,
-		key: 4
-	}
 ];
 const messageData = {
 	sideBar: [
