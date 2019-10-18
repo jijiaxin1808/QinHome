@@ -14,8 +14,9 @@ const HeaderScroll = () => {
   useEffect(() => {
     axios.get('http://yjxt.elatis.cn/options/name/safe').then(res => {
       if (res.data.code === 0) {
-        console.log(res.data);
+        console.log(typeof res.data);
         setdata(res.data.data);
+        console.log("data",data)
       } else {
         message.error(res.data.message);
       }

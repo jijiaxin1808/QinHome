@@ -1,10 +1,11 @@
 import "braft-editor/dist/index.css";
-import React from "react";
+import React,{ useEffect, useState , forwardRef} from "react";
 import BraftEditor from "braft-editor";
 import { Form, Input, Button, Select, Row, Col } from "antd";
 import styles from "./index.css";
 // import MenuList from '../../../../assets/contextMenuDown'
 import MenuList from "../../../../config/contextMenuDown";
+import axios from "axios";
 const formItemLayout = {
 	labelCol: { span: 4 },
 	wrapperCol: { span: 16 },
@@ -12,24 +13,41 @@ const formItemLayout = {
 
 const { Option } = Select;
 
-class FormDemo extends React.Component {
+function FormDemo (props) {
+	const { getFieldDecorator } = props.form;
 
-	componentDidMount () {
-
-		// 异步设置编辑器内容
+	useEffect(()=>{
 		setTimeout(() => {
-			this.props.form.setFieldsValue({
+			props.form.setFieldsValue({
 				content: BraftEditor.createEditorState("<p>Hello <b>World!</b></p>")
 			});
 		}, 1000);
+		console.log("axios");
+	},[]);
 
-	}
 
-  handleSubmit = (event) => {
+	const [data, setData] = useState([]);
+	useEffect(() =>{
+		axios({
+			method: "get",
+			url: "http://yjxt.elatis.cn/options/name/column"
+		}).then(res => {
+		  if (res.data.code === 0) {
+				setData(res.data.data);
+				console.log(res.data.data);
+			}
+
+		}).catch(err => {
+			console.log(err);
+		});
+	}, []);
+
+
+	const handleSubmit = (event) => {
 
   	event.preventDefault();
 
-  	this.props.form.validateFields((error, values) => {
+  	props.form.validateFields((error, values) => {
   		if (!error) {
   			const submitData = {
   				title: values.title,
@@ -39,25 +57,25 @@ class FormDemo extends React.Component {
   		}
   	});
 
-  };
+	};
 
-  handleChange = (value) => {
+	const handleChange = (value) => {
   	console.log(`selected ${value}`);
-  };
+	};
 
-  render () {
+	// render () {
 
-  	const { getFieldDecorator } = this.props.form;
+
   	const controls = ["bold", "italic", "underline", "text-color", "separator", "link", "separator", "media" ];
 
   	return (
   		<div className={styles["demo-container"]}>
   			<div className = { styles.title }>
   				<span>
-                 内容管理
+            内容管理
   				</span>
   			</div>
-  			<Form onSubmit={this.handleSubmit}>
+  			<Form onSubmit={handleSubmit}>
   				<Form.Item {...formItemLayout} label="文章标题">
   					{getFieldDecorator("title", {
   						rules: [{
@@ -87,16 +105,16 @@ class FormDemo extends React.Component {
   							}]
   						})(
   							<div>
-  								<Select defaultValue="新闻中心" style={{ width: 180, marginRight: "80px" }} onChange={this.handleChange}>
+  								<Select defaultValue="新闻中心" style={{ width: 180, marginRight: "80px" }} onChange={handleChange}>
   									{
-  										MenuList.map((item)=>{
+  										data.map((item)=>{
   											return (
-  												<Option key={item.id}>{item.value}</Option>
+  												<Option key={item.key}>{item.title}</Option>
   											);
   										})
   									}
   								</Select>
-  								<Select defaultValue="lucy" style={{ width: 180 }} onChange={this.handleChange}>
+  								<Select defaultValue="lucy" style={{ width: 180 }} onChange={handleChange}>
   									{
   										MenuList.map((item)=>{
   											return (
@@ -147,7 +165,7 @@ class FormDemo extends React.Component {
   			</Form>
   		</div>
   	);
-  }
+	// }
 }
 
-export default Form.create()(FormDemo);
+export default Form.create()(forwardRef(FormDemo));
