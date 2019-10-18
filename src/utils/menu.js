@@ -5,6 +5,10 @@ export const allMenu = [
 		url:"manage/column",
 		icon:"plus",
 	},{
+		name:"栏目管理",
+		url:"manage/column",
+		icon:"plus",
+	},{
 		name:"内容管理",
 		url:"manage/create",
 		icon:"plus",

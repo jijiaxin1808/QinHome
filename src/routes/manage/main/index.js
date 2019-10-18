@@ -5,11 +5,6 @@ import { allMenu } from "../../../utils/menu";
 import Top from "./header";
 import Contents from "./content";
 import Footer from "./bottom";
-
-// import NavLeft from './components/NavLeft'
-// import Header from './components/Header'
-
-
 import  "./index.less";
 import createHistory from "history/createBrowserHistory";
 

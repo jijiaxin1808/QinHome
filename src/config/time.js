@@ -7,7 +7,7 @@ function   getDate( time ) {
 	const mouth = date.getMonth();
 	const day = date.getDay();
 	const hour = date.getHours();
-    return `${year}/${mouth}/${day}`
+	return `${year}/${mouth}/${day}`
 }
 
 export default getDate;

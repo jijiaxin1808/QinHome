@@ -28,7 +28,13 @@ const routers= [
 		path: "/article",
 		component: Article,
 		key: 2
-	}
+	},
+	{
+		name: "栏目",
+		path: "/message",
+		component: Message,
+		key: 2
+	},
 ];
 const messageData = {
 	sideBar: [
