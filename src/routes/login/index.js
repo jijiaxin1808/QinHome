@@ -1,8 +1,10 @@
 import React from "react";
 import { Form, Icon, Input, Button, Checkbox, message } from "antd";
-import { connect } from "dva";
+import { connect} from "dva";
 import "./index.less"
 import axios from "axios";
+import { routerRedux } from "dva/router";
+import {_setCookie} from "../../utils/session";
 // import { Session } from 'inspector';
 
 @connect(
@@ -34,12 +36,14 @@ class NormalLoginForm extends React.Component {
   					"content-type": "application/json"
   				}
   			}).then(data =>{
-  				console.log(data);
   				if (data.data.code === 0 ) {
-  					sessionStorage.setItem("token", data.data.data.token);
   					message.success("登录成功");
-  					console.log("登录成功",);
-  					window.location.href = "/manage";
+  					_setCookie(data.data.data.token);
+  					this.props.dispatch(
+  						routerRedux.push({
+  							pathname:"/manage"
+  						})
+  					);
   				}
   				else {
   					message.error(data.data.message);
