@@ -45,7 +45,7 @@ const Log = ()=> {
       method:"GET",
       url:"http://yjxt.elatis.cn/logs",
       headers:{
-        "token": sessionStorage.getItem("token"),
+        "token": localStorage.getItem("token"),
         "Content-Type":"application/x-www-form-urlencoded"
       },
       data:data

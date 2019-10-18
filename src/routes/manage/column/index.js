@@ -64,7 +64,7 @@ export default function ColManage() {
   }, [col, colsData, data]);
 
   useEffect(() => {
-    // console.log(sessionStorage.getItem("token"))
+    // console.log(localStorage.getItem("token"))
     axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
       if(res.data.code === 0) {
         setArtiCategory(`/${res.data.data[0].title}/${(res.data.data[0].sec)[0].title}`)
@@ -128,7 +128,7 @@ export default function ColManage() {
         method: "POST",
         url: "http://yjxt.elatis.cn/options/update",
         headers: {
-          "token": sessionStorage.getItem("token"),
+          "token": localStorage.getItem("token"),
           "Content-Type": "application/json"
         },
         data: _data

@@ -4,8 +4,8 @@ import { connect} from "dva";
 import "./index.less"
 import axios from "axios";
 import { routerRedux } from "dva/router";
-import {_setCookie} from "../../utils/session";
-// import { Session } from 'inspector';
+import {_setCookie} from "../../utils/local";
+// import { local } from 'inspector';
 
 @connect(
 	({login, loading}) => ({

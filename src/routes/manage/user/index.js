@@ -24,7 +24,7 @@ class NormalLoginForm extends React.Component {
   					method:"POST",
   					url:"http://yjxt.elatis.cn/users/alterPwd",
   					headers:{
-  						"token":sessionStorage.getItem("token"),
+  						"token":localStorage.getItem("token"),
   						"Content-Type":"application/x-www-form-urlencoded"
   					},
   					data: data
@@ -33,7 +33,7 @@ class NormalLoginForm extends React.Component {
   						(res)=> {
   							if(res.data.code === 0) {
   								message.success("修改成功");
-  								sessionStorage.clear();
+  								localStorage.clear();
   								window.location.href="/login"
                   
   							}

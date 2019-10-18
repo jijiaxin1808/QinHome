@@ -139,7 +139,7 @@ const HeaderScroll = () => {
       method: 'POST',
       url: 'http://yjxt.elatis.cn/options/update',
       headers: {
-        token: sessionStorage.getItem('token'),
+        token: localStorage.getItem('token'),
         'Content-Type': 'application/json',
       },
       data: JSONData,
@@ -179,7 +179,7 @@ const Carousel = () => {
     action: 'http://yjxt.elatis.cn/file/upload',
     headers: {
       authorization: 'authorization-text',
-      token:sessionStorage.getItem("token"),
+      token:localStorage.getItem("token"),
     },
   };
   const onChange = (info, id) => {
@@ -361,7 +361,7 @@ const Carousel = () => {
       method: 'POST',
       url: 'http://yjxt.elatis.cn/options/update',
       headers: {
-        token: sessionStorage.getItem('token'),
+        token: localStorage.getItem('token'),
         'Content-Type': 'application/json',
       },
       data: JSONData,
@@ -498,7 +498,7 @@ const HomeTopic = () => {
     action: 'http://yjxt.elatis.cn/file/upload',
     headers: {
       authorization: 'authorization-text',
-      token: sessionStorage.getItem("token"),
+      token: localStorage.getItem("token"),
     },
   };
   const onChange = (info, id) => {
@@ -557,7 +557,7 @@ const HomeTopic = () => {
       method: 'POST',
       url: 'http://yjxt.elatis.cn/options/update',
       headers: {
-        token: sessionStorage.getItem('token'),
+        token: localStorage.getItem('token'),
         'Content-Type': 'application/json',
       },
       data: JSONData,
@@ -621,7 +621,7 @@ const Background = () => {
     action: 'http://yjxt.elatis.cn/file/upload',
     headers: {
       authorization: 'authorization-text',
-      token: sessionStorage.getItem("token"),
+      token: localStorage.getItem("token"),
     },
   };
   const onChange = (info, id) => {
@@ -680,7 +680,7 @@ const Background = () => {
       method: 'POST',
       url: 'http://yjxt.elatis.cn/options/update',
       headers: {
-        token: sessionStorage.getItem('token'),
+        token: localStorage.getItem('token'),
         'Content-Type': 'application/json',
       },
       data: JSONData,
