@@ -8,8 +8,8 @@ import CpMessage from './routes/message/cp'
 import SocietyMessage from './routes/message/society'
 import Footer from './components/footer'
 import Header from './components/header'
-import headerData from './config/headerData'
-import Message from './routes/message'
+import headerData from "./config/headerData"
+import Message from "./routes/message"
 
 const messageData = {
   sideBar: [
