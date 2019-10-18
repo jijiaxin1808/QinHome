@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Divider, Tag, Pagination } from 'antd';
-import logData from "../../../assets/logData";
+import logData from "../../../config/logData";
 import axios from "axios";
 import qs from "qs";
 import styles from "./index.css"

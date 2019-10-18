@@ -3,7 +3,8 @@ import React from 'react'
 import BraftEditor from 'braft-editor'
 import { Form, Input, Button, Select, Row, Col } from 'antd';
 import styles from './index.css'
-import MenuList from '../../../../assets/contextMenuDown'
+// import MenuList from '../../../../assets/contextMenuDown'
+import MenuList from "../../../../config/contextMenuDown";
 const formItemLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 16 },

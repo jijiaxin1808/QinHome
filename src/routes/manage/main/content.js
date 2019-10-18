@@ -4,6 +4,12 @@ import { Layout } from "antd";
 import "./content.less";
 import Menu from "../account";
 import announcement from "../user";
+import Log from "../log";
+import notification from "../notification";
+import account from "../account";
+import block from "../block";
+import create from "../context/create";
+
 const { Content } = Layout;
 export default class Contents extends React.Component {
 	render() {
@@ -11,6 +17,11 @@ export default class Contents extends React.Component {
 			<Content className="content">
 				<Route path="/manage/index" component={Menu} />
 				<Route path="/manage/announcement" component={announcement} />
+				<Route path="/manage/log" component={Log} />
+				<Route path="/manage/notification" component={notification} />
+				<Route path="/manage/account" component={account} />
+				<Route path="/manage/block" component={block} />
+				<Route path="/manage/create" component={create} />
 			</Content>
 		);
 	}
