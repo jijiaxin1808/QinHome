@@ -1,11 +1,11 @@
 /* eslint-disable linebreak-style */
 export const allMenu = [
 	{
-		name: "账号权限",
-		url: "manage/index", 
-		icon: "bars",
+		name:"栏目管理",
+		url:"manage/column",
+		icon:"plus",
 	},{
-		name:"区块管理",
+		name:"内容管理",
 		url:"manage/create",
 		icon:"plus",
 	},{

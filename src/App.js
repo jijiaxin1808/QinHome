@@ -28,18 +28,6 @@ const routers= [
 		path: "/article",
 		component: Article,
 		key: 2
-	},
-	{
-		name: "社会化服务",
-		path: "/society",
-		component: SocietyMessage,
-		key: 3
-	},
-	{
-		name: "文章",
-		path: "/cp",
-		component: CpMessage,
-		key: 4
 	}
 ];
 const messageData = {

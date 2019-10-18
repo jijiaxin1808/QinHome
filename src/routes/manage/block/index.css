@@ -8,7 +8,7 @@
   }
   .title>span {
         margin-top: 22px;
-    margin-left: 22px; 
+    /* margin-left: 22px;  */
     border-left:  #163E80 solid 5px;
     height: 25px;
      line-height: 25px; 

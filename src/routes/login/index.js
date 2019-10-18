@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Icon, Input, Button, Checkbox, message } from "antd";
 import { connect } from "dva";
-import "./index.less"
+import "./index.less";
 import axios from "axios";
 // import { Session } from 'inspector';
 

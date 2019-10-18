@@ -59,12 +59,12 @@
   background-color: #001529;
   flex: 1 0 auto;
 }
-.navText {
+/* .navText {
   color: #fff;
   display: block;
   font-size: 14px;
   margin-top: 10px;
-}
+} */
 .navTextB {
   color: #fff;
   display: block;
@@ -76,5 +76,5 @@
   flex: 1 1 auto;
 }
 :global(.ant-row) {
-  /* min-width: 300px; */
+  min-width: 300px;
 }
