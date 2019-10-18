@@ -1,0 +1,18 @@
+.nav_left{
+  background-color:#001529;
+  color: #fff;
+  height: calc(100vh);
+}
+.main{
+  height: calc(100vh);
+  overflow: auto;
+  background-color: #f1f3f5;
+}
+.content{
+  position: relative;
+  /* margin: 30px; */
+  min-height: calc(60vh);
+  background-color: #fff;
+  text-align: center;
+  font-size: 20px;
+}
