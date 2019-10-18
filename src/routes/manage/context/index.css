@@ -1,0 +1,32 @@
+.search {
+    width: 250px;
+}
+.header {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    
+}
+.header>span {
+    margin: 0 20px;
+    font-size: 36px;
+}
+.header button {
+    display: flex;
+    justify-content: center;
+}
+.contentHeader {
+    display: flex;
+    border-bottom:  1px solid #838383;
+}
+.contentHeader span {
+    margin-left: 150px;
+}
+.item {
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+.item>span {
+    margin-left: 150px;
+}

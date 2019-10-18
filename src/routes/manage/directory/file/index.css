@@ -1,0 +1,163 @@
+.FileHeader {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 70px;
+    width: 100%;
+    position: relative;
+}
+.hide {
+    display: none;
+}
+.createList {
+    position: absolute;
+    top: 40px;
+    left: -64px;
+    width: 143px;
+    /* background: white; */
+}
+.createList li {
+    list-style: none;
+    display: inline-block;
+    width: 143px;
+    border: 1px solid #e8e8e8;
+    border-bottom: none;
+}
+.createList a {
+    font-size: 18px;
+    color: rgba(0,0,0,0.65);
+}
+.create {
+    position: relative;
+    margin-left: 25px;
+}
+.name {
+    margin-left: 20px;
+    font-size: 36px;
+    color: #000000; 
+}
+.subbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+.app {
+    width: 100%;
+}
+.file {
+    margin-left: 200px;
+}
+.uploader {
+    margin-left: 200px;
+
+}
+.itemupLoader {
+    margin-left: 130px;
+}
+.uploadTo {
+    margin-left: 200px;
+}
+.itemuploadTo {
+    margin-left: 200px;
+
+}
+.uploadDate {
+    margin-left: 200px;
+}
+.itemuploadDate {
+    margin-left: 180px;
+}
+.checkAll {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+.item {
+    /* style = {{display:"flex",justifyContent:"flex-start",height:"150px"}} */
+    display: flex;
+    justify-content: flex-start;
+    height: 150px;
+    align-items: center;
+    border-top: 1px solid #979797;
+    border-bottom: 1px solid #979797;
+}
+.iteminfo {
+    display: flex;
+    flex-direction: column;
+    margin-left: 80px;
+    height: 150px;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+.itemHandle {
+    display: flex;
+    position: relative;
+    cursor: pointer;
+}
+.itemHandle>a {
+    border-right: 1px #979797 solid;
+    padding-right: 5px;
+    color: #000000;
+}
+.itemHandle>span {
+    border-right: 1px #979797 solid;
+    padding-right: 5px;
+    margin-right: 7px;
+    color: #c0392b;
+}
+.itemHandle>div {
+    color: #000000;
+} 
+.itemintrduce {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: blue;
+}
+.checkBox {
+    margin: 0 15px;
+}
+.search {
+    width: 250px;
+    position: absolute;
+    top: 15px;
+    right: 150px;
+}
+.handle {
+    width: 400px;
+    display: flex;
+    align-items: center;
+}
+.handle>p,.handle>div {
+    margin-left: 20px;
+}
+
+.title {
+    font-size: 22px;
+
+    color: #1B1B1B;
+    width:100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+.title>span {
+        margin-top: 22px;
+    margin-left: 22px; 
+    border-left:  #163E80 solid 5px;
+    height: 25px;
+     line-height: 25px; 
+    padding-left: 5px;
+}
+.button {
+    /* float: right; */
+    margin-right: 15px;
+    margin-bottom: 5px;
+  }
+.buttonSbar {
+    display: flex;
+    justify-content: flex-end;
+}
