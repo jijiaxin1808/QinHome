@@ -1,0 +1,28 @@
+:global(.ant-pagination-options-quick-jumper) {
+  font-size: 0;
+}
+:global(.ant-pagination-options-quick-jumper input) {
+  width: 48px;
+  height: 17px;
+  border-radius: 0;
+}
+:global(.ant-pagination-options-quick-jumper:before) {
+  content: "\524d\5f80";
+  font-size: 19px;
+  color: rgba(0, 0, 0, 0.65);
+}
+:global(.ant-pagination-options-quick-jumper:after) {
+  content: "\7b2c\51e0\9875";
+  font-size: 19px;
+  color: rgba(0, 0, 0, 0.65);
+}
+/* :global(.ant-pagination-item a) {
+  color: #000;
+  font-size: 19px;
+} */
+:global(.p .ant-pagination) {
+  display: flex;
+  justify-content: center;
+  padding: 5px 0;
+  margin-top: 40px;
+}

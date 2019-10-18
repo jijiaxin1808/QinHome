@@ -1,0 +1,33 @@
+.header {
+  line-height: 85px;
+  height: 85px;
+  background-color:#001529;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.header>span,a {
+  margin-right: 15px;
+}
+.toHome {
+  display: inline-block;
+  width: 16px;
+  height: 17px;
+  background: url("../../../../assets/shouye.png");
+}
+.toIssue {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  background: url("../../../../assets/xiaoxi-2.png");
+}
+.logOut {
+  display: inline-block;
+  width: 16px;
+  height: 17px;
+  background: url("../../../../assets/tuichu.png");
+  cursor: pointer;
+}
+.userName {
+  color: white;
+}
