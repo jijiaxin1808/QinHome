@@ -172,7 +172,7 @@ const Message = ()=> {
 
 	return(
 		<div>
-			<div className = { styles.title }>
+			<div className = { "title" }>
 				<span>
                  消息通知
 				</span>

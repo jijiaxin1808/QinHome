@@ -34,7 +34,7 @@ class NormalLoginForm extends React.Component {
   							if(res.data.code === 0) {
   								message.success("修改成功");
   								localStorage.clear();
-  								window.location.href="/login"
+  								window.location.href="/login";
                   
   							}
   							else {
@@ -122,8 +122,13 @@ const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(NormalLogin
 
 const UserInfo = ()=> {
 	return (
-		<div className = {styles.userInfo}>
-			<span className = { styles.title }>用户信息</span> 
+		<div className = {"userInfo"}>
+			<div className = { "title" }>
+				<span>
+			用户信息
+				</span>
+			
+			</div> 
 			<p>{ `用户： ${userData.userName }`}</p>
 			<p>{ `姓名： ${userData.realName}`}</p>
 			<p>{ `部门:  ${userData.section}`}</p>
@@ -137,7 +142,6 @@ const User = ()=> {
 			<Row >
 				<Col span = {12} offset = {6} >
 					<WrappedNormalLoginForm />
-
 				</Col>
 			</Row>
 		</div>

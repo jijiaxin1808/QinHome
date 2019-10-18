@@ -66,7 +66,7 @@ const Log = ()=> {
 		,[]);
 	return(
 		<div>
-			<div className = { styles.title }>
+			<div className = { "title" }>
 				<span>
                  操作日志
 				</span>
