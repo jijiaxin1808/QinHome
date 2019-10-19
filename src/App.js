@@ -30,17 +30,11 @@ const routers= [
 		key: 2
 	},
 	{
-		name: "社会化服务",
-		path: "/index/society",
-		component: SocietyMessage,
-		key: 3
+		name: "栏目",
+		path: "/index/message",
+		component: Message,
+		key: 2
 	},
-	{
-		name: "文章",
-		path: "/index/cp",
-		component: CpMessage,
-		key: 4
-	}
 ];
 const messageData = {
 	sideBar: [
@@ -79,7 +73,7 @@ export default function MainApp (props) {
 						<Route path={path} exact={exact} component={component} key={name} />
 					);
 				})}
-				{window.location.pathname ==="/index/index" || window.location.pathname==="/index/news"?null:<Message messageData={messageData} />}
+				{/* {window.location.pathname ==="/index/index" || window.location.pathname==="/index/news"?null:<Message messageData={messageData} />} */}
 				{/* </Switch> */}
 			</Suspense>
 			<Footer />

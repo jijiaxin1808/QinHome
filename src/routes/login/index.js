@@ -59,7 +59,7 @@ class NormalLoginForm extends React.Component {
   	const { getFieldDecorator } = this.props.form;
   	return (
   		<div className="login-content" >
-  			<div>
+  			<div className = "login-avger">
   				<img alt="login" src="/img/Oval.png" className="login-icon"/>
   			</div>
   			<Form onSubmit={this.handleSubmit} className="login-form">

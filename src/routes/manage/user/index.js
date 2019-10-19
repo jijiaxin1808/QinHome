@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./index.css";
 import userData from "../../../config/userData";
-import { Form, Icon, Input, Button, message, Row, Col } from 'antd';
-import axios from 'axios'
+import { Form, Icon, Input, Button, message, Row, Col } from "antd";
+import axios from "axios";
 import qs from "qs";
 
 
@@ -12,13 +12,13 @@ class NormalLoginForm extends React.Component {
   	this.props.form.validateFields((err, values) => {
   		if (!err) {
   			if(values.newpassword1 !== values.newpassword2) {
-  				message.warn("两次输入的密码不一致")
+  				message.warn("两次输入的密码不一致");
   			}
   			else {
   				const data1 = {
   					newPassword: values.newpassword2,
   					oldPassword: values.oldpassword
-  				}
+  				};
   				const data = qs.stringify(data1);
   				axios({
   					method:"POST",
@@ -34,7 +34,7 @@ class NormalLoginForm extends React.Component {
   							if(res.data.code === 0) {
   								message.success("修改成功");
   								localStorage.clear();
-  								window.location.href="/login"
+  								window.location.href="/login";
                   
   							}
   							else {
@@ -44,7 +44,7 @@ class NormalLoginForm extends React.Component {
   						}
   					).catch((error)=>{
   						console.log(error);
-  					})
+  					});
   				//这里写更改密码的请求
   			}
   		}
@@ -64,29 +64,29 @@ class NormalLoginForm extends React.Component {
   	};
   	const { getFieldDecorator } = this.props.form;
   	return (
-  		<Form onSubmit={this.handleSubmit} /*className= { styles.input }*/ {...formItemLayout}>
+  		<Form onSubmit={this.handleSubmit} /*className= { styles.input }*/ {...formItemLayout} >
 
   			<Form.Item label="原密码">
-  				{getFieldDecorator('oldpassword', {
-  					rules: [{ required: true, message: '请输入原始密码!' }],
+  				{getFieldDecorator("oldpassword", {
+  					rules: [{ required: true, message: "请输入原始密码!" }],
   				})(
   					<Input
-  						prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+  						prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
   						type="password"
   						placeholder="请输入原始密码"
   					/>,
   				)}
   			</Form.Item>
   			<Form.Item label="新密码"> 
-  				{getFieldDecorator('newpassword1', {
-  					rules: [{ required: true, message: '请输入新密码!' },
+  				{getFieldDecorator("newpassword1", {
+  					rules: [{ required: true, message: "请输入新密码!" },
   						{min:6, message:"至少六个字符"},
   						{ max:16, message:"最多16个字符" }
 
   					],
   				})(
   					<Input
-  						prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+  						prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
   						type="password"
   						placeholder="第一次输入密码"
   					/>,
@@ -94,22 +94,22 @@ class NormalLoginForm extends React.Component {
   			</Form.Item>
   			<Form.Item label="再次输入密码">
 
-  				{getFieldDecorator('newpassword2', {
-  					rules: [{ required: true, message: '请输入新密码!' }],
+  				{getFieldDecorator("newpassword2", {
+  					rules: [{ required: true, message: "请输入新密码!" }],
   				})(
   					<Input
-  						prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+  						prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
   						type="password"
   						placeholder="第二次输入密码"
   					/>,
   				)}
   			</Form.Item>
-  			<Form.Item className = {styles.alter}>
+  			<Form.Item className = {"user-alter"}>
   				{/* {getFieldDecorator('remember', {
             valuePropName: 'checked',
             initialValue: true,
           })(<Checkbox>Remember me</Checkbox>)} */}
-  				<Button type="primary" htmlType="submit"  >
+  				<Button type="primary" htmlType="submit"    >
             修改密码
   				</Button>
   			</Form.Item>
@@ -118,18 +118,23 @@ class NormalLoginForm extends React.Component {
   }
 }
 
-const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(NormalLoginForm);
+const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(NormalLoginForm);
 
 const UserInfo = ()=> {
 	return (
-		<div className = {styles.userInfo}>
-			<span className = { styles.title }>用户信息</span> 
+		<div className = {"userInfo"}>
+			<div className = { "title" }>
+				<span>
+			用户信息
+				</span>
+			
+			</div> 
 			<p>{ `用户： ${userData.userName }`}</p>
 			<p>{ `姓名： ${userData.realName}`}</p>
 			<p>{ `部门:  ${userData.section}`}</p>
 		</div>
-	)
-}
+	);
+};
 const User = ()=> {
 	return (
 		<div>
@@ -137,11 +142,10 @@ const User = ()=> {
 			<Row >
 				<Col span = {12} offset = {6} >
 					<WrappedNormalLoginForm />
-
 				</Col>
 			</Row>
 		</div>
-	)
-}
+	);
+};
 
 export default User;

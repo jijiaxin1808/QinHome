@@ -9,4 +9,4 @@ const MenuList = [{
 	value: "新闻中心2"
 }];
 
-export default MenuList
+export default MenuList;

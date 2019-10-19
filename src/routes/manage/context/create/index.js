@@ -52,7 +52,7 @@ class FormDemo extends React.Component {
 
   	return (
   		<div className={styles["demo-container"]}>
-  			<div className = { styles.title }>
+  			<div className = { "title" }>
   				<span>
                  内容管理
   				</span>
