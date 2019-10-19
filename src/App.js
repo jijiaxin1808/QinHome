@@ -70,7 +70,7 @@ export default function MainApp (props) {
 				{/* <Switch> */}
 				{routers.map(({ name, path, exact = true, component }) => {
 					return (
-						<Route path={path} /*exact={exact} */component={component} key={name} />
+						<Route path={path} exact={exact} component={component} key={name} />
 					);
 				})}
 				{/* {window.location.pathname ==="/index/index" || window.location.pathname==="/index/news"?null:<Message messageData={messageData} />} */}

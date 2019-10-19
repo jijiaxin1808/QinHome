@@ -74,7 +74,7 @@ const  Tabs =(props)=> {
 					setData(tabData);
 				}
 				else {
-					
+
 				}
 			});
 		}
@@ -95,7 +95,7 @@ const  Tabs =(props)=> {
 
 											<i className='tabs-i'>·</i>&nbsp;&nbsp;
 											{/* {index + 1} */}
-											<Link to={`/article?id=${item.id}`}>
+											<Link to={`/index/article?id=${item.id}`}>
 												{item.title}
 											</Link>
 										</li>
