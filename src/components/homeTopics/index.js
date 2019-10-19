@@ -9,12 +9,13 @@ const HomeTopic = (props) => {
 	useEffect(()=> {
 		axios({
 			method:"GET",
-			url:`http://yjxt.elatis.cn/posts/listPosts?category=${encodeURI(props.section)}`,
+			url:`http://yjxt.elatis.cn/posts/listPosts?category=/政府公开/行政许可`,
 			headers: {
 				token:localStorage.getItem("token")
 			},
 			params: {
-				status: "draft"
+        status: "draft",
+        limit: 3
 			},
 			data: {
 				status: ""
@@ -29,7 +30,7 @@ const HomeTopic = (props) => {
 		<div className='home-topic'>
 			<div className='home-topic-header'>
 				<span>{props.title}</span>
-				<Link to={props.href}>
+				<Link to={`/index/message?type=${props.type}`}>
                     更多 >>
 				</Link>
 			</div>
@@ -39,7 +40,7 @@ const HomeTopic = (props) => {
 						topicData.map((item, index) => {
 						  return (
 						    <li className='home-topic-li' key={index}>
-						      <Link to='/article?id=dasdas'>
+						      <Link to={`/index/article?id=${item.id}`}>
 						        {`${index + 1}. ${item.title}`}
 						      </Link>
 						    </li>
@@ -60,7 +61,7 @@ const HomeTopics = (props) => {
 				colsData.slice(2, colsData.length).map((item, index) => {
 					return (
 						<HomeTopic title = {item.title} href = {`/index/message?type=${index+3}`} 
-							section = {`/${item.title}/${item.sec[0].title}`} 
+							section = {`/${item.title}/${item.sec[0].title}`} type =  { item.key }
 						/>
 					);
 				})
