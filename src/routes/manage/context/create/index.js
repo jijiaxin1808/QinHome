@@ -5,6 +5,10 @@ import { ContentUtils } from "braft-utils";
 import { Form, Input, Button,  Row, Col ,Cascader, Upload, Icon, Modal, Select, Card, Tag} from "antd";
 import "./index.css";
 import axios from "axios";
+import getToken from './getToken'
+
+const QINIU_SERVER = 'http://upload-z1.qiniup.com'
+const QINIU_PATH = 'http://qiniu.waidzsalome.cn'
 
 const { Option } = Select;
 const formItemLayout = {
@@ -52,6 +56,17 @@ function FormDemo (props) {
 		}))
 	}));
 
+	const [token, setToken] = useState('');
+	const getUploadToken = () => {
+	  console.log(getToken());
+    setToken(getToken());
+  }
+
+  const handleOnChange = ({file}) => {
+const { response = {}} = file;
+console.log(response);
+console.log(response.hash)
+  }
 
 	const handleSubmit = (event) => {
 
@@ -62,7 +77,7 @@ function FormDemo (props) {
   			const submitData = {
   				title: values.title,
 					// department: values.department,
-					category: values.category[0]+ "/" +values.category[1],
+					category: "/"+values.category[0]+ "/" +values.category[1],
   				content: values.content.toHTML()// or values.content.toHTML()
   			};
 
@@ -154,8 +169,12 @@ function FormDemo (props) {
 			component: (
 				<Upload
 					accept="image/*"
+          action={QINIU_SERVER}
+          data={{token: token}}
+          beforeUpload={getUploadToken}
 					showUploadList={false}
 					customRequest={uploadHandler}
+          onChange={handleOnChange}
 				>
 					{/* 这里的按钮最好加上type="button"，以避免在表单容器中触发表单提交，用Antd的Button组件则无需如此 */}
 					<button type="button" className="control-item button upload-button" data-title="插入图片">

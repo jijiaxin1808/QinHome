@@ -9,6 +9,7 @@ import notification from "../notification";
 import account from "../account";
 import block from "../block";
 import create from "../context/create";
+import change from "../context/change";
 import column from "../column";
 import BmsSearch from "../bms-search";
 
@@ -24,6 +25,7 @@ export default class Contents extends React.Component {
 				<Route path="/manage/account" component={account} />
 				<Route path="/manage/block" component={block} />
 				<Route path="/manage/create" component={create} />
+				<Route path="/manage/change" component={change}/>
 				<Route path="/manage/column" component={column} />
 				<Route path="/manage/BmsSearch" component={BmsSearch} />
 
