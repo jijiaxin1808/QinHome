@@ -330,7 +330,7 @@ export default function AuthManage() {
 	};
 	return (
 		<div /*style={{padding: "20px 20px 0 20px"}}*/>
-			<div className = { styles.title }>
+			<div className = { "title" }>
 				<span>
           账号权限
 				</span>
@@ -343,22 +343,16 @@ export default function AuthManage() {
 						))
 					}
 				</div>
-				<div className={styles.search}>
-					<Input placeholder="姓名" style={{width: "160px"}}/>
-					<Button>
-            搜索用户
-					</Button>
-				</div>
 			</div>
-			<div className={styles.oper}>
+			<div className={"oper"}>
 				{
 					state === "manage" ? 
-          <>"           "<Button className={styles.operBtn}>
+          <><Button className={"operBtn"}>
               删除
-          </Button>"           "<Button className={styles.operBtn} onClick={handleAddClick}>
+		  </Button><Button className={"operBtn"} onClick={handleAddClick}>
               添加
-          </Button>"         "</> :
-						<Button className={styles.operBtn}　onClick={handleSureClick}>
+		  </Button></> :
+						<Button className={"operBtn"}　onClick={handleSureClick}>
             确定
 						</Button>
 				}
@@ -372,14 +366,14 @@ export default function AuthManage() {
 			/> 
 			{
 				state === "manage" && 
-        <>"         "<Button 
+        <><Button 
           	type="primary"
-          	className={styles.saveBtn}
+          	className={"oper-saveBtn"}
           	loading={loading} 
           	onClick={handleSaveClick}
         >
             保存
-        </Button>"       "</>
+        </Button></>
 			}
 		</div>
 	);

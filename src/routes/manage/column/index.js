@@ -38,8 +38,8 @@ export default function ColManage() {
   // 需要一个保存post数据(包括更改的二级栏目和文章列表)的变量，由category控制
   const [] = useState([]);
   
-  const renderRadio = (text, record, index) => {
-    const State =
+	const renderRadio = (text, record, index) => {
+		const State =
       !edit[index] && editState === "二级" ?
        <span>{articles[index].state}</span> :
        <Radio.Group className="radioGroup" name="pageState" defaultValue={record.state ? 1 : 2} onChange={(e) => handleRadioChange(index, record, e)}>
@@ -202,13 +202,13 @@ export default function ColManage() {
                     <Button type="primary" onClick={handleNewBtn}>
                       <Icon type="plus" />
                       新建
-                    </Button>
-                   ),
-      dataIndex: "delete",
-      key: "delete",
-      render: (text,record,index) => <a onClick={() => handleDelBtn(index)}><Icon type="delete" theme="twoTone" /></a>
-    }
-  ];
+				</Button>
+			),
+			dataIndex: "delete",
+			key: "delete",
+			render: (text,record,index) => <a onClick={() => handleDelBtn(index)}><Icon type="delete" theme="twoTone" /></a>
+		}
+	];
   
   const secondaryColumn = [
     {

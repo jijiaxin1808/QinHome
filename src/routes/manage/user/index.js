@@ -64,7 +64,7 @@ class NormalLoginForm extends React.Component {
   	};
   	const { getFieldDecorator } = this.props.form;
   	return (
-  		<Form onSubmit={this.handleSubmit} /*className= { styles.input }*/ {...formItemLayout}>
+  		<Form onSubmit={this.handleSubmit} /*className= { styles.input }*/ {...formItemLayout} >
 
   			<Form.Item label="原密码">
   				{getFieldDecorator("oldpassword", {
@@ -104,12 +104,12 @@ class NormalLoginForm extends React.Component {
   					/>,
   				)}
   			</Form.Item>
-  			<Form.Item className = {styles.alter}>
+  			<Form.Item className = {"user-alter"}>
   				{/* {getFieldDecorator('remember', {
             valuePropName: 'checked',
             initialValue: true,
           })(<Checkbox>Remember me</Checkbox>)} */}
-  				<Button type="primary" htmlType="submit"  >
+  				<Button type="primary" htmlType="submit"    >
             修改密码
   				</Button>
   			</Form.Item>

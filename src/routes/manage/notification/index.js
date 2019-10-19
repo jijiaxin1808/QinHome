@@ -177,11 +177,11 @@ const Message = ()=> {
                  消息通知
 				</span>
 			</div>
-			<div className = {styles.buttonSbar}>
-				<Button  onClick = {()=>{markAsRead();}} className = {styles.button} >
+			<div className = {"buttonSbar"}>
+				<Button  onClick = {()=>{markAsRead();}} className = {"button"} >
                 标记为已读
 				</Button>
-				<Button onClick = {()=>{markAsUnRead();}} className = {styles.button}>
+				<Button onClick = {()=>{markAsUnRead();}} className = {"button"}>
                 标记为未读
 				</Button>
 			</div>

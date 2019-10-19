@@ -590,17 +590,27 @@ const HomeTopic = () => {
 };
 
 const Public = () => {
+	const publicCol  = [
+		{
+			title: "序号",
+			dataIndex: "id",
+			key: "id",
+		},
+		{
+			title: "内容",
+			dataIndex: "content",
+			key: "content",
+			render: content => (
+				<Input placeholder = { content }   />
+			)
+		}
+	];
 	return (
 		<div>
 			<div className={"title"}>
 				<span>信息公开</span>
 			</div>
-			<h3>专栏1</h3>
-			<Table columns={blockCol.publicCol} dataSource={blockData.publicData1} pagination={false} />
-			<h3>专栏2</h3>
-			<Table columns={blockCol.publicCol} dataSource={blockData.publicData2} pagination={false} />
-			<h3>专栏3</h3>
-			<Table columns={blockCol.publicCol} dataSource={blockData.publicData3} pagination={false} />
+			<Table columns={publicCol} dataSource={blockData.publicData1} pagination={false} />
 		</div>
 	);
 };
@@ -721,7 +731,7 @@ const Background = () => {
 };
 const block = () => {
 	return (
-		<div className = {"block"}>
+		<div /*className = {"block"}*/>
 			<HeaderScroll />
 			<Carousel />
 			<HomeTopic />

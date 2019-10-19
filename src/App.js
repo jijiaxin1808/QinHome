@@ -31,7 +31,7 @@ const routers= [
 	},
 	{
 		name: "栏目",
-		path: "/message",
+		path: "/index/message",
 		component: Message,
 		key: 2
 	},
@@ -73,7 +73,7 @@ export default function MainApp (props) {
 						<Route path={path} exact={exact} component={component} key={name} />
 					);
 				})}
-				{window.location.pathname ==="/index/index" || window.location.pathname==="/index/news"?null:<Message messageData={messageData} />}
+				{/* {window.location.pathname ==="/index/index" || window.location.pathname==="/index/news"?null:<Message messageData={messageData} />} */}
 				{/* </Switch> */}
 			</Suspense>
 			<Footer />
