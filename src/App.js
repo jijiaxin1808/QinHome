@@ -13,31 +13,31 @@ import headerData from "./config/headerData";
 const routers= [
 	{
 		name: "首页",
-		path: "/",
+		path: "/index/index",
 		component: Home,
 		key: 0
 	},
 	{
 		name: "新闻中心",
-		path: "/news",
+		path: "/index/news",
 		component: News,
 		key: 1
 	},
 	{
 		name: "文章",
-		path: "/article",
+		path: "/index/article",
 		component: Article,
 		key: 2
 	},
 	{
 		name: "社会化服务",
-		path: "/society",
+		path: "/index/society",
 		component: SocietyMessage,
 		key: 3
 	},
 	{
-		name: "bgdf",
-		path: "/cp",
+		name: "文章",
+		path: "/index/cp",
 		component: CpMessage,
 		key: 4
 	}
@@ -68,7 +68,7 @@ const messageData = {
 	]
 };
 export default function MainApp (props) {
-    console.log(window.location.pathname)
+	console.log(window.location.pathname)
 	return (
 		<div>
 			<Header barData={headerData} />
@@ -79,7 +79,7 @@ export default function MainApp (props) {
 						<Route path={path} exact={exact} component={component} key={name} />
 					);
 				})}
-				{window.location.pathname ==="/" || window.location.pathname==="/news"?null:<Message messageData={messageData} />}
+				{window.location.pathname ==="/index/index" || window.location.pathname==="/index/news"?null:<Message messageData={messageData} />}
 				{/* </Switch> */}
 			</Suspense>
 			<Footer />

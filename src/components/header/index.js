@@ -45,8 +45,8 @@ Header (props) {
     			bardata.map((item, index) => {
     				return (
     					<li key={index} className={flag === item ? "active" : ""}>
-                {/* {item.link==="/" ?<Link to={`/a//index`}>{item.title}</Link>:<Link to={`/a/${item.link}`}>{item.title}</Link>} */}
-				        <Link to={`${item.link}`}>{item.title}</Link>
+                {item.link==="/" ?<Link to={`/index/index`}>{item.title}</Link>:<Link to={`/index${item.link}`}>{item.title}</Link>}
+				       
     					</li>
     				)
     			})
