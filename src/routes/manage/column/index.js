@@ -1,8 +1,7 @@
 import React, {useState,useEffect,useReducer} from "react";
 import {Radio,Input,Icon,Table,Button,Menu,message} from "antd";
-import styles from "./index.css";
+import "./index.less";
 import dataSource from "./dataSource";
-import * as utils from "../../../utils/utils";
 import axios from "axios";
 
 export default function ColManage() {
@@ -44,9 +43,9 @@ export default function ColManage() {
     const State =
       !edit[index] && editState === "二级" ?
        <span>{articles[index].state}</span> :
-       <Radio.Group className={styles.radioGroup} name="pageState" defaultValue={record.state ? 1 : 2} onChange={(e) => handleRadioChange(index, record, e)}>
-        <Radio value={1} className={styles.radio}>显示</Radio>
-        <Radio value={2} className={styles.radio}>隐藏</Radio>
+       <Radio.Group className="radioGroup" name="pageState" defaultValue={record.state ? 1 : 2} onChange={(e) => handleRadioChange(index, record, e)}>
+        <Radio value={1} className="radio">显示</Radio>
+        <Radio value={2} className="radio">隐藏</Radio>
       </Radio.Group>
     return State;
   }
@@ -54,7 +53,6 @@ export default function ColManage() {
 
     if(col && colsData.length!==0) {
       let _cols = colsData;
-      // console.log(_cols)
       let _col = _cols.find(item => {
         return item.title === col;
       });
@@ -64,7 +62,7 @@ export default function ColManage() {
   }, [col, colsData, data]);
 
   useEffect(() => {
-    // console.log(localStorage.getItem("token"))
+    // console.log(sessionStorage.getItem("token"))
     axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
       if(res.data.code === 0) {
         setArtiCategory(`/${res.data.data[0].title}/${(res.data.data[0].sec)[0].title}`)
@@ -103,7 +101,6 @@ export default function ColManage() {
 
   useEffect(() => {
     if(!saveClick) return;
-    console.log(colsData)
     if(colsData.length !== 0) {
       let _colsData = colsData.map(item => {
         let _item = {...item, title: item.newCol || item.title}
@@ -114,7 +111,7 @@ export default function ColManage() {
         delete _item.col;
         return _item;
       });
-      colsData.sort((a, b) => {
+      _colsData.sort((a, b) => {
         return a.weight - b.weight;
       });
       const _data = JSON.stringify({
@@ -123,7 +120,6 @@ export default function ColManage() {
           ..._colsData,
         }
       });
-      console.log(_data)
       axios({
         method: "POST",
         url: "http://yjxt.elatis.cn/options/update",
@@ -146,9 +142,9 @@ export default function ColManage() {
   }, [colsData, saveClick, secCols]);
 
   useEffect(() => {
-    secCols.length && setSecCol(secCols[0].title);
-    setSecColKey(dataSource.secCols[0].key);
-
+    console.log(secCols)
+    secCols.length ? setSecCol(secCols[0].title) : setSecCol("");
+    secCols[0] && setSecColKey(secCols[0].key);
   }, [secCols, data]);
   
   const columns = [
@@ -156,35 +152,35 @@ export default function ColManage() {
       title: "栏目",
       dataIndex: "title",
       key: "title", 
-      className: `${styles.column}`,
+      className: "column",
       render: (text) => <span>{text}</span>
     },
     {
       title: "修改后的新栏目名",
       dataIndex: "newCol",
       key: "newCol",
-      className: `${styles.column}`,
+      className: "column",
       render: (text,record,index) => <Input placeholder="请输入新栏目名" style={{width: "150px"}} onChange={(e) => handleColChange(e, "newCol", index)} defaultValue={record.title}/>
     },
     {
       title: "页面状态",
       dataIndex: "pageState",
       key: "pageState",
-      className: `${styles.column}`,
+      className: "column",
       render: renderRadio
     },
     {
       title: "权重",
       dataIndex: "weight",
       key: "weight",
-      className: `${styles.column}`,
+      className: "column",
       render: (text,record,index) => <Input style={{width: "50px"}} onChange={(e) => handleColChange(e, "weight", index)} value={!weightIsNum[index] ? "" : editData[index].weight}/>
     },
     {
       title: "链接地址",
       dataIndex: "link",
       key: "link",
-      className: `${styles.column}`,
+      className: "column",
       render: (text,record,index) => <Input placeholder="http://" onChange={(e) => handleColChange(e, "link", index)} defaultValue={record.link}/>
     },
     {
@@ -280,10 +276,13 @@ export default function ColManage() {
   const handleAddSeColClick = () => {
     // 这里直接改colsData就行了，不用setSecCols，因为useEffect会监控colsData改变secCols。
     let _secCols = [...secCols];
+    let _key = `${secCols.length!==0 ? parseInt(secCols[secCols.length-1].key)+1 : 1}`;
     _secCols.push({
-      key: `${secCols.length!==0 ? parseInt(secCols[secCols.length-1].key)+1 : 1}`,
+      key: _key,
       title: "新栏目",
     });
+    setSecColKey(_key);
+    console.log(_key)
     let _colsData = JSON.parse(JSON.stringify(colsData));
     _colsData = _colsData.map((item) => {
       if(item.title === col) {
@@ -356,8 +355,15 @@ export default function ColManage() {
     let index = _secCols.indexOf(_secCol);
     _secCols.splice(index, 1);
     setSecCols(_secCols);
-    _secCols[0] && setSecCol(_secCols[0].col);
-    _secCols[0] && setSecColKey(_secCols[0].key);
+    let _colsData = JSON.parse(JSON.stringify(colsData));
+    _colsData = _colsData.map((item) => {
+      if(item.title === col) {
+        return {...item, sec: _secCols};
+      } else {
+        return item;
+      }
+    });
+    setColsData(_colsData);
   }
   const handleColChange = (e, id, index) => {
     // 先这样，优化代码的时候记得改一下，这里只有在输入框改变的时候才会给colsData添加newCol,虽然默认newCol框值为title的值，但是没有newCol属性，所有是undefined。
@@ -391,24 +397,24 @@ export default function ColManage() {
   return (
     <React.Fragment>
       <div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px"}}>
-        <ul className={styles.list}>
+        <ul className="list">
           {
             data.map((item,index) => (
-              <li className={styles.li} onClick={() => handleColClick(item)}>
-                <a className={index<data.length-1 ? styles.navTextB : styles.navText}>{item.title}</a>
+              <li className="li" onClick={() => handleColClick(item)}>
+                <a className={index<data.length-1 ? "navTextB" : "navText"}>{item.title}</a>
               </li>
             ))
           }
         </ul>
         <Button　
           type="primary"
-          className={styles.editBtn}
+          className="editBtn"
           onClick={handleEditBtn}
         >
           编辑栏目
         </Button>
       </div>
-      <div className={styles.columnContainer}>
+      <div className="columnContainer">
         {
           editState === "二级" &&
           <Menu
@@ -431,10 +437,10 @@ export default function ColManage() {
             </Button>
           </Menu>
         }
-        <div className={styles.tableContainer}>
+        <div className="tableContainer">
           {
             editState === "二级" &&
-            <div className={styles.tableHeader}>
+            <div className="tableHeader">
               <h2>
                 {
                   !secColEdit ?
@@ -442,7 +448,7 @@ export default function ColManage() {
                   <Input style={{width: 100}} onChange={(e) => setSecCol(e.target.value)} defaultValue={secCol}/>
                 }
               </h2>
-              <div className={styles.oper}>
+              <div className="oper">
                 {
                   !secColEdit ?
                   <>
@@ -463,7 +469,7 @@ export default function ColManage() {
       </div>
        <Button 
           type="primary"
-          className={styles.submitBtn}
+          className="submitBtn"
           loading = {loading}
           onClick = {handleSaveClick}
        >
