@@ -92,7 +92,14 @@ export default function ColManage() {
 	useEffect(() => {
 		console.log(artiCategory);
 		// 根据分类动态获取文章列表
-		artiCategory && axios.get(`http://yjxt.elatis.cn/posts/getNew?category=${artiCategory}`).then(res => {
+		artiCategory && axios({
+			method: "GET",
+			url: `http://yjxt.elatis.cn/posts/listPosts?category=${artiCategory}`,
+			params: {
+				status: "draft"
+			}
+		}
+		).then(res => {
 
 			if(res.data.code === 0) {
 				console.log(res.data.data);

@@ -9,16 +9,22 @@ const HomeTopic = (props) => {
 	useEffect(()=> {
 		axios({
 			method:"GET",
-			url:`http://yjxt.elatis.cn/posts/getNew?category=${encodeURI(props.section)}`,
+			url:`http://yjxt.elatis.cn/posts/listPosts?category=${encodeURI(props.section)}`,
 			headers: {
 				token:localStorage.getItem("token")
+			},
+			params: {
+				status: "draft"
+			},
+			data: {
+				status: ""
 			}
 		}).then(res=> {
 			console.log(res.data,"topic数据");
+			setTopicData(res.data.data);
 		});
 
-
-	},);
+	},[]);
 	return (
 		<div className='home-topic'>
 			<div className='home-topic-header'>
@@ -59,7 +65,6 @@ const HomeTopics = (props) => {
 					);
 				})
 			}
-
 		</div>
 	);
 };

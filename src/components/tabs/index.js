@@ -65,9 +65,12 @@ const  Tabs =(props)=> {
 				if(index<=2) {
 					axios({
 						method:"get",
-						url:"http://yjxt.elatis.cn/posts/getNew?category=/新闻中心/领导讲话",
+						url:"http://yjxt.elatis.cn/posts/listPosts?category=/新闻中心/领导讲话",
 						headers: {
 							token: localStorage.getItem("token")
+						},
+						params: {
+							status: "draft"
 						}
 					}).then(res=> {
 						if(res.data.code === 0) {
