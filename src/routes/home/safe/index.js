@@ -79,13 +79,7 @@ export default function Safe () {
           </ul>
         </div>
       </div>
-      <Weather Data={{
-        weatherType: '1',
-        Max: '21',
-        Min: '0',
-        type: '优'
-      }}
-      />
+      <Weather />
     </div>
   )
 }
