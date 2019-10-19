@@ -74,19 +74,19 @@ class NewsBottomLeft extends React.Component {
 		// }
 		return (
 			<div className='NewsBottomLeft'>
-			<img src="/img/Office.png" alt='' />
-			<ol className='News-Right'>
-				{
-					data.map((item, index) => {
-						return (
-							<Link to='/article?id=dasdas' key={index}>
-								<li key={index}><a href=''><i /> &nbsp;{item}</a></li>
-							</Link>
-						);
-					})
-				}
-			</ol>
-		</div>
+				<img src="/img/Office.png" alt='' />
+				<ol className='News-Right'>
+					{
+						data.map((item, index) => {
+							return (
+								<Link to='/article?id=dasdas' key={index}>
+									<li key={index}><a href=''><i /> &nbsp;{item}</a></li>
+								</Link>
+							);
+						})
+					}
+				</ol>
+			</div>
 		);
 	}
 }

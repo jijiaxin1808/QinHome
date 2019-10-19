@@ -16,7 +16,6 @@ function  Header (props) {
 			if (res.data.code === 0) {
 				setbardata(res.data.data);
 				props.save(res.data.data);
-				console.log((res.data.data), "bardata");
 			}
 		});
 	}, []);
@@ -51,7 +50,7 @@ function  Header (props) {
     			})
     		}
     	</ul>
-   </div></>
+  </div></>
 	);
 }
 const mapDispatchToProps = (dispatch)=> ({
@@ -61,11 +60,9 @@ const mapDispatchToProps = (dispatch)=> ({
 			payload: {
 				columnData: data
 			}
-		})
+		});
 	}
-
-
-})
+});
 
 
 export default connect(({home})=>({home}),mapDispatchToProps)(Header);
