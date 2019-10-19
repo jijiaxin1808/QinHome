@@ -1,42 +1,42 @@
-import React from 'react'
-import './index.less'
+import React from "react";
+import "./index.less";
 // import Office from '/img/assest/Office.png'
-import Homecarousel from '../../components/home-carousel'
-import { Link } from 'react-router-dom'
+import Homecarousel from "../../components/home-carousel";
+import { Link } from "react-router-dom";
 
 const data = [
-	'lalalalalalalalalalallalalalalalalalalalallalalalalalalalalalallalalalalalalalalalallalalalalalalalalalal',
-	'lalalalalalalalalalal',
-	'lalalalalalalalalalal',
-	'lalalalalalalalalalal',
-	'lalalalalalalalalalal',
-	'lalalalalalalalalalal',
-	'lalalalalalalalalalal',
-	'lalalalalalalalalalal'
-]
+	"lalalalalalalalalalallalalalalalalalalalallalalalalalalalalalallalalalalalalalalalallalalalalalalalalalal",
+	"lalalalalalalalalalal",
+	"lalalalalalalalalalal",
+	"lalalalalalalalalalal",
+	"lalalalalalalalalalal",
+	"lalalalalalalalalalal",
+	"lalalalalalalalalalal",
+	"lalalalalalalalalalal"
+];
 
 const data1 = [
-	'lalalalalalalalalalallalalalalalalalalalallalalalalalalalalalallalalalalalalalalalallalalalalalalalalalal',
-	'lalalalalalalalalalal',
-	'lalalalalalalalalalal',
-	'lalalalalalalalalalal',
-	'lalalalalalalalalalal',
-	'lalalalalalalalalalal',
-	'lalalalalalalalalalal'
-]
+	"lalalalalalalalalalallalalalalalalalalalallalalalalalalalalalallalalalalalalalalalallalalalalalalalalalal",
+	"lalalalalalalalalalal",
+	"lalalalalalalalalalal",
+	"lalalalalalalalalalal",
+	"lalalalalalalalalalal",
+	"lalalalalalalalalalal",
+	"lalalalalalalalalalal"
+];
 
 const Data = [
 	{
-		href: '',
-		picUrl: ''
+		href: "",
+		picUrl: ""
 	}, {
-		href: '',
-		picUrl: ''
+		href: "",
+		picUrl: ""
 	}, {
-		href: '',
-		picUrl: ''
+		href: "",
+		picUrl: ""
 	}
-]
+];
 
 const NewsTopRight = () => {
 	return (
@@ -49,24 +49,20 @@ const NewsTopRight = () => {
 							<Link to='/article?id=dasdas' key={index}>
 								<li key={index}><a href=''><i /> &nbsp;{item}</a></li>
 							</Link>
-						)
+						);
 					})
 				}
 			</ol>
 		</div>
-	)
-}
-
-// const NewsBottomLeft = () =>{
-
-// }
+	);
+};
 
 class NewsBottomLeft extends React.Component {
 	constructor (props) {
-		super(props)
+		super(props);
 		this.state = {
-			type: 'gzdt'
-		}
+			type: "gzdt"
+		};
 	}
 
 	render () {
@@ -78,25 +74,20 @@ class NewsBottomLeft extends React.Component {
 		// }
 		return (
 			<div className='NewsBottomLeft'>
-				<div className='NewsBottomLeft-head'>
-					<a href='javascript:void(0);' onMouseOver={() => { this.setState({ type: 'gzdt' }) }} className={this.state.type === 'gzdt' ? 'click' : ''}>工作动态</a>
-					<a href='javascript:void(0);' onMouseOver={() => { this.setState({ type: 'gdkx' }) }} className={this.state.type === 'gdkx' ? 'click' : ''}>各地快讯</a>
-					<a href='javascript:void(0);' onMouseOver={() => { this.setState({ type: 'yjgljb' }) }} className={this.state.type === 'yjgljb' ? 'click' : ''}>应急管理简报</a>
-					<a href='javascript:void(0);' onMouseOver={() => { this.setState({ type: 'aqscjb' }) }} className={this.state.type === 'aqscjb' ? 'click' : ''}>安全生产简报</a>
-				</div>
-				<ol className='NewsBottomLeft-Contain'>
-					{
-						data.map((item, index) => {
-							return (
-								<Link to='/article?id=dasdas' key={index}>
-									<li key={index}><a href=''><i /> &nbsp;{item}</a></li>
-								</Link>
-							)
-						})
-					}
-				</ol>
-			</div>
-		)
+			<img src="/img/Office.png" alt='' />
+			<ol className='News-Right'>
+				{
+					data.map((item, index) => {
+						return (
+							<Link to='/article?id=dasdas' key={index}>
+								<li key={index}><a href=''><i /> &nbsp;{item}</a></li>
+							</Link>
+						);
+					})
+				}
+			</ol>
+		</div>
+		);
 	}
 }
 
@@ -111,13 +102,13 @@ const NewsBottomRight = () => {
 							<Link to='/article?id=dasdas' key={index}>
 								<li key={index}><a href=''><i /> &nbsp;{item}</a></li>
 							</Link>
-						)
+						);
 					})
 				}
 			</ol>
 		</div>
-	)
-}
+	);
+};
 
 const News = () => {
 	return (
@@ -127,6 +118,6 @@ const News = () => {
 			<NewsBottomLeft />
 			<NewsBottomRight />
 		</div>
-	)
-}
-export default News
+	);
+};
+export default News;

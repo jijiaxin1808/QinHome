@@ -39,7 +39,6 @@ const Log = ()=> {
 	const [ logdata, setlogdata ] = useState([]);
 	useEffect(()=> {
 		let data = qs.stringify({
-			page:1
 		});
 		axios({
 			method:"GET",
@@ -71,7 +70,7 @@ const Log = ()=> {
                  操作日志
 				</span>
 			</div>
-			<Table columns={columns} dataSource={logdata} style = {{width:"80%",margin: "0 auto"}} pagination = {false} />
+			<Table columns={columns} dataSource={logdata} style = {{width:"80%",margin: "0 auto"}}  />
 			{/* <Pagination defaultCurrent={1} total={50} pageSizeOptions = {["5"]} /> */}
 		</div>
 	);
