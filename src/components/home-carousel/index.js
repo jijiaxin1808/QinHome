@@ -21,8 +21,8 @@ const HomeCarousel = (props) => {
 					console.log(item.picUrl);
 					return (
 						<a href={item.href} key={item}>
-              <div className='home-carousel' style={{ position: "relative",
-              background:`url(${item.picUrl})`,backgroundSize:"cover",backgroundRepeat:"no-repeat" }} >
+							<div className='home-carousel' style={{ position: "relative",
+								background:`url(${item.picUrl})`,backgroundSize:"cover",backgroundRepeat:"no-repeat" }} >
 							</div>
 							<div className='carousel-bar'>
 								<p>
