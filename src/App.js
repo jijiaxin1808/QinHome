@@ -36,7 +36,7 @@ const routers= [
 		key: 3
 	},
 	{
-		name: "文章",
+		name: "bgdf",
 		path: "/cp",
 		component: CpMessage,
 		key: 4
@@ -67,17 +67,20 @@ const messageData = {
 		}
 	]
 };
-export default function MainApp () {
+export default function MainApp (props) {
+    console.log(window.location.pathname)
 	return (
 		<div>
-                	<Header barData={headerData} />
+			<Header barData={headerData} />
 			<Suspense fallback={<Loading />}>
-				<Switch>
-					{routers.map(({ name, path, exact = true, component }) => (
+				{/* <Switch> */}
+				{routers.map(({ name, path, exact = true, component }) => {
+					return (
 						<Route path={path} exact={exact} component={component} key={name} />
-					))}
-					<Message messageData={messageData} />
-				</Switch>
+					);
+				})}
+				{window.location.pathname ==="/" || window.location.pathname==="/news"?null:<Message messageData={messageData} />}
+				{/* </Switch> */}
 			</Suspense>
 			<Footer />
 		</div>
