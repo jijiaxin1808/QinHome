@@ -36,9 +36,15 @@ const Article = () => {
 		message.warn("所访问页面不存在");
 		window.location.href = "/index/index";
 		return null;
-	} else if (data === []) {
-		return <Spin size='large' />;
-	} else {
+	} 
+	else if (!(data.clicked&&data.section) ) {
+		return(
+			<div className='article allCenter '>
+				<Spin size='large' />
+			</div>
+		);
+	} 
+	else {
 		return (
 			<div className='article'>
 				<div className='article-location' />

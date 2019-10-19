@@ -16,7 +16,6 @@ function RouterConfig({ history }) {
 				<Route path="/login"  component={Login} />
 				<Route path="/services" component={Services}/>
 				<PrivateRoute path="/manage" component={Manage} />
-
 				{/* <Redirect from="/" to="/index/index" /> */}
 			</Switch>
 		</Router>
