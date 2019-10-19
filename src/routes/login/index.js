@@ -5,7 +5,7 @@ import "./index.less"
 import axios from "axios";
 import { routerRedux } from "dva/router";
 import {_setCookie} from "../../utils/session";
-// import { Session } from 'inspector';
+// import { local } from 'inspector';
 
 @connect(
 	({login, loading}) => ({
@@ -59,7 +59,7 @@ class NormalLoginForm extends React.Component {
   	const { getFieldDecorator } = this.props.form;
   	return (
   		<div className="login-content" >
-  			<div>
+  			<div className = "login-avger">
   				<img alt="login" src="/img/Oval.png" className="login-icon"/>
   			</div>
   			<Form onSubmit={this.handleSubmit} className="login-form">

@@ -18,7 +18,7 @@ const del = (id)=> {
     method:"GET",
     url:`http://yjxt.elatis.cn/file/delete/${id}`,
     headers: {
-      token:sessionStorage.getItem("token")
+      token:localStorage.getItem("token")
     }
   }).then((res)=>{
   if(res.data.code === 0){
@@ -134,7 +134,7 @@ const File = ()=> {
       method:"GET",
       url:"http://yjxt.elatis.cn/file/all",
       headers:{
-        token:sessionStorage.getItem("token")
+        token:localStorage.getItem("token")
       }
     }).then((res)=> {
       console.log(res.data.code);
