@@ -32,7 +32,7 @@ export default function Messages () {
 					return (
 						<li key={index}>
 							{/* {`·  ${index + 1}`} */}·
-							<Link to='/index/article?id=asdsa'>
+							<Link to='/index/article?id=1'>
 								{`${item}`}
 							</Link>
 						</li>
