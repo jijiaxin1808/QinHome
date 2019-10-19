@@ -95,7 +95,7 @@ export default class Manage extends React.Component {
   			<Layout>
   				<Top toggle={this.toggle} collapsed={this.state.collapsed} clear={this.clear} />
   				<Contents />
-  				<Footer />
+  				{/* <Footer /> */}
   			</Layout>
   		</Layout>
   	);

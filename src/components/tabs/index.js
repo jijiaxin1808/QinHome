@@ -6,79 +6,27 @@ import { Link } from "react-router-dom";
 import { connect } from "dva";
 import axios from "axios";
 const { TabPane } = T;
-const tabsData = [
-	{
-		tab: "领导讲话",
-		Info: [
-			"wergwergwegrfewf",
-			"werfewrfwefr",
-			".....",
-			".....",
-			".....",
-			"fwergfewrgrewg",
-			"wegrwergergew",
-			"....."
-		]
-	},
-	{
-		tab: "公文公告",
-		Info: [
-			"zyzyzhisd",
-			"adfasdfasf",
-			".....",
-			".....",
-			".....",
-			"afdadsfassfd",
-			"adfasdfasf",
-			"....."
-		]
-	},
-	{
-		tab: "工作动态",
-		Info: [
-			"adfasdfasdf",
-			"qerqwerqwr",
-			".....",
-			".....",
-			".....",
-			"342543w5w34",
-			"fwerfwerfewfrwe",
-			"....."
-		]
-	}
-];
-let resData = [];
 const  Tabs =(props)=> {
-	const [ data, setData ] = useState([
-		{
-			tab:"",
-			Info: [
-				"","","","","",""
-			]
-		}
-	]);
+	const [ data, setData ] = useState([]);
 	const [ flag, setFlag ] = useState(1);
 	useEffect(()=>{
-		console.log("tab",props.home.columnData);
 		if(props.home.columnData) {
 			props.home.columnData[1].sec.map((item,index) => {
 				if(index<=2) {
 					axios({
 						method:"get",
-						url:"http://yjxt.elatis.cn/posts/listPosts?category=/新闻中心/领导讲话",
-						headers: {
-							token: localStorage.getItem("token")
-						},
+						url:"http://yjxt.elatis.cn/posts/listPosts?category=/政府公开/行政许可",
 						params: {
 							status: "draft"
 						}
 					}).then(res=> {
 						if(res.data.code === 0) {
-							const newData = {
+							const newData = [...data]
+							newData.push ({
 								tab: props.home.columnData[1].sec[index].title,
 								Info: res.data.data,
-							};
-							resData.push(newData);
+							})
+							setData(newData);
 						}
 						else {
 						}
@@ -88,26 +36,22 @@ const  Tabs =(props)=> {
 
 		}
 	},[props.home]);
-
-	useEffect(()=>{
-		console.log(resData,"resData");
-		console.log("lengthaaaa",resData.length);
-		// if(resData.length === 3) {
-		console.log("成功啦");
-		setData(resData);
-		// }
-	},[resData]);
+	// useEffect(()=> {
+	// 	if(props.home.TabData.length&&props.home.TabData.length === 3 ) {
+	// 		setData(props.home.TabData);
+	// 		props.tabs([]);
+	// 	} 
+	// },[props.home.TabData])
 	useEffect(()=> {
-		console.log("data 变化了",data);
-		if(data.length===3){
-			console.log("刷新");
-			setFlag("1");
+		console.log("检测到变化",data);
+		if(data.length>0) {
+			console.log("OKOKOKOKOKOKOKOKO");
+			setFlag("ok");
 		}
 	},[data]);
- 	// const data = tabsData;
-	const operations = <Link to = {"/index/message?type=2"}>更多>></Link>;
 
-	if(data.length===3){
+	const operations = <Link to = {"/index/message?type=2"}>更多>></Link>;
+	if(flag === "ok"){
 		return (
 			<T defaultActiveKey='1' tabBarExtraContent={operations}>
 				{
@@ -142,9 +86,17 @@ const  Tabs =(props)=> {
 			<div>
 				loading
 			</div>
-		)
+		);
 	}
-	
 };
-
-export default connect(({home})=>({home}))(Tabs);
+const mapDispatchToProps = (dispatch)=> ({
+	tabs(data){
+		dispatch({
+			type:"home/tabs",
+			payload: {
+				TabData: data
+			}
+		});
+	}
+});
+export default connect(({home})=>({home}),mapDispatchToProps)(Tabs);

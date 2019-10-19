@@ -382,15 +382,22 @@ const Carousel = () => {
 				<Button
 					onClick={() => {
 						let newData = data;
-						newData.push({
+						// newData.push({
+						// 	id: data.length + 1,
+						// 	href: "请输入跳转至的链接",
+						// 	picUrl: "",
+						// 	title: "请输入标题",
+						// 	isShow: false,
+						// 	key: "4",
+						// });
+						setdata([...newData,{
 							id: data.length + 1,
 							href: "请输入跳转至的链接",
 							picUrl: "",
 							title: "请输入标题",
 							isShow: false,
 							key: "4",
-						});
-						setdata(newData);
+						}]);
 						console.log(data);
 					}}
 					className={"button"}
@@ -589,31 +596,31 @@ const HomeTopic = () => {
 	);
 };
 
-const Public = () => {
-	const publicCol  = [
-		{
-			title: "序号",
-			dataIndex: "id",
-			key: "id",
-		},
-		{
-			title: "内容",
-			dataIndex: "content",
-			key: "content",
-			render: content => (
-				<Input placeholder = { content }   />
-			)
-		}
-	];
-	return (
-		<div>
-			<div className={"title"}>
-				<span>信息公开</span>
-			</div>
-			<Table columns={publicCol} dataSource={blockData.publicData1} pagination={false} />
-		</div>
-	);
-};
+// const Public = () => {
+// 	const publicCol  = [
+// 		{
+// 			title: "序号",
+// 			dataIndex: "id",
+// 			key: "id",
+// 		},
+// 		{
+// 			title: "内容",
+// 			dataIndex: "content",
+// 			key: "content",
+// 			render: content => (
+// 				<Input placeholder = { content }   />
+// 			)
+// 		}
+// 	];
+// 	return (
+// 		<div>
+// 			<div className={"title"}>
+// 				<span>信息公开</span>
+// 			</div>
+// 			<Table columns={publicCol} dataSource={blockData.publicData1} pagination={false} />
+// 		</div>
+// 	);
+// };
 const Background = () => {
 	const [data, setdata] = useState([]);
 	useEffect(() => {
@@ -735,7 +742,7 @@ const block = () => {
 			<HeaderScroll />
 			<Carousel />
 			<HomeTopic />
-			<Public />
+			{/* <Public /> */}
 			<Background />
 		</div>
 	);

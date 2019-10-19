@@ -10,9 +10,6 @@ const HomeTopic = (props) => {
 		axios({
 			method:"GET",
 			url:`http://yjxt.elatis.cn/posts/listPosts?category=/政府公开/行政许可`,
-			headers: {
-				token:localStorage.getItem("token")
-			},
 			params: {
         status: "draft",
         limit: 3
