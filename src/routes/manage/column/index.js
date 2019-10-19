@@ -62,10 +62,11 @@ export default function ColManage() {
   }, [col, colsData, data]);
 
   useEffect(() => {
-    // console.log(sessionStorage.getItem("token"))
+    console.log(localStorage.getItem("token"))
     axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
       if(res.data.code === 0) {
-        setArtiCategory(`/${res.data.data[0].title}/${(res.data.data[0].sec)[0].title}`)
+        setArtiCategory(`/${res.data.data[0].title}/${(res.data.data[0].sec)[0].title}`);
+        setSecCol((res.data.data[0].sec)[0].title);
         let _weight = [];
         let  _data = JSON.parse(JSON.stringify(res.data.data));
         setColsData(_data);
@@ -81,22 +82,37 @@ export default function ColManage() {
       message.error(err);
     });
     // 调用最新文章数据接口(传入category)
-    setArticles(dataSource.articles[0].articles);
-    // useState()是异步的，需要后端能直接返回文章数量
-    setEdit([false, false, false]);
-
+    // setArticles(dataSource.articles[0].articles);
   }, []);
 
   useEffect(() => {
-    console.log(artiCategory);
+    setArtiCategory(`/${col}/${secCol}`);
+  }, [col, secCol]);
+
+  useEffect(() => {
     // 根据分类动态获取文章列表
-    artiCategory && axios.get(`http://yjxt.elatis.cn/posts/getNew?category=${artiCategory}`).then(res => {
+    // console.log(secCol)
+    if(secCol && artiCategory) {
+      // console.log(artiCategory)
+      axios.get("http://yjxt.elatis.cn/posts/getNew",
+        {
+          headers: {
+            "token": localStorage.getItem("token"),
+            "Content-Type": "application/json"
+          },
+          params: {
+            category: artiCategory
+          }
+        }
+      ).then(res => {
 
         if(res.data.code === 0) {
           console.log(res.data.data)
+          setArticles(res.data.data)
         }
       
-    }).catch(err => message.error(err.message));
+      }).catch(err => message.error(err.message));
+    }
   }, [artiCategory]);
 
   useEffect(() => {
@@ -142,7 +158,6 @@ export default function ColManage() {
   }, [colsData, saveClick, secCols]);
 
   useEffect(() => {
-    console.log(secCols)
     secCols.length ? setSecCol(secCols[0].title) : setSecCol("");
     secCols[0] && setSecColKey(secCols[0].key);
   }, [secCols, data]);
@@ -204,8 +219,8 @@ export default function ColManage() {
     },
     {
       title: "文章名称",
-      dataIndex: "articleName",
-      key: "articleName",
+      dataIndex: "title",
+      key: "title",
       render: (text,record,index) => {
         // return edit[index] ? <Input defaultValue={text} style={{width: 200}} onChange={(e) => handleArtiChange(e, index)}/>:
         return <span>{text}</span>
@@ -262,11 +277,6 @@ export default function ColManage() {
     setEdit([false, false, false]);
     setSecColKey(key);
     setSecCol(item.props.children);
-    // 每次点击二级栏目名，获取后端数据
-    // const arr = dataSource.articles.find((item) => {
-    //   return item.key === key;
-    // }).articles;
-    // setArticles(arr);
   }
    // 点击一级栏目
   const handleColClick = (item) => {
