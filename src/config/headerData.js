@@ -4,16 +4,16 @@ const headerData = [
 		href: "/"
 	}, {
 		title: "新闻中心",
-		href: "/news"
+		href: "/a/news"
 	}, {
 		title: "信息公开",
-		href: "/message?type=aqsc"
+		href: "/a/message?type=aqsc"
 	}, {
 		title: "安全生产",
-		href: "/message?type=aqsc"
+		href: "/a/message?type=aqsc"
 	}, {
 		title: "防灾减灾",
-		href: "/message?type=fzjz"
+		href: "/a/message?type=fzjz"
 	}, {
 		title: "应急救援",
 		href: "/message?type=yjjy"

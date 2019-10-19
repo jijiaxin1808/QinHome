@@ -7,11 +7,13 @@ import axios from "axios"
 
 const { Search } = Input
 
-function Header (props) {
+function 
+Header (props) {
 	const [bardata, setbardata] = useState([])
 	const [flag] = useState("首页")
 	useEffect(() => {
 		axios.get("http://yjxt.elatis.cn/options/name/column").then((res) => {
+      console.log(res.data.data)
 			if (res.data.code === 0) {
 				setbardata(res.data.data)
 				console.log((res.data.data), "bardata")
@@ -43,7 +45,8 @@ function Header (props) {
     			bardata.map((item, index) => {
     				return (
     					<li key={index} className={flag === item ? "active" : ""}>
-    						<Link to={item.link}>{item.title}</Link>
+                {item.link==="/" ?<Link to={`/index/index`}>{item.title}</Link>:<Link to={`/index${item.link}`}>{item.title}</Link>}
+				       
     					</li>
     				)
     			})
