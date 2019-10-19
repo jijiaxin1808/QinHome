@@ -5,7 +5,9 @@ import MainApp from "./App";
 import Article from "./routes/article"
 import Manage from "./routes/manage/main"
 import Services from "./routes/services"
+import Search from "./routes/search";
 import PrivateRoute from "./utils/privateRouter"
+
 function RouterConfig({ history }) {
 	return (
 		<Router history={history}>
@@ -13,6 +15,7 @@ function RouterConfig({ history }) {
 				<Route path="/index"  component={MainApp} />
 				<Route path="/login"  component={Login} />
 				<Route path="/services" component={Services}/>
+				<Route path="/search" component={Search}/>
 				<PrivateRoute path="/manage" component={Manage} />
 				<Redirect from="/" to="/index/index" />
 			</Switch>

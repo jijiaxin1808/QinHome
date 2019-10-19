@@ -5,6 +5,15 @@
   display: flex;
   justify-content: space-around;
   padding: 0 40px;
+  .ant-menu {
+    background: #fafafa;
+    border-width: 0;
+    text-align: center;
+  }
+  .ant-menu-item {
+    color: rgba(0, 0, 0, 0.75);
+    text-align: left;
+  }
 }
 .radioGroup {
   display: flex;
@@ -38,6 +47,12 @@
   border-radius: 11px;
   margin-top: 41px;
   margin-bottom: 20px;
+  span {
+    color: rgb(24, 144, 255);
+  }
+}
+.submitBtnContainer {
+  text-align: center;
 }
 .radio + * {
   padding: 0;
@@ -47,6 +62,9 @@
   height: 39px;
   margin-left: 40px;
   border-radius: 11px;
+  span {
+    color: rgb(24, 144, 255);
+  }
 }
 .list {
   display: flex;
@@ -56,25 +74,31 @@
 }
 .li {
   list-style: none;
-  background-color: #001529;
+  background-color: #fafafa;
   flex: 1 0 auto;
+  .navTextB {
+    color: rgba(0, 0, 0, 0.85);
+    display: block;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+  }
 }
-/* .navText {
-  color: #fff;
-  display: block;
-  font-size: 14px;
-  margin-top: 10px;
-} */
-.navTextB {
-  color: #fff;
-  display: block;
-  font-size: 14px;
-  margin-top: 10px;
-  border-right: 1px solid #979797;
-}
-:global(.ant-table-wrapper) {
+.ant-table-wrapper {
   flex: 1 1 auto;
 }
-:global(.ant-row) {
+.ant-row {
   min-width: 300px;
+}
+.ant-layout-content {
+  min-height: calc(~"100% + 160px");
+}
+.col-title {
+  height: 36px; 
+  line-height: 36px; 
+  margin-bottom: 15px;
+  color: rgba(0, 0, 0, 0.85);
+  text-align: center;
+  font-size: 20px;
+  background: #fafafa;
 }

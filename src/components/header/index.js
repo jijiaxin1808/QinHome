@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 import "./index.less"
 import ToTop from "../totop"
 import { Input } from "antd"
@@ -7,8 +7,7 @@ import axios from "axios"
 
 const { Search } = Input
 
-function 
-Header (props) {
+function Header(props) {
 	const [bardata, setbardata] = useState([])
 	const [flag] = useState("首页")
 	useEffect(() => {
@@ -19,25 +18,19 @@ Header (props) {
 				console.log((res.data.data), "bardata")
 			}
 		})
-	}, [])
+	}, []);
 	return (
   <><div className='header'>
     	<ToTop />
     	<div className='home-header'>
-      <div style = {{width:1080, margin: "0 auto"}}>
-    	<Search
-    		placeholder='请输入搜索关键字'
-    		onSearch={value => console.log(value)}
-    		style={{ width: 200, float: "right", marginTop: "70px" }}
-    	/>
+				<div style = {{width:1080, margin: "0 auto"}}>
+					<Search
+						placeholder='请输入搜索关键字'
+						onSearch={value => window.history.pushState({},"","/search")}
+						style={{ width: 200, float: "right", marginTop: "70px" }}
+					/>
+				</div>
       </div>
-      </div>
-
-    	{/* <Search
-    		placeholder='请输入搜索关键字'
-    		onSearch={value => console.log(value)}
-    		style={{ width: 200, marginTop: "70px" }}
-    	/> */}
     </div>
    <div className='header-asss'>
     	<ul className='header-bar'>

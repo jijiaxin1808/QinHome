@@ -5,7 +5,6 @@ import dataSource from "./dataSource";
 import axios from "axios";
 
 export default function ColManage() {
-
   // 
   const [initialState, setInitialState] = useState({});
   // 用与更新后端接口的临时变量
@@ -406,18 +405,22 @@ export default function ColManage() {
   }
   return (
     <React.Fragment>
-      <div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px"}}>
+      <div className="title">
+        <span>
+          栏目管理
+        </span>
+      </div> 
+      <div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px",marginBottom: "40px", paddingLeft: "40px"}}>
         <ul className="list">
           {
             data.map((item,index) => (
               <li className="li" onClick={() => handleColClick(item)}>
-                <a className={index<data.length-1 ? "navTextB" : "navText"}>{item.title}</a>
+                <a className="navTextB">{item.title}</a>
               </li>
             ))
           }
         </ul>
         <Button　
-          type="primary"
           className="editBtn"
           onClick={handleEditBtn}
         >
@@ -428,13 +431,12 @@ export default function ColManage() {
         {
           editState === "二级" &&
           <Menu
-            style={{width: 130, height: 483}}        
+            style={{width: 130, height: 483,}}        
             selectedKeys={[`${secColKey}`]}
             defaultSelectedKeys={["1"]}
             mode={"vertical"}
-            theme={"dark"}
           >
-            <div style={{height: 36, lineHeight: "36px"}}>{col}</div>
+            <div className="col-title">{col}</div>
             {
               secCols.map(item => {
                 return (
@@ -442,19 +444,21 @@ export default function ColManage() {
                 );
               })
             }
-            <Button type="primary" style={{width: 85, marginTop: 20, padding: 0}} onClick={handleAddSeColClick}>
-              <span style={{fontSize: 12}}>新增二级栏目</span>
-            </Button>
+            <div style={{textAlign: "left",padding: "0 5px", marginTop: 35}}>
+              <Button style={{width: 85, marginBottom: 10, padding: 0}} onClick={handleAddSeColClick}>
+                <span style={{fontSize: 12, color: "#1890ff"}}>新增二级栏目</span>
+              </Button>
+            </div>
           </Menu>
         }
         <div className="tableContainer">
           {
             editState === "二级" &&
             <div className="tableHeader">
-              <h2>
+              <h2 style={{marginTop: 15}}>
                 {
                   !secColEdit ?
-                  <span>{secCol}</span>:
+                  <span style={{fontSize: "18px"}}>{secCol}</span>:
                   <Input style={{width: 100}} onChange={(e) => setSecCol(e.target.value)} defaultValue={secCol}/>
                 }
               </h2>
@@ -477,14 +481,15 @@ export default function ColManage() {
           />
         </div>
       </div>
-       <Button 
-          type="primary"
-          className="submitBtn"
-          loading = {loading}
-          onClick = {handleSaveClick}
-       >
-         保存
-       </Button>
+      <div className="submitBtnContainer">
+        <Button 
+            className="submitBtn"
+            loading = {loading}
+            onClick = {handleSaveClick}
+        >
+          保存
+        </Button>
+      </div>
     </React.Fragment>
   );
 }
