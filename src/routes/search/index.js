@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 import urlHandle from "../../config/urlHandle";
 import {message, Spin, Pagination} from "antd";
-import "./index.less";
+import "./index.less"
 
 export default function Search(props) {
 

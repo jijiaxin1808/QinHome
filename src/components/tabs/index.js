@@ -92,7 +92,7 @@ const  Tabs =(props)=> {
 	else {
 		// setFlag("2");
 		return(
-			<Skeleton  paragraph={{ rows: 8 }} />
+			<Skeleton  paragraph={{ rows: 8 }}   style = {{width:"500px"}}/>
 		);
 	}
 };
