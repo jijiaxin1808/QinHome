@@ -479,7 +479,10 @@ export default function ColManage() {
             	<div className="col-oper">
             		{
             			!secColEdit ?
-                  <>"                   "<Button className="btn" onClick={handleRenameClick}><span>重命名</span></Button>"                   "<Button className="btn danger" onClick={DelSecCol}><span>删除</span></Button>"                 "</>:
+                  <>
+                    <Button className="btn" onClick={handleRenameClick}><span>重命名</span></Button>
+                    <Button className="btn danger" onClick={DelSecCol}><span>删除</span></Button>
+                  </>:
             				<Button className="btn" onClick={handleRenameSureClick}><span>确定</span></Button>
             		}
             	</div>

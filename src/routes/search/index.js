@@ -1,18 +1,38 @@
 import React,{useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import urlHandle from "../../config/urlHandle";
 import {message, Spin, Pagination} from "antd";
 import "./index.less";
 
-export default function Search() {
+export default function Search(props) {
 
 	const [searchList, setSearchList] = useState([]); 
 	const [curPage, setCurPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [key, setKey] = useState(decodeURIComponent(urlHandle("key")));
+
+  useEffect(() => {
+    key.length !==0 &&
+    axios.get("http://yjxt.elatis.cn/posts/searchTitle",{
+      headers: {
+        "Content-Type": "application/json",
+      },
+      params: {
+        flag: 1,
+        key: key
+      },
+    }).then(res => {
+      if(res.data.code === 0) {
+        setSearchList(res.data.data);
+      }
+    }).catch(err => message.error(err));
+  }, [key]);
 
   useEffect(() => {
 
+    key.length === 0 &&
     axios.get("http://yjxt.elatis.cn/posts/listPosts",{
       headers: {
         "Content-Type": "application/json",
@@ -100,7 +120,7 @@ function renderSearchList(searchList, loading) {
           {
             searchList.map((item,index) => (
               <li className="active" key={`${index}${item}`}>
-                <Link to={`/index/article?id=${item.id}`}>
+                <Link to={`/index/article?id=${item.id}`} className="arti-title">
                   {`【领导活动】  ${item.title}`}
                   <span className="time">2022-09-09</span>
                 </Link>
