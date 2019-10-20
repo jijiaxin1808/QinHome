@@ -26,7 +26,10 @@ function  Header (props) {
   		<div style = {{width:1080, margin: "0 auto"}}>
     	<Search
     		placeholder='请输入搜索关键字'
-    		onSearch={value => console.log(value)}
+    		onSearch={value => {
+					window.history.pushState({},"","/index/search");
+					window.location.reload();
+				}}
     		style={{ width: 200, float: "right", marginTop: "70px" }}
     	/>
   		</div>

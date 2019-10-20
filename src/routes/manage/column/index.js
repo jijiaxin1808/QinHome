@@ -1,7 +1,6 @@
-import React, {useState,useEffect,useReducer} from "react";
+import React, {useState,useEffect,useRef} from "react";
 import {Radio,Input,Icon,Table,Button,Menu,message} from "antd";
 import "./index.less";
-import dataSource from "./dataSource";
 import axios from "axios";
 
 export default function ColManage() {
@@ -38,6 +37,8 @@ export default function ColManage() {
   // 需要一个保存post数据(包括更改的二级栏目和文章列表)的变量，由category控制
   const [] = useState([]);
   
+  const input = useRef(null);
+
 	const renderRadio = (text, record, index) => {
 		const State =
       !edit[index] && editState === "二级" ?
@@ -93,14 +94,17 @@ export default function ColManage() {
     // console.log(secCol)
     if(secCol && artiCategory) {
       // console.log(artiCategory)
-      axios.get("http://yjxt.elatis.cn/posts/getNew",
+      axios.get("http://yjxt.elatis.cn/posts/listPosts",
         {
           headers: {
             "token": localStorage.getItem("token"),
             "Content-Type": "application/json"
           },
           params: {
-            category: artiCategory
+            category: artiCategory,
+            status: "draft",
+            limit: 10,
+            offset: 0
           }
         }
       ).then(res => {
@@ -109,7 +113,6 @@ export default function ColManage() {
           console.log(res.data.data)
           setArticles(res.data.data)
         }
-      
       }).catch(err => message.error(err.message));
     }
   }, [artiCategory]);
@@ -199,11 +202,11 @@ export default function ColManage() {
     },
     {
       title: () => (
-                    <Button type="primary" onClick={handleNewBtn}>
-                      <Icon type="plus" />
-                      新建
-				</Button>
-			),
+                    <Button className="addNewBtn" onClick={handleNewBtn}>
+                      <Icon style={{color: "rgb(24, 144, 255)"}} type="plus" />
+                      <span>新建</span>
+				            </Button>
+			             ),
 			dataIndex: "delete",
 			key: "delete",
 			render: (text,record,index) => <a onClick={() => handleDelBtn(index)}><Icon type="delete" theme="twoTone" /></a>
@@ -215,11 +218,13 @@ export default function ColManage() {
       title: "序列",
       dataIndex: "sequence",
       key: "sequence",
+      width: 100
     },
     {
       title: "文章名称",
       dataIndex: "title",
       key: "title",
+      width: 200,
       render: (text,record,index) => {
         // return edit[index] ? <Input defaultValue={text} style={{width: 200}} onChange={(e) => handleArtiChange(e, index)}/>:
         return <span>{text}</span>
@@ -248,12 +253,16 @@ export default function ColManage() {
       render: (text, record, index) => (
         <div>
           {
-            !edit[index] ?
-            <>
-              <Button type="primary" onClick={() => handleEditClick(index)}>编辑</Button>
-              <Button type="danger" onClick={() => handleDelClick(index)}>删除</Button>
-            </>:
-            <Button type="primary" onClick={() => handleASureClick(index, record)}>确定</Button>
+            <div className="article-oper">
+              {
+                !edit[index] ?
+                <>
+                  <Button className="edit-btn btn" onClick={() => handleEditClick(index)}><span>编辑</span></Button>
+                  <Button className="del-btn btn" onClick={() => handleDelClick(index)}><span>删除</span></Button>
+                </>:
+                <Button className="sure-btn btn" onClick={() => handleASureClick(index, record)}><span>确认</span></Button>
+              }
+            </div>
           }
         </div>
       )
@@ -403,6 +412,9 @@ export default function ColManage() {
       setColsData(editData);
     }
   }
+  const handleSurePressEnter = (e) => {
+    handleRenameSureClick();
+  }
   return (
     <React.Fragment>
       <div className="title">
@@ -413,7 +425,7 @@ export default function ColManage() {
       <div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px",marginBottom: "40px", paddingLeft: "40px"}}>
         <ul className="list">
           {
-            data.map((item,index) => (
+            data.map(item => (
               <li className="li" onClick={() => handleColClick(item)}>
                 <a className="navTextB">{item.title}</a>
               </li>
@@ -455,21 +467,21 @@ export default function ColManage() {
           {
             editState === "二级" &&
             <div className="tableHeader">
-              <h2 style={{marginTop: 15}}>
+              <h2>
                 {
                   !secColEdit ?
                   <span style={{fontSize: "18px"}}>{secCol}</span>:
-                  <Input style={{width: 100}} onChange={(e) => setSecCol(e.target.value)} defaultValue={secCol}/>
+                  <Input style={{width: 100}} ref={input} onChange={(e) => setSecCol(e.target.value)} onPressEnter={handleSurePressEnter} defaultValue={secCol}/>
                 }
               </h2>
-              <div className="oper">
+              <div className="col-oper">
                 {
                   !secColEdit ?
                   <>
-                    <Button onClick={handleRenameClick}>重命名</Button>
-                    <Button onClick={DelSecCol}>删除</Button>
+                    <Button className="btn" onClick={handleRenameClick}><span>重命名</span></Button>
+                    <Button className="btn danger" onClick={DelSecCol}><span>删除</span></Button>
                   </>:
-                  <Button onClick={handleRenameSureClick}>确定</Button>
+                  <Button className="btn" onClick={handleRenameSureClick}><span>确定</span></Button>
                 }
               </div>
             </div>

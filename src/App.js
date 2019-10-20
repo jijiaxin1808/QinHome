@@ -10,6 +10,8 @@ import Footer from "./components/footer";
 import Header from "./components/header";
 import Message from "./routes/message";
 import headerData from "./config/headerData";
+import Search from "./routes/search";
+
 const routers= [
 	{
 		name: "首页",
@@ -35,6 +37,12 @@ const routers= [
 		component: Message,
 		key: 2
 	},
+	{
+		name: "搜索",
+		path: "/index/search",
+		component: Search,
+		key: 2
+	}
 ];
 const messageData = {
 	sideBar: [

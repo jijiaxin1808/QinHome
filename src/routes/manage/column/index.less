@@ -5,10 +5,12 @@
   display: flex;
   justify-content: space-around;
   padding: 0 40px;
+  width: 1300px;
   .ant-menu {
     background: #fafafa;
     border-width: 0;
     text-align: center;
+    box-shadow: 10px 9px 9px rgba(0, 0, 0, 0.08);
   }
   .ant-menu-item {
     color: rgba(0, 0, 0, 0.75);
@@ -27,18 +29,27 @@
 .tableHeader {
   overflow: hidden;
   padding-left: 20px;
+  padding-bottom: 10px;
 }
 .tableHeader h2 {
   font-size: 20px;
 }
 .tableHeader h2,
-.tableHeader .oper {
+.tableHeader .col-oper {
   float: left;
 }
-.tableHeader .oper {
+.col-oper .btn {
+  span {
+    color: #1890ff;
+  }
+  &.danger span{
+    color: #ff4d4f;
+  }
+}
+.tableHeader .col-oper {
   margin-left: 40px;
 }
-.tableHeader .oper button {
+.tableHeader .col-oper button {
   margin-right: 10px;
 }
 .submitBtn {
@@ -61,9 +72,25 @@
   width: 100px;
   height: 39px;
   margin-left: 40px;
-  border-radius: 11px;
+  border-radius: 6px;
   span {
     color: rgb(24, 144, 255);
+  }
+}
+.addNewBtn {
+  span {
+    color: rgb(24, 144, 255);
+  }
+}
+.article-oper {
+  .btn span {
+      color: rgb(24, 144, 255);
+  }
+  & .del-btn span {
+    color: #ff4d4f;
+  }
+  & .edit-btn {
+    margin-right: 10px;
   }
 }
 .list {
@@ -71,6 +98,7 @@
   flex-flow: row nowrap;
   min-width: 679px;
   height: 39px;
+  box-shadow: 8px 7px 5px rgba(0, 0, 0, 0.08);
 }
 .li {
   list-style: none;
@@ -90,15 +118,40 @@
 .ant-row {
   min-width: 300px;
 }
-.ant-layout-content {
-  min-height: calc(~"100% + 160px");
-}
 .col-title {
-  height: 36px; 
+  height: 56px; 
   line-height: 36px; 
-  margin-bottom: 15px;
+  padding: 10px 0;
   color: rgba(0, 0, 0, 0.85);
   text-align: center;
   font-size: 20px;
   background: #fafafa;
+}
+.index-search-list {
+  padding-left: 144px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #186ec5;
+  li a {
+    display: block;
+    padding: 5px 0 5px 17px;
+    font-size: 16px;
+    position: relative;
+    &:before {
+      content: "·";
+      top: -5px;
+      left: 0;
+      position: absolute;
+      font-weight: bolder;
+      font-size: 29px;
+      color: rgb(24, 144, 255);
+    }
+  }
+  li a .time {
+    color: #999;
+    float: right;
+  }
+  & .active:hover a {
+    color: rgb(24, 144, 255);
+  }
 }
