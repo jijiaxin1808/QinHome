@@ -6,9 +6,10 @@ import "./index.less";
 
 export default function Search() {
 
-  const [searchList, setSearchList] = useState([]); 
-  const [curPage, setCurPage] = useState(1);
+	const [searchList, setSearchList] = useState([]); 
+	const [curPage, setCurPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
 
@@ -22,13 +23,13 @@ export default function Search() {
     }).then(res => {
       if(res.data.code === 0) {
         setTotal(res.data.data.length);
-
       }
     }).catch(err => {
       message.error(err);
     });
   }, []);
   useEffect(() => {
+    setLoading(true);
     axios.get("http://yjxt.elatis.cn/posts/listPosts",{
       headers: {
         "Content-Type": "application/json", 
@@ -40,39 +41,50 @@ export default function Search() {
       }, 
     }).then(res => {
       if(res.data.code === 0) {
+        setLoading(false);
         if(res.data.data.length === 0) {
           setSearchList("none");
         }
         else 
-        setTimeout(() => setSearchList(res.data.data),200);
+        setSearchList(res.data.data);
       }
     }).catch(err => {
       message.error(err);
     });
   }, [curPage]);
 
-  return (
-    <div className="search-page">
-      <div className='search-header'>
-					<i />
-					<span>您当前的位置: </span>
-					<Link to='/index/index'>
+	return (
+		<div className="search-page">
+			<div className='search-header'>
+				<i />
+				<span>您当前的位置: </span>
+				<Link to='/index/index'>
             首页&nbsp;>
-					</Link>
-					<span>
+				</Link>
+				<span>
 						搜索
-					</span>
-					<span className='message-header-paper' />
-				</div>
+				</span>
+				<span className='message-header-paper' />
+			</div>
+      <div>
         {
-          renderSearchList(searchList, curPage, total, setCurPage)
+          renderSearchList(searchList, loading)
         }
-    </div>
-  );
+        <Pagination 
+          total={total}
+          onChange={page => setCurPage(page)}
+          hideOnSinglePage
+          defaultCurrent={1}
+          pageSize={5}
+          showQuickJumper
+        />
+      </div>
+		</div>
+	);
 }
 
-function renderSearchList(searchList, curPage, total, setCurPage) {
-  if(searchList.length === 0) {
+function renderSearchList(searchList, loading) {
+  if(searchList.length === 0 || loading) {
     return (
       <div className="pagi">
         <Spin />
@@ -84,7 +96,6 @@ function renderSearchList(searchList, curPage, total, setCurPage) {
   } 
   else {
     return (
-      <>
         <ul className="index-search-list">
           {
             searchList.map((item,index) => (
@@ -97,15 +108,6 @@ function renderSearchList(searchList, curPage, total, setCurPage) {
             ))
           }
         </ul>
-        <Pagination 
-          total={total}
-          onChange={page => setCurPage(page)}
-          hideOnSinglePage
-          defaultCurrent={1}
-          pageSize={5}
-          showQuickJumper
-        />
-      </>
     )
   }
 }

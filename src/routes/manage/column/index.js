@@ -37,7 +37,7 @@ export default function ColManage() {
   // 需要一个保存post数据(包括更改的二级栏目和文章列表)的变量，由category控制
   const [tableLoading, setTableLoading] = useState(true);
   
-  const input = useRef(null);
+	const input = useRef(null);
 
 	const renderRadio = (text, record, index) => {
 		const State =
@@ -51,15 +51,15 @@ export default function ColManage() {
   }
   useEffect(() => {
 
-    if(col && colsData.length!==0) {
-      let _cols = colsData;
-      let _col = _cols.find(item => {
-        return item.title === col;
-      });
-      let _secCol = _col ? _col.sec : [];
-      setSecCols(_secCol);
-    }
-  }, [col, colsData, data]);
+		if(col && colsData.length!==0) {
+			let _cols = colsData;
+			let _col = _cols.find(item => {
+				return item.title === col;
+			});
+			let _secCol = _col ? _col.sec : [];
+			setSecCols(_secCol);
+		}
+	}, [col, colsData, data]);
 
   useEffect(() => {
     axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
@@ -116,52 +116,52 @@ export default function ColManage() {
     }
   }, [artiCategory]);
 
-  useEffect(() => {
-    if(!saveClick) return;
-    if(colsData.length !== 0) {
-      let _colsData = colsData.map(item => {
-        let _item = {...item, title: item.newCol || item.title}
-        if(!_item.sec) {
-          _item = {..._item, sec: []};
-        }
-        delete _item.newCol;
-        delete _item.col;
-        return _item;
-      });
-      _colsData.sort((a, b) => {
-        return a.weight - b.weight;
-      });
-      const _data = JSON.stringify({
-        name: "column",
-        value: {
-          ..._colsData,
-        }
-      });
-      axios({
-        method: "POST",
-        url: "http://yjxt.elatis.cn/options/update",
-        headers: {
-          "token": localStorage.getItem("token"),
-          "Content-Type": "application/json"
-        },
-        data: _data
-      }).then(res => {
-        if(res.data.code === 0) {
-          setLoading(false);
-          message.success("保存成功");
-          setSaveClick(false);
-          window.location.reload();
-        }
-      }).catch(err => {
-        message.error(err);
-      });
-    }
-  }, [colsData, saveClick, secCols]);
+	useEffect(() => {
+		if(!saveClick) return;
+		if(colsData.length !== 0) {
+			let _colsData = colsData.map(item => {
+				let _item = {...item, title: item.newCol || item.title};
+				if(!_item.sec) {
+					_item = {..._item, sec: []};
+				}
+				delete _item.newCol;
+				delete _item.col;
+				return _item;
+			});
+			_colsData.sort((a, b) => {
+				return a.weight - b.weight;
+			});
+			const _data = JSON.stringify({
+				name: "column",
+				value: {
+					..._colsData,
+				}
+			});
+			axios({
+				method: "POST",
+				url: "http://yjxt.elatis.cn/options/update",
+				headers: {
+					"token": localStorage.getItem("token"),
+					"Content-Type": "application/json"
+				},
+				data: _data
+			}).then(res => {
+				if(res.data.code === 0) {
+					setLoading(false);
+					message.success("保存成功");
+					setSaveClick(false);
+					window.location.reload();
+				}
+			}).catch(err => {
+				message.error(err);
+			});
+		}
+	}, [colsData, saveClick, secCols]);
 
-  useEffect(() => {
-    secCols.length ? setSecCol(secCols[0].title) : setSecCol("");
-    secCols[0] && setSecColKey(secCols[0].key);
-  }, [secCols, data]);
+	useEffect(() => {
+		secCols.length ? setSecCol(secCols[0].title) : setSecCol("");
+		secCols[0] && setSecColKey(secCols[0].key);
+	}, [secCols, data]);
   
   useEffect(() => {
     articles.length === 0 ? setTableLoading(true) : setTableLoading(false);
@@ -368,59 +368,59 @@ export default function ColManage() {
   }
   const DelSecCol = () => {
 
-    let _secCols = [...secCols];
-    let _secCol = secCols.find(item => {
-      return item.key === secColKey;
-    });
-    let index = _secCols.indexOf(_secCol);
-    _secCols.splice(index, 1);
-    setSecCols(_secCols);
-    let _colsData = JSON.parse(JSON.stringify(colsData));
-    _colsData = _colsData.map((item) => {
-      if(item.title === col) {
-        return {...item, sec: _secCols};
-      } else {
-        return item;
-      }
-    });
-    setColsData(_colsData);
-  }
-  const handleColChange = (e, id, index) => {
-    // 先这样，优化代码的时候记得改一下，这里只有在输入框改变的时候才会给colsData添加newCol,虽然默认newCol框值为title的值，但是没有newCol属性，所有是undefined。
-    let _value = id === "weight" ? parseInt(e.target.value) : e.target.value;
-    let _weightIsNum = [...weightIsNum];
-    _weightIsNum.splice(index, 1 ,true);
-    setWeightIsNum(_weightIsNum);
-    if(id === "weight" && Number.isNaN(_value)) {
-      message.warn("权重只能输入数值");
-      _weightIsNum.splice(index, 1, false);
-      setWeightIsNum(_weightIsNum);
-      return;
-    }
-    let _newCol = {
-      [id]: _value
-    }
-    let _cols = [...editData];
-    let _col = {..._cols[index], ..._newCol};
-    _cols.splice(index, 1, _col);
-    setEditData(_cols);
-  }
-  const handleSaveClick = () => {
-    setLoading(true);
-    if(editState === "二级") {
+		let _secCols = [...secCols];
+		let _secCol = secCols.find(item => {
+			return item.key === secColKey;
+		});
+		let index = _secCols.indexOf(_secCol);
+		_secCols.splice(index, 1);
+		setSecCols(_secCols);
+		let _colsData = JSON.parse(JSON.stringify(colsData));
+		_colsData = _colsData.map((item) => {
+			if(item.title === col) {
+				return {...item, sec: _secCols};
+			} else {
+				return item;
+			}
+		});
+		setColsData(_colsData);
+	};
+	const handleColChange = (e, id, index) => {
+		// 先这样，优化代码的时候记得改一下，这里只有在输入框改变的时候才会给colsData添加newCol,虽然默认newCol框值为title的值，但是没有newCol属性，所有是undefined。
+		let _value = id === "weight" ? parseInt(e.target.value) : e.target.value;
+		let _weightIsNum = [...weightIsNum];
+		_weightIsNum.splice(index, 1 ,true);
+		setWeightIsNum(_weightIsNum);
+		if(id === "weight" && Number.isNaN(_value)) {
+			message.warn("权重只能输入数值");
+			_weightIsNum.splice(index, 1, false);
+			setWeightIsNum(_weightIsNum);
+			return;
+		}
+		let _newCol = {
+			[id]: _value
+		};
+		let _cols = [...editData];
+		let _col = {..._cols[index], ..._newCol};
+		_cols.splice(index, 1, _col);
+		setEditData(_cols);
+	};
+	const handleSaveClick = () => {
+		setLoading(true);
+		if(editState === "二级") {
       
-    } else if(editState === "一级") {
-      setSaveClick(true);
-      setColsData(editData);
-    }
-  }
-  const handleSurePressEnter = (e) => {
-    handleRenameSureClick();
-  }
-  return (
-    <React.Fragment>
-      <div className="title">
-        <span>
+		} else if(editState === "一级") {
+			setSaveClick(true);
+			setColsData(editData);
+		}
+	};
+	const handleSurePressEnter = (e) => {
+		handleRenameSureClick();
+	};
+	return (
+		<React.Fragment>
+			<div className="title">
+				<span>
           栏目管理
         </span>
       </div> 
@@ -439,53 +439,50 @@ export default function ColManage() {
           onClick={handleEditBtn}
         >
           编辑栏目
-        </Button>
-      </div>
-      <div className="columnContainer">
-        {
-          editState === "二级" &&
+				</Button>
+			</div>
+			<div className="columnContainer">
+				{
+					editState === "二级" &&
           <Menu
-            style={{width: 130, height: 483,}}        
-            selectedKeys={[`${secColKey}`]}
-            defaultSelectedKeys={["1"]}
-            mode={"vertical"}
+          	style={{width: 130, height: 483,}}        
+          	selectedKeys={[`${secColKey}`]}
+          	defaultSelectedKeys={["1"]}
+          	mode={"vertical"}
           >
-            <div className="col-title">{col}</div>
-            {
-              secCols.map(item => {
-                return (
-                  <Menu.Item key={item.key} onClick={handleSecColClick}>{item.title}</Menu.Item>
-                );
-              })
-            }
-            <div style={{textAlign: "left",padding: "0 5px", marginTop: 35}}>
-              <Button style={{width: 85, marginBottom: 10, padding: 0}} onClick={handleAddSeColClick}>
-                <span style={{fontSize: 12, color: "#1890ff"}}>新增二级栏目</span>
-              </Button>
-            </div>
+          	<div className="col-title">{col}</div>
+          	{
+          		secCols.map(item => {
+          			return (
+          				<Menu.Item key={item.key} onClick={handleSecColClick}>{item.title}</Menu.Item>
+          			);
+          		})
+          	}
+          	<div style={{textAlign: "left",padding: "0 5px", marginTop: 35}}>
+          		<Button style={{width: 85, marginBottom: 10, padding: 0}} onClick={handleAddSeColClick}>
+          			<span style={{fontSize: 12, color: "#1890ff"}}>新增二级栏目</span>
+          		</Button>
+          	</div>
           </Menu>
-        }
-        <div className="tableContainer">
-          {
-            editState === "二级" &&
+				}
+				<div className="tableContainer">
+					{
+						editState === "二级" &&
             <div className="tableHeader">
-              <h2>
-                {
-                  !secColEdit ?
-                  <span style={{fontSize: "18px"}}>{secCol}</span>:
-                  <Input style={{width: 100}} ref={input} onChange={(e) => setSecCol(e.target.value)} onPressEnter={handleSurePressEnter} defaultValue={secCol}/>
-                }
-              </h2>
-              <div className="col-oper">
-                {
-                  !secColEdit ?
-                  <>
-                    <Button className="btn" onClick={handleRenameClick}><span>重命名</span></Button>
-                    <Button className="btn danger" onClick={DelSecCol}><span>删除</span></Button>
-                  </>:
-                  <Button className="btn" onClick={handleRenameSureClick}><span>确定</span></Button>
-                }
-              </div>
+            	<h2>
+            		{
+            			!secColEdit ?
+            				<span style={{fontSize: "18px"}}>{secCol}</span>:
+            				<Input style={{width: 100}} ref={input} onChange={(e) => setSecCol(e.target.value)} onPressEnter={handleSurePressEnter} defaultValue={secCol}/>
+            		}
+            	</h2>
+            	<div className="col-oper">
+            		{
+            			!secColEdit ?
+                  <>"                   "<Button className="btn" onClick={handleRenameClick}><span>重命名</span></Button>"                   "<Button className="btn danger" onClick={DelSecCol}><span>删除</span></Button>"                 "</>:
+            				<Button className="btn" onClick={handleRenameSureClick}><span>确定</span></Button>
+            		}
+            	</div>
             </div>
           }
           <Table 
@@ -503,10 +500,10 @@ export default function ColManage() {
           onClick = {handleSaveClick}
         >
           保存
-        </Button>
-      </div>
-    </React.Fragment>
-  );
+				</Button>
+			</div>
+		</React.Fragment>
+	);
 }
 
 

@@ -10,6 +10,16 @@ import React from "react";
 const RealFooter = () => {
 	return (
 		<div className='footer'>
+			<div>
+				<img src={require("../../assets/稿定设计导出-20191018-103434.png")}/>
+			</div>
+			<div className='footer-info'>
+				<p>主办单位：秦皇岛市应急管理局  地址：秦皇岛市燕山大街109号</p>
+				<p>电话： 0335-3650560  冀公网安备： 13030202002230
+					<br/>网站标识码： 1303000020  邮政编码： 066001 
+				</p>
+				<p>ICP备案号： 冀ICP备15003849号  技术支持： 秦皇岛昊锐科技有限公司</p>
+			</div>
 			<div className='footer-wechat'>
 				{/* <img
           width='56px' height='56px' src={require('../../assest/weixin.png')}
@@ -36,11 +46,6 @@ const RealFooter = () => {
 				</a>
 				<p>秦皇岛市应急管理部</p>
 				<p>官方微博</p>
-			</div>
-			<div className='footer-info'>
-				<p> 主办单位：秦皇岛市应急管理局地址：秦皇岛市燕山大街109号</p>
-				<p>电话：0335-3650560&nbsp;冀公网安备：13030202002230网站标识码：1303000020&nbsp;邮政编码：066001 </p>
-				<p>ICP备案号：冀ICP备15003849号&nbsp;技术支持：北京安宏睿业科技有限公司</p>
 			</div>
 		</div>
 	);

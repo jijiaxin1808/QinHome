@@ -5,13 +5,17 @@ export const allMenu = [
 		url:"manage/column",
 		icon:"plus",
 	},{
-		name:"栏目管理",
-		url:"manage/column",
-		icon:"plus",
-	},{
 		name:"内容管理",
-		url:"manage/create",
 		icon:"plus",
+		children: [{
+      name: "创建文章",
+      url: "manage/create",
+      icon: "plus"
+    },{
+      name: "修改文章",
+      url: "manage/change",
+      icon: "plus"
+    }]
 	},{
 		name:"区块管理",
 		url:"manage/block",
@@ -24,6 +28,16 @@ export const allMenu = [
 		name:"账号权限",
 		url:"manage/account",
 		icon:"plus",
+		children:[{
+			name:'账号权限',
+			url:"manage/account",
+			icon:"plus"
+		},{
+			name:"部门权限",
+			url:"manage/bumen",
+			icon:"plus"
+		}
+	]
 	},{
 		name:"操作日志",
 		url:"manage/log",

@@ -76,32 +76,39 @@ class Xx extends React.Component {
     		<div className="xx">
     			<p className="xx-p">添加留言</p>
     			<Form onSubmit={this.handleSubmit} className="login-form">
-  				<Form.Item label="标题">
-  					{getFieldDecorator("biaoti", {
-  						rules: [{ required: true }],
+  				<Form.Item label="被举报主题">
+  					{getFieldDecorator("zhuti", {
+  						rules: [{ required: true, message: "请输入用户名" }],
   					})(
   						<Input
-
-    							style={{width:'300px'}}
+  							style={{width:'400px'}}
+  							placeholder="请输入用户名"
   						/>,
   					)}
   				</Form.Item>
-    				<Form.Item label="内容">
+                  <Form.Item label="被举报地址">
+  					{getFieldDecorator("dz", {
+  						rules: [{  message: "请输入用户名",required:true }],
+  					})(
+  						<Input
+  							style={{width:'400px'}}
+  							placeholder="请输入用户名"
+  						/>,
+  					)}
+  				</Form.Item>
+                  <Form.Item label=" 举报内容">
   					{getFieldDecorator("nr", {
   						rules: [{ required: true, message: "请输入密码" }],
   					})(
-    						<TextArea rows={4} style={{width:'300px'}}/>
+    						<TextArea rows={4} style={{width:'400px'}}/>
   					)}
   				</Form.Item>
-    				<div className="xx-form">
-    					<Form.Item label="姓名">
-  					{getFieldDecorator("xm", {
-  						rules: [{  }],
+				  <div className="xx-form">
+				  <Form.Item label="举报人 ">
+  					{getFieldDecorator("man", {
+  						rules: [{ message: "请输入用户名" }],
   					})(
-  						<Input
-  							
-    								style={{width:'100px'}}
-  						/>,
+  						<Input/>,
   					)}
   				</Form.Item>
 				  <Form.Item label="性别">
@@ -113,76 +120,56 @@ class Xx extends React.Component {
     					<Radio value={2}>女</Radio>
     				</Radio.Group>
   					)}
-  				 </Form.Item>
-    				</div>
-    				<div className="xx-form">
-    					<Form.Item label="电话">
-  					{getFieldDecorator("number", {
-  						rules: [{ message: "请输入用户名" }],
+  				</Form.Item>
+				  </div>
+				  <div className="xx-form">
+				  <Form.Item label="电话号码">
+  					{getFieldDecorator("phone", {
+  						rules: [{  message: "请输入用户名" }],
   					})(
-    							<Input
-
-    								style={{width:'100px'}}
-  						/>,
+  						<Input/>,
   					)}
   				</Form.Item>
 				  <Form.Item label="家庭住址">
   					{getFieldDecorator("dz", {
   						rules: [{  message: "请输入用户名" }],
   					})(
-    							<Input
-
-    								style={{width:'100px'}}
-  						/>,
+  						<Input/>,
   					)}
   				</Form.Item>
-    				</div>
-    				<div className="xx-form">
-    					<Form.Item label="邮件">
+				  </div>
+				  <div className="xx-form">
+				  <Form.Item label="电子邮件">
   					{getFieldDecorator("email", {
   						rules: [{  message: "请输入用户名" }],
-  					})(
-    							<Input
-
-    								style={{width:'100px'}}
-  						/>,
-  					)}
-  				</Form.Item>
-    				
-    				<Form.Item label="工作单位">
-  					{getFieldDecorator("dw", {
-  						rules: [{  message: "请输入用户名" }],
-  					})(
-    							<Input
-
-    								style={{width:'100px'}}
-  						/>,
-  					)}
-  				</Form.Item>
-    				</div>
-					<div className="xx-form">
-					<Form.Item label="是否公开">
-  					{getFieldDecorator("gk", {
-  						rules: [{ required: true }],
-  					})(
-    						<Radio.Group onChange={this.onChange} >
-							<Radio value={1}>是</Radio>
-    					<Radio value={2}>否</Radio>
-    				</Radio.Group>
-  					)}
-  				</Form.Item>
-				  <div>
-				  <Form.Item label="验证码">
-  					{getFieldDecorator("code", {
-  						rules: [{ required: true, message: "请输入用户名" }],
   					})(
   						<Input/>,
   					)}
   				</Form.Item>
+
+    				<Form.Item label="工作单位">
+  					{getFieldDecorator("dw", {
+  						rules: [{  message: "请输入用户名" }],
+  					})(
+  						<Input/>,
+  					)}
+  				</Form.Item>
+				  </div>
+                  <div className="xx-form">
+				  <Form.Item label="验证码">
+  					{getFieldDecorator("code", {
+  						rules: [{ required: true, message: "请输入用户名" }],
+  					})(
+  						<Input
+  							prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
+  							placeholder="请输入用户名"
+  						/>,
+  					)}
+  				</Form.Item>
 				  <canvas onClick={this.createCode} width="80" height='39' ref={el => this.canvas = el}/>
 				  </div>
-					</div>
   				<Form.Item>
+
   					<Button type="primary" htmlType="submit" className="xx-form-button">
                      提交
   					</Button>
