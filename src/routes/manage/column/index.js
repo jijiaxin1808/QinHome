@@ -35,14 +35,14 @@ export default function ColManage() {
   // 存放文章分类的变量
   const [artiCategory, setArtiCategory] = useState("");
   // 需要一个保存post数据(包括更改的二级栏目和文章列表)的变量，由category控制
-  const [] = useState([]);
+  const [tableLoading, setTableLoading] = useState(true);
   
   const input = useRef(null);
 
 	const renderRadio = (text, record, index) => {
 		const State =
       !edit[index] && editState === "二级" ?
-       <span>{articles[index].state}</span> :
+       <span>{articles[index].state || "显示"}</span> :
        <Radio.Group className="radioGroup" name="pageState" defaultValue={record.state ? 1 : 2} onChange={(e) => handleRadioChange(index, record, e)}>
         <Radio value={1} className="radio">显示</Radio>
         <Radio value={2} className="radio">隐藏</Radio>
@@ -62,7 +62,6 @@ export default function ColManage() {
   }, [col, colsData, data]);
 
   useEffect(() => {
-    console.log(localStorage.getItem("token"))
     axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
       if(res.data.code === 0) {
         setArtiCategory(`/${res.data.data[0].title}/${(res.data.data[0].sec)[0].title}`);
@@ -86,14 +85,14 @@ export default function ColManage() {
   }, []);
 
   useEffect(() => {
+    setTableLoading(true)
     setArtiCategory(`/${col}/${secCol}`);
   }, [col, secCol]);
 
+ 
   useEffect(() => {
     // 根据分类动态获取文章列表
-    // console.log(secCol)
-    if(secCol && artiCategory) {
-      // console.log(artiCategory)
+    if(secCol && col && artiCategory) {
       axios.get("http://yjxt.elatis.cn/posts/listPosts",
         {
           headers: {
@@ -103,15 +102,15 @@ export default function ColManage() {
           params: {
             category: artiCategory,
             status: "draft",
-            limit: 10,
+            limit: 5,
             offset: 0
           }
         }
       ).then(res => {
 
         if(res.data.code === 0) {
-          console.log(res.data.data)
-          setArticles(res.data.data)
+          setArticles((res.data.data)[0] === "empty" ? [] : res.data.data);
+          setTableLoading(false);
         }
       }).catch(err => message.error(err.message));
     }
@@ -164,6 +163,10 @@ export default function ColManage() {
     secCols[0] && setSecColKey(secCols[0].key);
   }, [secCols, data]);
   
+  useEffect(() => {
+    articles.length === 0 ? setTableLoading(true) : setTableLoading(false);
+  }, [articles]);
+
   const columns = [
     {
       title: "栏目",
@@ -218,15 +221,14 @@ export default function ColManage() {
       title: "序列",
       dataIndex: "sequence",
       key: "sequence",
-      width: 100
+      width: 210,
     },
     {
       title: "文章名称",
       dataIndex: "title",
       key: "title",
       width: 200,
-      render: (text,record,index) => {
-        // return edit[index] ? <Input defaultValue={text} style={{width: 200}} onChange={(e) => handleArtiChange(e, index)}/>:
+      render: (text) => {
         return <span>{text}</span>
       }
     },
@@ -239,6 +241,7 @@ export default function ColManage() {
       title: "日期",
       dataIndex: "date",
       key: "date",
+      width: 202
     },
     {
       title: "页面状态",
@@ -300,7 +303,6 @@ export default function ColManage() {
       title: "新栏目",
     });
     setSecColKey(_key);
-    console.log(_key)
     let _colsData = JSON.parse(JSON.stringify(colsData));
     _colsData = _colsData.map((item) => {
       if(item.title === col) {
@@ -316,13 +318,13 @@ export default function ColManage() {
     _edit.splice(index, 1 ,true);
     setEdit(_edit);
   }
-  // const handleArtiChange = (e, index) => {
-  //   let _article = articles[index];
-  //   _article = {..._article, articleName: e.target.value};
-  //   let _articles = [...articles];
-  //   _articles.splice(index,1,_article);
-  //   setArticles(_articles);
-  // }
+  const handleArtiChange = (e, index) => {
+    let _article = articles[index];
+    _article = {..._article, articleName: e.target.value};
+    let _articles = [...articles];
+    _articles.splice(index,1,_article);
+    setArticles(_articles);
+  }
   const handleASureClick = index => {
     const arr = [...edit];
     arr.splice(index, 1 ,false);
@@ -422,7 +424,7 @@ export default function ColManage() {
           栏目管理
         </span>
       </div> 
-      <div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px",marginBottom: "40px", paddingLeft: "40px"}}>
+      <div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px",marginBottom: "40px", paddingLeft: "250px"}}>
         <ul className="list">
           {
             data.map(item => (
@@ -488,16 +490,17 @@ export default function ColManage() {
           }
           <Table 
             columns={editState === "二级" ? secondaryColumn : columns} 
-            dataSource={editState === "二级" ? articles : editData} 
-            pagination={false}
+            dataSource={editState === "二级" ? (tableLoading ? [] : articles) : editData} 
+            pagination={true}
+            loading={tableLoading}
           />
         </div>
       </div>
       <div className="submitBtnContainer">
         <Button 
-            className="submitBtn"
-            loading = {loading}
-            onClick = {handleSaveClick}
+          className="submitBtn"
+          loading = {loading}
+          onClick = {handleSaveClick}
         >
           保存
         </Button>

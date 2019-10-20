@@ -4,8 +4,8 @@
 .columnContainer {
   display: flex;
   justify-content: space-around;
-  padding: 0 40px;
-  width: 1300px;
+  padding: 0 40px 0 116px;
+  width: 1385px;
   .ant-menu {
     background: #fafafa;
     border-width: 0;
@@ -16,6 +16,14 @@
     color: rgba(0, 0, 0, 0.75);
     text-align: left;
   }
+}
+.ant-table-row .ant-table-row-cell-break-word span {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  width: 200px;
 }
 .radioGroup {
   display: flex;

@@ -11,6 +11,7 @@ export default function Search() {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
+
     axios.get("http://yjxt.elatis.cn/posts/listPosts",{
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +25,7 @@ export default function Search() {
 
       }
     }).catch(err => {
-
+      message.error(err);
     });
   }, []);
   useEffect(() => {
@@ -39,7 +40,6 @@ export default function Search() {
       }, 
     }).then(res => {
       if(res.data.code === 0) {
-        console.log(res.data.data)
         if(res.data.data.length === 0) {
           setSearchList("none");
         }
@@ -71,7 +71,7 @@ export default function Search() {
   );
 }
 
-function renderSearchList(searchList,curPage, total,setCurPage) {
+function renderSearchList(searchList, curPage, total, setCurPage) {
   if(searchList.length === 0) {
     return (
       <div className="pagi">
@@ -89,9 +89,9 @@ function renderSearchList(searchList,curPage, total,setCurPage) {
           {
             searchList.map((item,index) => (
               <li className="active" key={`${index}${item}`}>
-                <Link to="/">
+                <Link to={`/index/article?id=${item.id}`}>
                   {`【领导活动】  ${item.title}`}
-                  <span className="time">2020-03-04</span>
+                  <span className="time">2022-09-09</span>
                 </Link>
               </li>
             ))
