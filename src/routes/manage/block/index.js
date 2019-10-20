@@ -5,8 +5,8 @@ import styles from "./index.css";
 import { Table, Button, Input, Switch, message, Upload } from "antd";
 // import * as blockData from '../../../assets/blockData';
 // import * as blockCol from '../../../assets/blockCol';
-import * as blockData from "../../../config/blockData";
-import * as blockCol from "../../../config/blockCol";
+// import * as blockData from "../../../config/blockData";
+// import * as blockCol from "../../../config/blockCol";
 import axios from "axios";
 
 const HeaderScroll = () => {
@@ -748,3 +748,4 @@ const block = () => {
 	);
 };
 export default block;
+

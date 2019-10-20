@@ -21,11 +21,11 @@ const  Tabs =(props)=> {
 						}
 					}).then(res=> {
 						if(res.data.code === 0) {
-							const newData = [...data]
+							const newData = [...data];
 							newData.push ({
 								tab: props.home.columnData[1].sec[index].title,
 								Info: res.data.data,
-							})
+							});
 							setData(newData);
 						}
 						else {
