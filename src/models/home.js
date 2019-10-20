@@ -1,7 +1,8 @@
 export default {
 	namespace: "home",
 	state: {
-		TabData: []
+		TabData: [],
+		columnData: []
 	},
 	effects: {
 

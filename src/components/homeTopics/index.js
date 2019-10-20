@@ -2,27 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./index.less";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { Skeleton } from "antd";
 
 const HomeTopic = (props) => {
-	console.log(props.section);
-	const [ topicData, setTopicData ] = useState([]);
-	useEffect(()=> {
-		axios({
-			method:"GET",
-			url:`http://yjxt.elatis.cn/posts/listPosts?category=/政府公开/行政许可`,
-			params: {
-        status: "draft",
-        limit: 3
-			},
-			data: {
-				status: ""
-			}
-		}).then(res=> {
-			console.log(res.data,"topic数据");
-			setTopicData(res.data.data);
-		});
-
-	},[]);
 	return (
 		<div className='home-topic'>
 			<div className='home-topic-header'>
@@ -34,11 +16,11 @@ const HomeTopic = (props) => {
 			<div className='home-topic-content'>
 				<ul>
 					{
-						topicData.map((item, index) => {
+						props.data.map((item, index) => {
 						  return (
 						    <li className='home-topic-li' key={index}>
 						      <Link to={`/index/article?id=${item.id}`}>
-						        {`${index + 1}. ${item.title}`}
+						        {`${item.title}`}
 						      </Link>
 						    </li>
 						  );
@@ -51,20 +33,78 @@ const HomeTopic = (props) => {
 };
 const HomeTopics = (props) => {
 	const { colsData } = props;
-	console.log(colsData);
-	return (
-		<div className='home-topics'>
-			{
-				colsData.slice(2, colsData.length).map((item, index) => {
-					return (
-						<HomeTopic title = {item.title} href = {`/index/message?type=${index+3}`} 
-							section = {`/${item.title}/${item.sec[0].title}`} type =  { item.key }
-						/>
-					);
-				})
-			}
-		</div>
-	);
+	const [ topicData, setTopicData ] = useState([]);
+	console.log(colsData,"colData");
+
+	useEffect(()=> {
+		if(colsData.length !==0 ){
+			const sort = [...colsData].map((item,index)=> {
+				if(index>1){
+					return `/${item.title}/${item.sec[0].title}`;
+				}
+			});
+			const data1 = JSON.stringify({
+				limit:3,
+				moduleArray:sort,
+				status: "draft"
+			});
+			console.log(sort,"发送了home请求");
+			axios({
+				method:"POST",
+				url:"http://yjxt.elatis.cn/posts/listModulePost",
+				headers: {
+					"Content-Type":"application/json"
+				},
+				data: data1
+			}).then(res=> {
+				console.log(res.data,"topic数据");
+				const newData = res.data.data.map((item,index)=>{
+					if(index>1) {
+						return item.post;
+					}
+				});
+				console.log("newdata",newData);
+
+
+				setTopicData(newData);
+			});
+		}
+	},[props.colsData]);
+	useEffect(()=> {
+		console.log(topicData);
+	},[topicData]);
+	if(topicData.length!== 0) {
+		console.log("现在的 col",topicData);
+		return (
+			<div className='home-topics'>
+				{
+					topicData.map((item, index) => {
+						console.log(item,"jjjjjjjjxjxj");
+						if(index>1){
+							return (
+								<HomeTopic 
+									title = {colsData[index].title} 
+									href = {`/index/message?type=${index+3}`} 
+									//  type =  { item.key } 
+									data = {item}
+								/>
+							);
+						}
+						else return null;
+
+					})
+				}
+			</div>
+		);
+	}
+	else {
+		return(
+			<Skeleton rows = {20} />
+		);
+	}
+
+
 };
+
 
 export default HomeTopics;

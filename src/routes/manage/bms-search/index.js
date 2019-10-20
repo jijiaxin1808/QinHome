@@ -1,8 +1,66 @@
 import React, { useState,useEffect } from "react";
 import "./index.less";
-import { Table, Divider, Tag } from "antd";
+import axios from "axios";
+import { Table, Divider, Tag, Button, Modal, message } from "antd";
+const  DeleteArticle  = (props)=> {
+	const [ visible, setVisible ] = useState(false);
+	const showModal = () => {
+		setVisible(true);
+	};
 
-const BmsSearch = ()=> {
+	const handleOk = e => {
+		setVisible(false);
+		console.log("确认删除");
+		axios({
+			method:"GET",
+			url: "http://yjxt.elatis.cn/posts/delete",
+			params: {
+				id:props.id
+			},
+			Headers: {
+				"token":localStorage.getItem("token"),
+				"Content-Type": "application/json"
+			}
+		}).then(res=> {
+			if(res.data.code === 0 ) {
+				message.success("删除成功")
+			}
+			else {
+				message.warn(res.data.message);
+			}
+		})
+
+	};
+
+	const handleCancel = e => {
+		setVisible(false);
+	};
+
+	return (
+		<div>
+			<Button  onClick={()=>{showModal();}}>
+          删除
+			</Button>
+			<Modal
+				visible={visible}
+				onOk={()=>{handleOk();}}
+				onCancel={()=>{handleCancel();}}
+				okText = "确认"
+				cancelText = "取消"
+			>
+				<p>确认删除?</p>
+			</Modal>
+		</div>
+	);
+  
+};
+
+const alterAricle = (id)=> {
+	console.log("11");
+	window.location.href = `/manage/create?id=${id}`;
+};
+const BmsSearch = (props)=> {
+	const [ data, setData ] = useState([]);
 	const columns = [
 	  {
 			title: "id",
@@ -11,18 +69,18 @@ const BmsSearch = ()=> {
 	  },
 	  {
 			title: "文章名称",
-			dataIndex: "age",
-			key: "age",
+			dataIndex: "title",
+			key: "title",
 	  },
 	  {
 			title: "发布部门",
-			dataIndex: "address",
-			key: "address",
+			dataIndex: "category",
+			key: "category",
 	  },
 	  {
 			title: "日期",
-			key: "tags",
-			dataIndex: "tags"
+			key: "created_at",
+			dataIndex: "created_at"
 	  },
 	  {
 			title: "页面状态",
@@ -31,36 +89,37 @@ const BmsSearch = ()=> {
 	  },{
 			title: "操作",
 			key: "action",
-			dataIndex:"action"
-		},	  {
+			dataIndex:"action",
+			render: id => (
+				<Button onclick = {()=>{alterAricle(id);}}>修改文章</Button>
+			)
+		},{
 			title: "删除",
 			key: "action",
-			dataIndex:"action"
+			dataIndex:"action",
+			render: id=> (
+				<DeleteArticle  id = {id}>删除文章</DeleteArticle>
+			)
+
 		},
 	];
-	const data = [
-	  {
-			key: "1",
-			name: "John Brown",
-			age: 32,
-			address: "New York No. 1 Lake Park",
-			tags: ["nice", "developer"],
-	  },
-	  {
-			key: "2",
-			name: "Jim Green",
-			age: 42,
-			address: "London No. 1 Lake Park",
-			tags: ["loser"],
-	  },
-	  {
-			key: "3",
-			name: "Joe Black",
-			age: 32,
-			address: "Sidney No. 1 Lake Park",
-			tags: ["cool", "teacher"],
-	  },
-	];
+	useEffect(()=>{
+		axios({
+			method:"GET",
+			url: "http://yjxt.elatis.cn/posts/searchTitle",
+			params: {
+				flag: 2,
+				key : "使命召唤"
+			}
+		}).then(res=> {
+			if(res.data.code === 0) {
+				setData(res.data.data);
+			}
+		});
+	},[]);
+
+
+
 	
 	return (
 		<div>
