@@ -1,7 +1,8 @@
 import React from "react";
-import { Menu, Icon, Layout } from "antd";
+import { Menu, Icon, Layout, Input } from "antd";
 import { Link } from "react-router-dom";
 import "./header.less";
+const { Search } = Input;
 const SubMenu = Menu.SubMenu;
 const { Header } = Layout;
 export default class Top extends React.Component {
@@ -27,6 +28,9 @@ export default class Top extends React.Component {
     render() {
     	return (
     		<Header style={{ background: "#fff"}}>
+    			<Search placeholder="请输入搜索关键字" style = {{width:"300px"}}
+    				onSearch={ value => window.location.href = `/manage/bmsSearch?key=${value}`} enterButton={true} 
+    				  />
     			<Icon
     				className="trigger"
     				type={this.props.collapsed ? "menu-unfold" : "menu-fold"}
