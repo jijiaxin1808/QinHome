@@ -4,6 +4,10 @@ import axios from "axios";
 import urlHandle from "../../config/urlHandle";
 import { message, Spin } from "antd";
 
+const func = (data)=> {
+	return (data);
+};
+
 const Article = () => {
 	const [data, setdata] = useState([]);
 	// const [id, setid] = useState([])
@@ -59,7 +63,7 @@ const Article = () => {
 					</div>
 				</div>
 				<div className='article-content'>
-					{data.content}
+					{<p dangerouslySetInnerHTML={{ __html:data.content}}  />}
 				</div>
 			</div>
 		);
