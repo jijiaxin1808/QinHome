@@ -642,7 +642,7 @@ const Background = () => {
 		},
 	};
 	const onChange = (info, id) => {
-		if (info.file.status !== "uploading") { 
+		if (info.file.status !== "uploading") {
 			console.log(info.file, info.fileList);
 		}
 		if (info.file.status === "done") {
