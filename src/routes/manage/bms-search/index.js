@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import "./index.less";
 import axios from "axios";
-import { Table, Divider, Tag, Button, Modal, message, Skeleton } from "antd";
+import { Table, Divider, Tag, Button, Modal, message, Skeleton, Switch } from "antd";
 import urlHandle from "../../../config/urlHandle";
 const  DeleteArticle  = (props)=> {
 	const [ visible, setVisible ] = useState(false);
@@ -87,7 +87,10 @@ const BmsSearch = (props)=> {
 	  {
 			title: "页面状态",
 			key: "action",
-			dataIndex:"action"
+			dataIndex:"action",
+			render:isShow=>(
+				<Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked = {isShow}  />
+			),
 	  },{
 			title: "操作",
 			key: "action",

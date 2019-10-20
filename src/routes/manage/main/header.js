@@ -27,11 +27,17 @@ export default class Top extends React.Component {
     }
     render() {
     	return (
-    		<Header style={{ background: "#fff"}}>
-    			<Search placeholder="请输入搜索关键字" style = {{width:"300px"}}
-    				onSearch={ value => window.location.href = `/manage/bmsSearch?key=${value}`} enterButton={true} 
+    		<Header style={{ background: "#fff"}} className = "manage-header">
+    			<Search placeholder="请输入搜索关键字" style = {{width:"300px",marginRight:"15px"}}
+    				onSearch={ (value) => {
+    					if(value=="") {
+    					}
+    					else { window.location.href = `/manage/bmsSearch?key=${value}`;}
+    				}} enterButton={true} 
     				  />
+					
     			<Icon
+				style = {{marginRight:"15px"}}
     				className="trigger"
     				type={this.props.collapsed ? "menu-unfold" : "menu-fold"}
     				onClick={this.props.toggle}
