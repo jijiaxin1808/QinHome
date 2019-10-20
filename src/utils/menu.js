@@ -25,6 +25,10 @@ export const allMenu = [
 		url:"manage/notification",
 		icon:"plus",
 	},{
+		name:"留言回复",
+		url:'manage/reply',
+		icon:'plus'
+	},{
 		name:"账号权限",
 		url:"manage/account",
 		icon:"plus",

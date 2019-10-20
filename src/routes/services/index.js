@@ -5,68 +5,47 @@ import { Table, Divider, Tag ,Menu,Layout} from "antd";
 import {Search,Message} from "./search";
 import WrappedNormalLoginForm from "./form";
 import Tousu from "./form/tousu";
+import axios from 'axios'
 import "./index.less";
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 const columns = [
 	{
 		title: "序号",
-		dataIndex: "key",
-		key: "key",
+		dataIndex: "id",
+		key: "id",
 		render: text => <a>{text}</a>,
 	},
 	{
 		title: "留言消息",
-		dataIndex: "age",
-		key: "age",
+		dataIndex: "title",
+		key: "title",
 	},
 	{
 		title: "回复消息",
-		dataIndex: "address",
-		key: "address",
+		dataIndex: "reply",
+		key: "reply",
 	},
 	{
 		title: "留言时间",
-		key: "tags",
-		dataIndex: "tags"
+		key: "created_at",
+		dataIndex: "created_at"
 	},
 	{
 		title: "回复时间",
-		key: "name",
-		dataIndex:"name"
+		key: "updated_at",
+		dataIndex:"updated_at"
 	},
 ];
   
-const data = [
-	{
-		key: "10086",
-		name: "John Brown",
-		age: 32,
-		address: "New York No. 1 Lake Park",
-		tags: "10:00"
-	},
-	{
-		key: "2",
-		name: "Jim Green",
-		age: 42,
-		address: "London No. 1 Lake Park",
-		tags: "10:00"
-	},
-	{
-		key: "3",
-		name: "Joe Black",
-		age: 32,
-		address: "Sidney No. 1 Lake Park",
-		tags: "10:00"
-	},
-];
 let i
 export default class Services extends Component{
 	constructor(props) {
 		super(props);
 		this.state={
 			key:"1",
-			data:[]
+			data:[],
+			message:''
 		};
 	}
 	handleClick =(e)=> {
@@ -75,27 +54,43 @@ export default class Services extends Component{
 			key:e.key
 		});
 	}
+	shouldComponentUpdate(nextProps, nextState){
+	  if(this.state.key===nextState.key){
+		  return false
+	  }else{
+		  return true
+	  }
+	}
 	componentDidUpdate(){
+		axios({
+			url:'http://yjxt.elatis.cn/msgs/listMsgs?category=all&flag=1',
+			method:'GET',
+			headers:{
+				'Content-Type':'application/json'
+			}
+		}).then(res=>{
+			if(res.data.code===0){
+				this.setState({
+					data:res.data.data
+				})
+			}
+		})
 		const ctx=this
 		 i=[...document.getElementsByClassName("ant-table-row-level-0")]
 
 		if(i.length){			
 			i.map((item)=>{
 				item.addEventListener("click",function () {
+					// console.log(item.getAttribute("data-row-key"))
 					ctx.setState({
-						key:"XAS"
+						key:"XAS",
+						 message:ctx.state.data[item.getAttribute("data-row-key")]
 					})
 				})
 			});
 		}
     }
-    // componentDidMount(){
-    //     if(i.length){
-	// 		i.map((item)=>{
 
-	// 		})
-	// 	}
-    // }
 	render() {
 		return (
 			<div className="yj-services">
@@ -120,7 +115,7 @@ export default class Services extends Component{
 					</div>
 					<section className="services-main">
 						{
-							this.state.key==="1"?<WrappedNormalLoginForm/>:(this.state.key==="2"?<Search columns={columns} dataSource={data}/>:(this.state.key==="3"?<Tousu/>:<Message/>))
+							this.state.key==="1"?<WrappedNormalLoginForm/>:(this.state.key==="2"?<Search columns={columns} dataSource={this.state.data}/>:(this.state.key==="3"?<Tousu/>:<Message data={this.state.message}/>))
 						}
 						{/* <Search columns={columns} dataSource={data}/> */}
 						{/* <Message /> */}
