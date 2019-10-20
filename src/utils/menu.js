@@ -5,17 +5,11 @@ export const allMenu = [
 		url:"manage/column",
 		icon:"plus",
 	},{
-		name:"内容管理",
-		icon:"plus",
-		children: [{
-      name: "创建文章",
-      url: "manage/create",
-      icon: "plus"
-    },{
-      name: "修改文章",
-      url: "manage/change",
-      icon: "plus"
-    }]
+		
+			name: "创建文章",
+			url: "manage/create",
+			icon: "plus"
+		  
 	},{
 		name:"区块管理",
 		url:"manage/block",
