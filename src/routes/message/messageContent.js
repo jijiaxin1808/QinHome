@@ -54,7 +54,7 @@ const MessageContent = (props)=> {
 			<div className = "message-none">
 				当前模块没有文章
 			</div>
-		)
+		);
 	}
 	else if(data.length !== 0&&total){
 		// console.log("total:" ,total,"data: ",data)

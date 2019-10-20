@@ -1,7 +1,8 @@
 import React, { useState,useEffect } from "react";
 import "./index.less";
 import axios from "axios";
-import { Table, Divider, Tag, Button, Modal, message } from "antd";
+import { Table, Divider, Tag, Button, Modal, message, Skeleton } from "antd";
+import urlHandle from "../../../config/urlHandle";
 const  DeleteArticle  = (props)=> {
 	const [ visible, setVisible ] = useState(false);
 	const showModal = () => {
@@ -23,12 +24,12 @@ const  DeleteArticle  = (props)=> {
 			}
 		}).then(res=> {
 			if(res.data.code === 0 ) {
-				message.success("删除成功")
+				message.success("删除成功");
 			}
 			else {
 				message.warn(res.data.message);
 			}
-		})
+		});
 
 	};
 
@@ -61,6 +62,7 @@ const alterAricle = (id)=> {
 };
 const BmsSearch = (props)=> {
 	const [ data, setData ] = useState([]);
+	const [ key,setkey ] = useState(decodeURIComponent(urlHandle("key")));
 	const columns = [
 	  {
 			title: "id",
@@ -104,27 +106,64 @@ const BmsSearch = (props)=> {
 		},
 	];
 	useEffect(()=>{
-		axios({
-			method:"GET",
-			url: "http://yjxt.elatis.cn/posts/searchTitle",
-			params: {
-				flag: 2,
-				key : "使命召唤"
-			}
-		}).then(res=> {
-			if(res.data.code === 0) {
-				setData(res.data.data);
-			}
-		});
-	},[]);
+		if(key.length !== 0 ){
+			axios({
+				method:"GET",
+				url: "http://yjxt.elatis.cn/posts/searchTitle",
+				params: {
+					flag: 2,
+					key : key
+				}
+			}).then(res=> {
+				if(res.data.code === 0) {
+					console.log("长度",res.data.data.length);
+					if(res.data.data.length ==0) {
+						setData("empty");
+						console.log("empty");
+					}
+					else {
+						setData(res.data.data);
+					}
+				}
+			});
+		}
+	},[props]);
+	if(data === "empty") {
+		return (
+			<div className = "message-none">
+			没有搜索结果
+			</div>
+		);
+	}
+	else if(data.length!==0) {	
+		if(data === "empty") {
+			return (
+				<div className = "message-none">
+				没有搜索结果
+				</div>
+			);
+		}
+		else {
+			return (
+				<div>
+					<Table columns={columns} dataSource={data} />
+				</div>
+			);
+		}
 
+	}
+	else {
+		if(data === "empty") {
+			return (
+				<div>
+					没有搜索结果
+				</div>
+			);
+		}
+		else return (
+			<Skeleton />
+		);
+	}
 
-
-	
-	return (
-		<div>
-			<Table columns={columns} dataSource={data} />
-		</div>
-	);
 };
 export default BmsSearch;
