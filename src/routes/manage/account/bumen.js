@@ -57,7 +57,7 @@ class EditableFormTable extends React.Component{
       			"Content-Type":'application/json',
       			"token":localStorage.getItem("token")
       		},
-      		url:'http://yjxt.elatis.cn/posts/alter',
+      		url:'http://yjxt.elatis.cn/powers/alter',
       		data:data
       	}).then(res=>{
       		if(res.data.code===0){
