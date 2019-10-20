@@ -6,51 +6,51 @@ const { Search } = Input;
 
  
 const columns = [
-  {
-    title: '序列',
-    dataIndex: 'id',
-    key: 'id',
-  },
-  {
-    title: '文章名称',
-    dataIndex: 'title',
-    key: 'title',
-  },
-  {
-    title: '发布部门',
-    dataIndex: 'section',
-    key: 'section',
-  },
-  {
-    title: '日期',
-    key: 'time',
-    dataIndex: 'time',
-  },
-  {
-    title: '文章位置',
-    key: 'loaction',
-    dataIndex:"loaction"
-  },
-  {
-    title: '页面状态',
-    key: 'isShow',
-    dataIndex:"isShow",
-    render:isShow=>(
-        <Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked = {isShow}  />
-    ),
-    },
+	{
+		title: '序列',
+		dataIndex: 'id',
+		key: 'id',
+	},
+	{
+		title: '文章名称',
+		dataIndex: 'title',
+		key: 'title',
+	},
+	{
+		title: '发布部门',
+		dataIndex: 'section',
+		key: 'section',
+	},
+	{
+		title: '日期',
+		key: 'time',
+		dataIndex: 'time',
+	},
+	{
+		title: '文章位置',
+		key: 'loaction',
+		dataIndex:"loaction"
+	},
+	{
+		title: '页面状态',
+		key: 'isShow',
+		dataIndex:"isShow",
+		render:isShow=>(
+			<Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked = {isShow}  />
+		),
+	},
 ];
 
 
 
 const Context = ()=> { 
-    return(
-        <div>
-             <Search placeholder="请输入搜索内容" onSearch={value => console.log(value)} enterButton className = {styles.search} />
+	return(
+		<div>
+			<Search placeholder="请输入搜索内容" onSearch={value => console.log(value)} enterButton className = {styles.search} />
  
-            <Table columns={columns} dataSource={contextData}/>
-        </div>
-    )
+			<Table columns={columns} dataSource={contextData}/>
+		</div>
+	)
 }
 
 // const ContextContent = ()=> {

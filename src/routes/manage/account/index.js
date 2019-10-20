@@ -382,11 +382,15 @@ class EditableTable extends React.Component {
 			  id:value.key
 		  }
 	  }).then(res=>{
-		 if(res.data.data===0){
+		  console.log(res)
+		 if(res.data.code===0){
 			 message.success("删除成功")
+			 this.getData()
+		 }else{
+			 message.error("出错了")
 		 }
 	  })
-  	this.getData()
+  	
   }
 
   render() {
