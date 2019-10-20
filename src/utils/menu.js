@@ -24,6 +24,16 @@ export const allMenu = [
 		name:"账号权限",
 		url:"manage/account",
 		icon:"plus",
+		children:[{
+			name:'账号权限',
+			url:"manage/account",
+			icon:"plus"
+		},{
+			name:"部门权限",
+			url:"manage/bumen",
+			icon:"plus"
+		}
+	]
 	},{
 		name:"操作日志",
 		url:"manage/log",
