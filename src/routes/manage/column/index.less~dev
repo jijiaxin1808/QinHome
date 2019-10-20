@@ -59,12 +59,12 @@
   background-color: #001529;
   flex: 1 0 auto;
 }
-/* .navText {
+.navText {
   color: #fff;
   display: block;
   font-size: 14px;
   margin-top: 10px;
-} */
+}
 .navTextB {
   color: #fff;
   display: block;
@@ -72,9 +72,9 @@
   margin-top: 10px;
   border-right: 1px solid #979797;
 }
-:global(.ant-table-wrapper) {
+.ant-table-wrapper {
   flex: 1 1 auto;
 }
-:global(.ant-row) {
-  min-width: 300px;
+.ant-row {
+  /* min-width: 300px; */
 }

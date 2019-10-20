@@ -1,23 +1,11 @@
 import React from 'react'
 import { Pagination as P } from 'antd'
-import styles from "./index.css";
 
-export default function Pagination () {
+export default function Pagination(props) {
   return (
       <div className="p">
-        <P
-          className={styles.pagination}
-          hideOnSinglePage
-          onChange={onChange}
-          defaultCurrent={1}
-          defaultPageSize={20}
-          total={200}
-          showQuickJumper
-        /> 
+        <P {...props}/> 
       </div>
   )
 }
 
-function onChange (page) {
-  console.log(page)
-}
