@@ -57,8 +57,8 @@ const  DeleteArticle  = (props)=> {
 };
 
 const alterAricle = (id)=> {
-	console.log("11");
-	window.location.href = `/manage/create?id=${id}`;
+	console.log(id);
+	window.location.href = `/manage/change/${id}`;
 };
 const BmsSearch = (props)=> {
 	const [ data, setData ] = useState([]);
@@ -95,8 +95,8 @@ const BmsSearch = (props)=> {
 			title: "操作",
 			key: "action",
 			dataIndex:"action",
-			render: id => (
-				<Button onclick = {()=>{alterAricle(id);}}>修改文章</Button>
+			render: (text,record) => (
+				<Button onClick = {()=>{alterAricle(record.id);}}>修改文章</Button>
 			)
 		},{
 			title: "删除",

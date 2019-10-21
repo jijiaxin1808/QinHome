@@ -1,5 +1,6 @@
 import React from 'react'
-import {Form,Input,Icon,Button,Radio} from 'antd'
+import {Form,Input,Icon,Button,Radio,message} from 'antd'
+import axios from 'axios'
 import 'antd/dist/antd.css'
 import './index.less'
 import { randomNum, calculateWidth } from "../../../utils/utils";
@@ -26,15 +27,31 @@ class Xx extends React.Component {
     	e.preventDefault();
     	this.props.form.validateFields((err, values) => {
     		if (!err) {
-    			// console.log('Received values of form: ', values);
-    			// const { dispatch } = this.props;
-    			// dispatch({
-    			//   type: 'login/login',
-    			//   payload: { ...values }
-    			// })
-    			console.log(values)
+    			if(values.code!==this.state.code){
+    				message.error("验证码错误")
+    				this.createCode()
+    			}else{
+    				let data={
+    					...values,
+    					category:'complain'
+					}
+					console.log(data)
+					delete data.code
+    				axios({
+    					method:'POST',
+    					headers:{
+    						"Content-Type":'application/json'
+    					},
+    					url:'http://yjxt.elatis.cn/msgs/create',
+    					data:data
+    				}).then(res=>{
+    					if(res.data.code===0){
+							message.success("提交成功")
+						}
+						this.props.form.resetFields()
+    				})
 
-    		}
+    		}}
     	});
     };
     /**
@@ -77,47 +94,46 @@ class Xx extends React.Component {
     			<p className="xx-p">添加留言</p>
     			<Form onSubmit={this.handleSubmit} className="login-form">
   				<Form.Item label="被举报主题">
-  					{getFieldDecorator("zhuti", {
-  						rules: [{ required: true, message: "请输入用户名" }],
+  					{getFieldDecorator("title", {
+  						rules: [{ required: true, message: "请输入被举报主题" }],
   					})(
   						<Input
   							style={{width:'400px'}}
-  							placeholder="请输入用户名"
   						/>,
   					)}
   				</Form.Item>
                   <Form.Item label="被举报地址">
-  					{getFieldDecorator("dz", {
-  						rules: [{  message: "请输入用户名",required:true }],
+  					{getFieldDecorator("complainAddress", {
+  						rules: [{  message: "请输入被举报地址",required:true }],
   					})(
   						<Input
   							style={{width:'400px'}}
-  							placeholder="请输入用户名"
+
   						/>,
   					)}
   				</Form.Item>
                   <Form.Item label=" 举报内容">
-  					{getFieldDecorator("nr", {
-  						rules: [{ required: true, message: "请输入密码" }],
+  					{getFieldDecorator("content", {
+  						rules: [{ required: true, message: "请输入内容" }],
   					})(
     						<TextArea rows={4} style={{width:'400px'}}/>
   					)}
   				</Form.Item>
 				  <div className="xx-form">
 				  <Form.Item label="举报人 ">
-  					{getFieldDecorator("man", {
+  					{getFieldDecorator("name", {
   						rules: [{ message: "请输入用户名" }],
   					})(
   						<Input/>,
   					)}
   				</Form.Item>
 				  <Form.Item label="性别">
-  					{getFieldDecorator("xb", {
+  					{getFieldDecorator("sex", {
   						rules: [],
   					})(
     						<Radio.Group onChange={this.onChange} >
-    					<Radio value={1}>男</Radio>
-    					<Radio value={2}>女</Radio>
+    					<Radio value="男">男</Radio>
+    					<Radio value="女">女</Radio>
     				</Radio.Group>
   					)}
   				</Form.Item>
@@ -131,7 +147,7 @@ class Xx extends React.Component {
   					)}
   				</Form.Item>
 				  <Form.Item label="家庭住址">
-  					{getFieldDecorator("dz", {
+  					{getFieldDecorator("address", {
   						rules: [{  message: "请输入用户名" }],
   					})(
   						<Input/>,
@@ -148,7 +164,7 @@ class Xx extends React.Component {
   				</Form.Item>
 
     				<Form.Item label="工作单位">
-  					{getFieldDecorator("dw", {
+  					{getFieldDecorator("workspace", {
   						rules: [{  message: "请输入用户名" }],
   					})(
   						<Input/>,
@@ -158,11 +174,9 @@ class Xx extends React.Component {
                   <div className="xx-form">
 				  <Form.Item label="验证码">
   					{getFieldDecorator("code", {
-  						rules: [{ required: true, message: "请输入用户名" }],
+  						rules: [{ required: true, message: "请输入验证码" }],
   					})(
   						<Input
-  							prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-  							placeholder="请输入用户名"
   						/>,
   					)}
   				</Form.Item>
