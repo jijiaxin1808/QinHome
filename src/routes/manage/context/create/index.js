@@ -148,7 +148,7 @@ console.log(response.hash)
 	const onChange =(value) => {
 		console.log(value)
 	};
-  	const controls = ["bold", "italic", "underline", "text-color", "separator", "link", "separator", "media" ];
+  	const controls = ["font-size","bold", "italic", "underline", "text-color", "separator", "link", "separator", "media" ];
   	const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
 
   const uploadHandler = (param) => {
@@ -189,7 +189,7 @@ console.log(response.hash)
   		<div className="demo-container">
   			<div className = "title">
   				<span>
-            内容管理
+            创建文章
   				</span>
   			</div>
   			<Form onSubmit={handleSubmit}>
@@ -266,7 +266,7 @@ console.log(response.hash)
                   <Row>
                     <Col span={10}>
                       <Card>
-                        <h1 style={{textAlign: 'center'}}>生成预览</h1>
+                        <h1 style={{textAlign: "center"}}>生成预览</h1>
                         <p>
                           “秦皇岛市安全生产培训机构名单”
                         </p>
