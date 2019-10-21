@@ -42,7 +42,26 @@
     background: white;
     width: 1080px;
     margin: 0 auto;
+    .info-container {
+        height: 40px;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+    }
+    .home-info {
+        display: flex;
+        align-content: center;
+        float: left;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+        i {
+            display: inline-block;
+            font-size: 0;
+            width: 27px;
+            height: 25px;
+            background: url("../../../public/img/info.png") no-repeat 3px 2px;
+        }
+    }
 }
-.home {
-    // background: url("../../assest/位图2 .png");
-}
+
