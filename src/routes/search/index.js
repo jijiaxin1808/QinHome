@@ -11,28 +11,47 @@ export default function Search(props) {
 	const [curPage, setCurPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [key, setKey] = useState(decodeURIComponent(urlHandle("key")));
+  const [key] = useState(decodeURIComponent(urlHandle("key")));
 
   useEffect(() => {
-    key.length !==0 &&
+    key && 
     axios.get("http://yjxt.elatis.cn/posts/searchTitle",{
       headers: {
         "Content-Type": "application/json",
       },
       params: {
         flag: 1,
-        key: key
+        key: key,
       },
     }).then(res => {
       if(res.data.code === 0) {
-        setSearchList(res.data.data);
+        setTotal(res.data.data.length);
       }
     }).catch(err => message.error(err));
   }, [key]);
+  useEffect(() => {
+    key &&
+    axios.get("http://yjxt.elatis.cn/posts/searchTitle",{
+      headers: {
+        "Content-Type": "application/json",
+      },
+      params: {
+        flag: 1,
+        key: key,
+        limit: 5,
+        offset: (curPage-1) * 5,
+      },
+    }).then(res => {
+      if(res.data.code === 0) {
+        setLoading(false);
+        setSearchList(res.data.data);
+      }
+    }).catch(err => message.error(err));
+  }, [key, curPage]);
 
   useEffect(() => {
 
-    key.length === 0 &&
+    !key &&
     axios.get("http://yjxt.elatis.cn/posts/listPosts",{
       headers: {
         "Content-Type": "application/json",
@@ -48,9 +67,10 @@ export default function Search(props) {
       message.error(err);
     });
   }, []);
+
   useEffect(() => {
     setLoading(true);
-    axios.get("http://yjxt.elatis.cn/posts/listPosts",{
+    !key && axios.get("http://yjxt.elatis.cn/posts/listPosts",{
       headers: {
         "Content-Type": "application/json", 
       },

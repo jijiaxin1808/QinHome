@@ -11,11 +11,13 @@ const RealFooter = () => {
 	return (
 		<div className='footer'>
 			<div>
-				<img src={require("../../assets/稿定设计导出-20191018-103434.png")}/>
+				<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13030202002230">
+					<img src={require("../../assets/稿定设计导出-20191018-103434.png")}/>	
+				</a>
 			</div>
 			<div className='footer-info'>
 				<p>主办单位：秦皇岛市应急管理局  地址：秦皇岛市燕山大街109号</p>
-				<p>电话： 0335-3650560  冀公网安备： 13030202002230
+				<p>电话： 0335-3650560  <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13030202002230" style={{}}>冀公网安备： 13030202002230</a>
 					<br/>网站标识码： 1303000020  邮政编码： 066001 
 				</p>
 				<p>ICP备案号： 冀ICP备15003849号  技术支持： 秦皇岛昊锐科技有限公司</p>

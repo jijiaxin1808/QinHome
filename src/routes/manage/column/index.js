@@ -1,7 +1,8 @@
 import React, {useState,useEffect,useRef} from "react";
-import {Radio,Input,Icon,Table,Button,Menu,message} from "antd";
+import {Radio,Input,Icon,Table,Button,Menu,Switch,message} from "antd";
 import "./index.less";
 import axios from "axios";
+import { Redirect } from "react-router";
 
 export default function ColManage() {
   // 
@@ -39,16 +40,6 @@ export default function ColManage() {
   
 	const input = useRef(null);
 
-	const renderRadio = (text, record, index) => {
-		const State =
-      !edit[index] && editState === "二级" ?
-       <span>{articles[index].state || "显示"}</span> :
-       <Radio.Group className="radioGroup" name="pageState" defaultValue={record.state ? 1 : 2} onChange={(e) => handleRadioChange(index, record, e)}>
-        <Radio value={1} className="radio">显示</Radio>
-        <Radio value={2} className="radio">隐藏</Radio>
-      </Radio.Group>
-    return State;
-  }
   useEffect(() => {
 
 		if(col && colsData.length!==0) {
@@ -80,16 +71,20 @@ export default function ColManage() {
     }).catch(err => {
       message.error(err);
     });
-    // 调用最新文章数据接口(传入category)
-    // setArticles(dataSource.articles[0].articles);
   }, []);
 
   useEffect(() => {
-    setTableLoading(true)
     setArtiCategory(`/${col}/${secCol}`);
   }, [col, secCol]);
 
- 
+  useEffect(() => {
+    setTableLoading(true);
+  }, [col, secCol]);
+
+  useEffect(() => {
+    setTableLoading(false);
+  }, [articles]);
+
   useEffect(() => {
     // 根据分类动态获取文章列表
     if(secCol && col && artiCategory) {
@@ -109,8 +104,9 @@ export default function ColManage() {
       ).then(res => {
 
         if(res.data.code === 0) {
+          console.log()
           setArticles((res.data.data)[0] === "empty" ? [] : res.data.data);
-          setTableLoading(false);
+          setEdit((res.data.data)[0] === "empty" ? [] : new Array(res.data.data.length).fill(false));
         }
       }).catch(err => message.error(err.message));
     }
@@ -162,10 +158,6 @@ export default function ColManage() {
 		secCols.length ? setSecCol(secCols[0].title) : setSecCol("");
 		secCols[0] && setSecColKey(secCols[0].key);
 	}, [secCols, data]);
-  
-  useEffect(() => {
-    articles.length === 0 ? setTableLoading(true) : setTableLoading(false);
-  }, [articles]);
 
   const columns = [
     {
@@ -187,7 +179,7 @@ export default function ColManage() {
       dataIndex: "pageState",
       key: "pageState",
       className: "column",
-      render: renderRadio
+      render: () => <Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked={true}/>
     },
     {
       title: "权重",
@@ -244,10 +236,10 @@ export default function ColManage() {
       width: 202
     },
     {
-      title: "页面状态",
+      title: "状态",
       dataIndex: "pageState",
       key: "pageState",
-      render: renderRadio
+      render: () => <Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked={true}/>
     },
     {
       title: "",
@@ -257,14 +249,7 @@ export default function ColManage() {
         <div>
           {
             <div className="article-oper">
-              {
-                !edit[index] ?
-                <>
-                  <Button className="edit-btn btn" onClick={() => handleEditClick(index)}><span>编辑</span></Button>
-                  <Button className="del-btn btn" onClick={() => handleDelClick(index)}><span>删除</span></Button>
-                </>:
-                <Button className="sure-btn btn" onClick={() => handleASureClick(index, record)}><span>确认</span></Button>
-              }
+                <Button className="edit-btn btn" onClick={() => handleEditClick(index)}><span>编辑</span></Button>
             </div>
           }
         </div>
@@ -285,7 +270,6 @@ export default function ColManage() {
   // 点击二级栏目
   const handleSecColClick = ({item, key}) => {
     // 需要后端文章数量的数据
-    setEdit([false, false, false]);
     setSecColKey(key);
     setSecCol(item.props.children);
   }
@@ -314,31 +298,14 @@ export default function ColManage() {
     setColsData(_colsData);
   }
   const handleEditClick = (index) => {
-    const _edit = [...edit];
-    _edit.splice(index, 1 ,true);
+    console.log(edit)
+    let _edit = [...edit];
+    _edit.splice(index, 1, true);
     setEdit(_edit);
-  }
-  const handleArtiChange = (e, index) => {
-    let _article = articles[index];
-    _article = {..._article, articleName: e.target.value};
-    let _articles = [...articles];
-    _articles.splice(index,1,_article);
-    setArticles(_articles);
-  }
-  const handleASureClick = index => {
-    const arr = [...edit];
-    arr.splice(index, 1 ,false);
-    setEdit(arr);
   }
   const handleRadioChange = (index, record, e) => {
     let _value = e.target.value;
-    if(editState === "二级" && _value !== (record.state ? 1 : 2)) {
-       let article = articles[index];
-       article = {...article, state: _value === 1 ? true : false};
-       let _articles = [...articles];
-       _articles.splice(index, 1, article);
-       setArticles(_articles);
-    } else if(editState === "一级" && _value !== (record.state ? 1 : 2)) {
+    if(editState === "一级" && _value !== (record.state ? 1 : 2)) {
       let _cols = [...editData];
       let _col = _cols[index];
       _col = {..._col, state: _value === 1 ? true : false};
@@ -360,11 +327,6 @@ export default function ColManage() {
     let index = _secCols.indexOf(_secCol);
     _secCol.title = secCol;
     _secCols.splice(index, 1, _secCol);
-  }
-  const handleDelClick = (index) => {
-    let _articles = [...articles];
-    _articles.splice(index, 1);
-    setArticles(_articles);
   }
   const DelSecCol = () => {
 
@@ -419,92 +381,98 @@ export default function ColManage() {
 	};
 	return (
 		<React.Fragment>
-			<div className="title">
-				<span>
-          栏目管理
-        </span>
-      </div> 
-      <div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px",marginBottom: "40px", paddingLeft: "250px"}}>
-        <ul className="list">
-          {
-            data.map(item => (
-              <li className="li" onClick={() => handleColClick(item)}>
-                <a className="navTextB">{item.title}</a>
-              </li>
-            ))
-          }
-        </ul>
-        <Button　
-          className="editBtn"
-          onClick={handleEditBtn}
-        >
-          编辑栏目
-				</Button>
-			</div>
-			<div className="columnContainer">
-				{
-					editState === "二级" &&
-          <Menu
-          	style={{width: 130, height: 483,}}        
-          	selectedKeys={[`${secColKey}`]}
-          	defaultSelectedKeys={["1"]}
-          	mode={"vertical"}
-          >
-          	<div className="col-title">{col}</div>
-          	{
-          		secCols.map(item => {
-          			return (
-          				<Menu.Item key={item.key} onClick={handleSecColClick}>{item.title}</Menu.Item>
-          			);
-          		})
-          	}
-          	<div style={{textAlign: "left",padding: "0 5px", marginTop: 35}}>
-          		<Button style={{width: 85, marginBottom: 10, padding: 0}} onClick={handleAddSeColClick}>
-          			<span style={{fontSize: 12, color: "#1890ff"}}>新增二级栏目</span>
-          		</Button>
-          	</div>
-          </Menu>
-				}
-				<div className="tableContainer">
-					{
-						editState === "二级" &&
-            <div className="tableHeader">
-            	<h2>
-            		{
-            			!secColEdit ?
-            				<span style={{fontSize: "18px"}}>{secCol}</span>:
-            				<Input style={{width: 100}} ref={input} onChange={(e) => setSecCol(e.target.value)} onPressEnter={handleSurePressEnter} defaultValue={secCol}/>
-            		}
-            	</h2>
-            	<div className="col-oper">
-            		{
-            			!secColEdit ?
-                  <>
-                    <Button className="btn" onClick={handleRenameClick}><span>重命名</span></Button>
-                    <Button className="btn danger" onClick={DelSecCol}><span>删除</span></Button>
-                  </>:
-            				<Button className="btn" onClick={handleRenameSureClick}><span>确定</span></Button>
-            		}
-            	</div>
+      {
+        edit.indexOf(true)===-1 ?
+        <>
+          <div className="title">
+            <span>
+              栏目管理
+            </span>
+          </div> 
+          <div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px",marginBottom: "40px", paddingLeft: "250px"}}>
+            <ul className="list">
+              {
+                data.map(item => (
+                  <li className="li" onClick={() => handleColClick(item)}>
+                    <a className="navTextB">{item.title}</a>
+                  </li>
+                ))
+              }
+            </ul>
+            <Button　
+              className="editBtn"
+              onClick={handleEditBtn}
+            >
+              编辑栏目
+            </Button>
+          </div>
+          <div className="columnContainer">
+            {
+              editState === "二级" &&
+              <Menu
+                style={{width: 130, height: 483,}}        
+                selectedKeys={[`${secColKey}`]}
+                defaultSelectedKeys={["1"]}
+                mode={"vertical"}
+              >
+                <div className="col-title">{col}</div>
+                {
+                  secCols.map(item => {
+                    return (
+                      <Menu.Item key={item.key} onClick={handleSecColClick}>{item.title}</Menu.Item>
+                    );
+                  })
+                }
+                <div style={{textAlign: "left",padding: "0 5px", marginTop: 35}}>
+                  <Button style={{width: 85, marginBottom: 10, padding: 0}} onClick={handleAddSeColClick}>
+                    <span style={{fontSize: 12, color: "#1890ff"}}>新增二级栏目</span>
+                  </Button>
+                </div>
+              </Menu>
+            }
+            <div className="tableContainer">
+              {
+                editState === "二级" &&
+                <div className="tableHeader">
+                  <h2>
+                    {
+                      !secColEdit ?
+                        <span style={{fontSize: "18px"}}>{secCol}</span>:
+                        <Input style={{width: 100}} ref={input} onChange={(e) => setSecCol(e.target.value)} onPressEnter={handleSurePressEnter} defaultValue={secCol}/>
+                    }
+                  </h2>
+                  <div className="col-oper">
+                    {
+                      !secColEdit ?
+                      <>
+                        <Button className="btn" onClick={handleRenameClick}><span>重命名</span></Button>
+                        <Button className="btn danger" onClick={DelSecCol}><span>删除</span></Button>
+                      </>:
+                        <Button className="btn" onClick={handleRenameSureClick}><span>确定</span></Button>
+                    }
+                  </div>
+                </div>
+              }
+              <Table 
+                columns={editState === "二级" ? secondaryColumn : columns} 
+                dataSource={editState === "二级" ? (tableLoading ? [] : articles) : editData} 
+                pagination={true}
+                loading={tableLoading}
+              />
             </div>
-          }
-          <Table 
-            columns={editState === "二级" ? secondaryColumn : columns} 
-            dataSource={editState === "二级" ? (tableLoading ? [] : articles) : editData} 
-            pagination={true}
-            loading={tableLoading}
-          />
-        </div>
-      </div>
-      <div className="submitBtnContainer">
-        <Button 
-          className="submitBtn"
-          loading = {loading}
-          onClick = {handleSaveClick}
-        >
-          保存
-				</Button>
-			</div>
+          </div>
+          <div className="submitBtnContainer">
+            <Button 
+              className="submitBtn"
+              loading = {loading}
+              onClick = {handleSaveClick}
+            >
+              保存
+            </Button>
+          </div>
+        </>:
+        <Redirect from="/manage/column" to="/manage/change"/>
+      }
 		</React.Fragment>
 	);
 }
