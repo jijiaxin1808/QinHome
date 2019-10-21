@@ -13,7 +13,7 @@ function RouterConfig({ history }) {
 				{/* <Route path="/"  component={Home} /> */}
 				<Route path="/index"  component={MainApp} />
 				<Route path="/login"  component={Login} />
-				<Route path="/services" component={Services}/>
+				{/* <Route path="//services" component={Services}/> */}
 				<PrivateRoute path="/manage" component={Manage} />
 
 				<Redirect from="/" to="/index/index" />

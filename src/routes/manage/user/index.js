@@ -109,7 +109,7 @@ class NormalLoginForm extends React.Component {
             valuePropName: 'checked',
             initialValue: true,
           })(<Checkbox>Remember me</Checkbox>)} */}
-  				<Button type="primary" htmlType="submit"    >
+  				<Button htmlType="submit"    >
             修改密码
   				</Button>
   			</Form.Item>
@@ -146,9 +146,9 @@ const User = (props)=> {
 						</span>
 				
 					</div> 
-					<p style = {{fontSize:"18px",margin:"0 auto"}}>{ `用户： ${userData.name }`}</p>
+					<p style = {{fontSize:"18px",margin:"20px auto"}}>{ `用户： ${userData.name }`}</p>
 					{/* <p>{ `姓名： ${props.login.userName}`}</p> */}
-					<p style = {{fontSize:"18px",margin:"0 auto"}}>{ `部门:  ${userData.section}`}</p>
+					<p style = {{fontSize:"18px",margin:"20px auto"}}>{ `部门:  ${userData.section}`}</p>
 				</div>
 		
 				<Row >

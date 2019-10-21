@@ -5,10 +5,10 @@ import { ContentUtils } from "braft-utils";
 import { Form, Input, Button,  Row, Col ,Cascader, Upload, Icon, Modal, Select, Card, Tag} from "antd";
 import "./index.css";
 import axios from "axios";
-import getToken from './getToken'
+import getToken from "./getToken";
 
-const QINIU_SERVER = 'http://upload-z1.qiniup.com'
-const QINIU_PATH = 'http://qiniu.waidzsalome.cn'
+const QINIU_SERVER = "http://upload-z1.qiniup.com";
+const QINIU_PATH = "http://qiniu.waidzsalome.cn";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -56,17 +56,17 @@ function FormDemo (props) {
 		}))
 	}));
 
-	const [token, setToken] = useState('');
+	const [token, setToken] = useState("");
 	const getUploadToken = () => {
 	  console.log(getToken());
-    setToken(getToken());
-  }
+		setToken(getToken());
+	};
 
-  const handleOnChange = ({file}) => {
-const { response = {}} = file;
-console.log(response);
-console.log(response.hash)
-  }
+	const handleOnChange = ({file}) => {
+		const { response = {}} = file;
+		console.log(response);
+		console.log(response.hash);
+	};
 
 	const handleSubmit = (event) => {
 
@@ -82,7 +82,7 @@ console.log(response.hash)
   			};
 
   			axios({
-					method: 'post',
+					method: "post",
 					url: "http://yjxt.elatis.cn/posts/create",
 					headers: {
 						"content-type": "application/json",
@@ -94,45 +94,45 @@ console.log(response.hash)
 				]).catch( err => {
 					console.log(err);
 				});
-  			console.log('submitData',submitData);
+  			console.log("submitData",submitData);
   		}
   	});
 
 	};
 
-	const [userData, setUserData] = useState([])
+	const [userData, setUserData] = useState([]);
 	const [visible, setVisible] = useState(false);
 	const [confirmLoading, setConfirmLoading] = useState(false);
 
 	const showModal = () => {
 	  setVisible(true);
-    axios({
-      method: "get",
-      url:"http://yjxt.elatis.cn/users/getByRole",
-      headers: {
-        "content-type": "application/json",
-        "token": localStorage.getItem("token")
-      }
-    }).then(res=>{
-      console.log(res.data)
-      if(res.data.code === 0) {
-        console.log('success',res.data.data)
-        setUserData(res.data.data)
-      }
+		axios({
+			method: "get",
+			url:"http://yjxt.elatis.cn/users/getByRole",
+			headers: {
+				"content-type": "application/json",
+				"token": localStorage.getItem("token")
+			}
+		}).then(res=>{
+			console.log(res.data);
+			if(res.data.code === 0) {
+				console.log("success",res.data.data);
+				setUserData(res.data.data);
+			}
 		}).catch((err)=>{
-      console.log(err)
-		})
+			console.log(err);
+		});
 
 	};
 
-  const modalOptions = userData.map(item => ({
-    id: item.id,
-    number: item.number,
-    name: item.name,
-    section: item.section,
-  }));
+	const modalOptions = userData.map(item => ({
+		id: item.id,
+		number: item.number,
+		name: item.name,
+		section: item.section,
+	}));
 
-  console.log('modal',modalOptions)
+	console.log("modal",modalOptions);
 
 	const handleOk = () => {
 	  setConfirmLoading(true);
@@ -144,24 +144,24 @@ console.log(response.hash)
 
 	const handleCancel = () => {
 	  setVisible(false);
-  }
+	};
 	const onChange =(value) => {
-		console.log(value)
+		console.log(value);
 	};
   	const controls = ["bold", "italic", "underline", "text-color", "separator", "link", "separator", "media" ];
   	const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
 
-  const uploadHandler = (param) => {
-    if (!param.file) {
-      console.log("err");
-      return false;
-    }
-    // setEditorState({editorState: ContentUtils.insertMedias(editorState, [{
-    //   type: "IMAGE",
-    //   url: URL.createObjectURL
-    // }])
-    // });
-  };
+	const uploadHandler = (param) => {
+		if (!param.file) {
+			console.log("err");
+			return false;
+		}
+		// setEditorState({editorState: ContentUtils.insertMedias(editorState, [{
+		//   type: "IMAGE",
+		//   url: URL.createObjectURL
+		// }])
+		// });
+	};
   	const extendControls =[
 		{
 			key: "antd-uploader",
@@ -169,12 +169,12 @@ console.log(response.hash)
 			component: (
 				<Upload
 					accept="image/*"
-          action={QINIU_SERVER}
-          data={{token: token}}
-          beforeUpload={getUploadToken}
+					action={QINIU_SERVER}
+					data={{token: token}}
+					beforeUpload={getUploadToken}
 					showUploadList={false}
 					customRequest={uploadHandler}
-          onChange={handleOnChange}
+					onChange={handleOnChange}
 				>
 					{/* 这里的按钮最好加上type="button"，以避免在表单容器中触发表单提交，用Antd的Button组件则无需如此 */}
 					<button type="button" className="control-item button upload-button" data-title="插入图片">
@@ -189,7 +189,7 @@ console.log(response.hash)
   		<div className="demo-container">
   			<div className = "title">
   				<span>
-            内容管理
+            创建文章
   				</span>
   			</div>
   			<Form onSubmit={handleSubmit}>
@@ -252,59 +252,59 @@ console.log(response.hash)
 
   					<Row>
   						<Col span={4} offset={4}>
-                <Button size="large" type="primary" htmlType="submit">保存草稿</Button>
+							<Button size="large"  htmlType="submit">保存草稿</Button>
   						</Col>
   						<Col span={4} offset={4}>
-  							<Button size="large" type="primary" htmlType="button" onClick={showModal}>预览发布</Button>
-                <Modal
-                  title="请求发布"
-                  visible={visible}
-                  onOk={handleOk}
-                  confirmLoading={confirmLoading}
-                  onCancel={handleCancel}
-                >
-                  <Row>
-                    <Col span={10}>
-                      <Card>
-                        <h1 style={{textAlign: 'center'}}>生成预览</h1>
-                        <p>
+  							<Button size="large"  htmlType="button" onClick={showModal}>预览发布</Button>
+							<Modal
+								title="请求发布"
+								visible={visible}
+								onOk={handleOk}
+								confirmLoading={confirmLoading}
+								onCancel={handleCancel}
+							>
+								<Row>
+									<Col span={10}>
+										<Card>
+											<h1 style={{textAlign: "center"}}>生成预览</h1>
+											<p>
                           “秦皇岛市安全生产培训机构名单”
-                        </p>
-                        <Tag className="tag">
+											</p>
+											<Tag className="tag">
                           https://gw6wov.axshare.com
-                        </Tag>
-                        <Button size="middle" type="primary" htmlType="button" block style={{marginBottom: '10px'}}>
+											</Tag>
+											<Button size="middle"  htmlType="button" block style={{marginBottom: "10px"}}>
                           更新页面
-                        </Button>
-                        <Button size="middle" block>
+											</Button>
+											<Button size="middle" block>
                           生成新地址
-                        </Button>
-                      </Card>
-                    </Col>
-                    <Col span={12} offset={2}>
-                      <Select defaultValue="常用联系人" style={{width: 200}}>
-                        {
-                          modalOptions.map(item => (
-                            <Option
-                              key={item.id}
-                              value={item.name}
-                            >
-                              {item.name}
-                              {item.section}
-                              {item.number}
-                            </Option>
-                          ))
-                        }
-                      </Select>
-                      <Button size="small" type="primary" htmlType="button" style={{marginTop: '50px'}}>
+											</Button>
+										</Card>
+									</Col>
+									<Col span={12} offset={2}>
+										<Select defaultValue="常用联系人" style={{width: 200}}>
+											{
+												modalOptions.map(item => (
+													<Option
+														key={item.id}
+														value={item.name}
+													>
+														{item.name}
+														{item.section}
+														{item.number}
+													</Option>
+												))
+											}
+										</Select>
+										<Button size="small"  htmlType="button" style={{marginTop: "50px"}}>
                         发送申请
-                      </Button>
-                    </Col>
-                  </Row>
-                </Modal>
+										</Button>
+									</Col>
+								</Row>
+							</Modal>
   						</Col>
   						<Col span={4} offset={4}>
-  							<Button size="large" type="primary" htmlType="button">直接发布</Button>
+  							<Button size="large"  htmlType="button">直接发布</Button>
   						</Col>
   					</Row>
   				</Form.Item>
