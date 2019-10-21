@@ -299,10 +299,11 @@ export default function ColManage() {
     setColsData(_colsData);
   }
   const handleEditClick = (index) => {
-    console.log(edit)
-    let _edit = [...edit];
-    _edit.splice(index, 1, true);
-    setEdit(_edit);
+    window.location.href = `/manage/change/id=${index}`;
+    // console.log(edit)
+    // let _edit = [...edit];
+    // _edit.splice(index, 1, true);
+    // setEdit(_edit);
   }
   const handleRenameClick = () => {
     setSecColEdit(true);
@@ -371,7 +372,7 @@ export default function ColManage() {
 	return (
 		<React.Fragment>
       {
-        edit.indexOf(true)===-1 ?
+        // edit.indexOf(true)===-1 ?
         <>
           <div className="title">
             <span>
@@ -459,8 +460,9 @@ export default function ColManage() {
               保存
             </Button>
           </div>
-        </>:
-        <Redirect from="/manage/column" to="/manage/context"/>
+        </>
+        // :
+        // <Redirect from="/manage/column" to="/manage/context"/>
       }
 		</React.Fragment>
 	);
