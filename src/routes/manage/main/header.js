@@ -33,11 +33,11 @@ export default class Top extends React.Component {
     					if(value=="") {
     					}
     					else { window.location.href = `/manage/bmsSearch?key=${value}`;}
-    				}} enterButton={true} 
+    				}} 
     				  />
 					
     			<Icon
-				style = {{marginRight:"15px"}}
+    				style = {{marginRight:"15px"}}
     				className="trigger"
     				type={this.props.collapsed ? "menu-unfold" : "menu-fold"}
     				onClick={this.props.toggle}

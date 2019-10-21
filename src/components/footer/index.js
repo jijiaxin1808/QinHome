@@ -17,10 +17,16 @@ const RealFooter = () => {
 			</div>
 			<div className='footer-info'>
 				<p>主办单位：秦皇岛市应急管理局  地址：秦皇岛市燕山大街109号</p>
-				<p>电话： 0335-3650560  <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13030202002230" style={{}}>冀公网安备： 13030202002230</a>
-					<br/>网站标识码： 1303000020  邮政编码： 066001 
+				<p>电话： 0335-3650560  <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13030202002230" 
+					style={{fontSize:"15px",
+						color: "#FFFFFF"
+					}}>冀公网安备： 13030202002230</a>
+				<br/>网站标识码： 1303000020  邮政编码： 066001 
 				</p>
-				<p>ICP备案号： 冀ICP备15003849号  技术支持： 秦皇岛昊锐科技有限公司</p>
+				<p><a href="http://www.beian.miit.gov.cn/state/outPortal/loginPortal.action" 
+					style={{fontSize:"15px",
+						color: "#FFFFFF"
+					}}>ICP备案号： 冀ICP备15003849号</a>  技术支持： 秦皇岛昊锐科技有限公司</p>
 			</div>
 			<div className='footer-wechat'>
 				{/* <img

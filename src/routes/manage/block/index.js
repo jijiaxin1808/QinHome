@@ -79,7 +79,7 @@ const HeaderScroll = () => {
 			key: "title",
 			render: (content, id) => (
 				<Input
-					placeholder={content}
+				defaultValue={content}
 					onChange={e => {
 						const newData = data.map(item => {
 							console.log(id.id, "id");
@@ -105,7 +105,7 @@ const HeaderScroll = () => {
 			key: "href",
 			render: (href, id) => (
 				<Input
-					placeholder={href}
+				defaultValue={href}
 					onChange={e => {
 						const newData = data.map(item => {
 							console.log(id.id, "id");
@@ -327,7 +327,7 @@ const Carousel = () => {
 			key: "title",
 			render: (content, id) => (
 				<Input
-					placeholder={content}
+				defaultValue={content}
 					onChange={e => {
 						const newData = data.map(item => {
 							console.log(id.id, "id");
@@ -359,7 +359,7 @@ const Carousel = () => {
 			key: "href",
 			render: (href, id) => (
 				<Input
-					placeholder={href}
+				defaultValue={href}
 					onChange={e => {
 						const newData = data.map(item => {
 							console.log(id.id, "id");
@@ -549,7 +549,7 @@ const HomeTopic = () => {
 			key: "content",
 			render: (content, id) => (
 				<Input
-					placeholder={content}
+				defaultValue={content}
 					onChange={e => {
 						const newData = data.map(item => {
 							console.log(id.id, "id");
@@ -581,7 +581,7 @@ const HomeTopic = () => {
 			key: "url",
 			render: (href, id) => (
 				<Input
-					placeholder={href}
+				defaultValue={href}
 					onChange={e => {
 						const newData = data.map(item => {
 							console.log(id.id, "id");

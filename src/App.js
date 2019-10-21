@@ -9,6 +9,7 @@ import Header from "./components/header";
 import Message from "./routes/message";
 import headerData from "./config/headerData";
 import Search from "./routes/search";
+import Services from "./routes/services";
 
 const routers= [
 	{
@@ -33,6 +34,11 @@ const routers= [
 		name: "栏目",
 		path: "/index/message",
 		component: Message,
+		key: 2
+	},	{
+		name: "栏目",
+		path: "/index/services",
+		component: Services,
 		key: 2
 	},
 	{

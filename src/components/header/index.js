@@ -20,7 +20,7 @@ function  Header (props) {
 		});
 	}, []);
 	return (
-  <><div className='header'>
+  <><div className='header-h'>
     	<ToTop />
     	<div className='home-header'>
   		<div style = {{width:1080, margin: "0 auto"}}>

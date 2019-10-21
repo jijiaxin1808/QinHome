@@ -129,8 +129,13 @@ const Context = (props)=> {
 		,[]);
 	return(
 		<div>
+			<div className = "title">
+  				<span>
+            文章管理
+  				</span>
+  			</div>
 			<div className={"buttonSbar"}>
-				<Button   className={"button"} onClick = {()=>{window.location.href="/manage/create";}}>新建文章</Button>
+				<Button   className={"button-context"} type = "primary" onClick = {()=>{window.location.href="/manage/create";}}>新建文章</Button>
 			</div>
 			<Table columns={columns} dataSource={data} />
 		</div>

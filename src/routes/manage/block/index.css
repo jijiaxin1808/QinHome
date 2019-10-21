@@ -19,6 +19,14 @@
   margin-right: 15px;
   margin-bottom: 5px;
 }
+.button-context {
+  float: right;
+  margin-right: 15px;
+  margin-bottom: 5px;
+}
+.button-context>span {
+  color: white;
+}
 .buttonSbar {
   display: flex;
   justify-content: flex-end;
