@@ -1,18 +1,16 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
-
 import "./index.less";
 import System from "../../components/system";
-// import Footer from '../../components/footer'
 import HomeTopics from "../../components/homeTopics";
 import HomeCarousel from "../../components/home-carousel";
-// import Header from '../../components/header'
 import Safe from "./safe";
 import Tabs from "../../components/tabs";
 import { Link } from "react-router-dom";
 import { message } from "antd";
 import friendlinkData from "../../config/friendlinkData";
 import axios from "axios";
+import TextScroll from 'react-textscroll';
 
 const data = [
 	{

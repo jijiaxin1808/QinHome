@@ -35,7 +35,6 @@ export default function ColManage() {
   const [saveClick, setSaveClick] = useState(false);
   // 存放文章分类的变量
   const [artiCategory, setArtiCategory] = useState("");
-  // 需要一个保存post数据(包括更改的二级栏目和文章列表)的变量，由category控制
   const [tableLoading, setTableLoading] = useState(true);
   
 	const input = useRef(null);
@@ -74,7 +73,6 @@ export default function ColManage() {
   }, []);
 
   useEffect(() => {
-    console.log(colsData)
     setArtiCategory(`/${col}/${secCol}`);
     setTableLoading(true);
   }, [secCol]);
@@ -299,7 +297,6 @@ export default function ColManage() {
     setColsData(_colsData);
   }
   const handleEditClick = (index) => {
-    console.log(edit)
     let _edit = [...edit];
     _edit.splice(index, 1, true);
     setEdit(_edit);
