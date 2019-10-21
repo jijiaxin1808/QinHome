@@ -107,11 +107,11 @@ class Reply extends React.Component{
       		}
       	}).then(res=>{
       		if(res.data.code===0){
-                  message.success("删除成功")
-                  this.getData()
-              }else{
-                  message.error("错误请重试")
-              }
+      			message.success("删除成功")
+      			this.getData()
+      		}else{
+      			message.error("错误请重试")
+      		}
       	})
       }
       render(){
@@ -126,13 +126,24 @@ class Reply extends React.Component{
       			dataIndex: 'category',
       			key: 'name',
     
-      		},
+			  },
+			  {
+				 title:"状态",
+				 key:"status",
+				 render:(text,record) =>{
+      				return  (
+      					<div>
+      						{record.reply?"已回复":"未回复"}
+					 </div>
+					  )
+				 }
+			  },
       		{
-      			title: 'Action',
+      			title: '操作',
       			key: 'action',
       			render: (text, record) => (
       				<div>
-      					<Button onClick={this.showModal.bind(this,record)}>回复</Button>
+      					<Button onClick={this.showModal.bind(this,record)}>{record.reply?"查看":"回复"}</Button>
       					<Divider type="vertical"/>
       					<Button onClick={this.handleDelete.bind(this,record)}>删除</Button>
            

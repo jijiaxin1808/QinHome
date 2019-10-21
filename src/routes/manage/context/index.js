@@ -23,7 +23,7 @@ const  DeleteArticle  = (props)=> {
 			params: {
 				id:props.id
 			},
-			Headers: {
+			headers: {
 				"token":localStorage.getItem("token"),
 				"Content-Type": "application/json"
 			}
@@ -85,7 +85,7 @@ const columns = [
 	},
 	{
 		title: "页面状态",
-		key: "action",
+		key: "status",
 		dataIndex:"action",
 		render:isShow=>(
 			<Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked = {isShow}  />
@@ -99,7 +99,7 @@ const columns = [
 		)
 	},{
 		title: "删除",
-		key: "action",
+		key: "delete",
 		dataIndex:"action",
 		render:(text,record)=> (
 			<DeleteArticle  id = {record.id}>删除文章</DeleteArticle>

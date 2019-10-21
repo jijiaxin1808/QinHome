@@ -273,10 +273,10 @@ function FormDemo (props) {
 											<Tag className="tag">
                           https://gw6wov.axshare.com
 											</Tag>
-											<Button size="middle"  htmlType="button" block style={{marginBottom: "10px"}}>
+											<Button  htmlType="button" block style={{marginBottom: "10px"}}>
                           更新页面
 											</Button>
-											<Button size="middle" block>
+											<Button  block>
                           生成新地址
 											</Button>
 										</Card>
