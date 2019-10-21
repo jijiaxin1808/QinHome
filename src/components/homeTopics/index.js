@@ -105,6 +105,4 @@ const HomeTopics = (props) => {
 
 
 };
-
-
 export default HomeTopics;
