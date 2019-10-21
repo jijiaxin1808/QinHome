@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Pagination, Spin } from "antd";
+import { Pagination, Skeleton } from "antd";
 import { connect } from "dva";
 import { Link } from "react-router-dom";
 import "./index.less";
@@ -92,10 +92,8 @@ const MessageContent = (props)=> {
 		}
 		console.log("total:" ,total,"data: ",data)
 		return (
-			<Spin />
+			<Skeleton />
 		);
 	}
-
-	
 };
 export default connect(({home})=>({home}))(MessageContent);

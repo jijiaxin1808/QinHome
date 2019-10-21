@@ -27,7 +27,7 @@ function  Header (props) {
     	<Search
     		placeholder='请输入搜索关键字'
     		onSearch={value => {
-  					window.history.pushState({},"","/index/search");
+  					window.history.pushState({},"",`/index/search?key=${value}`);
   					window.location.reload();
   				}}
     		style={{ width: 200, float: "right", marginTop: "70px" }}

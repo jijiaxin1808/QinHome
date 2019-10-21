@@ -4,18 +4,26 @@
 .columnContainer {
   display: flex;
   justify-content: space-around;
-  padding: 0 40px;
-  width: 1300px;
+  padding: 0 40px 0 116px;
+  width: 1385px;
   .ant-menu {
     background: #fafafa;
     border-width: 0;
     text-align: center;
-    box-shadow: 10px 9px 9px rgba(0, 0, 0, 0.08);
+    box-shadow: 10px 9px 9px rgba(0, 0, 0, 0.08)!important;
   }
   .ant-menu-item {
     color: rgba(0, 0, 0, 0.75);
     text-align: left;
   }
+}
+.ant-table-row .ant-table-row-cell-break-word span {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  width: 200px;
 }
 .radioGroup {
   display: flex;
@@ -126,32 +134,4 @@
   text-align: center;
   font-size: 20px;
   background: #fafafa;
-}
-.index-search-list {
-  padding-left: 144px;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #186ec5;
-  li a {
-    display: block;
-    padding: 5px 0 5px 17px;
-    font-size: 16px;
-    position: relative;
-    &:before {
-      content: "·";
-      top: -5px;
-      left: 0;
-      position: absolute;
-      font-weight: bolder;
-      font-size: 29px;
-      color: rgb(24, 144, 255);
-    }
-  }
-  li a .time {
-    color: #999;
-    float: right;
-  }
-  & .active:hover a {
-    color: rgb(24, 144, 255);
-  }
 }
