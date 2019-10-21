@@ -6,8 +6,8 @@ import axios from "axios";
 
 const { Search } = Input;
 const alterAricle = (id)=> {
-	console.log("11");
-	window.location.href = `/manage/create?id=${id}`;
+	console.log(id);
+	window.location.href = `/manage/change/${id}`;
 };
 const  DeleteArticle  = (props)=> {
 	const [ visible, setVisible ] = useState(false);
@@ -94,15 +94,15 @@ const columns = [
 		title: "操作",
 		key: "action",
 		dataIndex:"action",
-		render: id => (
-			<Button onClick = {()=>{alterAricle(id);}}>修改文章</Button>
+		render: (text,record) => (
+			<Button onClick = {()=>{alterAricle(record.id);}}>修改文章</Button>
 		)
 	},{
 		title: "删除",
 		key: "action",
 		dataIndex:"action",
-		render: id=> (
-			<DeleteArticle  id = {id}>删除文章</DeleteArticle>
+		render:(text,record)=> (
+			<DeleteArticle  id = {record.id}>删除文章</DeleteArticle>
 		)
 
 	},

@@ -52,49 +52,34 @@ export default function Safe () {
 		setTimer(null);
 	};
 
-	const handleMouseLeave = () => {
-		console.log(leftTimer);
-		leftTimer && clearInterval(leftTimer);
-		setTimer(setInterval(timerFunc, 20));
-	};
-	if(annouces.length !==0) {
-		return (
-			<div className='safe'>
-				<a>
-					<i />
-				</a>
-				<div className='aqts'>
-					<div className='temp-wrap'>
-						<ul className='aqtslist' ref={ref} style={style}>
-							{
-								annouces.map((item, index) => {
-									return (
-	
-										<li key={index} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-											<Link to={item.href}>{item.title}</Link>
-										</li>
-									);
-								})
-							}
-						</ul>
-					</div>
-				</div>
-				<Weather Data={{
-					weatherType: "1",
-					Max: "21",
-					Min: "0",
-					type: "优"
-				}}
-				/>
-			</div>);
-	}
-	else {
-		return (
-			<div>
-				公告
-			</div>
-		)
-	}
-	
-	
+  const handleMouseLeave = () => {
+    console.log(leftTimer)
+    leftTimer && clearInterval(leftTimer)
+    setTimer(setInterval(timerFunc, 20))
+  }
+
+  return (
+    <div className='safe'>
+      <a>
+        <i />
+      </a>
+      <div className='aqts'>
+        <div className='temp-wrap'>
+          <ul className='aqtslist' ref={ref} style={style}>
+            {
+              annouces.map((item, index) => {
+                return (
+
+                  <li key={index} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                    <Link to={item.href}>{item.title}</Link>
+                  </li>
+                )
+              })
+            }
+          </ul>
+        </div>
+      </div>
+      <Weather />
+    </div>
+  )
 }

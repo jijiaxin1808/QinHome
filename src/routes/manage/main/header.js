@@ -28,6 +28,12 @@ export default class Top extends React.Component {
     render() {
     	return (
     		<Header style={{ background: "#fff"}} className = "manage-header">
+			    			<Icon
+    				style = {{marginRight:"15px"}}
+    				className="trigger"
+    				type={this.props.collapsed ? "menu-unfold" : "menu-fold"}
+    				onClick={this.props.toggle}
+    			/>
     			<Search placeholder="请输入搜索关键字" style = {{width:"300px",marginRight:"15px"}}
     				onSearch={ (value) => {
     					if(value=="") {
@@ -36,12 +42,6 @@ export default class Top extends React.Component {
     				}} 
     				  />
 					
-    			<Icon
-    				style = {{marginRight:"15px"}}
-    				className="trigger"
-    				type={this.props.collapsed ? "menu-unfold" : "menu-fold"}
-    				onClick={this.props.toggle}
-    			/>
     			<Menu mode="horizontal" className="logOut" onClick={this.clear}>
     				<SubMenu title={<span><Icon type="user" />{ this.state.username }</span>} >
     					<Menu.Item key="logOut"><Link to="/login" >退出</Link></Menu.Item>

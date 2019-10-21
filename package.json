@@ -13,7 +13,7 @@
     "braft-editor": "^2.3.8",
     "braft-utils": "^3.0.12",
     "dva": "^2.4.1",
-    "qiniu": "^7.2.2",
+    "qiniu": "^7.2.1",
     "react": "^16.10.2",
     "react-dom": "^16.2.0"
   },
