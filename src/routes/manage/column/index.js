@@ -2,11 +2,9 @@ import React, {useState,useEffect,useRef} from "react";
 import {Radio,Input,Icon,Table,Button,Menu,Switch,message,Tooltip} from "antd";
 import "./index.less";
 import axios from "axios";
-import { Redirect } from "react-router";
 
 export default function ColManage() {
-  // 
-  const [initialState, setInitialState] = useState({});
+
   // 用与更新后端接口的临时变量
   const [colsData, setColsData] = useState([]);
   // 后端data
@@ -300,6 +298,7 @@ export default function ColManage() {
     let _edit = [...edit];
     _edit.splice(index, 1, true);
     setEdit(_edit);
+    window.location.href = `/manage/change/${index}`;
   }
   const handleRenameClick = () => {
     setSecColEdit(true);
@@ -368,7 +367,6 @@ export default function ColManage() {
 	return (
 		<React.Fragment>
       {
-        edit.indexOf(true)===-1 ?
         <>
           <div className="title">
             <span>
@@ -456,8 +454,7 @@ export default function ColManage() {
               保存
             </Button>
           </div>
-        </>:
-        <Redirect from="/manage/column" to="/manage/context"/>
+        </>
       }
 		</React.Fragment>
 	);

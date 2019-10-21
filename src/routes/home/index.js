@@ -4,10 +4,10 @@ import "./index.less";
 import System from "../../components/system";
 import HomeTopics from "../../components/homeTopics";
 import HomeCarousel from "../../components/home-carousel";
-import Safe from "./safe";
+import Weather from "./weather";
 import Tabs from "../../components/tabs";
 import { Link } from "react-router-dom";
-import { message } from "antd";
+import { message, Tooltip } from "antd";
 import friendlinkData from "../../config/friendlinkData";
 import axios from "axios";
 import TextScroll from 'react-textscroll';
@@ -118,29 +118,50 @@ const FooterTopic = () => {
 };
 const Home = () => {
 	const [colsData, setColsData] = useState([]);
+	const [backgroundUrl, setbackgroundUrl] = useState("");
+	const [annouces, setAnnouces] = useState([]);
+
 	useEffect(() => {
 		axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
-			console.log(res);
 			if (res.data.code === 0) {
 				setColsData(res.data.data);
 			}
 		}).catch(err => {
 			message.error(err);
 		});
-	},[]);
-	const [backgroundUrl, setbackgroundUrl] = useState("");
-	useEffect(() => {
+		axios.get("http://yjxt.elatis.cn/options/name/safe").then((res) => {
+			if (res.data.code === 0) {
+				setAnnouces(res.data.data.map(item => (
+						<a title={item.title} href={`${item.href}`} style={{color: "#333", fontSize: "18px"}}>{item.title}</a>
+				)))
+			}
+		});
 		axios.get("http://yjxt.elatis.cn/options/name/background").then((res) => {
 			if (res.data.code === 0) {
 				setbackgroundUrl(res.data.data[0].picUrl);
-				console.log(res.data.data[0].picUrl, "background");
 			}
 		});
-	}, []);
+	},[]);
+
 	return (
 		<div className='home' style={{ backgroundImage: `url(${backgroundUrl})`, backgroundSize: "cover", width: "100%", margin: "0 auto" }}>
 			<div className='mainBan'>
-				<Safe />
+				<div className="info-container">
+					<span className="home-info">
+						<i className="info-icon">公告</i>
+					</span>
+					{
+						annouces.length!==0 &&
+						<div style={{marginLeft: -97}}>
+							<TextScroll 
+								mode="vertical"
+								text={annouces}
+								speed={3000}
+							/>
+						</div>
+					}
+					<Weather />
+				</div>
 				<div className='container' style={{ display: "flex", flexFlow: "row nowrap", width: "1080px", margin: "0 auto" }}>
 					<HomeCarousel data={data} />
 					<Tabs data={tabsData} />
@@ -149,7 +170,6 @@ const Home = () => {
 				<HomeTopics colsData={colsData} />
 				<FooterTopic />
 				<FriendLink />
-				{/* <Footer /> */}
 			</div>
 		</div>
 	);
