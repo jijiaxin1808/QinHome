@@ -84,8 +84,8 @@ const HomeTopics = (props) => {
 							return (
 								<HomeTopic 
 									title = {colsData[index].title} 
-									href = {`/index/message?type=${index+3}`} 
-									//  type =  { item.key } 
+									href = {`/index/message?type=${index+2}`} 
+									 type =  { index+1 } 
 									data = {item}
 								/>
 							);
