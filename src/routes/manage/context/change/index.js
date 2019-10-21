@@ -59,10 +59,10 @@ const changeContext=(props)=>{
 					content: values.content.toHTML()// or values.content.toHTML()
 				};
 				axios({
-					method: 'post',
+					method: "post",
 					url: "http://yjxt.elatis.cn/posts/alter",
 					headers: {
-						"content-type": "application/json",
+						"Content-type": "application/json",
 						"token": localStorage.getItem("token")
 					},
 					data: submitData
@@ -177,7 +177,7 @@ const changeContext=(props)=>{
 								message: "请填写发布分类"
 							}]
 						})(
-							<Cascader options={options} onChange={onChange} placeholder="Please select"/>
+							<Cascader options={options} onChange={onChange} placeholder="请选择文章路径"/>
 						)
 					}
 				</Form.Item>

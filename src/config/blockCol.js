@@ -45,7 +45,7 @@ const picUrlButton = (picUrl)=> {
 	if(picUrl) {
 		return (
 			<Fragment>
-				<Button>查看图片</Button>
+				<Button >查看图片</Button>
 				<Button>修改图片</Button>
 			</Fragment>
 		)

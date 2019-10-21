@@ -36,3 +36,6 @@
   flex-direction: column;
   padding: 0 50px;
 }
+.ant-carousel .slick-dots-bottom {
+  bottom: 40px;
+}

@@ -25,7 +25,7 @@ const HomeCarousel = (props) => {
 								background:`url(${item.picUrl})`,backgroundSize:"cover",backgroundRepeat:"no-repeat" }} >
 							</div>
 							<div className='carousel-bar'>
-								<p>
+								<p style  = {{marginLeft: "20px"}}>
 									{item.title}
 								</p>
 							</div>
