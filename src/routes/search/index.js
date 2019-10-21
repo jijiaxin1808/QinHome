@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 import urlHandle from "../../config/urlHandle";
 import {message, Spin, Pagination} from "antd";
-import "./index.less"
+import "./index.less";
 
 export default function Search(props) {
 
@@ -14,6 +14,7 @@ export default function Search(props) {
   const [key] = useState(decodeURIComponent(urlHandle("key")));
 
   useEffect(() => {
+
     key && 
     axios.get("http://yjxt.elatis.cn/posts/searchTitle",{
       headers: {
@@ -29,6 +30,7 @@ export default function Search(props) {
       }
     }).catch(err => message.error(err));
   }, [key]);
+
   useEffect(() => {
     key &&
     axios.get("http://yjxt.elatis.cn/posts/searchTitle",{
@@ -42,15 +44,20 @@ export default function Search(props) {
         offset: (curPage-1) * 5,
       },
     }).then(res => {
-      if(res.data.code === 0) {
+      if(!res.data.code) {
         setLoading(false);
-        setSearchList(res.data.data);
+        if(!res.data.data.length ) {
+          setSearchList("none");
+        } else {
+          setSearchList(res.data.data);
+        }
+        
       }
     }).catch(err => message.error(err));
+
   }, [key, curPage]);
 
   useEffect(() => {
-
     !key &&
     axios.get("http://yjxt.elatis.cn/posts/listPosts",{
       headers: {
@@ -60,7 +67,7 @@ export default function Search(props) {
         status: "draft"
       },
     }).then(res => {
-      if(res.data.code === 0) {
+      if(!res.data.code) {
         setTotal(res.data.data.length);
       }
     }).catch(err => {
@@ -80,9 +87,9 @@ export default function Search(props) {
         offset: (curPage-1) * 5,
       }, 
     }).then(res => {
-      if(res.data.code === 0) {
+      if(!res.data.code) {
         setLoading(false);
-        if(res.data.data.length === 0) {
+        if(!res.data.data.length) {
           setSearchList("none");
         }
         else 
