@@ -8,7 +8,14 @@
         align-items: center;
         /* border-bottom:  1px solid #979797; */
 }
-.alter {
+.user-alter {
+    display: flex !important;
+    justify-content: center;
+}
+.user-form {
     display: flex;
     justify-content: center;
+}
+.ant-layout-content {
+    min-height: auto;
 }

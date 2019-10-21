@@ -12,6 +12,11 @@ export default {
 		}
 	},
 	reducers: {
-
+		init(state,action) {
+			return {
+				...state,
+				...action.payload
+			};
+		}
 	}
 }
