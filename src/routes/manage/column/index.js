@@ -1,5 +1,5 @@
 import React, {useState,useEffect,useRef} from "react";
-import {Radio,Input,Icon,Table,Button,Menu,Switch,message} from "antd";
+import {Radio,Input,Icon,Table,Button,Menu,Switch,message,Tooltip} from "antd";
 import "./index.less";
 import axios from "axios";
 import { Redirect } from "react-router";
@@ -218,7 +218,11 @@ export default function ColManage() {
       key: "title",
       width: 200,
       render: (text) => {
-        return <span>{text}</span>
+        return (
+          <Tooltip arrowPointAtCenter title={text}>
+            <span>{text}</span>
+          </Tooltip>
+        )
       }
     },
     {
