@@ -9,19 +9,20 @@ export const Search = (props)=> {
 	)
 }
 export const Message = (props)=> {
+	console.log(props)
 	return (
 		<div className="zx-message">
 			<div className="zx-message-main">
-				<p>留言标题</p>
-				<p className="second">你在说什csdcdscsdcdscdscfgbghtyt个好人桐谷和人一塌糊涂如果他然后给高v如果热歌乳鸽肉高v热歌vgfdvdvffwsf日他哥么</p>
+				<p className="one">留言标题</p>
+				<p className="second">{props.data.title}</p>
 			</div>
 			<div className="zx-message-main">
-				<p>留言消息</p>
-				<p className="second">你在说什么</p>
+				<p className="one">留言消息</p>
+				<p className="second">{props.data.content}</p>
 			</div>
 			<div className="zx-message-main">
-				<p>回复消息</p>
-				<p className="second">你在说什么</p>
+				<p className="one"> 回复消息</p>
+				<p className="second">{props.data.title?props.data.title:null}</p>
 			</div>
 		</div>
 	)

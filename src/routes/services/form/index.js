@@ -1,8 +1,9 @@
 import React from 'react'
-import {Form,Input,Icon,Button,Radio} from 'antd'
+import {Form,Input,Icon,Button,Radio, message} from 'antd'
 import 'antd/dist/antd.css'
 import './index.less'
 import { randomNum, calculateWidth } from "../../../utils/utils";
+import axios from 'axios';
 const {TextArea} = Input
 
 class Xx extends React.Component {
@@ -26,14 +27,30 @@ class Xx extends React.Component {
     	e.preventDefault();
     	this.props.form.validateFields((err, values) => {
     		if (!err) {
-    			// console.log('Received values of form: ', values);
-    			// const { dispatch } = this.props;
-    			// dispatch({
-    			//   type: 'login/login',
-    			//   payload: { ...values }
-    			// })
-    			console.log(values)
-
+    			if(values.code!==this.state.code){
+    				message.error("验证码错误")
+    				this.createCode()
+    			}else{
+    				let data={
+    					...values,
+    					category:'msg'
+					}
+					console.log(data)
+					delete data.code
+    				axios({
+    					method:'POST',
+    					headers:{
+    						"Content-Type":'application/json'
+    					},
+    					url:'http://yjxt.elatis.cn/msgs/create',
+    					data:data
+    				}).then(res=>{
+    					if(res.data.code===0){
+							message.success("提交成功")
+						}
+						this.props.form.resetFields()
+    				})
+    			}
     		}
     	});
     };
@@ -77,8 +94,8 @@ class Xx extends React.Component {
     			<p className="xx-p">添加留言</p>
     			<Form onSubmit={this.handleSubmit} className="login-form">
   				<Form.Item label="标题">
-  					{getFieldDecorator("biaoti", {
-  						rules: [{ required: true }],
+  					{getFieldDecorator("title", {
+  						rules: [{ required: true,message: "请输入标题" }],
   					})(
   						<Input
 
@@ -87,15 +104,15 @@ class Xx extends React.Component {
   					)}
   				</Form.Item>
     				<Form.Item label="内容">
-  					{getFieldDecorator("nr", {
-  						rules: [{ required: true, message: "请输入密码" }],
+  					{getFieldDecorator("content", {
+  						rules: [{ required: true, message: "请输入内容" }],
   					})(
     						<TextArea rows={4} style={{width:'300px'}}/>
   					)}
   				</Form.Item>
     				<div className="xx-form">
     					<Form.Item label="姓名">
-  					{getFieldDecorator("xm", {
+  					{getFieldDecorator("name", {
   						rules: [{  }],
   					})(
   						<Input
@@ -105,19 +122,19 @@ class Xx extends React.Component {
   					)}
   				</Form.Item>
 				  <Form.Item label="性别">
-  					{getFieldDecorator("xb", {
+  					{getFieldDecorator("sex", {
   						rules: [],
   					})(
     						<Radio.Group onChange={this.onChange} >
-    					<Radio value={1}>男</Radio>
-    					<Radio value={2}>女</Radio>
+    					<Radio value="男">男</Radio>
+    					<Radio value="女">女</Radio>
     				</Radio.Group>
   					)}
   				 </Form.Item>
     				</div>
     				<div className="xx-form">
     					<Form.Item label="电话">
-  					{getFieldDecorator("number", {
+  					{getFieldDecorator("phone", {
   						rules: [{ message: "请输入用户名" }],
   					})(
     							<Input
@@ -127,7 +144,7 @@ class Xx extends React.Component {
   					)}
   				</Form.Item>
 				  <Form.Item label="家庭住址">
-  					{getFieldDecorator("dz", {
+  					{getFieldDecorator("address", {
   						rules: [{  message: "请输入用户名" }],
   					})(
     							<Input
@@ -150,7 +167,7 @@ class Xx extends React.Component {
   				</Form.Item>
     				
     				<Form.Item label="工作单位">
-  					{getFieldDecorator("dw", {
+  					{getFieldDecorator("workspace", {
   						rules: [{  message: "请输入用户名" }],
   					})(
     							<Input
@@ -160,13 +177,13 @@ class Xx extends React.Component {
   					)}
   				</Form.Item>
     				</div>
-					<div className="xx-form">
-					<Form.Item label="是否公开">
-  					{getFieldDecorator("gk", {
-  						rules: [{ required: true }],
+    				<div className="xx-form">
+    					<Form.Item label="是否公开">
+  					{getFieldDecorator("is_public", {
+  						rules: [{ required: true,message: "选择是否公开" }],
   					})(
     						<Radio.Group onChange={this.onChange} >
-							<Radio value={1}>是</Radio>
+    								<Radio value={1}>是</Radio>
     					<Radio value={2}>否</Radio>
     				</Radio.Group>
   					)}
@@ -174,14 +191,14 @@ class Xx extends React.Component {
 				  <div>
 				  <Form.Item label="验证码">
   					{getFieldDecorator("code", {
-  						rules: [{ required: true, message: "请输入用户名" }],
+  						rules: [{ required: true, message: "请输入验证码" }],
   					})(
   						<Input/>,
   					)}
   				</Form.Item>
 				  <canvas onClick={this.createCode} width="80" height='39' ref={el => this.canvas = el}/>
 				  </div>
-					</div>
+    				</div>
   				<Form.Item>
   					<Button type="primary" htmlType="submit" className="xx-form-button">
                      提交

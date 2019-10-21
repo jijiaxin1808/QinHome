@@ -41,7 +41,7 @@ class NormalLoginForm extends React.Component {
   					_setCookie(data.data.data.token);
   					this.props.dispatch(
   						routerRedux.push({
-  							pathname:"/manage"
+  							pathname:"/manage/index"
   						})
 					  );
   				}
