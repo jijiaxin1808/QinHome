@@ -94,7 +94,7 @@ export default class Services extends Component{
 	render() {
 		return (
 			<div className="yj-services">
-				<Header/>
+				{/* <Header/> */}
 				<div className="services">
 					<div className="services-slider">
 						<Layout >
@@ -123,7 +123,7 @@ export default class Services extends Component{
 						{/* <Tousu /> */}
 					</section>   
 				</div>
-				<Footer/>
+				{/* <Footer/> */}
 			</div>
 		);
 	}
