@@ -74,12 +74,10 @@ export default function ColManage() {
   }, []);
 
   useEffect(() => {
+    console.log(colsData)
     setArtiCategory(`/${col}/${secCol}`);
-  }, [col, secCol]);
-
-  useEffect(() => {
     setTableLoading(true);
-  }, [col, secCol]);
+  }, [secCol]);
 
   useEffect(() => {
     setTableLoading(false);
@@ -454,7 +452,7 @@ export default function ColManage() {
               }
               <Table 
                 columns={editState === "二级" ? secondaryColumn : columns} 
-                dataSource={editState === "二级" ? articles : editData} 
+                dataSource={editState === "二级" ? (tableLoading ? [] : articles) : editData} 
                 pagination={true}
                 loading={tableLoading}
               />
