@@ -299,7 +299,7 @@ export default function ColManage() {
     setColsData(_colsData);
   }
   const handleEditClick = (index) => {
-    window.location.href = `/manage/change/id=${index}`;
+    window.location.href = `/manage/change/${index}`;
     // console.log(edit)
     // let _edit = [...edit];
     // _edit.splice(index, 1, true);
