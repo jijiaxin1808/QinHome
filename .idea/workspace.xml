@@ -16,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/manage/context/change/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-630">
-              <caret line="108" column="50" selection-start-line="108" selection-start-column="50" selection-end-line="108" selection-end-column="50" />
+            <state relative-caret-position="870">
+              <caret line="58" column="52" lean-forward="true" selection-start-line="58" selection-start-column="52" selection-end-line="58" selection-end-column="52" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -29,18 +29,9 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/utils/qiniu.config.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="48" selection-start-line="10" selection-start-column="48" selection-end-line="10" selection-end-column="48" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/manage/notification/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2235">
+            <state relative-caret-position="555">
               <caret line="154" column="43" selection-start-line="154" selection-start-column="43" selection-end-line="154" selection-end-column="43" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
@@ -52,8 +43,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/manage/context/create/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="196" column="41" lean-forward="true" selection-start-line="196" selection-start-column="41" selection-end-line="196" selection-end-column="41" />
+            <state relative-caret-position="-1140">
+              <caret line="94" column="25" lean-forward="true" selection-start-line="94" selection-start-column="25" selection-end-line="94" selection-end-column="25" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -75,17 +66,17 @@
           <provider selected="true" editor-type-id="text-editor">
             <state>
               <folding>
-                <element signature="e#0#26#0" expanded="true" />
+                <element signature="e#0#50#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/routes/manage/context/create/index.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="20" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
+            <state relative-caret-position="15">
+              <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -93,8 +84,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/manage/account/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1710">
-              <caret line="118" column="20" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
+            <state relative-caret-position="3630">
+              <caret line="246" column="7" selection-start-line="246" selection-start-column="7" selection-end-line="246" selection-end-column="7" />
               <folding>
                 <element signature="e#0#63#0" expanded="true" />
               </folding>
@@ -114,6 +105,10 @@
       <find>console</find>
       <find>class</find>
       <find>styles</find>
+      <find>editor-wrapper</find>
+      <find>modal</find>
+      <find>size</find>
+      <find>onchange</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -125,7 +120,6 @@
       <list>
         <option value="$PROJECT_DIR$/src/router.js" />
         <option value="$PROJECT_DIR$/../../Text/COPY/note" />
-        <option value="$PROJECT_DIR$/src/routes/manage/context/create/index.css" />
         <option value="$PROJECT_DIR$/src/routes/manage/block/index.js" />
         <option value="$PROJECT_DIR$/src/utils/menu.js" />
         <option value="$PROJECT_DIR$/src/routes/manage/main/content.js" />
@@ -133,6 +127,7 @@
         <option value="$PROJECT_DIR$/src/routes/manage/context/create/getToken.js" />
         <option value="$PROJECT_DIR$/src/routes/manage/context/change/index.js" />
         <option value="$PROJECT_DIR$/src/routes/manage/context/create/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/manage/context/create/index.css" />
       </list>
     </option>
   </component>
@@ -156,24 +151,6 @@
             <path>
               <item name="QinHome" type="b2602c69:ProjectViewProjectNode" />
               <item name="QinHome" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QinHome" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QinHome" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QinHome" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QinHome" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="braft-editor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QinHome" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QinHome" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="braft-editor" type="462c0819:PsiDirectoryNode" />
-              <item name="dist" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="QinHome" type="b2602c69:ProjectViewProjectNode" />
@@ -268,12 +245,12 @@
       <workItem from="1571398951257" duration="1053000" />
       <workItem from="1571400558543" duration="6193000" />
       <workItem from="1571407130758" duration="38465000" />
-      <workItem from="1571656906974" duration="914000" />
+      <workItem from="1571656906974" duration="10664000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46625000" />
+    <option name="totallyTimeSpent" value="56375000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
@@ -517,23 +494,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils/qiniu.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="48" selection-start-line="10" selection-start-column="48" selection-end-line="10" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/manage/notification/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2235">
-          <caret line="154" column="43" selection-start-line="154" selection-start-column="43" selection-end-line="154" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/manage/context/create/getToken.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -541,28 +501,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/manage/context/index.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/manage/account/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="3630">
+          <caret line="246" column="7" selection-start-line="246" selection-start-column="7" selection-end-line="246" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/qiniu.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/manage/notification/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="154" column="43" selection-start-line="154" selection-start-column="43" selection-end-line="154" selection-end-column="43" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/manage/context/create/index.css">
+    <entry file="file://$PROJECT_DIR$/src/routes/manage/context/change/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="20" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/manage/account/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1710">
-          <caret line="118" column="20" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
+        <state relative-caret-position="870">
+          <caret line="58" column="52" lean-forward="true" selection-start-line="58" selection-start-column="52" selection-end-line="58" selection-end-column="52" />
           <folding>
-            <element signature="e#0#63#0" expanded="true" />
+            <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -570,7 +541,7 @@
     <entry file="file://$PROJECT_DIR$/node_modules/braft-editor/dist/index.css">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="61" selection-start-column="61" selection-end-column="61" />
+          <caret column="150" selection-start-column="150" selection-end-column="150" />
           <folding>
             <element signature="e#6844#22015#2" expanded="true" />
           </folding>
@@ -579,21 +550,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/manage/context/create/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="196" column="41" lean-forward="true" selection-start-line="196" selection-start-column="41" selection-end-line="196" selection-end-column="41" />
+        <state relative-caret-position="-1140">
+          <caret line="94" column="25" lean-forward="true" selection-start-line="94" selection-start-column="25" selection-end-line="94" selection-end-column="25" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/manage/context/change/index.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/manage/context/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-630">
-          <caret line="108" column="50" selection-start-line="108" selection-start-column="50" selection-end-line="108" selection-end-column="50" />
+        <state>
           <folding>
-            <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#0#50#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/manage/context/create/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
         </state>
       </provider>
     </entry>
