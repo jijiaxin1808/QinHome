@@ -54,7 +54,7 @@ const  Message = (props) => {
 						{props.home.columnData[type-1 ].title}>
 					</Link>
 					<span>
-						{props.home.columnData[type-1].sec[id ] && props.home.columnData[type - 1].sec[id - 1].title}
+						{props.home.columnData[type-1].sec[id-1 ] && props.home.columnData[type - 1].sec[id - 1].title}
 					</span>
 					<span className='message-header-paper' />
 				</div>

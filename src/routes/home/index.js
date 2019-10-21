@@ -108,7 +108,7 @@ const FooterTopic = () => {
 						return (
 							<div className='footer-topic-item' key={index}>
 								<Link to={item.url} style={{ display: "block" }}>
-									<img src={item.picUrl} style={{ height: "118px", width: "192px", verticalAlign: "middle" }} />
+									<img src={item.picUrl} style={{ height: "111px", width: "250px", verticalAlign: "middle" }} />
 								</Link>
 							</div>
 						);
