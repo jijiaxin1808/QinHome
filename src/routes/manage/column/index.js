@@ -104,7 +104,6 @@ export default function ColManage() {
       ).then(res => {
 
         if(res.data.code === 0) {
-          console.log()
           setArticles((res.data.data)[0] === "empty" ? [] : res.data.data);
           setEdit((res.data.data)[0] === "empty" ? [] : new Array(res.data.data.length).fill(false));
         }
@@ -455,7 +454,7 @@ export default function ColManage() {
               }
               <Table 
                 columns={editState === "二级" ? secondaryColumn : columns} 
-                dataSource={editState === "二级" ? (tableLoading ? [] : articles) : editData} 
+                dataSource={editState === "二级" ? articles : editData} 
                 pagination={true}
                 loading={tableLoading}
               />
