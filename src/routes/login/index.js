@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Icon, Input, Button, Checkbox, message } from "antd";
 import { connect} from "dva";
-import "./index.less"
+import "./index.less";
 import axios from "axios";
 import { routerRedux } from "dva/router";
 import {_setCookie} from "../../utils/session";
@@ -41,9 +41,9 @@ class NormalLoginForm extends React.Component {
   					_setCookie(data.data.data.token);
   					this.props.dispatch(
   						routerRedux.push({
-  							pathname:"/manage"
+  							pathname:"/manage/index"
   						})
-  					);
+					  );
   				}
   				else {
   					message.error(data.data.message);

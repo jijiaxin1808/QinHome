@@ -4,6 +4,10 @@ import axios from "axios";
 import urlHandle from "../../config/urlHandle";
 import { message, Spin } from "antd";
 
+const func = (data)=> {
+	return (data);
+};
+
 const Article = () => {
 	const [data, setdata] = useState([]);
 	// const [id, setid] = useState([])
@@ -36,9 +40,15 @@ const Article = () => {
 		message.warn("所访问页面不存在");
 		window.location.href = "/index/index";
 		return null;
-	} else if (data === []) {
-		return <Spin size='large' />;
-	} else {
+	} 
+	else if (!(data.clicked&&data.section) ) {
+		return(
+			<div className='article allCenter '>
+				<Spin size='large' />
+			</div>
+		);
+	} 
+	else {
 		return (
 			<div className='article'>
 				<div className='article-location' />
@@ -53,7 +63,7 @@ const Article = () => {
 					</div>
 				</div>
 				<div className='article-content'>
-					{data.content}
+					{<p dangerouslySetInnerHTML={{ __html:data.content}}  />}
 				</div>
 			</div>
 		);

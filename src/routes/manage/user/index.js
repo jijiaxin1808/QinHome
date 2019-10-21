@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./index.css";
 import userData from "../../../config/userData";
-import { Form, Icon, Input, Button, message, Row, Col } from "antd";
+import { Form, Icon, Input, Button, message, Row, Col, Skeleton } from "antd";
 import axios from "axios";
 import qs from "qs";
-
+import { connect } from "../../../../node_modules/dva";
 
 class NormalLoginForm extends React.Component {
   handleSubmit = e => {
@@ -109,7 +109,7 @@ class NormalLoginForm extends React.Component {
             valuePropName: 'checked',
             initialValue: true,
           })(<Checkbox>Remember me</Checkbox>)} */}
-  				<Button type="primary" htmlType="submit"    >
+  				<Button htmlType="submit"    >
             修改密码
   				</Button>
   			</Form.Item>
@@ -120,32 +120,50 @@ class NormalLoginForm extends React.Component {
 
 const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(NormalLoginForm);
 
-const UserInfo = ()=> {
-	return (
-		<div className = {"userInfo"}>
-			<div className = { "title" }>
-				<span>
-			用户信息
-				</span>
-			
-			</div> 
-			<p>{ `用户： ${userData.userName }`}</p>
-			<p>{ `姓名： ${userData.realName}`}</p>
-			<p>{ `部门:  ${userData.section}`}</p>
-		</div>
-	);
-};
-const User = ()=> {
-	return (
-		<div>
-			<UserInfo />
-			<Row >
-				<Col span = {12} offset = {6} >
-					<WrappedNormalLoginForm />
-				</Col>
-			</Row>
-		</div>
-	);
+const User = (props)=> {
+	const [ userData,setUserData ] = useState([]);
+	useEffect(()=>{
+		axios({
+			method:"GET",
+			url: "http://yjxt.elatis.cn/users/tokenLogin",
+			headers: {
+				token: localStorage.getItem("token")
+			}
+		}).then(res=> {
+			if(res.data.code === 0) {
+				setUserData(res.data.data);
+			}
+		})	
+	},[])
+	if(userData.length !==0) {
+		console.log(userData,"usersuusus")
+		return (
+			<div>
+				<div className = {"userInfo"}>
+					<div className = { "title" }>
+						<span>
+							用户信息
+						</span>
+				
+					</div> 
+					<p style = {{fontSize:"18px",margin:"20px auto"}}>{ `用户： ${userData.name }`}</p>
+					{/* <p>{ `姓名： ${props.login.userName}`}</p> */}
+					<p style = {{fontSize:"18px",margin:"20px auto"}}>{ `部门:  ${userData.section}`}</p>
+				</div>
+		
+				<Row >
+					<Col span = {12} offset = {6} >
+						<WrappedNormalLoginForm />
+					</Col>
+				</Row>
+			</div>
+		);
+	}
+	else return (
+		<Skeleton rows = {40} />
+	)
+
 };
 
-export default User;
+
+export default connect(({login})=>({login}))(User);

@@ -1,118 +1,130 @@
-import React,{Component} from 'react'
+import React,{Component} from "react";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
-import { Table, Divider, Tag ,Menu,Layout} from 'antd';
-import {Search,Message} from './search'
-import "./index.less"
-import Slider from 'react-slick';
+import { Table, Divider, Tag ,Menu,Layout} from "antd";
+import {Search,Message} from "./search";
+import WrappedNormalLoginForm from "./form";
+import Tousu from "./form/tousu";
+import axios from 'axios'
+import "./index.less";
 const { SubMenu } = Menu;
-const { Sider } = Layout
+const { Sider } = Layout;
 const columns = [
 	{
-		title: 'Name',
-		dataIndex: 'name',
-		key: 'name',
+		title: "序号",
+		dataIndex: "id",
+		key: "id",
 		render: text => <a>{text}</a>,
 	},
 	{
-		title: 'Age',
-		dataIndex: 'age',
-		key: 'age',
+		title: "留言消息",
+		dataIndex: "title",
+		key: "title",
 	},
 	{
-		title: 'Address',
-		dataIndex: 'address',
-		key: 'address',
+		title: "回复消息",
+		dataIndex: "reply",
+		key: "reply",
 	},
 	{
-		title: 'Tags',
-		key: 'tags',
-		dataIndex: 'tags',
-		render: tags => (
-			<span>
-				{tags.map(tag => {
-					let color = tag.length > 5 ? 'geekblue' : 'green';
-					if (tag === 'loser') {
-						color = 'volcano';
-					}
-					return (
-						<Tag color={color} key={tag}>
-							{tag.toUpperCase()}
-						</Tag>
-					);
-				})}
-			</span>
-		),
+		title: "留言时间",
+		key: "created_at",
+		dataIndex: "created_at"
 	},
 	{
-		title: 'Action',
-		key: 'action',
-		render: (text, record) => (
-			<span>
-				<a>Invite {record.name}</a>
-				<Divider type="vertical" />
-				<a>Delete</a>
-			</span>
-		),
+		title: "回复时间",
+		key: "updated_at",
+		dataIndex:"updated_at"
 	},
 ];
   
-const data = [
-	{
-		key: '1',
-		name: 'John Brown',
-		age: 32,
-		address: 'New York No. 1 Lake Park',
-		tags: ['nice', 'developer'],
-	},
-	{
-		key: '2',
-		name: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		tags: ['loser'],
-	},
-	{
-		key: '3',
-		name: 'Joe Black',
-		age: 32,
-		address: 'Sidney No. 1 Lake Park',
-		tags: ['cool', 'teacher'],
-	},
-];
-  
+let i
 export default class Services extends Component{
+	constructor(props) {
+		super(props);
+		this.state={
+			key:"1",
+			data:[],
+			message:''
+		};
+	}
+	handleClick =(e)=> {
+		console.log(e);
+		this.setState({
+			key:e.key
+		});
+	}
+	shouldComponentUpdate(nextProps, nextState){
+	  if(this.state.key===nextState.key){
+		  return false
+	  }else{
+		  return true
+	  }
+	}
+	componentDidUpdate(){
+		axios({
+			url:'http://yjxt.elatis.cn/msgs/listMsgs?category=all&flag=1',
+			method:'GET',
+			headers:{
+				'Content-Type':'application/json'
+			}
+		}).then(res=>{
+			if(res.data.code===0){
+				this.setState({
+					data:res.data.data
+				})
+			}
+		})
+		const ctx=this
+		 i=[...document.getElementsByClassName("ant-table-row-level-0")]
+
+		if(i.length){			
+			i.map((item)=>{
+				item.addEventListener("click",function () {
+					// console.log(item.getAttribute("data-row-key"))
+					ctx.setState({
+						key:"XAS",
+						 message:ctx.state.data[item.getAttribute("data-row-key")]
+					})
+				})
+			});
+		}
+    }
+
 	render() {
 		return (
 			<div className="yj-services">
-				<Header/>
+				{/* <Header/> */}
 				<div className="services">
-					<Layout>
-						<Sider width={200} style={{ background: '#fff' }}>
-							<Menu
-								onClick={this.handleClick}
-								style={{ width: 200 }}
-								defaultSelectedKeys={['1']}
-								defaultOpenKeys={['sub1']}
-								mode="inline"
-							>
-								<Menu.Item key="1">Option 1</Menu.Item>
-								<Menu.Item key="2">Option 2</Menu.Item>
-								<Menu.Item key="3">Option 3</Menu.Item>
-								<Menu.Item key="4">Option 4</Menu.Item>
-							</Menu>
-						</Sider>
-					</Layout>
-					{/* <div className="services-left">
-						
-					</div> */}
+					<div className="services-slider">
+						<Layout >
+							<Sider width={200} style={{ background: "#fff" }}>
+								<Menu
+									onClick={this.handleClick}
+									style={{ width: 200 }}
+									defaultSelectedKeys={["1"]}
+									defaultOpenKeys={["sub1"]}
+									mode="inline"
+								>
+									<Menu.Item key="1">局长信箱</Menu.Item>
+									<Menu.Item key="2">网上咨询</Menu.Item>
+									<Menu.Item key="3">网上投诉</Menu.Item>
+								</Menu>
+							</Sider>
+						</Layout>
+					</div>
 					<section className="services-main">
-						<Search columns={columns} dataSource={data}/>
-						<Message />
+						{
+							this.state.key==="1"?<WrappedNormalLoginForm/>:(this.state.key==="2"?<Search columns={columns} dataSource={this.state.data}/>:(this.state.key==="3"?<Tousu/>:<Message data={this.state.message}/>))
+						}
+						{/* <Search columns={columns} dataSource={data}/> */}
+						{/* <Message /> */}
+						{/* <WrappedNormalLoginForm /> */}
+						{/* <Tousu /> */}
 					</section>   
 				</div>
-				<Footer/>
+				{/* <Footer/> */}
 			</div>
-		)
+		);
 	}
 }

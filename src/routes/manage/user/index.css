@@ -9,10 +9,14 @@
         /* border-bottom:  1px solid #979797; */
 }
 .user-alter {
-    display: flex;
+    display: flex !important;
     justify-content: center;
 }
 .user-form {
     display: flex;
     justify-content: center;
+}
+.ant-layout-content {
+    min-height: auto !important;
+    
 }

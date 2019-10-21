@@ -1,9 +1,9 @@
 import React from 'react'
-import {Form,Input,Icon,Button,Radio, message} from 'antd'
+import {Form,Input,Icon,Button,Radio,message} from 'antd'
+import axios from 'axios'
 import 'antd/dist/antd.css'
 import './index.less'
 import { randomNum, calculateWidth } from "../../../utils/utils";
-import axios from 'axios';
 const {TextArea} = Input
 
 class Xx extends React.Component {
@@ -33,7 +33,7 @@ class Xx extends React.Component {
     			}else{
     				let data={
     					...values,
-    					category:'msg'
+    					category:'complain'
 					}
 					console.log(data)
 					delete data.code
@@ -50,8 +50,8 @@ class Xx extends React.Component {
 						}
 						this.props.form.resetFields()
     				})
-    			}
-    		}
+
+    		}}
     	});
     };
     /**
@@ -93,32 +93,38 @@ class Xx extends React.Component {
     		<div className="xx">
     			<p className="xx-p">添加留言</p>
     			<Form onSubmit={this.handleSubmit} className="login-form">
-  				<Form.Item label="标题">
+  				<Form.Item label="被举报主题">
   					{getFieldDecorator("title", {
-  						rules: [{ required: true,message: "请输入标题" }],
+  						rules: [{ required: true, message: "请输入被举报主题" }],
   					})(
   						<Input
-
-    							style={{width:'300px'}}
+  							style={{width:'400px'}}
   						/>,
   					)}
   				</Form.Item>
-    				<Form.Item label="内容">
+                  <Form.Item label="被举报地址">
+  					{getFieldDecorator("complainAddress", {
+  						rules: [{  message: "请输入被举报地址",required:true }],
+  					})(
+  						<Input
+  							style={{width:'400px'}}
+
+  						/>,
+  					)}
+  				</Form.Item>
+                  <Form.Item label=" 举报内容">
   					{getFieldDecorator("content", {
   						rules: [{ required: true, message: "请输入内容" }],
   					})(
-    						<TextArea rows={4} style={{width:'300px'}}/>
+    						<TextArea rows={4} style={{width:'400px'}}/>
   					)}
   				</Form.Item>
-    				<div className="xx-form">
-    					<Form.Item label="姓名">
+				  <div className="xx-form">
+				  <Form.Item label="举报人 ">
   					{getFieldDecorator("name", {
-  						rules: [{  }],
+  						rules: [{ message: "请输入用户名" }],
   					})(
-  						<Input
-  							
-    								style={{width:'100px'}}
-  						/>,
+  						<Input/>,
   					)}
   				</Form.Item>
 				  <Form.Item label="性别">
@@ -130,76 +136,54 @@ class Xx extends React.Component {
     					<Radio value="女">女</Radio>
     				</Radio.Group>
   					)}
-  				 </Form.Item>
-    				</div>
-    				<div className="xx-form">
-    					<Form.Item label="电话">
+  				</Form.Item>
+				  </div>
+				  <div className="xx-form">
+				  <Form.Item label="电话号码">
   					{getFieldDecorator("phone", {
-  						rules: [{ message: "请输入用户名" }],
+  						rules: [{  message: "请输入用户名" }],
   					})(
-    							<Input
-
-    								style={{width:'100px'}}
-  						/>,
+  						<Input/>,
   					)}
   				</Form.Item>
 				  <Form.Item label="家庭住址">
   					{getFieldDecorator("address", {
   						rules: [{  message: "请输入用户名" }],
   					})(
-    							<Input
-
-    								style={{width:'100px'}}
-  						/>,
+  						<Input/>,
   					)}
   				</Form.Item>
-    				</div>
-    				<div className="xx-form">
-    					<Form.Item label="邮件">
+				  </div>
+				  <div className="xx-form">
+				  <Form.Item label="电子邮件">
   					{getFieldDecorator("email", {
   						rules: [{  message: "请输入用户名" }],
-  					})(
-    							<Input
-
-    								style={{width:'100px'}}
-  						/>,
-  					)}
-  				</Form.Item>
-    				
-    				<Form.Item label="工作单位">
-  					{getFieldDecorator("workspace", {
-  						rules: [{  message: "请输入用户名" }],
-  					})(
-    							<Input
-
-    								style={{width:'100px'}}
-  						/>,
-  					)}
-  				</Form.Item>
-    				</div>
-    				<div className="xx-form">
-    					<Form.Item label="是否公开">
-  					{getFieldDecorator("is_public", {
-  						rules: [{ required: true,message: "选择是否公开" }],
-  					})(
-    						<Radio.Group onChange={this.onChange} >
-    								<Radio value={1}>是</Radio>
-    					<Radio value={2}>否</Radio>
-    				</Radio.Group>
-  					)}
-  				</Form.Item>
-				  <div>
-				  <Form.Item label="验证码">
-  					{getFieldDecorator("code", {
-  						rules: [{ required: true, message: "请输入验证码" }],
   					})(
   						<Input/>,
   					)}
   				</Form.Item>
+
+    				<Form.Item label="工作单位">
+  					{getFieldDecorator("workspace", {
+  						rules: [{  message: "请输入用户名" }],
+  					})(
+  						<Input/>,
+  					)}
+  				</Form.Item>
+				  </div>
+                  <div className="xx-form">
+				  <Form.Item label="验证码">
+  					{getFieldDecorator("code", {
+  						rules: [{ required: true, message: "请输入验证码" }],
+  					})(
+  						<Input
+  						/>,
+  					)}
+  				</Form.Item>
 				  <canvas onClick={this.createCode} width="80" height='39' ref={el => this.canvas = el}/>
 				  </div>
-    				</div>
   				<Form.Item>
+
   					<Button type="primary" htmlType="submit" className="xx-form-button">
                      提交
   					</Button>

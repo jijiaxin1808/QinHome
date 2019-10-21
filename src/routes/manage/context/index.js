@@ -1,95 +1,146 @@
-import React from "react";
-import { Table, Divider, Tag, Switch,Input   } from 'antd';
-import contextData from "../../../assets/contextData";
+import React,{ useState, useEffect } from "react";
+import { Table, Divider, Tag, Switch,Input,Button, Modal, message   } from "antd";
+// import contextData from "../../../assets/contextData";
 import styles from "./index.css";
-const { Search } = Input;
+import axios from "axios";
 
- 
+const { Search } = Input;
+const alterAricle = (id)=> {
+	console.log(id);
+	window.location.href = `/manage/change/${id}`;
+};
+const  DeleteArticle  = (props)=> {
+	const [ visible, setVisible ] = useState(false);
+	const showModal = () => {
+		setVisible(true);
+	};
+	const handleOk = e => {
+		setVisible(false);
+		console.log("确认删除");
+		axios({
+			method:"GET",
+			url: "http://yjxt.elatis.cn/posts/delete",
+			params: {
+				id:props.id
+			},
+			Headers: {
+				"token":localStorage.getItem("token"),
+				"Content-Type": "application/json"
+			}
+		}).then(res=> {
+			if(res.data.code === 0 ) {
+				message.success("删除成功");
+			}
+			else {
+				message.warn(res.data.message);
+			}
+		});
+
+	};
+
+	const handleCancel = e => {
+		setVisible(false);
+	};
+
+	return (
+		<div>
+			<Button  onClick={()=>{showModal();}}>
+          删除
+			</Button>
+			<Modal
+				visible={visible}
+				onOk={()=>{handleOk();}}
+				onCancel={()=>{handleCancel();}}
+				okText = "确认"
+				cancelText = "取消"
+			>
+				<p>确认删除?</p>
+			</Modal>
+		</div>
+	);
+  
+};
+
+
 const columns = [
-  {
-    title: '序列',
-    dataIndex: 'id',
-    key: 'id',
-  },
-  {
-    title: '文章名称',
-    dataIndex: 'title',
-    key: 'title',
-  },
-  {
-    title: '发布部门',
-    dataIndex: 'section',
-    key: 'section',
-  },
-  {
-    title: '日期',
-    key: 'time',
-    dataIndex: 'time',
-  },
-  {
-    title: '文章位置',
-    key: 'loaction',
-    dataIndex:"loaction"
-  },
-  {
-    title: '页面状态',
-    key: 'isShow',
-    dataIndex:"isShow",
-    render:isShow=>(
-        <Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked = {isShow}  />
-    ),
-    },
+	{
+		title: "id",
+		dataIndex: "id",
+		key: "id",
+	},
+	{
+		title: "文章名称",
+		dataIndex: "title",
+		key: "title",
+	},
+	{
+		title: "发布部门",
+		dataIndex: "category",
+		key: "category",
+	},
+	{
+		title: "日期",
+		key: "created_at",
+		dataIndex: "created_at"
+	},
+	{
+		title: "页面状态",
+		key: "action",
+		dataIndex:"action",
+		render:isShow=>(
+			<Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked = {isShow}  />
+		),
+	},{
+		title: "操作",
+		key: "action",
+		dataIndex:"action",
+		render: (text,record) => (
+			<Button onClick = {()=>{alterAricle(record.id);}}>修改文章</Button>
+		)
+	},{
+		title: "删除",
+		key: "action",
+		dataIndex:"action",
+		render:(text,record)=> (
+			<DeleteArticle  id = {record.id}>删除文章</DeleteArticle>
+		)
+
+	},
 ];
 
 
 
-const Context = ()=> { 
-    return(
-        <div>
-             <Search placeholder="请输入搜索内容" onSearch={value => console.log(value)} enterButton className = {styles.search} />
- 
-            <Table columns={columns} dataSource={contextData}/>
-        </div>
-    )
-}
-
-// const ContextContent = ()=> {
-//     return (
-//         <div>
-//             <div className = { styles.contentHeader } >
-//             <span>序列</span>
-//             <span>文章名称</span>
-//             <span>发布部门</span>
-//             <span>日期</span>
-//             <span>文章位置</span>
-//             <span>页面状态</span>
-//             </div>
-//             {
-//                 contextData.map((item,index)=>{
-//                     return (
-//                         <div className = { styles.item }>
-//                             <span>{item.id}</span>
-//                             <span>{item.title}</span>
-//                             <span>{item.section}</span>
-//                             <span>{item.loaction}</span>
-//                             <span>
-//                             
-//                             </span>
-//                         </div>
-//                     )
-
-//                 })
-//             }
-//         </div>
-//     )
-// }
-// const Context = ()=> {
-//     return(
-//         <div  >
-//             <ContextHeader />
-//             <ContextContent />
-//         </div>
-//     )
-// }
+const Context = (props)=> { 
+	const [ data, setData ] = useState([]);
+	useEffect(()=>{
+		axios({
+			method:"GET",
+			url: "http://yjxt.elatis.cn/posts/listPosts",
+			params: {
+				status: "draft",
+			}
+		}).then(res=> {
+			if(res.data.code === 0) {
+				console.log("内容管理",res.data.data);
+				setData(res.data.data);
+			}
+		});
+	}
+		,[]);
+	return(
+		<div>
+			<div className = "title">
+  				<span>
+            文章管理
+  				</span>
+  			</div>
+			<div className={"buttonSbar"}>
+				<Button   className={"button-context"} type = "primary" onClick = {()=>{window.location.href="/manage/create";}}>新建文章</Button>
+			</div>
+			<Table columns={columns} dataSource={data} />
+		</div>
+	);
+	
+};
 
 export default Context;

@@ -20,13 +20,16 @@ function  Header (props) {
 		});
 	}, []);
 	return (
-  <><div className='header'>
+  <><div className='header-h'>
     	<ToTop />
     	<div className='home-header'>
   		<div style = {{width:1080, margin: "0 auto"}}>
     	<Search
     		placeholder='请输入搜索关键字'
-    		onSearch={value => console.log(value)}
+    		onSearch={value => {
+  					window.history.pushState({},"",`/index/search?key=${value}`);
+  					window.location.reload();
+  				}}
     		style={{ width: 200, float: "right", marginTop: "70px" }}
     	/>
   		</div>

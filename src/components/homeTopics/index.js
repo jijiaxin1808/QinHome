@@ -1,49 +1,108 @@
-import React from 'react'
-import './index.less'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import "./index.less";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { Skeleton } from "antd";
 
 const HomeTopic = (props) => {
-  return (
-    <div className='home-topic'>
-      <div className='home-topic-header'>
-        <span>{props.title}</span>
-        <Link to={props.href}>
+	return (
+		<div className='home-topic'>
+			<div className='home-topic-header'>
+				<span>{props.title}</span>
+				<Link to={`/index/message?type=${props.type}`}>
                     更多 >>
-        </Link>
-      </div>
-      <div className='home-topic-content'>
-        <ul>
-          {
-            // props.data.map((item, index) => {
-            //   return (
-            //     <li className='home-topic-li' key={index}>
-            //       <Link to='/article?id=dasdas'>
-            //         {`${index + 1}. ${item.title}`}
-            //       </Link>
-            //     </li>
-            //   )
-            // })
-          }
-        </ul>
-      </div>
-    </div>
-  )
-}
+				</Link>
+			</div>
+			<div className='home-topic-content'>
+				<ul>
+					{
+						props.data.map((item, index) => {
+						  return (
+						    <li className='home-topic-li' key={index}>
+						      <Link to={`/index/article?id=${item.id}`}>
+						        {`${item.title}`}
+						      </Link>
+						    </li>
+						  );
+						})
+					}
+				</ul>
+			</div>
+		</div>
+	);
+};
 const HomeTopics = (props) => {
-  const { colsData } = props
-  console.log(colsData)
-  return (
-    <div className='home-topics'>
-      {
-        colsData.slice(2, colsData.length).map((item, index) => {
-          return (
-            <HomeTopic data={item.articles} title={item.title} href={item.link} key={index} />
-          )
-        })
-      }
+	const { colsData } = props;
+	const [ topicData, setTopicData ] = useState([]);
+	console.log(colsData,"colData");
 
-    </div>
-  )
-}
+	useEffect(()=> {
+		if(colsData.length !==0 ){
+			const sort = [...colsData].map((item,index)=> {
+				if(index>1){
+					return `/${item.title}/${item.sec[0].title}`;
+				}
+			});
+			const data1 = JSON.stringify({
+				limit:3,
+				moduleArray:sort,
+				status: "draft"
+			});
+			console.log(sort,"发送了home请求");
+			axios({
+				method:"POST",
+				url:"http://yjxt.elatis.cn/posts/listModulePost",
+				headers: {
+					"Content-Type":"application/json"
+				},
+				data: data1
+			}).then(res=> {
+				console.log(res.data,"topic数据");
+				const newData = res.data.data.map((item,index)=>{
+					if(index>1) {
+						return item.post;
+					}
+				});
+				console.log("newdata",newData);
 
-export default HomeTopics
+
+				setTopicData(newData);
+			});
+		}
+	},[props.colsData]);
+	useEffect(()=> {
+		console.log(topicData);
+	},[topicData]);
+	if(topicData.length!== 0) {
+		console.log("现在的 col",topicData);
+		return (
+			<div className='home-topics'>
+				{
+					topicData.map((item, index) => {
+						console.log(item,"jjjjjjjjxjxj");
+						if(index>1){
+							return (
+								<HomeTopic 
+									title = {colsData[index].title} 
+									href = {`/index/message?type=${index+2}`} 
+									 type =  { index+1 } 
+									data = {item}
+								/>
+							);
+						}
+						else return null;
+
+					})
+				}
+			</div>
+		);
+	}
+	else {
+		return(
+			<Skeleton rows = {20} />
+		);
+	}
+
+
+};
+export default HomeTopics;
