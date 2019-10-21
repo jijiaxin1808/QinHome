@@ -2,15 +2,61 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React, { useEffect, useState, Fragment } from "react";
 import styles from "./index.css";
-import { Table, Button, Input, Switch, message, Upload } from "antd";
+import { Table, Button, Input, Switch, message, Upload, Modal } from "antd";
 // import * as blockData from '../../../assets/blockData';
 // import * as blockCol from '../../../assets/blockCol';
-import * as blockData from "../../../config/blockData";
-import * as blockCol from "../../../config/blockCol";
+// import * as blockData from "../../../config/blockData";
+// import * as blockCol from "../../../config/blockCol";
 import axios from "axios";
 
 const HeaderScroll = () => {
 	const [data, setdata] = useState([]);
+	const 	HeaderSave  = (props)=> {
+		const [ visible, setVisible ] = useState(false);
+		const showModal = () => {
+			setVisible(true);
+		};
+	
+		const handleOk = e => {
+			setVisible(false);
+			console.log("保存的", data);
+			axios({
+				method: "POST",
+				url: "http://yjxt.elatis.cn/options/update",
+				headers: {
+					token: localStorage.getItem("token"),
+					"Content-Type": "application/json",
+				},
+				data: JSONData,
+			}).then(res => {
+				if (res.data.code === 0) {
+					message.success("保存成功");
+				} else {
+					message.error(res.data.message);
+				}
+			});
+		};
+		const handleCancel = e => {
+			setVisible(false);
+		};
+		return (
+			<div>
+				<Button  onClick={()=>{showModal();}}>
+			  保存
+				</Button>
+				<Modal
+					visible={visible}
+					onOk={()=>{handleOk();}}
+					onCancel={()=>{handleCancel();}}
+					okText = "确认"
+					cancelText = "取消"
+				>
+					<p>确认保存?</p>
+				</Modal>
+			</div>
+		);
+	  
+	};
 	useEffect(() => {
 		axios.get("http://yjxt.elatis.cn/options/name/safe").then(res => {
 			if (res.data.code === 0) {
@@ -33,7 +79,7 @@ const HeaderScroll = () => {
 			key: "title",
 			render: (content, id) => (
 				<Input
-					placeholder={content}
+				defaultValue={content}
 					onChange={e => {
 						const newData = data.map(item => {
 							console.log(id.id, "id");
@@ -59,7 +105,7 @@ const HeaderScroll = () => {
 			key: "href",
 			render: (href, id) => (
 				<Input
-					placeholder={href}
+				defaultValue={href}
 					onChange={e => {
 						const newData = data.map(item => {
 							console.log(id.id, "id");
@@ -133,24 +179,6 @@ const HeaderScroll = () => {
 		name: "safe",
 		value: data,
 	});
-	const save = () => {
-		console.log("保存的", data);
-		axios({
-			method: "POST",
-			url: "http://yjxt.elatis.cn/options/update",
-			headers: {
-				token: sessionStorage.getItem("token"),
-				"Content-Type": "application/json",
-			},
-			data: JSONData,
-		}).then(res => {
-			if (res.data.code === 0) {
-				message.success("保存成功");
-			} else {
-				message.error(res.data.message);
-			}
-		});
-	};
 	return (
 		<div>
 			<div className={"title"}>
@@ -158,14 +186,11 @@ const HeaderScroll = () => {
 			</div>
 			<div className={"buttonSbar"}>
 				<Button className={"button"}>添加顶部滚动条</Button>
-				<Button
+				<HeaderSave
 					className={"button"}
-					onClick={() => {
-						save();
-					}}
 				>
           保存
-				</Button>
+				</HeaderSave>
 			</div>
 			<Table columns={headerScrollCol} dataSource={data} pagination={false} />
 		</div>
@@ -174,12 +199,57 @@ const HeaderScroll = () => {
 
 const Carousel = () => {
 	const [data, setdata] = useState([]);
+	const  CarouselSave  = (props)=> {
+		const [ visible, setVisible ] = useState(false);
+		const showModal = () => {
+			setVisible(true);
+		};
+	
+		const handleOk = e => {
+			setVisible(false);
+			axios({
+				method: "POST",
+				url: "http://yjxt.elatis.cn/options/update",
+				headers: {
+					token: localStorage.getItem("token"),
+					"Content-Type": "application/json",
+				},
+				data: JSONData,
+			}).then(res => {
+				if (res.data.code === 0) {
+					message.success("保存成功");
+				} else {
+					message.error(res.data.message);
+				}
+			});
+		};
+		const handleCancel = e => {
+			setVisible(false);
+		};
+		return (
+			<div>
+				<Button  onClick={()=>{showModal();}}>
+			  保存
+				</Button>
+				<Modal
+					visible={visible}
+					onOk={()=>{handleOk();}}
+					onCancel={()=>{handleCancel();}}
+					okText = "确认"
+					cancelText = "取消"
+				>
+					<p>确认保存?</p>
+				</Modal>
+			</div>
+		);
+	  
+	};
 	const props = {
 		name: "file",
 		action: "http://yjxt.elatis.cn/file/upload",
 		headers: {
 			authorization: "authorization-text",
-			token:sessionStorage.getItem("token"),
+			token:localStorage.getItem("token"),
 		},
 	};
 	const onChange = (info, id) => {
@@ -226,7 +296,14 @@ const Carousel = () => {
 					</Upload>
 				</Fragment>
 			);
-		} else return <Button>添加图片</Button>;
+		} else return 					<Upload
+		{...props}
+		onChange={info => {
+			onChange(info, id);
+		}}
+	>
+		<Button>添加图片</Button>
+	</Upload>;
 	};
 	useEffect(() => {
 		axios.get("http://yjxt.elatis.cn/options/name/carousel").then(res => {
@@ -250,7 +327,7 @@ const Carousel = () => {
 			key: "title",
 			render: (content, id) => (
 				<Input
-					placeholder={content}
+				defaultValue={content}
 					onChange={e => {
 						const newData = data.map(item => {
 							console.log(id.id, "id");
@@ -282,7 +359,7 @@ const Carousel = () => {
 			key: "href",
 			render: (href, id) => (
 				<Input
-					placeholder={href}
+				defaultValue={href}
 					onChange={e => {
 						const newData = data.map(item => {
 							console.log(id.id, "id");
@@ -356,23 +433,6 @@ const Carousel = () => {
 		name: "carousel",
 		value: data,
 	});
-	const save = () => {
-		axios({
-			method: "POST",
-			url: "http://yjxt.elatis.cn/options/update",
-			headers: {
-				token: sessionStorage.getItem("token"),
-				"Content-Type": "application/json",
-			},
-			data: JSONData,
-		}).then(res => {
-			if (res.data.code === 0) {
-				message.success("保存成功");
-			} else {
-				message.error(res.data.message);
-			}
-		});
-	};
 	return (
 		<div>
 			<div className={"title"}>
@@ -382,29 +442,33 @@ const Carousel = () => {
 				<Button
 					onClick={() => {
 						let newData = data;
-						newData.push({
+						// newData.push({
+						// 	id: data.length + 1,
+						// 	href: "请输入跳转至的链接",
+						// 	picUrl: "",
+						// 	title: "请输入标题",
+						// 	isShow: false,
+						// 	key: "4",
+						// });
+						setdata([...newData,{
 							id: data.length + 1,
 							href: "请输入跳转至的链接",
 							picUrl: "",
 							title: "请输入标题",
 							isShow: false,
 							key: "4",
-						});
-						setdata(newData);
+						}]);
 						console.log(data);
 					}}
 					className={"button"}
 				>
           添加轮播图
 				</Button>
-				<Button
-					onClick={() => {
-						save();
-					}}
+				<CarouselSave
 					className={"button"}
 				>
           保存
-				</Button>
+				</CarouselSave>
 			</div>
 			<Table
 				columns={carouselCol}
@@ -418,6 +482,51 @@ const Carousel = () => {
 
 const HomeTopic = () => {
 	const [data, setdata] = useState([]);
+	const  HomeTopicSave  = (props)=> {
+		const [ visible, setVisible ] = useState(false);
+		const showModal = () => {
+			setVisible(true);
+		};
+	
+		const handleOk = e => {
+			setVisible(false);
+			axios({
+				method: "POST",
+				url: "http://yjxt.elatis.cn/options/update",
+				headers: {
+					token: localStorage.getItem("token"),
+					"Content-Type": "application/json",
+				},
+				data: JSONData,
+			}).then(res => {
+				if (res.data.code === 0) {
+					message.success("保存成功");
+				} else {
+					message.error(res.data.message);
+				}
+			});
+		};
+		const handleCancel = e => {
+			setVisible(false);
+		};
+		return (
+			<div>
+				<Button  onClick={()=>{showModal();}}>
+			  保存
+				</Button>
+				<Modal
+					visible={visible}
+					onOk={()=>{handleOk();}}
+					onCancel={()=>{handleCancel();}}
+					okText = "确认"
+					cancelText = "取消"
+				>
+					<p>确认保存?</p>
+				</Modal>
+			</div>
+		);
+	  
+	};
 	useEffect(() => {
 		axios.get("http://yjxt.elatis.cn/options/name/topicCol").then(res => {
 			if (res.data.code === 0) {
@@ -440,7 +549,7 @@ const HomeTopic = () => {
 			key: "content",
 			render: (content, id) => (
 				<Input
-					placeholder={content}
+				defaultValue={content}
 					onChange={e => {
 						const newData = data.map(item => {
 							console.log(id.id, "id");
@@ -472,7 +581,7 @@ const HomeTopic = () => {
 			key: "url",
 			render: (href, id) => (
 				<Input
-					placeholder={href}
+				defaultValue={href}
 					onChange={e => {
 						const newData = data.map(item => {
 							console.log(id.id, "id");
@@ -498,7 +607,7 @@ const HomeTopic = () => {
 		action: "http://yjxt.elatis.cn/file/upload",
 		headers: {
 			authorization: "authorization-text",
-			token: sessionStorage.getItem("token"),
+			token: localStorage.getItem("token"),
 		},
 	};
 	const onChange = (info, id) => {
@@ -551,61 +660,72 @@ const HomeTopic = () => {
 		name: "topicCol",
 		value: data,
 	});
-	const save = () => {
-		console.log("保存的", data);
-		axios({
-			method: "POST",
-			url: "http://yjxt.elatis.cn/options/update",
-			headers: {
-				token: sessionStorage.getItem("token"),
-				"Content-Type": "application/json",
-			},
-			data: JSONData,
-		}).then(res => {
-			if (res.data.code === 0) {
-				message.success("保存成功");
-			} else {
-				message.error(res.data.message);
-			}
-		});
-	};
+	
 	return (
 		<div>
 			<div className={"title"}>
 				<span>专题专栏</span>
 			</div>
 			<div className={"buttonSbar"}>
-				<Button
+				<HomeTopicSave
 					className={"button"}
-					onClick={() => {
-						save();
-					}}
 				>
           保存
-				</Button>
+				</HomeTopicSave>
 			</div>
 			<Table columns={homeTopicCol} dataSource={data} pagination={false} />
 		</div>
 	);
 };
 
-const Public = () => {
-	return (
-		<div>
-			<div className={"title"}>
-				<span>信息公开</span>
-			</div>
-			<h3>专栏1</h3>
-			<Table columns={blockCol.publicCol} dataSource={blockData.publicData1} pagination={false} />
-			<h3>专栏2</h3>
-			<Table columns={blockCol.publicCol} dataSource={blockData.publicData2} pagination={false} />
-			<h3>专栏3</h3>
-			<Table columns={blockCol.publicCol} dataSource={blockData.publicData3} pagination={false} />
-		</div>
-	);
-};
 const Background = () => {
 	const [data, setdata] = useState([]);
+	const  BackgroundSave  = (props)=> {
+		const [ visible, setVisible ] = useState(false);
+		const showModal = () => {
+			setVisible(true);
+		};
+	
+		const handleOk = e => {
+			setVisible(false);
+			console.log("保存的", data);
+			axios({
+				method: "POST",
+				url: "http://yjxt.elatis.cn/options/update",
+				headers: {
+					token: localStorage.getItem("token"),
+					"Content-Type": "application/json",
+				},
+				data: JSONData,
+			}).then(res => {
+				if (res.data.code === 0) {
+					message.success("保存成功");
+				} else {
+					message.error(res.data.message);
+				}
+			});
+		};
+		const handleCancel = e => {
+			setVisible(false);
+		};
+		return (
+			<div>
+				<Button  onClick={()=>{showModal();}}>
+			  保存
+				</Button>
+				<Modal
+					visible={visible}
+					onOk={()=>{handleOk();}}
+					onCancel={()=>{handleCancel();}}
+					okText = "确认"
+					cancelText = "取消"
+				>
+					<p>确认保存?</p>
+				</Modal>
+			</div>
+		);
+	  
+	};
 	useEffect(() => {
 		axios.get("http://yjxt.elatis.cn/options/name/background").then(res => {
 			if (res.data.code === 0) {
@@ -621,11 +741,11 @@ const Background = () => {
 		action: "http://yjxt.elatis.cn/file/upload",
 		headers: {
 			authorization: "authorization-text",
-			token: sessionStorage.getItem("token"),
+			token: localStorage.getItem("token"),
 		},
 	};
 	const onChange = (info, id) => {
-		if (info.file.status !== "uploading") { 
+		if (info.file.status !== "uploading") {
 			console.log(info.file, info.fileList);
 		}
 		if (info.file.status === "done") {
@@ -674,24 +794,6 @@ const Background = () => {
 		name: "background",
 		value: data,
 	});
-	const save = () => {
-		console.log("保存的", data);
-		axios({
-			method: "POST",
-			url: "http://yjxt.elatis.cn/options/update",
-			headers: {
-				token: sessionStorage.getItem("token"),
-				"Content-Type": "application/json",
-			},
-			data: JSONData,
-		}).then(res => {
-			if (res.data.code === 0) {
-				message.success("保存成功");
-			} else {
-				message.error(res.data.message);
-			}
-		});
-	};
 	const backgroundCol = [
 		{
 			title: "图片",
@@ -706,14 +808,12 @@ const Background = () => {
 				<span>背景图片</span>
 			</div>
 			<div className={"buttonSbar"}>
-				<Button
-					onClick={() => {
-						save();
-					}}
+			
+				<BackgroundSave
 					className={"button"}
 				>
           保存
-				</Button>
+				</BackgroundSave>
 			</div>
 			<Table columns={backgroundCol} dataSource={data} pagination={false} />
 		</div>
@@ -721,11 +821,11 @@ const Background = () => {
 };
 const block = () => {
 	return (
-		<div className = {"block"}>
+		<div /*className = {"block"}*/>
 			<HeaderScroll />
 			<Carousel />
 			<HomeTopic />
-			<Public />
+			{/* <Public /> */}
 			<Background />
 		</div>
 	);
