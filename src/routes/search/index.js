@@ -64,7 +64,7 @@ export default function Search(props) {
         "Content-Type": "application/json",
       },
       params: {
-        status: "draft"
+        status: "publish"
       },
     }).then(res => {
       if(!res.data.code) {
@@ -82,7 +82,7 @@ export default function Search(props) {
         "Content-Type": "application/json", 
       },
       params: {
-        status: "draft",
+        status: "publish",
         limit: 5,
         offset: (curPage-1) * 5,
       }, 

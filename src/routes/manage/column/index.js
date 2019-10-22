@@ -90,7 +90,7 @@ export default function ColManage() {
           },
           params: {
             category: artiCategory,
-            status: "draft",
+            status: "publish",
             limit: 5,
             offset: 0
           }
@@ -172,7 +172,9 @@ export default function ColManage() {
       dataIndex: "pageState",
       key: "pageState",
       className: "column",
-      render: () => <Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked={true}/>
+			render:(text,record)=>(
+				<p>{record.status === "publish"?"已发布":"未发布"}</p>
+			)
     },
     {
       title: "权重",

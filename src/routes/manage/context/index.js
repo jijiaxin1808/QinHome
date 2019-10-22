@@ -87,9 +87,9 @@ const columns = [
 		title: "页面状态",
 		key: "action",
 		dataIndex:"action",
-		render:isShow=>(
-			<Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked = {isShow}  />
-		),
+		render:(text,record)=>(
+			<p>{record.status === "publish"?"已发布":"未发布"}</p>
+		)
 	},{
 		title: "操作",
 		key: "action",
@@ -117,7 +117,7 @@ const Context = (props)=> {
 			method:"GET",
 			url: "http://yjxt.elatis.cn/posts/listPosts",
 			params: {
-				status: "draft",
+				status: "publish",
 			}
 		}).then(res=> {
 			if(res.data.code === 0) {

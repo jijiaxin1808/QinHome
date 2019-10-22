@@ -120,7 +120,7 @@ const News = () => {
 		const data1 = JSON.stringify({
 			limit:7,
 			moduleArray:sort,
-			status: "draft"
+			status: "publish"
 		});
 		axios({
 			method:"POST",

@@ -41,7 +41,7 @@ const Article = () => {
 		window.location.href = "/index/index";
 		return null;
 	} 
-	else if (!(data.clicked&&data.section) ) {
+	else if (!data.section ) {
 		return(
 			<div className='article allCenter '>
 				<Spin size='large' />
