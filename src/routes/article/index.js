@@ -57,7 +57,7 @@ const Article = () => {
 						{data.title}
 					</div>
 					<div className='article-info'>
-						<span>{`发布时间: ${data.createTime}`}</span>
+						<span>{`发布时间: ${data.created_at.slice(0,10)}`}</span>
 						<span>{`发布部门: ${data.section}`}</span>
 						<span>{`点击次数: ${data.clicked}`}</span>
 					</div>

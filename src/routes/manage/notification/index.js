@@ -33,10 +33,10 @@ const columns = [
 		title: "操作",
 		key: "operation",
 		dataIndex: "operation",
-		render: handle=>(
+		render: (text,record)=>(
 			<span>
 				{
-					handleFunc(handle)
+					handleFunc(record.operation,record.id)
 				}
 			</span>
 		)
@@ -51,15 +51,25 @@ const columns = [
 
 
 
-const publish = ()=> {
-	console.log("pub");
-	//在这里写确认发布的请求
+const publish = (id)=> {
+	const data1 = JSON.stringify({id:id, status: "publish"});
+	axios({
+		method: "post",
+		url: "http://yjxt.elatis.cn/posts/alter",
+		headers:{
+			"token":localStorage.getItem("token"),
+			"Content-Type":"application/json"
+		},
+		data: data1
+	})
+
 };
 
-const handleFunc = (handle)=>{
+
+const handleFunc = (handle,id)=>{
 	if(handle === "确认发布") {
 		return(
-			<Button onClick = {()=>{ publish();}}>
+			<Button onClick = {()=>{ publish(id);}}>
         确认发布
 			</Button>
 		);

@@ -64,6 +64,7 @@ export default function Search(props) {
         "Content-Type": "application/json",
       },
       params: {
+        flag: 1,
         status: "publish"
       },
     }).then(res => {
@@ -82,6 +83,7 @@ export default function Search(props) {
         "Content-Type": "application/json", 
       },
       params: {
+        flag: 1,
         status: "publish",
         limit: 5,
         offset: (curPage-1) * 5,

@@ -19,6 +19,7 @@ const MessageContent = (props)=> {
 			url: "http://yjxt.elatis.cn/posts/listPosts",//这里触发了两次
 			params: {
 				status: "publish",
+				flag: 1,
 				limit: 1,
 				offset: 0,
 				category: props.category
@@ -48,6 +49,7 @@ const MessageContent = (props)=> {
 			params: {
 				status: "publish",
 				limit: limit,
+				flag: 1,
 				offset: (page-1)*limit,
 				category: props.category
 			}

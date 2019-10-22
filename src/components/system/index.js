@@ -16,10 +16,10 @@ const System = () => {
 				</div>
 			</div>
 			<div className='Enforcement'>
-				<Link  to = "" className='Enforcement-top'><img src="/img/2.png" className='IntelligentSecurity-bottom-img' />行政执法公示</Link>
+				<Link  to = "/index/services" className='Enforcement-top'><img src="/img/2.png" className='IntelligentSecurity-bottom-img' />行政执法公示</Link>
 			</div>
 			<div className='Note'>
-				<Link to = "/" className='Note-top'><img src="/img/3.png" className='IntelligentSecurity-bottom-img' />安监留言吧</Link>
+				<Link to = "/index/services" className='Note-top'><img src="/img/3.png" className='IntelligentSecurity-bottom-img' />安监留言吧</Link>
 			</div>
 		</div>
 	);
