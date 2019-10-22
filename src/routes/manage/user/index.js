@@ -6,18 +6,7 @@ import axios from "axios";
 import qs from "qs";
 import { connect } from "../../../../node_modules/dva";
 
-const fabu = ()=> {
-	const data1 = JSON.stringify({id:50, status: "publish"});
-	axios({
-		method: "post",
-		url: "http://yjxt.elatis.cn/posts/alter",
-		headers:{
-			"token":localStorage.getItem("token"),
-			"Content-Type":"application/json"
-		},
-		data: data1
-	})
-}
+
 class NormalLoginForm extends React.Component {
   handleSubmit = e => {
   	e.preventDefault();
@@ -169,9 +158,7 @@ const User = (props)=> {
 						<WrappedNormalLoginForm />
 					</Col>
 				</Row>
-				<Button   onClick = {()=>{fabu()}} >
-            审核通过 
-  				</Button>
+
 			</div>
 		);
 	}
