@@ -24,6 +24,9 @@ function  Header (props) {
     	<ToTop />
     	<div className='home-header'>
   		<div style = {{width:1080, margin: "0 auto"}}>
+		<div className="wxn">
+			<img src="/img/tu2.png"></img>
+		</div>
     	<Search
     		placeholder='请输入搜索关键字'
     		onSearch={value => {
@@ -35,11 +38,6 @@ function  Header (props) {
   		</div>
   	</div>
 
-    	{/* <Search
-    		placeholder='请输入搜索关键字'
-    		onSearch={value => console.log(value)}
-    		style={{ width: 200, marginTop: "70px" }}
-    	/> */}
   </div><div className='header-asss'>
     	<ul className='header-bar'>
     		{

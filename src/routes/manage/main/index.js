@@ -51,6 +51,8 @@ export default class Manage extends React.Component {
   				onCollapse={this.onCollapse}
   				className="leftMenu"
   			>
+  				{/* {this.state.theme === "light" ? <a href="https://github.com/YYL1999" target='_blank' rel='noopener noreferrer'><Icon type="github" className="github" /></a> :
+  					<a href="https://github.com/YYL1999" target='_blank' rel='noopener noreferrer'><Icon type="github" className="githubwhite" /></a> } */}
   				{ this.state.theme === "light" ? this.state.collapsed===false?<span className="author">应急管理</span> : "":<span className="authorwhite">应急管理</span> }
   				<Menu
   					theme={this.state.theme}
@@ -64,7 +66,7 @@ export default class Manage extends React.Component {
   						allMenu.map((subMenu) => {
   							if (subMenu.children && subMenu.children.length) {
   								return (
-  									<SubMenu key={subMenu.url} title={<span><span>{subMenu.name}</span></span>}>
+  									<SubMenu key={subMenu.url} title={<span><Icon type={subMenu.icon} /><span>{subMenu.name}</span></span>}>
   										{subMenu.children.map(menu => (
   											<Menu.Item key={menu.url}><Link to={`/${menu.url}`}>{menu.name}</Link></Menu.Item>
   										))}
@@ -74,7 +76,7 @@ export default class Manage extends React.Component {
   							return (
   								<Menu.Item key={subMenu.url}>
   									<Link to={`/${subMenu.url}`}>
-  										<span className="navText">{subMenu.name}</span>
+  										<Icon type={subMenu.icon} /><span className="navText">{subMenu.name}</span>
   									</Link>
   								</Menu.Item>
   							);

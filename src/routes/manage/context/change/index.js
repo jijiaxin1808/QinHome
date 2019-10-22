@@ -59,10 +59,10 @@ const changeContext=(props)=>{
 					content: values.content.toHTML()// or values.content.toHTML()
 				};
 				axios({
-					method: 'post',
+					method: 'POST',
 					url: "http://yjxt.elatis.cn/posts/alter",
 					headers: {
-						"content-type": "application/json",
+						"Content-Type": "application/json",
 						"token": localStorage.getItem("token")
 					},
 					data: submitData

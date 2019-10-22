@@ -27,7 +27,7 @@ export default class Top extends React.Component {
     }
     render() {
     	return (
-    		<Header style={{ background: "#fff"}} className = "manage-header">
+    		<Header style={{ background: "#fff"}} >
 			    			<Icon
     				style = {{marginRight:"15px"}}
     				className="trigger"

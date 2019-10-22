@@ -66,7 +66,7 @@ class Xx extends React.Component {
     		const char = chars[randomNum(0, 57)];
     		code += char;
     		ctx.font = randomNum(20, 25) + "px SimHei";  //设置字体随机大小
-    		ctx.fillStyle = "#D3D7F7";
+    		ctx.fillStyle = "black";
     		ctx.textBaseline = "middle";
     		ctx.shadowOffsetX = randomNum(-3, 3);
     		ctx.shadowOffsetY = randomNum(-3, 3);
@@ -82,7 +82,8 @@ class Xx extends React.Component {
     		/**恢复旋转角度和坐标原点**/
     		ctx.rotate(-deg * Math.PI / 180);
     		ctx.translate(-x, -y);
-    	}
+		}
+		code=code.toLowerCase()
     	this.setState({
     		code
     	});

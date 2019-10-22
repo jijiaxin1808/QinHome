@@ -3,28 +3,34 @@ export const allMenu = [
 	{
 		name:"栏目管理",
 		url:"manage/column",
+		icon:"home"
 	},{
 		name:"内容管理",
+		icon:"diff",
 		children: [
 			{
 				name: "管理文章",
-				url: "manage/context",
+				url: "manage/context"
 			},{
 				name: "创建文章",
-				url: "manage/create",
+				url: "manage/create"
 			}]
 	},{
 		name:"区块管理",
 		url:"manage/block",
+		icon:"setting"
 	},{
 		name:"消息通知",
 		url:"manage/notification",
+		icon:"message"
 	},{
 		name:"留言回复",
 		url:"manage/reply",
+		icon:"eye"
 	},{
 		name:"账号权限",
 		url:"manage/account",
+		icon:"menu",
 		children:[{
 			name:"账号权限",
 			url:"manage/account",
@@ -35,8 +41,10 @@ export const allMenu = [
 	},{
 		name:"操作日志",
 		url:"manage/log",
+		icon:"file-done"
 	},{
 		name:"个人信息",
 		url:"manage/announcement",
+		icon:"user"
 	}
 ];
