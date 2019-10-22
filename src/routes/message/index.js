@@ -13,32 +13,12 @@ const  Message = (props) => {
 	const [type, setType] = useState(1);// 这里用于区别二级页面
 	// const [ messageData, setmessageData ] = useState("");
 	const [ contentData, setContentData ] = useState([]);
-	// const [total, settotal ] =useState("111"); 
-	// console.log("href",props);
-	// useEffect(() => {
-	// 	// props.home.columnData&&setmessageData(props.home.columnData);
-	// 	console.log(urlHandle("id"),"aaa", urlHandle("type"));
-	// }, [props.home.columnData]);
+
 	useEffect(()=> {
 		urlHandle("id")&&setId(urlHandle("id"));
 		setType(urlHandle("type"));
 	},[props]);
-	useEffect(()=> {
-		// props.home.columnData.length!==0&&axios({
-		// 	method: "GET",
-		// 	url: "http://yjxt.elatis.cn/posts/listPosts",//这里触发了两次
-		// 	params: {
-		// 		status: "draft",
-		// 		limit: 1,
-		// 		offset: 0,
-		// 		category: `/${props.home.columnData[type-1].title}/${props.home.columnData[type-1].sec[id-1].title}`
-		// 	}
-		// }).then(res=> {
-		// 	if(res.data.code === 0) {
-		// 		console.log(res.data.data,"刷新了");
-		// 		setContentData(res.data.data);
-		// 	}
-		// });		
+	useEffect(()=> {	
 	},[id,type,props]);
 	if(type&&props.home.columnData.length!==0) {
 		console.log("当前初始化数据",contentData);
@@ -54,7 +34,7 @@ const  Message = (props) => {
 						{props.home.columnData[type-1 ].title}>
 					</Link>
 					<span>
-						{props.home.columnData[type-1].sec[id ] && props.home.columnData[type - 1].sec[id - 1].title}
+						{props.home.columnData[type-1].sec[id-1 ] && props.home.columnData[type - 1].sec[id - 1].title}
 					</span>
 					<span className='message-header-paper' />
 				</div>

@@ -135,7 +135,7 @@ const HeaderScroll = () => {
 							if (item.id === id.id) {
 								return {
 									...item,
-									isSHow: checked,
+									isShow: checked,
 								};
 							} else
 								return {
@@ -279,7 +279,7 @@ const Carousel = () => {
 			return (
 				<Fragment>
 					<a href={picUrl} target="_blank">
-						<Button>查看图片</Button>
+						<Button style = {{marginRight:"10px"}}>查看图片</Button>
 					</a>
 					<Upload
 						{...props}
@@ -637,7 +637,7 @@ const HomeTopic = () => {
 			return (
 				<Fragment>
 					<a href={picUrl} target="_blank">
-						<Button>查看图片</Button>
+						<Button style = {{marginRight:"10px"}}>查看图片</Button>
 					</a>
 					<Upload
 						{...props}
@@ -771,7 +771,7 @@ const Background = () => {
 			return (
 				<Fragment>
 					<a href={picUrl} target="_blank">
-						<Button>查看图片</Button>
+						<Button style = {{marginRight:"10px"}}>查看图片</Button>
 					</a>
 					<Upload
 						{...props}

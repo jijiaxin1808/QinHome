@@ -2,7 +2,6 @@ import React, {useState,useEffect,useRef} from "react";
 import {Radio,Input,Icon,Table,Button,Menu,Switch,message,Tooltip} from "antd";
 import "./index.less";
 import axios from "axios";
-import { Redirect } from "react-router";
 
 export default function ColManage() {
 	// 
@@ -73,33 +72,32 @@ export default function ColManage() {
 		});
 	}, []);
 
-	useEffect(() => {
-		console.log(colsData)
-		setArtiCategory(`/${col}/${secCol}`);
-		setTableLoading(true);
-	}, [secCol]);
+  useEffect(() => {
+    setArtiCategory(`/${col}/${secCol}`);
+    setTableLoading(true);
+  }, [secCol]);
 
 	useEffect(() => {
 		setTableLoading(false);
 	}, [articles]);
 
-	useEffect(() => {
-		// 根据分类动态获取文章列表
-		if(secCol && col && artiCategory) {
-			axios.get("http://yjxt.elatis.cn/posts/listPosts",
-				{
-					headers: {
-						"token": localStorage.getItem("token"),
-						"Content-Type": "application/json"
-					},
-					params: {
-						category: artiCategory,
-						status: "draft",
-						limit: 5,
-						offset: 0
-					}
-				}
-			).then(res => {
+  useEffect(() => {
+    // 根据分类动态获取文章列表
+    if(secCol && col && artiCategory) {
+      axios.get("http://yjxt.elatis.cn/posts/listPosts",
+        {
+          headers: {
+            "token": localStorage.getItem("token"),
+            "Content-Type": "application/json"
+          },
+          params: {
+            category: artiCategory,
+            status: "publish",
+            limit: 5,
+            offset: 0
+          }
+        }
+      ).then(res => {
 
 				if(res.data.code === 0) {
 					setArticles((res.data.data)[0] === "empty" ? [] : res.data.data);
@@ -371,8 +369,7 @@ export default function ColManage() {
 	};
 	return (
 		<React.Fragment>
-			{
-        // edit.indexOf(true)===-1 ?
+      {
         <>
           <div className="title">
           	<span>
@@ -461,9 +458,7 @@ export default function ColManage() {
           	</Button>
           </div>
         </>
-        // :
-        // <Redirect from="/manage/column" to="/manage/context"/>
-			}
+      }
 		</React.Fragment>
 	);
 }

@@ -6,6 +6,10 @@ import "./index.less";
 import axios from "axios";
 
 const MessageContent = (props)=> {
+	const isShow = (item)=> {
+		// console.log("当前文章发布状态")
+	    return item.status === "publish";
+		}
 	const limit = 1;
 	const [ data, setData ] = useState([]);
 	const [total, setTotal ] =useState();
@@ -14,7 +18,7 @@ const MessageContent = (props)=> {
 			method: "GET",
 			url: "http://yjxt.elatis.cn/posts/listPosts",//这里触发了两次
 			params: {
-				status: "draft",
+				status: "publish",
 				limit: 1,
 				offset: 0,
 				category: props.category
@@ -24,21 +28,25 @@ const MessageContent = (props)=> {
 				console.log(props.category,"当前分类初始化了",res.data.data,"ssss");
 				setTotal(res.data.total);
 				if(res.data.data[0] === "empty") {
+					
 					console.log("当前栏目没有文章");
 					setData("empty");
 				}
-				setData(res.data.data);
+				else {
+					setData(res.data.data);
+				}
 			}
 		});	
 
 	},[props])
+
 
 	const onChange = (page, pageSize)=> {
 		props.home.columnData.length!==0&&axios({
 			method: "GET",
 			url: "http://yjxt.elatis.cn/posts/listPosts",
 			params: {
-				status: "draft",
+				status: "publish",
 				limit: limit,
 				offset: (page-1)*limit,
 				category: props.category
@@ -63,7 +71,7 @@ const MessageContent = (props)=> {
 			<div className = "message-maincontent">
 				<ul className = "message-ul">
 					{
-						data.map((item,index)=> {
+							data.map((item,index)=> {
 							return (
 								<li className = "message-maincontent-li">
 									<Link to = {`/index/article?id=${item.id}`} className = "message-article"> 

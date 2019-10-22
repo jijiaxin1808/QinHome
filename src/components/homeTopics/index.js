@@ -46,7 +46,7 @@ const HomeTopics = (props) => {
 			const data1 = JSON.stringify({
 				limit:3,
 				moduleArray:sort,
-				status: "draft"
+				status: ""
 			});
 			console.log(sort,"发送了home请求");
 			axios({
@@ -105,6 +105,4 @@ const HomeTopics = (props) => {
 
 
 };
-
-
 export default HomeTopics;

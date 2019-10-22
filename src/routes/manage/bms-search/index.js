@@ -88,8 +88,8 @@ const BmsSearch = (props)=> {
 			title: "页面状态",
 			key: "action",
 			dataIndex:"action",
-			render:isShow=>(
-				<Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked = {isShow}  />
+			render:(text,record)=>(
+				<p>{record.status === "publish"?"已发布":"未发布"}</p>
 			),
 	  },{
 			title: "操作",

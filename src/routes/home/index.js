@@ -1,72 +1,17 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
-
 import "./index.less";
 import System from "../../components/system";
-// import Footer from '../../components/footer'
 import HomeTopics from "../../components/homeTopics";
 import HomeCarousel from "../../components/home-carousel";
-// import Header from '../../components/header'
-import Safe from "./safe";
+import Weather from "./weather";
 import Tabs from "../../components/tabs";
 import { Link } from "react-router-dom";
-import { message } from "antd";
+import { message, Tooltip } from "antd";
 import friendlinkData from "../../config/friendlinkData";
 import axios from "axios";
+import TextScroll from 'react-textscroll';
 
-const data = [
-	{
-		href: "",
-		picUrl: ""
-	}, {
-		href: "",
-		picUrl: ""
-	}, {
-		href: "",
-		picUrl: ""
-	}
-];
-const tabsData = [
-	{
-		tab: "领导讲话",
-		Info: [
-			"wergwergwegrfewf",
-			"werfewrfwefr",
-			".....",
-			".....",
-			".....",
-			"fwergfewrgrewg",
-			"wegrwergergew",
-			"....."
-		]
-	},
-	{
-		tab: "公文公告",
-		Info: [
-			"zyzyzhisd",
-			"adfasdfasf",
-			".....",
-			".....",
-			".....",
-			"afdadsfassfd",
-			"adfasdfasf",
-			"....."
-		]
-	},
-	{
-		tab: "工作动态",
-		Info: [
-			"adfasdfasdf",
-			"qerqwerqwr",
-			".....",
-			".....",
-			".....",
-			"342543w5w34",
-			"fwerfwerfewfrwe",
-			"....."
-		]
-	}
-];
 const FriendLink = () => {
 	return (
 		<div className='footer-friendlink'>
@@ -108,7 +53,7 @@ const FooterTopic = () => {
 						return (
 							<div className='footer-topic-item' key={index}>
 								<Link to={item.url} style={{ display: "block" }}>
-									<img src={item.picUrl} style={{ height: "118px", width: "192px", verticalAlign: "middle" }} />
+									<img src={item.picUrl} style={{ height: "111px", width: "250px", verticalAlign: "middle" }} />
 								</Link>
 							</div>
 						);
@@ -120,38 +65,67 @@ const FooterTopic = () => {
 };
 const Home = () => {
 	const [colsData, setColsData] = useState([]);
+	const [backgroundUrl, setbackgroundUrl] = useState("");
+	const [annouces, setAnnouces] = useState([]);
+
 	useEffect(() => {
 		axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
-			console.log(res);
 			if (res.data.code === 0) {
 				setColsData(res.data.data);
 			}
 		}).catch(err => {
 			message.error(err);
 		});
-	},[]);
-	const [backgroundUrl, setbackgroundUrl] = useState("");
-	useEffect(() => {
+		axios.get("http://yjxt.elatis.cn/options/name/safe").then((res) => {
+			if (res.data.code === 0) {
+
+				let _data = [];
+				res.data.data.map(item => {
+					if(item.isShow) {
+						console.log("push了数据",item)
+						_data.push(
+							<a title={item.title} href={`${item.href}`} style={{color: "#333", fontSize: "18px"}}>{item.title}</a>
+						)
+					}
+				})
+				setAnnouces(_data);
+				console.log("设置了数据",_data);
+			}
+		});
 		axios.get("http://yjxt.elatis.cn/options/name/background").then((res) => {
 			if (res.data.code === 0) {
 				setbackgroundUrl(res.data.data[0].picUrl);
-				console.log(res.data.data[0].picUrl, "background");
 			}
 		});
-	}, []);
+	},[]);
+
 	return (
 		<div className='home' style={{ backgroundImage: `url(${backgroundUrl})`, backgroundSize: "cover", width: "100%", margin: "0 auto" }}>
 			<div className='mainBan'>
-				<Safe />
+				<div className="info-container">
+					<span className="home-info">
+						<i className="info-icon">公告</i>
+					</span>
+					{
+						annouces.length!==0 &&
+						<div style={{marginLeft: -129,width:"500px"}}>
+							<TextScroll 
+								mode="horizontal"
+								text={annouces}
+								speed={6000}
+							/>
+						</div>
+					}
+					<Weather />
+				</div>
 				<div className='container' style={{ display: "flex", flexFlow: "row nowrap", width: "1080px", margin: "0 auto" }}>
-					<HomeCarousel data={data} />
-					<Tabs data={tabsData} />
+					<HomeCarousel />
+					<Tabs />
 				</div>
 				<System />
 				<HomeTopics colsData={colsData} />
 				<FooterTopic />
 				<FriendLink />
-				{/* <Footer /> */}
 			</div>
 		</div>
 	);

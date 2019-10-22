@@ -15,7 +15,8 @@
     "dva": "^2.4.1",
     "qiniu": "^7.2.1",
     "react": "^16.10.2",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-textscroll": "^1.0.0"
   },
   "devDependencies": {
     "babel-plugin-dva-hmr": "^0.3.2",
