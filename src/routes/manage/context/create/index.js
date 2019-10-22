@@ -1,14 +1,10 @@
 import "braft-editor/dist/index.css";
 import React,{ useEffect, useState , forwardRef} from "react";
 import BraftEditor from "braft-editor";
-import { ContentUtils } from "braft-utils";
 import { Form, Input, Button,  Row, Col ,Cascader, Upload, Icon, Modal, Select, Card, Tag} from "antd";
 import "./index.css";
 import axios from "axios";
-import getToken from "./getToken";
 
-const QINIU_SERVER = "http://upload-z1.qiniup.com";
-const QINIU_PATH = "http://qiniu.waidzsalome.cn";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -56,11 +52,6 @@ function FormDemo (props) {
 		}))
 	}));
 
-	const [token, setToken] = useState("");
-	const getUploadToken = () => {
-	  console.log(getToken());
-		setToken(getToken());
-	};
 
 	const handleOnChange = ({file}) => {
 		const { response = {}} = file;
@@ -68,10 +59,18 @@ function FormDemo (props) {
 		console.log(response.hash);
 	};
 
+	const [state, setState] = useState("")
+	const judgeStateP = () => {
+	 setState("publish");
+  };
+
+	const judgeStateC = () =>{
+	  setState("create");
+  }
+
 	const handleSubmit = (event) => {
-
   	event.preventDefault();
-
+    console.log(state);
   	props.form.validateFields((error, values) => {
   		if (!error) {
   			const submitData = {
@@ -80,7 +79,9 @@ function FormDemo (props) {
 					category: "/"+values.category[0]+ "/" +values.category[1],
   				content: values.content.toHTML()// or values.content.toHTML()
   			};
-
+  			if (state === "publish") {
+          submitData.status = "publish";
+        }
   			axios({
 					method: "post",
 					url: "http://yjxt.elatis.cn/posts/create",
@@ -132,7 +133,7 @@ function FormDemo (props) {
 		section: item.section,
 	}));
 
-	console.log("modal",modalOptions);
+	// console.log("modal",modalOptions);
 
 	const handleOk = () => {
 	  setConfirmLoading(true);
@@ -148,7 +149,9 @@ function FormDemo (props) {
 	const onChange =(value) => {
 		console.log(value);
 	};
-  	const controls = ["bold", "italic", "underline", "text-color", "separator", "link", "separator", "media" ];
+
+
+  	const controls = ["font-size","bold", "italic", "underline", "text-color", "separator", "link", "separator", "media" ];
   	const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
 
 	const uploadHandler = (param) => {
@@ -169,9 +172,6 @@ function FormDemo (props) {
 			component: (
 				<Upload
 					accept="image/*"
-					action={QINIU_SERVER}
-					data={{token: token}}
-					beforeUpload={getUploadToken}
 					showUploadList={false}
 					customRequest={uploadHandler}
 					onChange={handleOnChange}
@@ -200,7 +200,7 @@ function FormDemo (props) {
   							message: "请输入标题",
   						}],
   					})(
-  						<Input size="large" placeholder="请输入标题"/>
+  						<Input size="large" placeholder="请输入标题" />
   					)}
   				</Form.Item>
   				<Form.Item {...formItemLayout} label="发布部门">
@@ -210,7 +210,7 @@ function FormDemo (props) {
   							message: "请填写发布部门",
   						}],
   					})(
-  						<Input size="large" placeholder="请输入标题"/>
+  						<Input size="large" placeholder="请输入发布部门" />
   					)}
   				</Form.Item >
   				<Form.Item {...formItemLayout} label="请选择文章路径">
@@ -241,10 +241,11 @@ function FormDemo (props) {
   						}],
   					})(
   						<BraftEditor
-  							className="my-editor"
+  							className="editor-wrapper"
   							controls={controls}
   							placeholder="请输入正文内容"
 							  extendControls={extendControls}
+                contentStyle={{height: 210, boxShadow: 'inset 0 1px 3px rgba(0,0,0,.1)'}}
   						/>
   					)}
   				</Form.Item>
@@ -252,7 +253,7 @@ function FormDemo (props) {
 
   					<Row>
   						<Col span={4} offset={4}>
-							<Button size="large"  htmlType="submit">保存草稿</Button>
+							<Button size="large"  htmlType="submit" onClick={judgeStateC}>保存草稿</Button>
   						</Col>
   						<Col span={4} offset={4}>
   							<Button size="large"  htmlType="button" onClick={showModal}>预览发布</Button>
@@ -273,10 +274,10 @@ function FormDemo (props) {
 											<Tag className="tag">
                           https://gw6wov.axshare.com
 											</Tag>
-											<Button size="middle"  htmlType="button" block style={{marginBottom: "10px"}}>
+											<Button size="large"  htmlType="button" block style={{marginBottom: "10px"}}>
                           更新页面
 											</Button>
-											<Button size="middle" block>
+											<Button size="large" block>
                           生成新地址
 											</Button>
 										</Card>
@@ -304,7 +305,7 @@ function FormDemo (props) {
 							</Modal>
   						</Col>
   						<Col span={4} offset={4}>
-  							<Button size="large"  htmlType="button">直接发布</Button>
+  							<Button size="large" type="primary" htmlType="submit" onClick={judgeStateP}>直接发布</Button>
   						</Col>
   					</Row>
   				</Form.Item>
