@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import qs from "qs";
 // import messageData from "../../../assets/messageData";
-const columns = [
+const columns = [	
 	{
 		title: "操作人",
 		dataIndex: "name",
@@ -36,7 +36,7 @@ const columns = [
 		render: (text,record)=>(
 			<span>
 				{
-					handleFunc(record.operation,record.id)
+					handleFunc(record.operation,record.post_id)
 				}
 			</span>
 		)
@@ -61,8 +61,7 @@ const publish = (id)=> {
 			"Content-Type":"application/json"
 		},
 		data: data1
-	})
-
+	});
 };
 
 
@@ -160,7 +159,7 @@ const Message = ()=> {
 	useEffect(()=>{
 		axios({
 			method:"GET",
-			url:"http://yjxt.elatis.cn/messages/getPageInfo?limit=10&offset=0",
+			url:"http://yjxt.elatis.cn/messages/getPageInfo",
 			headers: {
 				token:localStorage.getItem("token")
 			}
