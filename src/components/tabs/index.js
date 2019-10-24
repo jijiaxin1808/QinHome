@@ -20,7 +20,7 @@ const  Tabs =(props)=> {
 			const data1 = JSON.stringify({
 				limit:7,
 				moduleArray:sort,
-				status: "draft"
+				status: "publish"
 			});
 			console.log("发送了 hometopic 请求",sort);
 			axios({

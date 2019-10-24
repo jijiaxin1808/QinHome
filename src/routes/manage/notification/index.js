@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import qs from "qs";
 // import messageData from "../../../assets/messageData";
-const columns = [
+const columns = [	
 	{
 		title: "操作人",
 		dataIndex: "name",
@@ -33,10 +33,10 @@ const columns = [
 		title: "操作",
 		key: "operation",
 		dataIndex: "operation",
-		render: handle=>(
+		render: (text,record)=>(
 			<span>
 				{
-					handleFunc(handle)
+					handleFunc(record.operation,record.post_id)
 				}
 			</span>
 		)
@@ -51,15 +51,24 @@ const columns = [
 
 
 
-const publish = ()=> {
-	console.log("pub");
-	//在这里写确认发布的请求
+const publish = (id)=> {
+	const data1 = JSON.stringify({id:id, status: "publish"});
+	axios({
+		method: "post",
+		url: "http://yjxt.elatis.cn/posts/alter",
+		headers:{
+			"token":localStorage.getItem("token"),
+			"Content-Type":"application/json"
+		},
+		data: data1
+	});
 };
 
-const handleFunc = (handle)=>{
+
+const handleFunc = (handle,id)=>{
 	if(handle === "确认发布") {
 		return(
-			<Button onClick = {()=>{ publish();}}>
+			<Button onClick = {()=>{ publish(id);}}>
         确认发布
 			</Button>
 		);
@@ -150,7 +159,7 @@ const Message = ()=> {
 	useEffect(()=>{
 		axios({
 			method:"GET",
-			url:"http://yjxt.elatis.cn/messages/getPageInfo?limit=10&offset=0",
+			url:"http://yjxt.elatis.cn/messages/getPageInfo",
 			headers: {
 				token:localStorage.getItem("token")
 			}

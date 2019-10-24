@@ -19,7 +19,7 @@ function FormDemo (props) {
 	useEffect(()=>{
 		setTimeout(() => {
 			props.form.setFieldsValue({
-				content: BraftEditor.createEditorState("<p>Hello <b>World!</b></p>")
+				content: BraftEditor.createEditorState("World!")
 			});
 		}, 1000);
 	},[]);
@@ -39,8 +39,6 @@ function FormDemo (props) {
 		}).catch(err => {
 			console.log(err);
 		});
-
-
 	}, []);
 
 	const options = data.map( item => ({
@@ -152,7 +150,7 @@ function FormDemo (props) {
 
 
   	const controls = ["font-size","bold", "italic", "underline", "text-color", "separator", "link", "separator", "media" ];
-  	const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
+  	// const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
 
 	const uploadHandler = (param) => {
 		if (!param.file) {
@@ -203,16 +201,6 @@ function FormDemo (props) {
   						<Input size="large" placeholder="请输入标题" />
   					)}
   				</Form.Item>
-  				<Form.Item {...formItemLayout} label="发布部门">
-  					{getFieldDecorator("department", {
-  						rules: [{
-  							required: true,
-  							message: "请填写发布部门",
-  						}],
-  					})(
-  						<Input size="large" placeholder="请输入发布部门" />
-  					)}
-  				</Form.Item >
   				<Form.Item {...formItemLayout} label="请选择文章路径">
   					{
   						getFieldDecorator("category",{
@@ -241,11 +229,12 @@ function FormDemo (props) {
   						}],
   					})(
   						<BraftEditor
-  							className="editor-wrapper"
+
+  							className="my-editor"
   							controls={controls}
-  							placeholder="请输入正文内容"
-							  extendControls={extendControls}
-                contentStyle={{height: 210, boxShadow: 'inset 0 1px 3px rgba(0,0,0,.1)'}}
+  							// placeholder="请输入正文内容"
+							// extendControls={extendControls}
+                			// contentStyle={{height: 210, boxShadow: 'inset 0 1px 3px rgba(0,0,0,.1)'}}
   						/>
   					)}
   				</Form.Item>
@@ -255,55 +244,7 @@ function FormDemo (props) {
   						<Col span={4} offset={4}>
 							<Button size="large"  htmlType="submit" onClick={judgeStateC}>保存草稿</Button>
   						</Col>
-  						<Col span={4} offset={4}>
-  							<Button size="large"  htmlType="button" onClick={showModal}>预览发布</Button>
-							<Modal
-								title="请求发布"
-								visible={visible}
-								onOk={handleOk}
-								confirmLoading={confirmLoading}
-								onCancel={handleCancel}
-							>
-								<Row>
-									<Col span={10}>
-										<Card>
-											<h1 style={{textAlign: "center"}}>生成预览</h1>
-											<p>
-                          “秦皇岛市安全生产培训机构名单”
-											</p>
-											<Tag className="tag">
-                          https://gw6wov.axshare.com
-											</Tag>
-											<Button size="large"  htmlType="button" block style={{marginBottom: "10px"}}>
-                          更新页面
-											</Button>
-											<Button size="large" block>
-                          生成新地址
-											</Button>
-										</Card>
-									</Col>
-									<Col span={12} offset={2}>
-										<Select defaultValue="常用联系人" style={{width: 200}}>
-											{
-												modalOptions.map(item => (
-													<Option
-														key={item.id}
-														value={item.name}
-													>
-														{item.name}
-														{item.section}
-														{item.number}
-													</Option>
-												))
-											}
-										</Select>
-										<Button size="small"  htmlType="button" style={{marginTop: "50px"}}>
-                        发送申请
-										</Button>
-									</Col>
-								</Row>
-							</Modal>
-  						</Col>
+  						
   						<Col span={4} offset={4}>
   							<Button size="large" type="primary" htmlType="submit" onClick={judgeStateP}>直接发布</Button>
   						</Col>

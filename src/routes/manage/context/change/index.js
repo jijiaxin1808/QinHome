@@ -177,19 +177,7 @@ const changeContext=(props)=>{
 						<Input size="large" placeholder="请输入标题"/>
 					)}
 				</Form.Item>
-				<Form.Item {...formItemLayout} label="请选择文章路径">
-					{
-						getFieldDecorator("category",{
-							rules: [{
-								type: "array",
-								required: true,
-								message: "请填写发布分类"
-							}]
-						})(
-							<Cascader options={options} onChange={onChange} placeholder="请选择文章路径"/>
-						)
-					}
-				</Form.Item>
+
 				<Form.Item {...formItemLayout} label="文章正文">
 					{getFieldDecorator("content", {
 						validateTrigger: "onBlur",

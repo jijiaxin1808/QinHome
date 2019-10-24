@@ -117,7 +117,7 @@ const Context = (props)=> {
 			method:"GET",
 			url: "http://yjxt.elatis.cn/posts/listPosts",
 			params: {
-				status: "publish",
+				flag: 2
 			}
 		}).then(res=> {
 			if(res.data.code === 0) {

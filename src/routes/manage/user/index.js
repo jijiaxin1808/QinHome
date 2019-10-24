@@ -6,6 +6,7 @@ import axios from "axios";
 import qs from "qs";
 import { connect } from "../../../../node_modules/dva";
 
+
 class NormalLoginForm extends React.Component {
   handleSubmit = e => {
   	e.preventDefault();
@@ -112,6 +113,7 @@ class NormalLoginForm extends React.Component {
   				<Button htmlType="submit"    >
             修改密码
   				</Button>
+				  
   			</Form.Item>
   		</Form>
   	);
@@ -156,6 +158,7 @@ const User = (props)=> {
 						<WrappedNormalLoginForm />
 					</Col>
 				</Row>
+
 			</div>
 		);
 	}
