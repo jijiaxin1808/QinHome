@@ -33,7 +33,7 @@ class Xx extends React.Component {
     			}else{
     				let data={
     					...values,
-    					category:'complain'
+						category:'complain'
 					}
 					console.log(data)
 					delete data.code
@@ -132,8 +132,8 @@ class Xx extends React.Component {
   						rules: [],
   					})(
     						<Radio.Group onChange={this.onChange} >
-    					<Radio value="男">男</Radio>
-    					<Radio value="女">女</Radio>
+    					<Radio value={1}>男</Radio>
+    					<Radio value={2}>女</Radio>
     				</Radio.Group>
   					)}
   				</Form.Item>
@@ -164,7 +164,7 @@ class Xx extends React.Component {
   				</Form.Item>
 
     				<Form.Item label="工作单位">
-  					{getFieldDecorator("workspace", {
+  					{getFieldDecorator("workplace", {
   						rules: [{  message: "请输入用户名" }],
   					})(
   						<Input/>,

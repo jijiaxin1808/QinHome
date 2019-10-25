@@ -61,6 +61,10 @@ const publish = (id)=> {
 			"Content-Type":"application/json"
 		},
 		data: data1
+	}).then((res)=> {
+		if(res.data.code === 0) {
+			message.success("确认发布成功")
+		}
 	});
 };
 
@@ -91,7 +95,6 @@ const Message = ()=> {
 			});
 			setselectedid(selectedId);
 			console.log(`selectedRowKeys: ${selectedRowKeys}`, "selectedRows: ", selectedId );
-
 		},
 		getCheckboxProps: record => ({
 			disabled: record.name === "Disabled User", // Column configuration not to be checked

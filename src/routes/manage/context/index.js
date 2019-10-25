@@ -18,7 +18,7 @@ const  DeleteArticle  = (props)=> {
 		setVisible(false);
 		console.log("确认删除");
 		axios({
-			method:"GET",
+			method:"POST",
 			url: "http://yjxt.elatis.cn/posts/delete",
 			params: {
 				id:props.id
@@ -30,6 +30,7 @@ const  DeleteArticle  = (props)=> {
 		}).then(res=> {
 			if(res.data.code === 0 ) {
 				message.success("删除成功");
+				window.location.reload();
 			}
 			else {
 				message.warn(res.data.message);

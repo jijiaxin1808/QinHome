@@ -8,23 +8,23 @@ const  DeleteArticle  = (props)=> {
 	const showModal = () => {
 		setVisible(true);
 	};
-
 	const handleOk = e => {
 		setVisible(false);
 		console.log("确认删除");
 		axios({
-			method:"GET",
+			method:"POST",
 			url: "http://yjxt.elatis.cn/posts/delete",
 			params: {
 				id:props.id
 			},
-			Headers: {
+			headers: {
 				"token":localStorage.getItem("token"),
 				"Content-Type": "application/json"
 			}
 		}).then(res=> {
 			if(res.data.code === 0 ) {
 				message.success("删除成功");
+				window.location.reload();
 			}
 			else {
 				message.warn(res.data.message);
@@ -102,8 +102,8 @@ const BmsSearch = (props)=> {
 			title: "删除",
 			key: "action",
 			dataIndex:"action",
-			render: id=> (
-				<DeleteArticle  id = {id}>删除文章</DeleteArticle>
+			render:(text,record) => (
+				<DeleteArticle  id = {record.id}>删除文章</DeleteArticle>
 			)
 
 		},

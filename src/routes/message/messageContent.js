@@ -10,7 +10,7 @@ const MessageContent = (props)=> {
 		// console.log("当前文章发布状态")
 	    return item.status === "publish";
 		}
-	const limit = 1;
+	const limit = 4;
 	const [ data, setData ] = useState([]);
 	const [total, setTotal ] =useState();
 	useEffect(()=> {
@@ -20,7 +20,7 @@ const MessageContent = (props)=> {
 			params: {
 				status: "publish",
 				flag: 1,
-				limit: 1,
+				limit: limit,
 				offset: 0,
 				category: props.category
 			}
@@ -71,7 +71,7 @@ const MessageContent = (props)=> {
 
 		return (
 			<div className = "message-maincontent">
-				<ul className = "message-ul">
+				<ul className = "message-ul" style  = {{minHeight : "500px"}}>
 					{
 							data.map((item,index)=> {
 							return (

@@ -1,7 +1,7 @@
 import "braft-editor/dist/index.css";
 import React,{ useEffect, useState , forwardRef} from "react";
 import BraftEditor from "braft-editor";
-import { Form, Input, Button,  Row, Col ,Cascader, Upload, Icon, Modal, Select, Card, Tag} from "antd";
+import { Form, Input, Button,  Row, Col ,Cascader, Upload, Icon, Modal, Select, Card, Tag,message} from "antd";
 import "./index.css";
 import axios from "axios";
 
@@ -88,9 +88,13 @@ function FormDemo (props) {
 						"token": localStorage.getItem("token")
 					},
 					data: submitData
-				}).then( res => [
-					console.log(res)
-				]).catch( err => {
+				}).then( res => {
+					if(res.data.code === 0) {
+						message.success("发布成功")
+					}
+				}
+					
+				).catch( err => {
 					console.log(err);
 				});
   			console.log("submitData",submitData);

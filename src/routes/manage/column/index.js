@@ -91,6 +91,7 @@ export default function ColManage() {
             "Content-Type": "application/json"
           },
           params: {
+			flag:2,
             category: artiCategory,
             status: "publish",
             limit: 5,
@@ -206,8 +207,8 @@ export default function ColManage() {
 	const secondaryColumn = [
 		{
 			title: "序列",
-			dataIndex: "sequence",
-			key: "sequence",
+			dataIndex: "id",
+			key: "id",
 			width: 210,
 		},
 		{
@@ -225,14 +226,17 @@ export default function ColManage() {
 		},
 		{
 			title: "发布部门",
-			dataIndex: "dept",
-			key: "dept",
+			dataIndex: "category",
+			key: "category",
 		},
 		{
 			title: "日期",
-			dataIndex: "date",
-			key: "date",
-			width: 202
+			dataIndex: "created_at",
+			key: "created_at",
+			width: 202,
+			render: (id,created_at)=>(
+				<p>{created_at.created_at.slice(10)}</p>
+			)
 		},
 		{
 			title: "状态",
