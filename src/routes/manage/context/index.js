@@ -1,7 +1,7 @@
 import React,{ useState, useEffect } from "react";
-import { Table, Divider, Tag, Switch,Input,Button, Modal, message   } from "antd";
+import { Table, Input,Button, Modal, message   } from "antd";
 // import contextData from "../../../assets/contextData";
-import styles from "./index.css";
+// import styles from "./index.css";
 import axios from "axios";
 import {routerRedux} from "dva/router";
 import { connect } from "dva";
@@ -44,9 +44,7 @@ const  DeleteArticle  = (props)=> {
 				message.warn(res.data.message);
 			}
 		});
-
 	};
-
 	const handleCancel = e => {
 		setVisible(false);
 	};

@@ -57,18 +57,18 @@ function FormDemo (props) {
 		console.log(response.hash);
 	};
 
-	const [state, setState] = useState("")
+	const [state, setState] = useState("");
 	const judgeStateP = () => {
 	 setState("publish");
-  };
+	};
 
 	const judgeStateC = () =>{
 	  setState("create");
-  }
+	};
 
 	const handleSubmit = (event) => {
   	event.preventDefault();
-    console.log(state);
+		console.log(state);
   	props.form.validateFields((error, values) => {
   		if (!error) {
   			const submitData = {
@@ -78,8 +78,8 @@ function FormDemo (props) {
   				content: values.content.toHTML()// or values.content.toHTML()
   			};
   			if (state === "publish") {
-          submitData.status = "publish";
-        }
+					submitData.status = "publish";
+				}
   			axios({
 					method: "post",
 					url: "http://yjxt.elatis.cn/posts/create",
@@ -90,7 +90,7 @@ function FormDemo (props) {
 					data: submitData
 				}).then( res => {
 					if(res.data.code === 0) {
-						message.success("发布成功")
+						message.success("发布成功");
 					}
 				}
 					

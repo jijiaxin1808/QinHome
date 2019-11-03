@@ -1,11 +1,11 @@
 import React, {useState,useEffect,useRef} from "react";
-import {Radio,Input,Icon,Table,Button,Menu,Switch,message,Tooltip} from "antd";
+import {Input,Icon,Table,Button,Menu,Switch,message,Tooltip} from "antd";
 import "./index.less";
 import axios from "axios";
 
 export default function ColManage() {
 	// 
-	const [initialState, setInitialState] = useState({});
+	// const [initialState, setInitialState] = useState({});
 	// 用与更新后端接口的临时变量
 	const [colsData, setColsData] = useState([]);
 	// 后端data
@@ -72,33 +72,33 @@ export default function ColManage() {
 		});
 	}, []);
 
-  useEffect(() => {
-    setArtiCategory(`/${col}/${secCol}`);
-    setTableLoading(true);
-  }, [secCol]);
+	useEffect(() => {
+		setArtiCategory(`/${col}/${secCol}`);
+		setTableLoading(true);
+	}, [secCol]);
 
 	useEffect(() => {
 		setTableLoading(false);
 	}, [articles]);
 
-  useEffect(() => {
-    // 根据分类动态获取文章列表
-    if(secCol && col && artiCategory) {
-      axios.get("http://yjxt.elatis.cn/posts/listPosts",
-        {
-          headers: {
-            "token": localStorage.getItem("token"),
-            "Content-Type": "application/json"
-          },
-          params: {
-			flag:2,
-            category: artiCategory,
-            status: "publish",
-            limit: 5,
-            offset: 0
-          }
-        }
-      ).then(res => {
+	useEffect(() => {
+		// 根据分类动态获取文章列表
+		if(secCol && col && artiCategory) {
+			axios.get("http://yjxt.elatis.cn/posts/listPosts",
+				{
+					headers: {
+						"token": localStorage.getItem("token"),
+						"Content-Type": "application/json"
+					},
+					params: {
+						flag:2,
+						category: artiCategory,
+						status: "publish",
+						limit: 5,
+						offset: 0
+					}
+				}
+			).then(res => {
 
 				if(res.data.code === 0) {
 					setArticles((res.data.data)[0] === "empty" ? [] : res.data.data);
@@ -221,7 +221,7 @@ export default function ColManage() {
 					<Tooltip arrowPointAtCenter title={text}>
 						<span>{text}</span>
 					</Tooltip>
-				)
+				);
 			}
 		},
 		{
@@ -260,31 +260,31 @@ export default function ColManage() {
 		}
 	];
 	const handleNewBtn = () => {
-		setEditData([...editData,{key: `${editData.length+1}`, title: "新栏目", weight: 100, state: true, sec: []}])
-	}
+		setEditData([...editData,{key: `${editData.length+1}`, title: "新栏目", weight: 100, state: true, sec: []}]);
+	};
 	const handleDelBtn = (index) => {
 		editData.splice(index, 1);
 		setEditData([...editData]);
-	}
+	};
 	const handleEditBtn = () => {
 		setEditState("一级");
 		setEditData([...colsData]);
-	}
+	};
 	// 点击二级栏目
 	const handleSecColClick = ({item, key}) => {
 		// 需要后端文章数量的数据
 		setSecColKey(key);
 		setSecCol(item.props.children);
-	}
+	};
 	// 点击一级栏目
 	const handleColClick = (item) => {
 		setCol(item.title);
-	}
+	};
 	// 新增二级栏目
 	const handleAddSeColClick = () => {
 		// 这里直接改colsData就行了，不用setSecCols，因为useEffect会监控colsData改变secCols。
 		let _secCols = [...secCols];
-		let _key = `${secCols.length!==0 ? parseInt(secCols[secCols.length-1].key)+1 : 1}`;
+		let _key = `${secCols.length!==0 ? parseInt(secCols[secCols.length-1].key,10)+1 : 1}`;
 		_secCols.push({
 			key: _key,
 			title: "新栏目",
@@ -297,19 +297,19 @@ export default function ColManage() {
 			} else {
 				return item;
 			}
-		})
+		});
 		setColsData(_colsData);
-	}
+	};
 	const handleEditClick = (index) => {
 		window.location.href = `/manage/change/${index}`;
 		// console.log(edit)
 		// let _edit = [...edit];
 		// _edit.splice(index, 1, true);
 		// setEdit(_edit);
-	}
+	};
 	const handleRenameClick = () => {
 		setSecColEdit(true);
-	}
+	};
 	const handleRenameSureClick = () => {
 		setSecColEdit(false);
 		let _secCols = [...secCols];
@@ -319,7 +319,7 @@ export default function ColManage() {
 		let index = _secCols.indexOf(_secCol);
 		_secCol.title = secCol;
 		_secCols.splice(index, 1, _secCol);
-	}
+	};
 	const DelSecCol = () => {
 
 		let _secCols = [...secCols];
@@ -341,7 +341,7 @@ export default function ColManage() {
 	};
 	const handleColChange = (e, id, index) => {
 		// 先这样，优化代码的时候记得改一下，这里只有在输入框改变的时候才会给colsData添加newCol,虽然默认newCol框值为title的值，但是没有newCol属性，所有是undefined。
-		let _value = id === "weight" ? parseInt(e.target.value) : e.target.value;
+		let _value = id === "weight" ? parseInt(e.target.value,10) : e.target.value;
 		let _weightIsNum = [...weightIsNum];
 		_weightIsNum.splice(index, 1 ,true);
 		setWeightIsNum(_weightIsNum);
@@ -373,14 +373,13 @@ export default function ColManage() {
 	};
 	return (
 		<React.Fragment>
-      {
-        <>
-          <div className="title">
+			{
+        <>"         "<div className="title">
           	<span>
               栏目管理
           	</span>
-          </div> 
-          <div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px",marginBottom: "40px", paddingLeft: "250px"}}>
+        </div>"
+         "<div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px",marginBottom: "40px", paddingLeft: "250px"}}>
           	<ul className="list">
           		{
           			data.map(item => (
@@ -396,8 +395,7 @@ export default function ColManage() {
           	>
               编辑栏目
           	</Button>
-          </div>
-          <div className="columnContainer">
+        </div>"         "<div className="columnContainer">
           	{
           		editState === "二级" &&
               <Menu
@@ -435,10 +433,7 @@ export default function ColManage() {
                 	<div className="col-oper">
                 		{
                 			!secColEdit ?
-                      <>
-                        <Button className="btn" onClick={handleRenameClick}><span>重命名</span></Button>
-                        <Button className="btn danger" onClick={DelSecCol}><span>删除</span></Button>
-                      </>:
+                      <>"                       "<Button className="btn" onClick={handleRenameClick}><span>重命名</span></Button>"                       "<Button className="btn danger" onClick={DelSecCol}><span>删除</span></Button>"                     "</>:
                 				<Button className="btn" onClick={handleRenameSureClick}><span>确定</span></Button>
                 		}
                 	</div>
@@ -451,8 +446,7 @@ export default function ColManage() {
           			loading={tableLoading}
           		/>
           	</div>
-          </div>
-          <div className="submitBtnContainer">
+        </div>"         "<div className="submitBtnContainer">
           	<Button 
           		className="submitBtn"
           		loading = {loading}
@@ -460,9 +454,8 @@ export default function ColManage() {
           	>
               保存
           	</Button>
-          </div>
-        </>
-      }
+        </div>"       "</>
+			}
 		</React.Fragment>
 	);
 }

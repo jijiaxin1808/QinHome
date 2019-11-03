@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import styles from "./index.css";
-import userData from "../../../config/userData";
+// import styles from "./index.css";
+// import userData from "../../../config/userData";
 import { Form, Icon, Input, Button, message, Row, Col, Skeleton } from "antd";
 import axios from "axios";
 import qs from "qs";
@@ -135,10 +135,10 @@ const User = (props)=> {
 			if(res.data.code === 0) {
 				setUserData(res.data.data);
 			}
-		})	
-	},[])
+		});	
+	},[]);
 	if(userData.length !==0) {
-		console.log(userData,"usersuusus")
+		console.log(userData,"usersuusus");
 		return (
 			<div>
 				<div className = {"userInfo"}>
@@ -164,7 +164,7 @@ const User = (props)=> {
 	}
 	else return (
 		<Skeleton rows = {40} />
-	)
+	);
 
 };
 

@@ -8,8 +8,8 @@ import axios from "axios";
 const MessageContent = (props)=> {
 	const isShow = (item)=> {
 		// console.log("当前文章发布状态")
-	    return item.status === "publish";
-		}
+		return item.status === "publish";
+	};
 	const limit = 4;
 	const [ data, setData ] = useState([]);
 	const [total, setTotal ] =useState();
@@ -39,7 +39,7 @@ const MessageContent = (props)=> {
 			}
 		});	
 
-	},[props])
+	},[props]);
 
 
 	const onChange = (page, pageSize)=> {
@@ -73,7 +73,7 @@ const MessageContent = (props)=> {
 			<div className = "message-maincontent">
 				<ul className = "message-ul" style  = {{minHeight : "500px"}}>
 					{
-							data.map((item,index)=> {
+						data.map((item,index)=> {
 							return (
 								<li className = "message-maincontent-li">
 									<Link to = {`/index/article?id=${item.id}`} className = "message-article"> 
@@ -98,9 +98,9 @@ const MessageContent = (props)=> {
 				<div className = "message-none">
 					当前模块没有文章
 				</div>
-			)
+			);
 		}
-		console.log("total:" ,total,"data: ",data)
+		console.log("total:" ,total,"data: ",data);
 		return (
 			<Skeleton />
 		);
