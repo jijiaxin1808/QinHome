@@ -22,7 +22,7 @@ const FriendLink = () => {
 					friendlinkData.map((item, index) => {
 						return (
 						// eslint-disable-next-line react/react-in-jsx-scope
-							<a alt={item.name} key={index} href={item.href}>
+							<a alt={item.name} key={index} href={item.href} target = "_blank">
 								{item.name}
 							</a>
 						);
@@ -108,7 +108,7 @@ const Home = () => {
 					</span>
 					{
 						annouces.length!==0 &&
-						<div style={{width:"500px"}}>
+						<div style={{marginLeft:"-100px",width:"500px"}}>
 							<TextScroll 
 								mode="horizontal"
 								text={annouces}
