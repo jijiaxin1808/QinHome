@@ -3,6 +3,9 @@ import { Table, Divider, Tag, Switch,Input,Button, Modal, message   } from "antd
 // import contextData from "../../../assets/contextData";
 import styles from "./index.css";
 import axios from "axios";
+import {routerRedux} from "dva/router";
+import { connect } from "dva";
+
 
 const { Search } = Input;
 const alterAricle = (id)=> {
@@ -30,7 +33,12 @@ const  DeleteArticle  = (props)=> {
 		}).then(res=> {
 			if(res.data.code === 0 ) {
 				message.success("删除成功");
-				window.location.reload();
+				// window.location.reload();
+				// setTimeout(()=>{},500)
+				// props.dispatch(routerRedux.push({
+				// 	pathname: '/index/index'
+				// }));
+				// props.reload();
 			}
 			else {
 				message.warn(res.data.message);
@@ -59,8 +67,15 @@ const  DeleteArticle  = (props)=> {
 			</Modal>
 		</div>
 	);
-  
 };
+const mapDispatchToProps = (dispatch)=> ({
+	reload() {
+		dispatch(routerRedux.push({
+			pathname: '/manage/context'
+		}));
+	}
+})
+const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle)
 
 
 const columns = [
@@ -103,7 +118,7 @@ const columns = [
 		key: "delete",
 		dataIndex:"action",
 		render:(text,record)=> (
-			<DeleteArticle  id = {record.id}>删除文章</DeleteArticle>
+			<Dle  id = {record.id} >删除文章</Dle >
 		)
 
 	},
@@ -113,6 +128,7 @@ const columns = [
 
 const Context = (props)=> { 
 	const [ data, setData ] = useState([]);
+	const { reload } = props;
 	useEffect(()=>{
 		axios({
 			method:"GET",
@@ -138,10 +154,12 @@ const Context = (props)=> {
 			<div className={"buttonSbar"}>
 				<Button   className={"button-context"} type = "primary" onClick = {()=>{window.location.href="/manage/create";}}>新建文章</Button>
 			</div>
-			<Table columns={columns} dataSource={data} />
+			<Table columns={columns} dataSource={data} reload = {reload}  />
 		</div>
 	);
 	
 };
+
+
 
 export default Context;

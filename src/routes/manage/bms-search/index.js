@@ -3,6 +3,8 @@ import "./index.less";
 import axios from "axios";
 import { Table, Divider, Tag, Button, Modal, message, Skeleton, Switch } from "antd";
 import urlHandle from "../../../config/urlHandle";
+import {routerRedux} from "dva/router";
+import { connect } from "dva";
 const  DeleteArticle  = (props)=> {
 	const [ visible, setVisible ] = useState(false);
 	const showModal = () => {
@@ -55,7 +57,14 @@ const  DeleteArticle  = (props)=> {
 	);
   
 };
-
+const mapDispatchToProps = (dispatch)=> ({
+	reload() {
+		dispatch(routerRedux.push({
+			pathname: '/manage'
+		}));
+	}
+})
+const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle)
 const alterAricle = (id)=> {
 	console.log(id);
 	window.location.href = `/manage/change/${id}`;
@@ -103,9 +112,8 @@ const BmsSearch = (props)=> {
 			key: "action",
 			dataIndex:"action",
 			render:(text,record) => (
-				<DeleteArticle  id = {record.id}>删除文章</DeleteArticle>
+				<Dle  id = {record.id}>删除文章</Dle>
 			)
-
 		},
 	];
 	useEffect(()=>{

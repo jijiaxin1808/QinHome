@@ -1,4 +1,4 @@
-import { login } from "../api/login";
+// import { login } from "../api/login";
 
 export default {
 	namespace: "login",
@@ -7,9 +7,9 @@ export default {
 
 	},
 	effects: {
-		*login({ payload }, { call, put }){
-			console.log("effects",payload, call, put)
-		}
+		// *login({ payload }, { call, put }){
+		// 	console.log("effects",payload, call, put);
+		// }
 	},
 	reducers: {
 		init(state,action) {
@@ -19,4 +19,4 @@ export default {
 			};
 		}
 	}
-}
+};

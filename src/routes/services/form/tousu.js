@@ -1,18 +1,18 @@
-import React from 'react'
-import {Form,Input,Icon,Button,Radio,message} from 'antd'
-import axios from 'axios'
-import 'antd/dist/antd.css'
-import './index.less'
-import { randomNum, calculateWidth } from "../../../utils/utils";
-const {TextArea} = Input
+import React from "react";
+import {Form,Input,Icon,Button,Radio,message} from "antd";
+import axios from "axios";
+import "antd/dist/antd.css";
+import "./index.less";
+import { randomNum } from "../../../utils/utils";
+const {TextArea} = Input;
 
 class Xx extends React.Component {
 	constructor(props){
-		super(props)
+		super(props);
 		this.state={
-			value:'1',
-			code:''
-		}
+			value:"1",
+			code:""
+		};
 	}
     onChange = e => {
     	
@@ -28,28 +28,28 @@ class Xx extends React.Component {
     	this.props.form.validateFields((err, values) => {
     		if (!err) {
     			if(values.code!==this.state.code){
-    				message.error("验证码错误")
-    				this.createCode()
+    				message.error("验证码错误");
+    				this.createCode();
     			}else{
     				let data={
     					...values,
-						category:'complain'
-					}
-					console.log(data)
-					delete data.code
+    					category:"complain"
+    				};
+    				console.log(data);
+    				delete data.code;
     				axios({
-    					method:'POST',
+    					method:"POST",
     					headers:{
-    						"Content-Type":'application/json'
+    						"Content-Type":"application/json"
     					},
-    					url:'http://yjxt.elatis.cn/msgs/create',
+    					url:"http://yjxt.elatis.cn/msgs/create",
     					data:data
     				}).then(res=>{
     					if(res.data.code===0){
-							message.success("提交成功")
-						}
-						this.props.form.resetFields()
-    				})
+    						message.success("提交成功");
+    					}
+    					this.props.form.resetFields();
+    				});
 
     		}}
     	});
@@ -98,25 +98,25 @@ class Xx extends React.Component {
   						rules: [{ required: true, message: "请输入被举报主题" }],
   					})(
   						<Input
-  							style={{width:'400px'}}
+  							style={{width:"400px"}}
   						/>,
   					)}
   				</Form.Item>
-                  <Form.Item label="被举报地址">
+    				<Form.Item label="被举报地址">
   					{getFieldDecorator("complainAddress", {
   						rules: [{  message: "请输入被举报地址",required:true }],
   					})(
   						<Input
-  							style={{width:'400px'}}
+  							style={{width:"400px"}}
 
   						/>,
   					)}
   				</Form.Item>
-                  <Form.Item label=" 举报内容">
+    				<Form.Item label=" 举报内容">
   					{getFieldDecorator("content", {
   						rules: [{ required: true, message: "请输入内容" }],
   					})(
-    						<TextArea rows={4} style={{width:'400px'}}/>
+    						<TextArea rows={4} style={{width:"400px"}}/>
   					)}
   				</Form.Item>
 				  <div className="xx-form">
@@ -171,7 +171,7 @@ class Xx extends React.Component {
   					)}
   				</Form.Item>
 				  </div>
-                  <div className="xx-form">
+    				<div className="xx-form">
 				  <Form.Item label="验证码">
   					{getFieldDecorator("code", {
   						rules: [{ required: true, message: "请输入验证码" }],
@@ -190,7 +190,7 @@ class Xx extends React.Component {
   				</Form.Item>
   			</Form>
     		</div>
-    	)
+    	);
     }
 } 
 const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(Xx);

@@ -12,7 +12,7 @@ const RealFooter = () => {
 		<div className='footer'>
 			<div>
 				<a href="http://bszs.conac.cn/sitename?method=show&id=082080304EE01E77E053012819AC76B5" target = "_blank">
-					<img src={require("../../assets/稿定设计导出-20191018-103434.png")}/>	
+					<img src={require("../../assets/稿定设计导出-20191018-103434.png")} alt = ""/>	
 				</a>
 			</div>
 			<div className='footer-info'>

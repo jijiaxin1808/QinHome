@@ -1,29 +1,29 @@
-import React from "react"
+import React from "react";
 import { Table, Input, message, Popconfirm, Form, Button, Select } from "antd";
-import axios from "axios"
-import "./index.css"
-import { EOVERFLOW } from "constants";
+import axios from "axios";
+import "./index.css";
+// import { EOVERFLOW } from "constants";
 const { Option } = Select;
 const EditableContext = React.createContext();
 class EditableCell extends React.Component {
 	constructor(props){
-		super(props)
+		super(props);
 		this.state={
 			bumen:[]
-		}
+		};
 	}
 	handleChange =(value)=>{
 		this.setState({
 			bm:value
-		})
+		});
 	}
 	handleChanges=(value)=>{
 		this.setState({
 			qx:value
-		})
+		});
 	}
   getInput = () => {
-	  console.log(this.props)
+	  console.log(this.props);
 	  if(this.props.inputTypes ==="select" ){
 		  if(this.props.dataIndex==="roles_id"){
 			  return (
@@ -31,7 +31,7 @@ class EditableCell extends React.Component {
   					<Option value={1}>管理员</Option>
   					<Option value={2}>普通管理</Option>
 				  </Select>
-			  )
+			  );
 		  }else{
   			return (
   				<Select defaultValue="lucy" style={{ width: 120 }} onChange={this.props.handleChange}>
@@ -39,11 +39,11 @@ class EditableCell extends React.Component {
   						this.props.bumen.map((item)=>{
 					  return (
   								<Option value={item.section} key={item.id}>{item.section}</Option>
-					  )
+					  );
 				  })
   					} 
   				</Select>
-			  )
+			  );
 		  }
 	  }
   	return <Input style={{width:"100px"}}/>;
@@ -130,7 +130,7 @@ class EditableTable extends React.Component {
 					  >
 							<Button type="primary">重置</Button>
 					  </Popconfirm>
-					)
+					);
 				}
 			},
 			{
@@ -171,15 +171,15 @@ class EditableTable extends React.Component {
 				render:(item,record)=> {
 					return (
 						<Button onClick={()=>this.delete(record)}>删除</Button>
-					)
+					);
 				}
 				
 			}
 		];
 	}
 	componentDidMount(){
-		this.getData()
-		this.getBumen()
+		this.getData();
+		this.getBumen();
 	
 	}
 	getData=()=>{
@@ -191,11 +191,11 @@ class EditableTable extends React.Component {
 			},
 			url: "http://yjxt.elatis.cn/users/listUsers"
 		}).then(res=>{
-			console.log(res)
+			console.log(res);
 			this.setState({
 				data:res.data.data
-			})
-		})
+			});
+		});
 	}
 	getBumen=()=>{
 		axios({
@@ -206,23 +206,23 @@ class EditableTable extends React.Component {
 			},
 			url:"http://yjxt.elatis.cn/users/listSection"
 		}).then(res=>{
-			console.log(res.data)
+			console.log(res.data);
 			if(res.data.code===0){
 				this.setState({
 					bumen:res.data.data
-				})
+				});
 			}
-		})
+		});
 	}
 	handleChange =(value)=>{
 		this.setState({
 			bm:value
-		})
+		});
 	}
 	handleChanges=(value)=>{
 		this.setState({
 			qx:value
-		})
+		});
 	}
 	confirm=(e)=> {
 		console.log(e);
@@ -243,9 +243,9 @@ class EditableTable extends React.Component {
 			if(res.data.code===0){
 				message.success("重置成功");
 			}else{
-				message.error("出现错误请重试")
+				message.error("出现错误请重试");
 			}
-		})
+		});
 	  }
 	  
 	  cancels=(e) =>{
@@ -257,35 +257,35 @@ class EditableTable extends React.Component {
   cancel = () => {
 	  this.setState({ editingKey: "",add:false });
 	  if(this.state.add){
-		let data=this.state.data.slice(0)
-		data.splice(data.length-1,1)
-		this.setState({
-			data:data
-		})
+  		let data=this.state.data.slice(0);
+  		data.splice(data.length-1,1);
+  		this.setState({
+  			data:data
+  		});
 	  }
   };
   //新建账号 
   addAccount=()=>{
-	  const index=Date.parse(new Date())
+	  const index=Date.parse(new Date());
 	  const data={
-		  number:'',
-		  name:'',
-		  section:'',
-		  roles_id:'',
+		  number:"",
+		  name:"",
+		  section:"",
+		  roles_id:"",
 		  key:index
-	  }
+	  };
 	  new Promise(function (resolve,reject){
-		  resolve()
+		  resolve();
 	  }).then(()=>{
   		this.setState({
 			  data:[...this.state.data,data],
 			  add:true
-  		})
+  		});
 	  }).then(()=>{
-  		this.edit(data)
+  		this.edit(data);
 	  }).catch((error)=>{
-		  message.error(error)
-	  })
+		  message.error(error);
+	  });
 	  
 
 
@@ -305,14 +305,14 @@ class EditableTable extends React.Component {
   			name:row.name
   		}
   	}).then(res=>{
-  		console.log(res)
+  		console.log(res);
   		if(res.data.code===0){
-  			message.success("修改成功")
+  			message.success("修改成功");
   		}
-  	})
+  	});
   }
   addMessage=(item,row)=>{
-	  console.log(item,row,this.state)
+	  console.log(item,row,this.state);
   	axios({
   		method:"POST",
   		headers:{
@@ -327,11 +327,11 @@ class EditableTable extends React.Component {
   			name:row.name
   		}
   	}).then(res=>{
-  		console.log(res)
+  		console.log(res);
   		if(res.data.code===0){
-  			message.success("添加成功")
+  			message.success("添加成功");
   		}
-  	})
+  	});
   }
   save(form, key,type) {
   	form.validateFields((error, row) => {
@@ -340,13 +340,13 @@ class EditableTable extends React.Component {
   		}
   		const newData = [...this.state.data];
 		  const index = newData.findIndex(item => key === item.key);
-		  const item=newData[index]
-		  console.log(row)
-		  console.log(type)
+		  const item=newData[index];
+		  console.log(row);
+		  console.log(type);
   		if(type){
-  			this.addMessage(item,row)
+  			this.addMessage(item,row);
   		}else{
-  			this.changeMessage(item,row)
+  			this.changeMessage(item,row);
   		}
   		if (index > -1) {
   			const item = newData[index];
@@ -367,10 +367,10 @@ class EditableTable extends React.Component {
 	  this.setState({
 		  bm:record.section,
 		  qx:record.roles_id
-	  })
+	  });
   }
   delete =(value)=>{
-	  console.log(value)
+	  console.log(value);
 	  axios({
 		  method:"POST",
 		  headers:{
@@ -382,14 +382,14 @@ class EditableTable extends React.Component {
 			  id:value.key
 		  }
 	  }).then(res=>{
-		  console.log(res)
+		  console.log(res);
 		 if(res.data.code===0){
-			 message.success("删除成功")
-			 this.getData()
+			 message.success("删除成功");
+			 this.getData();
 		 }else{
-			 message.error("出错了")
+			 message.error("出错了");
 		 }
-	  })
+	  });
   	
   }
 
@@ -399,7 +399,7 @@ class EditableTable extends React.Component {
   			cell: EditableCell,
   		},
 	  };
-	  const ctx=this
+	  const ctx=this;
   	const columns = this.columns.map(col => {
   		if (!col.editable) {
   			return col;
@@ -447,4 +447,4 @@ class EditableTable extends React.Component {
 
 const EditableFormTable = Form.create()(EditableTable);
 
-export default EditableFormTable
+export default EditableFormTable;

@@ -1,6 +1,6 @@
-import React from 'react';
-import {Table, Button,Divider,Modal,Input,message, Form} from 'antd';
-import axios from 'axios';
+import React from "react";
+import {Table, Button,Divider,Modal,Input,message, Form} from "antd";
+import axios from "axios";
 const { TextArea } = Input;
 
 class Reply extends React.Component{
@@ -9,21 +9,21 @@ class Reply extends React.Component{
 		this.state={
 			visible: false,
 			data:[],
-			message:'',
-			a:''
+			message:"",
+			a:""
 		};
 	}
 	componentDidMount(){
-		 this.getData()
+		 this.getData();
 	}
     getData=()=>{
     	axios({
     		url:"http://yjxt.elatis.cn/msgs/listMsgs?category=all&flag=2",
     		headers:{
-    			"Content-Type":'application/json',
-    			"token":localStorage.getItem('token')
+    			"Content-Type":"application/json",
+    			"token":localStorage.getItem("token")
     		},
-    		method:'GET'
+    		method:"GET"
     	}).then(res=>{
     		let data=res.data.data;
     		data.map((item)=>{
@@ -49,19 +49,19 @@ class Reply extends React.Component{
     
       handleOk = e => {
       	if(!this.state.message.reply){
-      		if(document.getElementById('reply-input').value===''){
-      			message.error("回复内容不能为空")
-      			return
+      		if(document.getElementById("reply-input").value===""){
+      			message.error("回复内容不能为空");
+      			return;
       		}else{
       			axios({
       				url:"http://yjxt.elatis.cn/msgs/addReply",
       				headers:{
       					"token":localStorage.getItem("token"),
-      					"Content-Type":'application/json'
+      					"Content-Type":"application/json"
       				},
-      				method:'POST',
+      				method:"POST",
       				data:{
-      					reply:document.getElementById('reply-input').value,
+      					reply:document.getElementById("reply-input").value,
       					id:this.state.message.id
       				}
       			}).then(res=>{
@@ -70,7 +70,7 @@ class Reply extends React.Component{
       					this.setState({
       						visible: false,
       					});
-      					this.getData()
+      					this.getData();
       				}else{
       					message.error("错误 请重试");
       				}
@@ -94,12 +94,12 @@ class Reply extends React.Component{
       	console.log(e);
       }
       handleDelete=(e)=>{
-      	console.log(e)
+      	console.log(e);
       	axios({
-      		method:'POST',
+      		method:"POST",
       		headers:{
       			"token":localStorage.getItem("token"),
-      			"Content-Type":'application/json'
+      			"Content-Type":"application/json"
       		},
       		url:"http://yjxt.elatis.cn/msgs/delete",
       		data:{
@@ -107,24 +107,24 @@ class Reply extends React.Component{
       		}
       	}).then(res=>{
       		if(res.data.code===0){
-      			message.success("删除成功")
-      			this.getData()
+      			message.success("删除成功");
+      			this.getData();
       		}else{
-      			message.error("错误请重试")
+      			message.error("错误请重试");
       		}
-      	})
+      	});
       }
       render(){
       	const columns = [
       		{
       			title:"标题",
-      			dataIndex:'title',
-      			key:'title'
+      			dataIndex:"title",
+      			key:"title"
       		},
       		{
-      			title: '类型',
-      			dataIndex: 'category',
-      			key: 'name',
+      			title: "类型",
+      			dataIndex: "category",
+      			key: "name",
     
 			  },
 			  {
@@ -135,12 +135,12 @@ class Reply extends React.Component{
       					<div>
       						{record.reply?"已回复":"未回复"}
 					 </div>
-					  )
+					  );
 				 }
 			  },
       		{
-      			title: '操作',
-      			key: 'action',
+      			title: "操作",
+      			key: "action",
       			render: (text, record) => (
       				<div>
       					<Button onClick={this.showModal.bind(this,record)}>{record.reply?"查看":"回复"}</Button>
@@ -167,7 +167,7 @@ class Reply extends React.Component{
       			>   
       				<p>标题：{this.state.message.title}</p>
       				<p>内容：{this.state.message.content}</p>
-      				<p>姓名：{this.state.message.name!==''?this.state.message.name:null}</p>
+      				<p>姓名：{this.state.message.name!==""?this.state.message.name:null}</p>
       				<p>标题：{this.state.message.title}</p>
       				<span>回复信息:</span>
       				{this.state.message.reply?this.state.message.reply:<TextArea rows={4} id="reply-input"/>}

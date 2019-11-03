@@ -5,6 +5,8 @@ import ToTop from "../totop";
 import { Input } from "antd";
 import axios from "axios";
 import { connect } from "dva";
+import { router } from "dva/router";
+import {routerRedux} from "dva/router";
 
 const { Search } = Input;
 function  Header (props) {
@@ -30,8 +32,11 @@ function  Header (props) {
     	<Search
     		placeholder='请输入搜索关键字'
     		onSearch={value => {
-  					value&&window.history.pushState({},"",`/index/search?key=${value}`);
-  					window.location.reload();
+  					// value&&window.history.pushState({},"",`/index/search?key=${value}`);
+					props.reload(value);
+					window.location.reload();
+
+
   				}}
     		style={{ width: 200, float: "right", marginTop: "70px" }}
     	/>
@@ -62,6 +67,11 @@ const mapDispatchToProps = (dispatch)=> ({
 				columnData: data
 			}
 		});
+	},
+	reload(value) {
+		dispatch(routerRedux.push({
+			pathname: `/index/search?key=${value}`
+		}));
 	}
 });
 

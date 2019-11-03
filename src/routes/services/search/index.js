@@ -1,15 +1,15 @@
-import React from "react"
+import React from "react";
 import { Table} from "antd";
-import './index.less'
+import "./index.less";
 export const Search = (props)=> {
 	return (
 		<div>
-			<Table columns={props.columns} dataSource={props.dataSource} style={{width:'800px',paddingTop:'30px'}}/>  
+			<Table columns={props.columns} dataSource={props.dataSource} style={{width:"800px",paddingTop:"30px"}}/>  
 		</div>
-	)
-}
+	);
+};
 export const Message = (props)=> {
-	console.log(props)
+	console.log(props);
 	return (
 		<div className="zx-message">
 			<div className="zx-message-main">
@@ -25,5 +25,5 @@ export const Message = (props)=> {
 				<p className="second">{props.data.title?props.data.title:null}</p>
 			</div>
 		</div>
-	)
-}
+	);
+};

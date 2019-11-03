@@ -7,10 +7,10 @@ import HomeCarousel from "../../components/home-carousel";
 import Weather from "./weather";
 import Tabs from "../../components/tabs";
 import { Link } from "react-router-dom";
-import { message, Tooltip } from "antd";
+import { message } from "antd";
 import friendlinkData from "../../config/friendlinkData";
 import axios from "axios";
-import TextScroll from 'react-textscroll';
+import TextScroll from "react-textscroll";
 
 const FriendLink = () => {
 	return (
@@ -82,12 +82,12 @@ const Home = () => {
 				let _data = [];
 				res.data.data.map(item => {
 					if(item.isShow) {
-						console.log("push了数据",item)
+						console.log("push了数据",item);
 						_data.push(
 							<a title={item.title} href={`${item.href}`} style={{color: "#333", fontSize: "18px"}}>{item.title}</a>
-						)
+						);
 					}
-				})
+				});
 				setAnnouces(_data);
 				console.log("设置了数据",_data);
 			}
