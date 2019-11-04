@@ -105,12 +105,12 @@ class NormalLoginForm extends React.Component {
   					/>,
   				)}
   			</Form.Item>
-  			<Form.Item className = {"user-alter"}>
+  			<Form.Item className = {"user-alter"} style = {{display:"flex",justifyContent:"center"}}>
   				{/* {getFieldDecorator('remember', {
             valuePropName: 'checked',
             initialValue: true,
           })(<Checkbox>Remember me</Checkbox>)} */}
-  				<Button htmlType="submit"    >
+  				<Button htmlType="submit" style = {{margin: "0 auto"}}   >
             修改密码
   				</Button>
 				  
@@ -148,9 +148,9 @@ const User = (props)=> {
 						</span>
 				
 					</div> 
-					<p style = {{fontSize:"18px",margin:"20px auto"}}>{ `用户： ${userData.name }`}</p>
+					<p style = {{fontSize:"18px",margin:"20px auto",width:"300px"}}>{ `用户: ${userData.name }`}</p>
 					{/* <p>{ `姓名： ${props.login.userName}`}</p> */}
-					<p style = {{fontSize:"18px",margin:"20px auto"}}>{ `部门:  ${userData.section}`}</p>
+					<p style = {{fontSize:"18px",margin:"20px auto",width:"300px"}}>{ `部门: ${userData.section}`}</p>
 				</div>
 		
 				<Row >

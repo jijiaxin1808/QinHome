@@ -21,7 +21,7 @@ const changeContext=(props)=>{
 	useEffect(()=>{
 		setTimeout(() => {
 			props.form.setFieldsValue({
-				content: BraftEditor.createEditorState("<p>Hello <b>World!</b></p>")
+				// content: BraftEditor.createEditorState("请输入文章内容")
 			});
 		}, 1000);
 	},[]);
@@ -56,8 +56,8 @@ const changeContext=(props)=>{
 				const submitData = {
 					title: values.title,
 					// department: values.department,
-          category: "/"+values.category[0]+ "/" +values.category[1],
-          id:props.match.params.id,
+          			category: "/"+values.category[0]+ "/" +values.category[1],
+          			id:props.match.params.id,
 					content: values.content.toHTML()// or values.content.toHTML()
 				};
 				axios({
@@ -202,13 +202,13 @@ const changeContext=(props)=>{
 				</Form.Item>
 				<Form.Item {...formItemLayout}>
 
-					<Row>
-						<Col span={4} offset={4}>
+					<Row style = {{margin: "0 auto"}}>
+						<Col span={4} offset={16}>
 							<Button size="large" type="primary" htmlType="submit">确认发布</Button>
 						</Col>
-						<Col>
+						{/* <Col>
 							<Button>getData</Button>
-						</Col>
+						</Col> */}
 					</Row>
 				</Form.Item>
 			</Form>

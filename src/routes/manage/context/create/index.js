@@ -19,7 +19,7 @@ function FormDemo (props) {
 	useEffect(()=>{
 		setTimeout(() => {
 			props.form.setFieldsValue({
-				content: BraftEditor.createEditorState("World!")
+				content: BraftEditor.createEditorState("")
 			});
 		}, 1000);
 	},[]);
@@ -205,7 +205,7 @@ function FormDemo (props) {
   						<Input size="large" placeholder="请输入标题" />
   					)}
   				</Form.Item>
-  				<Form.Item {...formItemLayout} label="请选择文章路径">
+  				<Form.Item {...formItemLayout} label="文章路径">
   					{
   						getFieldDecorator("category",{
   							rules: [{
@@ -214,7 +214,7 @@ function FormDemo (props) {
   								message: "请填写发布分类"
   							}]
   						})(
-  								<Cascader options={options} onChange={onChange} placeholder="Please select"/>
+  								<Cascader options={options} onChange={onChange} placeholder="请选择要发布的位置"/>
   						)
   					}
   				</Form.Item>
@@ -236,7 +236,7 @@ function FormDemo (props) {
 
   							className="my-editor"
   							controls={controls}
-  							// placeholder="请输入正文内容"
+  							placeholder="请输入正文内容"
 							// extendControls={extendControls}
                 			// contentStyle={{height: 210, boxShadow: 'inset 0 1px 3px rgba(0,0,0,.1)'}}
   						/>

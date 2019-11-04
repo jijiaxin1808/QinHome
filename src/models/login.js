@@ -1,5 +1,4 @@
 // import { login } from "../api/login";
-
 export default {
 	namespace: "login",
 	state: [],

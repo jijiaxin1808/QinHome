@@ -14,7 +14,7 @@ class EditableCell extends React.Component {
 	}
 	handleChange =(value)=>{
 		this.setState({
-			bm:value
+			qx:value
 		});
 	}
 	handleChanges=(value)=>{
@@ -27,14 +27,14 @@ class EditableCell extends React.Component {
 	  if(this.props.inputTypes ==="select" ){
 		  if(this.props.dataIndex==="roles_id"){
 			  return (
-				  <Select default="lucy" style={{width:120}} onChange={this.props.handleChange}>
+				  <Select default="lucy" style={{width:120}} onChange={this.props.handleChanges}>
   					<Option value={1}>管理员</Option>
   					<Option value={2}>普通管理</Option>
 				  </Select>
 			  );
 		  }else{
   			return (
-  				<Select defaultValue="lucy" style={{ width: 120 }} onChange={this.props.handleChange}>
+  				<Select defaultValue="lucy" style={{ width: 120 }} onChange={this.props.handleChanges}>
   					{
   						this.props.bumen.map((item)=>{
 					  return (
@@ -68,7 +68,7 @@ class EditableCell extends React.Component {
   						rules: [
   							{
   								required: true,
-  								message: `Please Input ${title}!`,
+  								message: `请输入 ${title}!`,
   							},
   						],
   						initialValue: record[dataIndex],
@@ -114,6 +114,9 @@ class EditableTable extends React.Component {
 				dataIndex: "roles_id",
 				width:"10%",
 				editable: true,
+				render:roles_id => (
+					<p>{roles_id === 1?"管理员":"普通用户"}</p>
+				)
 			},
 			{
 				title:"密码",

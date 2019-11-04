@@ -10,7 +10,7 @@ const MessageContent = (props)=> {
 		// console.log("当前文章发布状态")
 		return item.status === "publish";
 	};
-	const limit = 4;
+	const limit = 15;
 	const [ data, setData ] = useState([]);
 	const [total, setTotal ] =useState();
 	useEffect(()=> {

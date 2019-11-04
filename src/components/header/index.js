@@ -21,8 +21,7 @@ function  Header (props) {
 			}
 		});
 	}, []);
-	return (
-  <><div className='headers'>
+	return (<><div className='headers'>
     	<ToTop />
     	<div className='home-header'>
   		<div style = {{width:1080, margin: "0 auto"}}>

@@ -23,7 +23,7 @@ class ToTop extends React.Component {
 		};
 		const scrollTop = document.documentElement.scrollTop;
 		return (
-      <>"       "<div
+      <><div
         	onClick={() => { func(); }}
         	className={classnames({
         		totop: this.state.isshow,
@@ -31,7 +31,7 @@ class ToTop extends React.Component {
         	})}
         	data={scrollTop}
         >回到顶部
-        </div>"     "</>
+        </div></>
 
 		);
 	}

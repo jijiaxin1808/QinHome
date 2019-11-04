@@ -2,10 +2,13 @@ import React from "react";
 import { Menu, Icon, Layout, Input } from "antd";
 import { Link } from "react-router-dom";
 import "./header.less";
+import { connect } from "dva";
+import axios from "axios";
+
 const { Search } = Input;
 const SubMenu = Menu.SubMenu;
 const { Header } = Layout;
-export default class Top extends React.Component {
+class Top extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -36,18 +39,28 @@ export default class Top extends React.Component {
     			/>
     			<Search placeholder="请输入搜索关键字" style = {{width:"300px",marginRight:"15px"}}
     				onSearch={ (value) => {
-    					if(value=="") {
+    					if(value=== "") {
     					}
     					else { window.location.href = `/manage/bmsSearch?key=${value}`;}
     				}} 
     				  />
-					
-    			<Menu mode="horizontal" className="logOut" onClick={this.clear}>
-    				<SubMenu title={<span><Icon type="user" />{ this.state.username }</span>} >
-    					<Menu.Item key="logOut"><Link to="/login" >退出</Link></Menu.Item>
-    				</SubMenu>
-    			</Menu>
+					      			<Link to = "/login"  className = "header-icons">
+    				<Icon type="logout"   onClick = {()=>{
+    				localStorage.clear();
+    				window.location.href = "/login";
+    			}}/>
+				 </Link>
+				 <Link to = "manage/notification" className = "header-icons" ><Icon type="message" /></Link>
+
+    			<Link to = "/index/index" className = "header-icons" ><Icon type="home" /></Link>
+
+
+    			
     		</Header>
     	);
     }
 }
+
+
+
+export default connect(({login})=>({login}))(Top);

@@ -252,7 +252,7 @@ export default function ColManage() {
 				<div>
 					{
 						<div className="article-oper">
-							<Button className="edit-btn btn" onClick={() => handleEditClick(index)}><span>编辑</span></Button>
+							<Button className="edit-btn btn" onClick={() => handleEditClick(record.id)}><span>编辑</span></Button>
 						</div>
 					}
 				</div>
@@ -374,12 +374,11 @@ export default function ColManage() {
 	return (
 		<React.Fragment>
 			{
-        <>"         "<div className="title">
+        <><div className="title">
           	<span>
               栏目管理
           	</span>
-        </div>"
-         "<div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px",marginBottom: "40px", paddingLeft: "250px"}}>
+        </div><div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px",marginBottom: "40px", paddingLeft: "250px"}}>
           	<ul className="list">
           		{
           			data.map(item => (
@@ -395,7 +394,7 @@ export default function ColManage() {
           	>
               编辑栏目
           	</Button>
-        </div>"         "<div className="columnContainer">
+        </div><div className="columnContainer">
           	{
           		editState === "二级" &&
               <Menu
@@ -433,7 +432,7 @@ export default function ColManage() {
                 	<div className="col-oper">
                 		{
                 			!secColEdit ?
-                      <>"                       "<Button className="btn" onClick={handleRenameClick}><span>重命名</span></Button>"                       "<Button className="btn danger" onClick={DelSecCol}><span>删除</span></Button>"                     "</>:
+                      <><Button className="btn" onClick={handleRenameClick}><span>重命名</span></Button><Button className="btn danger" onClick={DelSecCol}><span>删除</span></Button></>:
                 				<Button className="btn" onClick={handleRenameSureClick}><span>确定</span></Button>
                 		}
                 	</div>
@@ -446,7 +445,7 @@ export default function ColManage() {
           			loading={tableLoading}
           		/>
           	</div>
-        </div>"         "<div className="submitBtnContainer">
+        </div><div className="submitBtnContainer">
           	<Button 
           		className="submitBtn"
           		loading = {loading}
@@ -454,7 +453,7 @@ export default function ColManage() {
           	>
               保存
           	</Button>
-        </div>"       "</>
+        </div></>
 			}
 		</React.Fragment>
 	);
