@@ -14,16 +14,16 @@ class EditableCell extends React.Component {
 	}
 	handleChange =(value)=>{
 		this.setState({
-			qx:value
+			bumen:value
 		});
 	}
 	handleChanges=(value)=>{
 		this.setState({
-			qx:value
+			bumen:value
 		});
 	}
   getInput = () => {
-	  console.log(this.props);
+	  console.log(this.props,"账号");
 	  if(this.props.inputTypes ==="select" ){
 		  if(this.props.dataIndex==="roles_id"){
 			  return (
@@ -303,8 +303,9 @@ class EditableTable extends React.Component {
   		url:"http://yjxt.elatis.cn/users/alterOtherInfo",
   		data:{
   			id:item.key,
-  			section:this.state.bm,
-  			roles_id:this.state.qx,
+			  // section:this.state.bm,
+			  section: row.section,
+  			roles_id:row.roles_id,
   			name:row.name
   		}
   	}).then(res=>{

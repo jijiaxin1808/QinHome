@@ -56,7 +56,7 @@ const changeContext=(props)=>{
 				const submitData = {
 					title: values.title,
 					// department: values.department,
-          			category: "/"+values.category[0]+ "/" +values.category[1],
+          			// category: "/"+values.category[0]+ "/" +values.category[1],
           			id:props.match.params.id,
 					content: values.content.toHTML()// or values.content.toHTML()
 				};
