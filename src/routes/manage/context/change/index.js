@@ -121,7 +121,7 @@ const changeContext=(props)=>{
 	const onChange =(value) => {
 		console.log(value)
 	};
-	const controls = ["bold", "italic", "underline", "text-color", "separator", "link", "separator", "media" ];
+	const controls = ["font-size","bold", "italic", "underline", "text-color", "separator", "link", "separator", "media" ];
 	const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
 
 	const uploadHandler = (param) => {

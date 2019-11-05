@@ -82,6 +82,14 @@ const BmsSearch = (props)=> {
 			title: "文章名称",
 			dataIndex: "title",
 			key: "title",
+			render: title => (
+				<div style = {{   width:"500px",
+					whiteSpace:"nowrap",
+					overflow:"hidden",
+					 textOverflow:"ellipsis"}}>
+					{title}
+				</div>
+			)
 	  },
 	  {
 			title: "发布部门",

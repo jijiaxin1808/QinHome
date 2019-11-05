@@ -50,7 +50,7 @@ class Top extends React.Component {
     				window.location.href = "/login";
     			}}/>
 				 </Link>
-				 <Link to = "manage/notification" className = "header-icons" ><Icon type="message" /></Link>
+				 <Link to = "notification" className = "header-icons" ><Icon type="message" /></Link>
 
     			<Link to = "/index/index" className = "header-icons" ><Icon type="home" /></Link>
 

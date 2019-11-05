@@ -15,6 +15,8 @@ import column from "../column";
 import BmsSearch from "../bms-search";
 import Bumen from "../account/bumen";
 import Reply from "../reply";
+import File from "../directory/file";
+
 const { Content } = Layout;
 export default class Contents extends React.Component {
 	render() {
@@ -33,6 +35,7 @@ export default class Contents extends React.Component {
 				<Route path="/manage/bumen" component={Bumen}/>
 				<Route path="/manage/context" component={Context}/>
 				<Route path="/manage/reply" component={Reply}/>
+				<Route path="/manage/file" component={File}/>
 			</Content>
 		);
 	}
