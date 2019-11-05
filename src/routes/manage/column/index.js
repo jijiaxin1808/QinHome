@@ -52,6 +52,7 @@ export default function ColManage() {
   useEffect(() => {
     axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
       if(res.data.code === 0) {
+        console.log(res.data.data)
         setArtiCategory(`/${res.data.data[0].title}/${(res.data.data[0].sec)[0].title}`);
         setSecCol((res.data.data[0].sec)[0].title);
         let _weight = [];
@@ -99,7 +100,6 @@ export default function ColManage() {
 
         if(res.data.code === 0) {
           setArticles((res.data.data)[0] === "empty" ? [] : res.data.data);
-          setEdit((res.data.data)[0] === "empty" ? [] : new Array(res.data.data.length).fill(false));
         }
       }).catch(err => message.error(err.message));
     }
@@ -125,7 +125,7 @@ export default function ColManage() {
 				value: {
 					..._colsData,
 				}
-			});
+      });
 			axios({
 				method: "POST",
 				url: "http://yjxt.elatis.cn/options/update",
@@ -172,7 +172,7 @@ export default function ColManage() {
       dataIndex: "pageState",
       key: "pageState",
       className: "column",
-      render: () => <Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked={true}/>
+      render: (text,record,index) => <Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked={true} onChange={(checked) => handleColChange(checked, "state", index)} checked={record.state}/>
     },
     {
       title: "权重",
@@ -204,9 +204,10 @@ export default function ColManage() {
   const secondaryColumn = [
     {
       title: "序列",
-      dataIndex: "sequence",
-      key: "sequence",
+      dataIndex: "id",
+      key: "id",
       width: 210,
+      render: (text) => <span>{text}</span>
     },
     {
       title: "文章名称",
@@ -223,14 +224,16 @@ export default function ColManage() {
     },
     {
       title: "发布部门",
-      dataIndex: "dept",
-      key: "dept",
+      dataIndex: "section",
+      key: "section",
+      render: (text) => <span>{text}</span>
     },
     {
       title: "日期",
-      dataIndex: "date",
-      key: "date",
-      width: 202
+      dataIndex: "created_at",
+      key: "created_at",
+      width: 202,
+      render: (text) => <span>{text}</span>
     },
     {
       title: "状态",
@@ -270,7 +273,7 @@ export default function ColManage() {
     setSecColKey(key);
     setSecCol(item.props.children);
   }
-   // 点击一级栏目
+  // 点击一级栏目
   const handleColClick = (item) => {
     setCol(item.title);
   }
@@ -314,7 +317,6 @@ export default function ColManage() {
     _secCols.splice(index, 1, _secCol);
   }
   const DelSecCol = () => {
-
 		let _secCols = [...secCols];
 		let _secCol = secCols.find(item => {
 			return item.key === secColKey;
@@ -333,10 +335,17 @@ export default function ColManage() {
 		setColsData(_colsData);
 	};
 	const handleColChange = (e, id, index) => {
-		// 先这样，优化代码的时候记得改一下，这里只有在输入框改变的时候才会给colsData添加newCol,虽然默认newCol框值为title的值，但是没有newCol属性，所有是undefined。
-		let _value = id === "weight" ? parseInt(e.target.value) : e.target.value;
+		// 先这样，优化代码的时候记得改一下，这里只有在输入框改变的时候才会给colsData添加newCol,虽然默认newCol框值为title的值，但是没有newCol属性，所以是undefined。
+    let _value = 0;
+    if(id === "weight") {
+      _value = parseInt(e.target.value);
+    } else if(id === "state") {
+      _value = e;
+    } else {
+      _value = e.target.value;
+    }
 		let _weightIsNum = [...weightIsNum];
-		_weightIsNum.splice(index, 1 ,true);
+		_weightIsNum.splice(index, 1, true);
 		setWeightIsNum(_weightIsNum);
 		if(id === "weight" && Number.isNaN(_value)) {
 			message.warn("权重只能输入数值");
@@ -347,17 +356,17 @@ export default function ColManage() {
 		let _newCol = {
 			[id]: _value
 		};
-		let _cols = [...editData];
-		let _col = {..._cols[index], ..._newCol};
+    let _cols = [...editData];
+    let _col = {..._cols[index], ..._newCol};
 		_cols.splice(index, 1, _col);
-		setEditData(_cols);
+    setEditData(_cols);
 	};
 	const handleSaveClick = () => {
 		setLoading(true);
 		if(editState === "二级") {
       
 		} else if(editState === "一级") {
-			setSaveClick(true);
+      setSaveClick(true);
 			setColsData(editData);
 		}
 	};
@@ -422,7 +431,7 @@ export default function ColManage() {
                     {
                       !secColEdit ?
                         <span style={{fontSize: "18px"}}>{secCol}</span>:
-                        <Input style={{width: 100}} ref={input} onChange={(e) => setSecCol(e.target.value)} onPressEnter={handleSurePressEnter} defaultValue={secCol}/>
+                        <Input style={{width: 100}} ref={input} onChange={(e) => { setSecCol(e.target.value)}} onPressEnter={handleSurePressEnter} defaultValue={secCol}/>
                     }
                   </h2>
                   <div className="col-oper">
