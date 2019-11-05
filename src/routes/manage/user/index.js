@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import styles from "./index.css";
-import userData from "../../../config/userData";
+// import styles from "./index.css";
+// import userData from "../../../config/userData";
 import { Form, Icon, Input, Button, message, Row, Col, Skeleton } from "antd";
 import axios from "axios";
 import qs from "qs";
 import { connect } from "../../../../node_modules/dva";
+
 
 class NormalLoginForm extends React.Component {
   handleSubmit = e => {
@@ -104,14 +105,15 @@ class NormalLoginForm extends React.Component {
   					/>,
   				)}
   			</Form.Item>
-  			<Form.Item className = {"user-alter"}>
+  			<Form.Item className = {"user-alter"} style = {{display:"flex",justifyContent:"center"}}>
   				{/* {getFieldDecorator('remember', {
             valuePropName: 'checked',
             initialValue: true,
           })(<Checkbox>Remember me</Checkbox>)} */}
-  				<Button htmlType="submit"    >
+  				<Button htmlType="submit" style = {{margin: "0 auto"}}   >
             修改密码
   				</Button>
+				  
   			</Form.Item>
   		</Form>
   	);
@@ -133,10 +135,10 @@ const User = (props)=> {
 			if(res.data.code === 0) {
 				setUserData(res.data.data);
 			}
-		})	
-	},[])
+		});	
+	},[]);
 	if(userData.length !==0) {
-		console.log(userData,"usersuusus")
+		console.log(userData,"usersuusus");
 		return (
 			<div>
 				<div className = {"userInfo"}>
@@ -146,9 +148,9 @@ const User = (props)=> {
 						</span>
 				
 					</div> 
-					<p style = {{fontSize:"18px",margin:"20px auto"}}>{ `用户： ${userData.name }`}</p>
+					<p style = {{fontSize:"18px",margin:"20px auto",width:"300px"}}>{ `用户: ${userData.name }`}</p>
 					{/* <p>{ `姓名： ${props.login.userName}`}</p> */}
-					<p style = {{fontSize:"18px",margin:"20px auto"}}>{ `部门:  ${userData.section}`}</p>
+					<p style = {{fontSize:"18px",margin:"20px auto",width:"300px"}}>{ `部门: ${userData.section}`}</p>
 				</div>
 		
 				<Row >
@@ -156,12 +158,13 @@ const User = (props)=> {
 						<WrappedNormalLoginForm />
 					</Col>
 				</Row>
+
 			</div>
 		);
 	}
 	else return (
 		<Skeleton rows = {40} />
-	)
+	);
 
 };
 

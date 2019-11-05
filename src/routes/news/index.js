@@ -32,7 +32,7 @@ const NewsTopRight = (props) => {
 		<div className='NewsTopRight'>
 			<div className = "news-header">
 				<span>
-				公文公告
+				事故调查
 				</span>
 				<Link to = "/index/message?type=2">
 				更多>>
@@ -58,7 +58,7 @@ const NewsBottomLeft = (props)=> {
 		<div className='NewsBottomLeft'>
 						<div className = "news-header">
 				<span>
-				领导讲话
+				行政许可
 				</span>
 				<Link to = "/index/message?type=2">
 				更多>>
@@ -87,7 +87,7 @@ const NewsBottomRight = (props) => {
 		<div className='NewsBottomRight'>
 						<div className = "news-header">
 				<span>
-				工作动态
+				行政执法
 				</span>
 				<Link to = "/index/message?type=2">
 				更多>>
@@ -112,15 +112,15 @@ const News = () => {
 	const [ data,setData ] = useState([]);
 	useEffect(()=> { 
 		const sort = [
-			"/新闻中心/公文公告",
-			"/新闻中心/领导讲话",
-			"/新闻中心/工作动态",
+			"/新闻中心/行政许可",
+			"/新闻中心/行政执法",
+			"/新闻中心/事故调查",
 			
 		];
 		const data1 = JSON.stringify({
 			limit:7,
 			moduleArray:sort,
-			status: "draft"
+			status: "publish"
 		});
 		axios({
 			method:"POST",

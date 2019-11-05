@@ -3,10 +3,6 @@
 import React, { useEffect, useState, Fragment } from "react";
 import styles from "./index.css";
 import { Table, Button, Input, Switch, message, Upload, Modal } from "antd";
-// import * as blockData from '../../../assets/blockData';
-// import * as blockCol from '../../../assets/blockCol';
-// import * as blockData from "../../../config/blockData";
-// import * as blockCol from "../../../config/blockCol";
 import axios from "axios";
 
 const HeaderScroll = () => {
@@ -16,7 +12,6 @@ const HeaderScroll = () => {
 		const showModal = () => {
 			setVisible(true);
 		};
-	
 		const handleOk = e => {
 			setVisible(false);
 			console.log("保存的", data);
@@ -71,7 +66,7 @@ const HeaderScroll = () => {
 		{
 			title: "序号",
 			dataIndex: "id",
-			key: "id",
+			key: "idaa",
 		},
 		{
 			title: "内容",
@@ -140,7 +135,7 @@ const HeaderScroll = () => {
 							if (item.id === id.id) {
 								return {
 									...item,
-									isSHow: checked,
+									isShow: checked,
 								};
 							} else
 								return {
@@ -156,7 +151,7 @@ const HeaderScroll = () => {
 		{
 			title: "操作",
 			key: "id",
-			dataIndex: "id",
+			dataIndex: "idcv",
 			render: id => (
 				<Button
 					onClick={() => {
@@ -284,7 +279,7 @@ const Carousel = () => {
 			return (
 				<Fragment>
 					<a href={picUrl} target="_blank">
-						<Button>查看图片</Button>
+						<Button style = {{marginRight:"10px"}}>查看图片</Button>
 					</a>
 					<Upload
 						{...props}
@@ -409,7 +404,7 @@ const Carousel = () => {
 		},
 		{
 			title: "操作",
-			key: "id",
+			key: "action",
 			dataIndex: "id",
 			render: id => (
 				<Button
@@ -541,7 +536,7 @@ const HomeTopic = () => {
 		{
 			title: "id",
 			dataIndex: "id",
-			key: "id",
+			key: "idss",
 		},
 		{
 			title: "内容",
@@ -642,7 +637,7 @@ const HomeTopic = () => {
 			return (
 				<Fragment>
 					<a href={picUrl} target="_blank">
-						<Button>查看图片</Button>
+						<Button style = {{marginRight:"10px"}}>查看图片</Button>
 					</a>
 					<Upload
 						{...props}
@@ -776,7 +771,7 @@ const Background = () => {
 			return (
 				<Fragment>
 					<a href={picUrl} target="_blank">
-						<Button>查看图片</Button>
+						<Button style = {{marginRight:"10px"}}>查看图片</Button>
 					</a>
 					<Upload
 						{...props}

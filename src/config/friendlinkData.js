@@ -16,6 +16,6 @@ const friendlinkData = [
 		name: "秦皇岛市政府",
 		href: "http://www.qhd.gov.cn"
 	}
-]
+];
 
-export default friendlinkData
+export default friendlinkData;

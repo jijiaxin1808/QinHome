@@ -1,18 +1,18 @@
-import React from 'react'
-import {Form,Input,Icon,Button,Radio, message} from 'antd'
-import 'antd/dist/antd.css'
-import './index.less'
+import React from "react";
+import {Form,Input,Icon,Button,Radio, message} from "antd";
+import "antd/dist/antd.css";
+import "./index.less";
 import { randomNum, calculateWidth } from "../../../utils/utils";
-import axios from 'axios';
-const {TextArea} = Input
+import axios from "axios";
+const {TextArea} = Input;
 
 class Xx extends React.Component {
 	constructor(props){
-		super(props)
+		super(props);
 		this.state={
-			value:'1',
-			code:''
-		}
+			value:"1",
+			code:""
+		};
 	}
     onChange = e => {
     	
@@ -28,28 +28,28 @@ class Xx extends React.Component {
     	this.props.form.validateFields((err, values) => {
     		if (!err) {
     			if(values.code!==this.state.code){
-    				message.error("验证码错误")
-    				this.createCode()
+    				message.error("验证码错误");
+    				this.createCode();
     			}else{
     				let data={
     					...values,
-    					category:'msg'
-					}
-					console.log(data)
-					delete data.code
+    					category:"msg"
+    				};
+    				console.log(data);
+    				delete data.code;
     				axios({
-    					method:'POST',
+    					method:"POST",
     					headers:{
-    						"Content-Type":'application/json'
+    						"Content-Type":"application/json"
     					},
-    					url:'http://yjxt.elatis.cn/msgs/create',
+    					url:"http://yjxt.elatis.cn/msgs/create",
     					data:data
     				}).then(res=>{
     					if(res.data.code===0){
-							message.success("提交成功")
-						}
-						this.props.form.resetFields()
-    				})
+    						message.success("提交成功");
+    					}
+    					this.props.form.resetFields();
+    				});
     			}
     		}
     	});
@@ -66,7 +66,7 @@ class Xx extends React.Component {
     		const char = chars[randomNum(0, 57)];
     		code += char;
     		ctx.font = randomNum(20, 25) + "px SimHei";  //设置字体随机大小
-    		ctx.fillStyle = "#D3D7F7";
+    		ctx.fillStyle = "black";
     		ctx.textBaseline = "middle";
     		ctx.shadowOffsetX = randomNum(-3, 3);
     		ctx.shadowOffsetY = randomNum(-3, 3);
@@ -83,6 +83,7 @@ class Xx extends React.Component {
     		ctx.rotate(-deg * Math.PI / 180);
     		ctx.translate(-x, -y);
     	}
+    	code=code.toLowerCase();
     	this.setState({
     		code
     	});
@@ -99,7 +100,7 @@ class Xx extends React.Component {
   					})(
   						<Input
 
-    							style={{width:'300px'}}
+    							style={{width:"300px"}}
   						/>,
   					)}
   				</Form.Item>
@@ -107,7 +108,7 @@ class Xx extends React.Component {
   					{getFieldDecorator("content", {
   						rules: [{ required: true, message: "请输入内容" }],
   					})(
-    						<TextArea rows={4} style={{width:'300px'}}/>
+    						<TextArea rows={4} style={{width:"300px"}}/>
   					)}
   				</Form.Item>
     				<div className="xx-form">
@@ -117,7 +118,7 @@ class Xx extends React.Component {
   					})(
   						<Input
   							
-    								style={{width:'100px'}}
+    								style={{width:"100px"}}
   						/>,
   					)}
   				</Form.Item>
@@ -126,8 +127,8 @@ class Xx extends React.Component {
   						rules: [],
   					})(
     						<Radio.Group onChange={this.onChange} >
-    					<Radio value="男">男</Radio>
-    					<Radio value="女">女</Radio>
+    					<Radio value={1}>男</Radio>
+    					<Radio value={2}>女</Radio>
     				</Radio.Group>
   					)}
   				 </Form.Item>
@@ -139,7 +140,7 @@ class Xx extends React.Component {
   					})(
     							<Input
 
-    								style={{width:'100px'}}
+    								style={{width:"100px"}}
   						/>,
   					)}
   				</Form.Item>
@@ -149,7 +150,7 @@ class Xx extends React.Component {
   					})(
     							<Input
 
-    								style={{width:'100px'}}
+    								style={{width:"100px"}}
   						/>,
   					)}
   				</Form.Item>
@@ -161,18 +162,18 @@ class Xx extends React.Component {
   					})(
     							<Input
 
-    								style={{width:'100px'}}
+    								style={{width:"100px"}}
   						/>,
   					)}
   				</Form.Item>
     				
     				<Form.Item label="工作单位">
-  					{getFieldDecorator("workspace", {
+  					{getFieldDecorator("workplace", {
   						rules: [{  message: "请输入用户名" }],
   					})(
     							<Input
 
-    								style={{width:'100px'}}
+    								style={{width:"100px"}}
   						/>,
   					)}
   				</Form.Item>
@@ -206,7 +207,7 @@ class Xx extends React.Component {
   				</Form.Item>
   			</Form>
     		</div>
-    	)
+    	);
     }
 } 
 const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(Xx);

@@ -30,7 +30,8 @@ class NormalLoginForm extends React.Component {
   				method:"post",
   				url:"http://yjxt.elatis.cn/users/login",
   				data: {
-  					...tmp
+					  ...tmp,
+					  keep_alive: 1
   				},
   				headers: {
   					"content-type": "application/json"
@@ -63,7 +64,7 @@ class NormalLoginForm extends React.Component {
   				<img alt="login" src="/img/Oval.png" className="login-icon"/>
   			</div>
   			<Form onSubmit={this.handleSubmit} className="login-form">
-  				<Form.Item>
+  				<Form.Item style = {{display:"flex",justifyContent:"center"}}>
   					{getFieldDecorator("number", {
   						rules: [{ required: true, message: "请输入用户名" }],
   					})(
@@ -73,7 +74,7 @@ class NormalLoginForm extends React.Component {
   						/>,
   					)}
   				</Form.Item>
-  				<Form.Item>
+  				<Form.Item style = {{display:"flex",justifyContent:"center"}}>
   					{getFieldDecorator("password", {
   						rules: [{ required: true, message: "请输入密码" }],
   					})(
@@ -84,18 +85,11 @@ class NormalLoginForm extends React.Component {
   						/>,
   					)}
   				</Form.Item>
-  				<Form.Item>
-  					{getFieldDecorator("keep_alive", {
-  						valuePropName: "checked",
-  						initialValue: true,
-  					})(<Checkbox>记住密码</Checkbox>)}
-  					<a className="login-form-forgot" href="">
-              忘记密码
-  					</a>
-  					<Button type="primary" htmlType="submit" className="login-form-button">
+				  <Form.Item   style = {{display:"flex",justifyContent:"center",margin: "0 auto"}} >
+					  <Button type="primary" htmlType="submit" className="login-form-button" 
+					  style = {{width: "150px"}}>
               登录
   					</Button>
-            Or <a href="">现在登录!</a>
   				</Form.Item>
   			</Form>
   		</div>

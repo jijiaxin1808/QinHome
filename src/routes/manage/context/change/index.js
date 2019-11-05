@@ -1,9 +1,11 @@
 import "braft-editor/dist/index.css";
 import React,{ useEffect, useState , forwardRef} from "react";
 import BraftEditor from "braft-editor";
-import { ContentUtils } from "braft-utils";
-import { Form, Input, Button,  Row, Col ,Cascader, Upload, Icon, Modal, Select, Card, Tag} from "antd";
+// import { ContentUtils } from "braft-utils";
+import { Form, Input, Button,  Row, Col ,Cascader, Upload, Icon, Select} from "antd";
+import { message } from "antd"
 import axios from "axios";
+
 
 const { Option } = Select;
 const formItemLayout = {
@@ -19,7 +21,7 @@ const changeContext=(props)=>{
 	useEffect(()=>{
 		setTimeout(() => {
 			props.form.setFieldsValue({
-				content: BraftEditor.createEditorState("<p>Hello <b>World!</b></p>")
+				// content: BraftEditor.createEditorState("请输入文章内容")
 			});
 		}, 1000);
 	},[]);
@@ -54,21 +56,28 @@ const changeContext=(props)=>{
 				const submitData = {
 					title: values.title,
 					// department: values.department,
-          category: values.category[0]+ "/" +values.category[1],
-          id:props.match.params.id,
+          			// category: "/"+values.category[0]+ "/" +values.category[1],
+          			id:props.match.params.id,
 					content: values.content.toHTML()// or values.content.toHTML()
 				};
 				axios({
-					method: 'post',
+					method: 'POST',
 					url: "http://yjxt.elatis.cn/posts/alter",
 					headers: {
-						"content-type": "application/json",
+						"Content-Type": "application/json",
 						"token": localStorage.getItem("token")
 					},
 					data: submitData
-				}).then( res => [
+				}).then( res => {
 					console.log(res)
-				]).catch( err => {
+					if(res.data.code ===0) {
+						message.success("修改成功");
+						window.location.href = "/manage/context";
+					}
+					else {
+						message.warn(res.data.message);
+					}
+				}).catch( err => {
 					console.log(err);
 				});
 				console.log("submitData",submitData);
@@ -168,19 +177,7 @@ const changeContext=(props)=>{
 						<Input size="large" placeholder="请输入标题"/>
 					)}
 				</Form.Item>
-				<Form.Item {...formItemLayout} label="请选择文章路径">
-					{
-						getFieldDecorator("category",{
-							rules: [{
-								type: "array",
-								required: true,
-								message: "请填写发布分类"
-							}]
-						})(
-							<Cascader options={options} onChange={onChange} placeholder="Please select"/>
-						)
-					}
-				</Form.Item>
+
 				<Form.Item {...formItemLayout} label="文章正文">
 					{getFieldDecorator("content", {
 						validateTrigger: "onBlur",
@@ -205,13 +202,13 @@ const changeContext=(props)=>{
 				</Form.Item>
 				<Form.Item {...formItemLayout}>
 
-					<Row>
-						<Col span={4} offset={4}>
+					<Row style = {{margin: "0 auto"}}>
+						<Col span={4} offset={16}>
 							<Button size="large" type="primary" htmlType="submit">确认发布</Button>
 						</Col>
-						<Col>
+						{/* <Col>
 							<Button>getData</Button>
-						</Col>
+						</Col> */}
 					</Row>
 				</Form.Item>
 			</Form>

@@ -19,7 +19,7 @@ const HomeTopic = (props) => {
 						props.data.map((item, index) => {
 						  return (
 						    <li className='home-topic-li' key={index}>
-						      <Link to={`/index/article?id=${item.id}`}>
+						      <Link to={`/index/article?id=${item.id}`} style = {{paddingLeft:"5px"}}>
 						        {`${item.title}`}
 						      </Link>
 						    </li>
@@ -46,7 +46,7 @@ const HomeTopics = (props) => {
 			const data1 = JSON.stringify({
 				limit:3,
 				moduleArray:sort,
-				status: "draft"
+				status: ""
 			});
 			console.log(sort,"发送了home请求");
 			axios({

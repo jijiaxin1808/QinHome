@@ -19,18 +19,22 @@ const HomeCarousel = (props) => {
 			{
 				data.map((item, index) => {
 					console.log(item.picUrl);
-					return (
-						<a href={item.href} key={item}>
-							<div className='home-carousel' style={{ position: "relative",
-								background:`url(${item.picUrl})`,backgroundSize:"cover",backgroundRepeat:"no-repeat" }} >
-							</div>
-							<div className='carousel-bar'>
-								<p>
-									{item.title}
-								</p>
-							</div>
-						</a>
-					);
+					if(item.isShow) {
+						return (
+							<a href={item.href} key={item}>
+								<div className='home-carousel' style={{ position: "relative",
+									background:`url(${item.picUrl})`,backgroundSize:"cover",backgroundRepeat:"no-repeat" }} >
+								</div>
+								<div className='carousel-bar'>
+									<p style  = {{marginLeft: "20px"}}>
+										{item.title}
+									</p>
+								</div>
+							</a>
+						);
+					}
+					else return null;
+
 				})
 			}
 

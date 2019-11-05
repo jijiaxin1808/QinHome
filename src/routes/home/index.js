@@ -7,64 +7,11 @@ import HomeCarousel from "../../components/home-carousel";
 import Weather from "./weather";
 import Tabs from "../../components/tabs";
 import { Link } from "react-router-dom";
-import { message, Tooltip } from "antd";
+import { message } from "antd";
 import friendlinkData from "../../config/friendlinkData";
 import axios from "axios";
-import TextScroll from 'react-textscroll';
+import TextScroll from "react-textscroll";
 
-const data = [
-	{
-		href: "",
-		picUrl: ""
-	}, {
-		href: "",
-		picUrl: ""
-	}, {
-		href: "",
-		picUrl: ""
-	}
-];
-const tabsData = [
-	{
-		tab: "领导讲话",
-		Info: [
-			"wergwergwegrfewf",
-			"werfewrfwefr",
-			".....",
-			".....",
-			".....",
-			"fwergfewrgrewg",
-			"wegrwergergew",
-			"....."
-		]
-	},
-	{
-		tab: "公文公告",
-		Info: [
-			"zyzyzhisd",
-			"adfasdfasf",
-			".....",
-			".....",
-			".....",
-			"afdadsfassfd",
-			"adfasdfasf",
-			"....."
-		]
-	},
-	{
-		tab: "工作动态",
-		Info: [
-			"adfasdfasdf",
-			"qerqwerqwr",
-			".....",
-			".....",
-			".....",
-			"342543w5w34",
-			"fwerfwerfewfrwe",
-			"....."
-		]
-	}
-];
 const FriendLink = () => {
 	return (
 		<div className='footer-friendlink'>
@@ -75,7 +22,7 @@ const FriendLink = () => {
 					friendlinkData.map((item, index) => {
 						return (
 						// eslint-disable-next-line react/react-in-jsx-scope
-							<a alt={item.name} key={index} href={item.href}>
+							<a alt={item.name} key={index} href={item.href} target = "_blank">
 								{item.name}
 							</a>
 						);
@@ -106,7 +53,7 @@ const FooterTopic = () => {
 						return (
 							<div className='footer-topic-item' key={index}>
 								<Link to={item.url} style={{ display: "block" }}>
-									<img src={item.picUrl} style={{ height: "118px", width: "192px", verticalAlign: "middle" }} />
+									<img src={item.picUrl} style={{ height: "111px", width: "250px", verticalAlign: "middle" }} />
 								</Link>
 							</div>
 						);
@@ -131,9 +78,18 @@ const Home = () => {
 		});
 		axios.get("http://yjxt.elatis.cn/options/name/safe").then((res) => {
 			if (res.data.code === 0) {
-				setAnnouces(res.data.data.map(item => (
-						<a title={item.title} href={`${item.href}`} style={{color: "#333", fontSize: "18px"}}>{item.title}</a>
-				)))
+
+				let _data = [];
+				res.data.data.map(item => {
+					if(item.isShow) {
+						console.log("push了数据",item);
+						_data.push(
+							<a title={item.title} href={`${item.href}`} style={{color: "#333", fontSize: "18px"}}>{item.title}</a>
+						);
+					}
+				});
+				setAnnouces(_data);
+				console.log("设置了数据",_data);
 			}
 		});
 		axios.get("http://yjxt.elatis.cn/options/name/background").then((res) => {
@@ -152,19 +108,19 @@ const Home = () => {
 					</span>
 					{
 						annouces.length!==0 &&
-						<div style={{marginLeft: -97}}>
+						<div style={{marginLeft:"-100px",width:"500px"}}>
 							<TextScroll 
-								mode="vertical"
+								mode="horizontal"
 								text={annouces}
-								speed={3000}
+								speed={6000}
 							/>
 						</div>
 					}
 					<Weather />
 				</div>
 				<div className='container' style={{ display: "flex", flexFlow: "row nowrap", width: "1080px", margin: "0 auto" }}>
-					<HomeCarousel data={data} />
-					<Tabs data={tabsData} />
+					<HomeCarousel />
+					<Tabs />
 				</div>
 				<System />
 				<HomeTopics colsData={colsData} />

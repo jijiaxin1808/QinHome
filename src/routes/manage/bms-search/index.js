@@ -3,28 +3,30 @@ import "./index.less";
 import axios from "axios";
 import { Table, Divider, Tag, Button, Modal, message, Skeleton, Switch } from "antd";
 import urlHandle from "../../../config/urlHandle";
+import {routerRedux} from "dva/router";
+import { connect } from "dva";
 const  DeleteArticle  = (props)=> {
 	const [ visible, setVisible ] = useState(false);
 	const showModal = () => {
 		setVisible(true);
 	};
-
 	const handleOk = e => {
 		setVisible(false);
 		console.log("确认删除");
 		axios({
-			method:"GET",
+			method:"POST",
 			url: "http://yjxt.elatis.cn/posts/delete",
 			params: {
 				id:props.id
 			},
-			Headers: {
+			headers: {
 				"token":localStorage.getItem("token"),
 				"Content-Type": "application/json"
 			}
 		}).then(res=> {
 			if(res.data.code === 0 ) {
 				message.success("删除成功");
+				window.location.reload();
 			}
 			else {
 				message.warn(res.data.message);
@@ -55,7 +57,14 @@ const  DeleteArticle  = (props)=> {
 	);
   
 };
-
+const mapDispatchToProps = (dispatch)=> ({
+	reload() {
+		dispatch(routerRedux.push({
+			pathname: '/manage'
+		}));
+	}
+})
+const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle)
 const alterAricle = (id)=> {
 	console.log(id);
 	window.location.href = `/manage/change/${id}`;
@@ -88,8 +97,8 @@ const BmsSearch = (props)=> {
 			title: "页面状态",
 			key: "action",
 			dataIndex:"action",
-			render:isShow=>(
-				<Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked = {isShow}  />
+			render:(text,record)=>(
+				<p>{record.status === "publish"?"已发布":"未发布"}</p>
 			),
 	  },{
 			title: "操作",
@@ -102,10 +111,9 @@ const BmsSearch = (props)=> {
 			title: "删除",
 			key: "action",
 			dataIndex:"action",
-			render: id=> (
-				<DeleteArticle  id = {id}>删除文章</DeleteArticle>
+			render:(text,record) => (
+				<Dle  id = {record.id}>删除文章</Dle>
 			)
-
 		},
 	];
 	useEffect(()=>{

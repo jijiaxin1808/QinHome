@@ -50,7 +50,7 @@ const routers= [
 ];
 
 export default function MainApp (props) {
-	console.log(window.location.pathname)
+	// console.log(window.location.pathname)
 	return (
 		<div>
 			<Header barData={headerData} />

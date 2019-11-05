@@ -5,6 +5,8 @@ import ToTop from "../totop";
 import { Input } from "antd";
 import axios from "axios";
 import { connect } from "dva";
+// import { router } from "dva/router";
+import {routerRedux} from "dva/router";
 
 const { Search } = Input;
 function  Header (props) {
@@ -19,27 +21,27 @@ function  Header (props) {
 			}
 		});
 	}, []);
-	return (
-  <><div className='header-h'>
+	return (<><div className='headers'>
     	<ToTop />
     	<div className='home-header'>
   		<div style = {{width:1080, margin: "0 auto"}}>
+  			<div className="wxn">
+  				<img src="/img/tu2.png"></img>
+  			</div>
     	<Search
     		placeholder='请输入搜索关键字'
     		onSearch={value => {
-  					window.history.pushState({},"",`/index/search?key=${value}`);
+  					// value&&window.history.pushState({},"",`/index/search?key=${value}`);
+  					props.reload(value);
   					window.location.reload();
+
+
   				}}
     		style={{ width: 200, float: "right", marginTop: "70px" }}
     	/>
   		</div>
   	</div>
 
-    	{/* <Search
-    		placeholder='请输入搜索关键字'
-    		onSearch={value => console.log(value)}
-    		style={{ width: 200, marginTop: "70px" }}
-    	/> */}
   </div><div className='header-asss'>
     	<ul className='header-bar'>
     		{
@@ -64,6 +66,11 @@ const mapDispatchToProps = (dispatch)=> ({
 				columnData: data
 			}
 		});
+	},
+	reload(value) {
+		dispatch(routerRedux.push({
+			pathname: `/index/search?key=${value}`
+		}));
 	}
 });
 
