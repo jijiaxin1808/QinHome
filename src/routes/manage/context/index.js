@@ -1,5 +1,5 @@
 import React,{ useState, useEffect } from "react";
-import { Table, Input,Button, Modal, message   } from "antd";
+import { Table, Input,Button, Modal, message,Skeleton   } from "antd";
 // import contextData from "../../../assets/contextData";
 // import styles from "./index.css";
 import axios from "axios";
@@ -69,13 +69,11 @@ const  DeleteArticle  = (props)=> {
 const mapDispatchToProps = (dispatch)=> ({
 	reload() {
 		dispatch(routerRedux.push({
-			pathname: '/manage/context'
+			pathname: "/manage/context"
 		}));
 	}
-})
-const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle)
-
-
+});
+const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
 const columns = [
 	{
 		title: "id",
@@ -142,19 +140,25 @@ const Context = (props)=> {
 		});
 	}
 		,[]);
-	return(
-		<div>
-			<div className = "title">
-  				<span>
-            文章管理
-  				</span>
-  			</div>
-			<div className={"buttonSbar"}>
-				<Button   className={"button-context"} type = "primary" onClick = {()=>{window.location.href="/manage/create";}}>新建文章</Button>
+	if(data.length !== 0 ) {
+		return(
+			<div>
+				<div className = "title">
+						  <span>
+					文章管理
+						  </span>
+					  </div>
+				<div className={"buttonSbar"}>
+					<Button   className={"button-context"} type = "primary" onClick = {()=>{window.location.href="/manage/create";}}>新建文章</Button>
+				</div>
+				<Table columns={columns} dataSource={data} reload = {reload}  />
 			</div>
-			<Table columns={columns} dataSource={data} reload = {reload}  />
-		</div>
+		);
+	}
+	else return (
+		<Skeleton />
 	);
+
 	
 };
 

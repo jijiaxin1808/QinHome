@@ -90,8 +90,12 @@ function FormDemo (props) {
 					data: submitData
 				}).then( res => {
 					if(res.data.code === 0) {
-						message.success("发布成功");
+						if(state === "publish"){
+							message.success("发布成功");
+						}
+						else message.success("申请成功");
 					}
+					else message.warn("权限不足");
 				}
 					
 				).catch( err => {
