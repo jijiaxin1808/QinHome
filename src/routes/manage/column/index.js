@@ -91,7 +91,7 @@ export default function ColManage() {
 						"Content-Type": "application/json"
 					},
 					params: {
-						flag:2,
+						flag:1,
 						category: artiCategory,
 						status: "publish",
 						limit: 5,
@@ -101,6 +101,7 @@ export default function ColManage() {
 			).then(res => {
 
 				if(res.data.code === 0) {
+					console.log(res.data)
 					setArticles((res.data.data)[0] === "empty" ? [] : res.data.data);
 					setEdit((res.data.data)[0] === "empty" ? [] : new Array(res.data.data.length).fill(false));
 				}
@@ -228,15 +229,7 @@ export default function ColManage() {
 			title: "发布部门",
 			dataIndex: "category",
 			key: "category",
-		},
-		{
-			title: "日期",
-			dataIndex: "created_at",
-			key: "created_at",
-			width: 202,
-			render: (id,created_at)=>(
-				<p>{created_at.created_at.slice(10)}</p>
-			)
+			render: () => <span>{artiCategory}</span>
 		},
 		{
 			title: "状态",
@@ -302,10 +295,6 @@ export default function ColManage() {
 	};
 	const handleEditClick = (index) => {
 		window.location.href = `/manage/change/${index}`;
-		// console.log(edit)
-		// let _edit = [...edit];
-		// _edit.splice(index, 1, true);
-		// setEdit(_edit);
 	};
 	const handleRenameClick = () => {
 		setSecColEdit(true);
