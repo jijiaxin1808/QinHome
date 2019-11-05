@@ -91,7 +91,7 @@ export default function ColManage() {
 						"Content-Type": "application/json"
 					},
 					params: {
-						flag:2,
+						flag:1,
 						category: artiCategory,
 						status: "publish",
 						limit: 5,
@@ -101,6 +101,7 @@ export default function ColManage() {
 			).then(res => {
 
 				if(res.data.code === 0) {
+					console.log(res.data)
 					setArticles((res.data.data)[0] === "empty" ? [] : res.data.data);
 					setEdit((res.data.data)[0] === "empty" ? [] : new Array(res.data.data.length).fill(false));
 				}
@@ -128,7 +129,7 @@ export default function ColManage() {
 				value: {
 					..._colsData,
 				}
-			});
+      });
 			axios({
 				method: "POST",
 				url: "http://yjxt.elatis.cn/options/update",
@@ -228,15 +229,7 @@ export default function ColManage() {
 			title: "发布部门",
 			dataIndex: "category",
 			key: "category",
-		},
-		{
-			title: "日期",
-			dataIndex: "created_at",
-			key: "created_at",
-			width: 202,
-			render: (id,created_at)=>(
-				<p>{created_at.created_at.slice(10)}</p>
-			)
+			render: () => <span>{artiCategory}</span>
 		},
 		{
 			title: "状态",
@@ -302,10 +295,6 @@ export default function ColManage() {
 	};
 	const handleEditClick = (index) => {
 		window.location.href = `/manage/change/${index}`;
-		// console.log(edit)
-		// let _edit = [...edit];
-		// _edit.splice(index, 1, true);
-		// setEdit(_edit);
 	};
 	const handleRenameClick = () => {
 		setSecColEdit(true);
@@ -343,7 +332,7 @@ export default function ColManage() {
 		// 先这样，优化代码的时候记得改一下，这里只有在输入框改变的时候才会给colsData添加newCol,虽然默认newCol框值为title的值，但是没有newCol属性，所有是undefined。
 		let _value = id === "weight" ? parseInt(e.target.value,10) : e.target.value;
 		let _weightIsNum = [...weightIsNum];
-		_weightIsNum.splice(index, 1 ,true);
+		_weightIsNum.splice(index, 1, true);
 		setWeightIsNum(_weightIsNum);
 		if(id === "weight" && Number.isNaN(_value)) {
 			message.warn("权重只能输入数值");
@@ -354,17 +343,17 @@ export default function ColManage() {
 		let _newCol = {
 			[id]: _value
 		};
-		let _cols = [...editData];
-		let _col = {..._cols[index], ..._newCol};
+    let _cols = [...editData];
+    let _col = {..._cols[index], ..._newCol};
 		_cols.splice(index, 1, _col);
-		setEditData(_cols);
+    setEditData(_cols);
 	};
 	const handleSaveClick = () => {
 		setLoading(true);
 		if(editState === "二级") {
       
 		} else if(editState === "一级") {
-			setSaveClick(true);
+      setSaveClick(true);
 			setColsData(editData);
 		}
 	};
