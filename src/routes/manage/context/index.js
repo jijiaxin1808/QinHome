@@ -1,11 +1,11 @@
 import React,{ useState, useEffect } from "react";
-import { Table, Input,Button, Modal, message,Skeleton   } from "antd";
+import { Table, Input,Button, Modal, message,Skeleton,Spin} from "antd";
 // import contextData from "../../../assets/contextData";
 // import styles from "./index.css";
 import axios from "axios";
 import {routerRedux} from "dva/router";
 import { connect } from "dva";
-
+import Loading from "../../../components/loading";
 
 const { Search } = Input;
 const alterAricle = (id)=> {
@@ -156,7 +156,10 @@ const Context = (props)=> {
 		);
 	}
 	else return (
-		<Skeleton />
+		<React.Fragment>
+		<Loading />
+		</React.Fragment>
+
 	);
 
 	

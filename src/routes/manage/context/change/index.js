@@ -121,7 +121,7 @@ const changeContext=(props)=>{
 	const onChange =(value) => {
 		console.log(value)
 	};
-	const controls = ["font-size","bold", "italic", "underline", "text-color", "separator", "link", "separator", "media" ];
+	const controls =["font-size","bold", "italic", "underline", "text-color", "separator", "link",  "media" ];
 	const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
 
 	const uploadHandler = (param) => {
@@ -141,9 +141,6 @@ const changeContext=(props)=>{
 					customRequest={uploadHandler}
 				>
 					{/* 这里的按钮最好加上type="button"，以避免在表单容器中触发表单提交，用Antd的Button组件则无需如此 */}
-					<button type="button" className="control-item button upload-button" data-title="插入图片">
-						<Icon type="picture" theme="filled" />
-					</button>
 				</Upload>
 			)
 		}

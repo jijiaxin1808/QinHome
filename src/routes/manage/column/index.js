@@ -172,13 +172,6 @@ export default function ColManage() {
 			render: (text,record,index) => <Input placeholder="请输入新栏目名" style={{width: "150px"}} onChange={(e) => handleColChange(e, "newCol", index)} defaultValue={record.title}/>
 		},
 		{
-			title: "页面状态",
-			dataIndex: "pageState",
-			key: "pageState",
-			className: "column",
-			render: () => <Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked={true}/>
-		},
-		{
 			title: "权重",
 			dataIndex: "weight",
 			key: "weight",
@@ -193,18 +186,11 @@ export default function ColManage() {
 			render: (text,record,index) => <Input placeholder="http://" onChange={(e) => handleColChange(e, "link", index)} defaultValue={record.link}/>
 		},
 		{
-			title: () => (
-				<Button className="addNewBtn" onClick={handleNewBtn}>
-					<Icon style={{color: "rgb(24, 144, 255)"}} type="plus" />
-					<span>新建</span>
-				            </Button>
-			             ),
 			dataIndex: "delete",
 			key: "delete",
 			render: (text,record,index) => <a onClick={() => handleDelBtn(index)}><Icon type="delete" theme="twoTone" /></a>
 		}
 	];
-  
 	const secondaryColumn = [
 		{
 			title: "序列",
