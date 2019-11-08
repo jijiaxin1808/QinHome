@@ -1,3 +1,5 @@
+/* eslint-disable linebreak-style */
+
 import React,{Component} from "react";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
@@ -45,7 +47,8 @@ export default class Services extends Component{
 		this.state={
 			key:"1",
 			data:[],
-			message:''
+			message:'',
+			n:1
 		};
 	}
 	handleClick =(e)=> {
@@ -70,9 +73,11 @@ export default class Services extends Component{
 			}
 		}).then(res=>{
 			if(res.data.code===0){
+				console.log("刷新了")
 				this.setState({
 					data:res.data.data
 				})
+				console.log("刷结束")
 			}
 		})
 		const ctx=this
@@ -92,6 +97,7 @@ export default class Services extends Component{
     }
 
 	render() {
+		console.log(this.state)
 		return (
 			<div className="yj-services">
 				{/* <Header/> */}

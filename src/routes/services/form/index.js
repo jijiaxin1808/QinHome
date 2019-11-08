@@ -1,3 +1,5 @@
+/* eslint-disable linebreak-style */
+
 import React from "react";
 import {Form,Input,Icon,Button,Radio, message} from "antd";
 import "antd/dist/antd.css";

@@ -184,12 +184,12 @@ export default function ColManage() {
 			key: "link",
 			className: "column",
 			render: (text,record,index) => <Input placeholder="http://" onChange={(e) => handleColChange(e, "link", index)} defaultValue={record.link}/>
-		},
-		{
-			dataIndex: "delete",
-			key: "delete",
-			render: (text,record,index) => <a onClick={() => handleDelBtn(index)}><Icon type="delete" theme="twoTone" /></a>
 		}
+		// {
+		// 	dataIndex: "delete",
+		// 	key: "delete",
+		// 	render: (text,record,index) => <a onClick={() => handleDelBtn(index)}><Icon type="delete" theme="twoTone" /></a>
+		// }
 	];
 	const secondaryColumn = [
 		{

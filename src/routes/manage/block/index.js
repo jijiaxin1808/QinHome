@@ -152,17 +152,19 @@ const HeaderScroll = () => {
 			title: "操作",
 			key: "id",
 			dataIndex: "idcv",
-			render: id => (
+			render: (id1,id2) => (
 				<Button
 					onClick={() => {
-						const newData = data;
+						const newData = [...data];
 						data.map((item, index) => {
-							if (item.id === id) {
+							if (item.id === id2.id) {
+								console.log("找到了",index)
 								newData.splice(index, 1);
 							}
 							return null;
 						});
 						console.log("删除", newData);
+						setdata(newData)
 					}}
 				>
           删除
@@ -180,7 +182,24 @@ const HeaderScroll = () => {
 				<span>顶部滚动条</span>
 			</div>
 			<div className={"buttonSbar"}>
-				<Button className={"button"}>添加顶部滚动条</Button>
+				<Button className={"button"} 					onClick={() => {
+					let newData = data;
+					// newData.push({
+					// 	id: data.length + 1,
+					// 	href: "请输入跳转至的链接",
+					// 	picUrl: "",
+					// 	title: "请输入标题",
+					// 	isShow: false,
+					// 	key: "4",
+					// });
+					setdata([...newData,{
+						id: data.length + 1,
+						"title": "省应急管理厅全面部署冬春受灾群众生活救助工作",
+						"href": "/index/article?id=258",
+						"isShow": 1
+					}]);
+					console.log(data);
+				}}>添加顶部滚动条</Button>
 				<HeaderSave
 					className={"button"}
 				>
@@ -406,17 +425,19 @@ const Carousel = () => {
 			title: "操作",
 			key: "action",
 			dataIndex: "id",
-			render: id => (
+			render: (id1,id2) => (
 				<Button
 					onClick={() => {
-						const newData = data;
+						const newData = [...data];
 						data.map((item, index) => {
-							if (item.id === id) {
+							if (item.id === id2.id) {
+								console.log("找到了",index)
 								newData.splice(index, 1);
 							}
 							return null;
 						});
 						console.log("删除", newData);
+						setdata(newData)
 					}}
 				>
           删除

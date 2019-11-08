@@ -50,6 +50,10 @@ const  DeleteArticle  = (props)=> {
 	};
 
 	return (
+
+
+
+
 		<div>
 			<Button  onClick={()=>{showModal();}}>
           删除
@@ -66,6 +70,11 @@ const  DeleteArticle  = (props)=> {
 		</div>
 	);
 };
+
+
+
+
+
 const mapDispatchToProps = (dispatch)=> ({
 	reload() {
 		dispatch(routerRedux.push({
@@ -121,10 +130,31 @@ const columns = [
 ];
 
 
-
 const Context = (props)=> { 
 	const [ data, setData ] = useState([]);
 	const { reload } = props;
+	const [  Pagination, setPagination ] = useState({});
+	const changePage = (pagination)=> {
+		console.log("当前页码",pagination);
+		let P = { ...Pagination,				
+			results: pagination.pageSize,
+			page: pagination.current};
+		setPagination(P);
+		axios({
+			method:"GET",
+			url: "http://yjxt.elatis.cn/posts/listPosts",
+			params: {
+				flag: 2,
+			}
+		}).then(res=> {
+			if(res.data.code === 0) {
+				console.log("内容管理",res.data.data);
+				setData(res.data.data);
+
+
+			}
+		});
+	}
 	useEffect(()=>{
 		axios({
 			method:"GET",
@@ -136,6 +166,9 @@ const Context = (props)=> {
 			if(res.data.code === 0) {
 				console.log("内容管理",res.data.data);
 				setData(res.data.data);
+				let P = {...Pagination};
+				P.total =res.data.total
+				setPagination(P);
 			}
 		});
 	}
@@ -167,4 +200,17 @@ const Context = (props)=> {
 
 
 
+
 export default Context;
+
+
+
+
+
+
+
+
+
+
+
+

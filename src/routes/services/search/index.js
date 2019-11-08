@@ -1,3 +1,5 @@
+/* eslint-disable linebreak-style */
+
 import React from "react";
 import { Table} from "antd";
 import "./index.less";
