@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 /* eslint-disable react/jsx-no-target-blank */
 import React, { useEffect, useState, Fragment } from "react";
-import styles from "./index.css";
+// import styles from "./index.css";
 import { Table, Button, Input, Switch, message, Upload, Modal } from "antd";
 import axios from "axios";
 
@@ -158,13 +158,13 @@ const HeaderScroll = () => {
 						const newData = [...data];
 						data.map((item, index) => {
 							if (item.id === id2.id) {
-								console.log("找到了",index)
+								console.log("找到了",index);
 								newData.splice(index, 1);
 							}
 							return null;
 						});
 						console.log("删除", newData);
-						setdata(newData)
+						setdata(newData);
 					}}
 				>
           删除
@@ -431,13 +431,13 @@ const Carousel = () => {
 						const newData = [...data];
 						data.map((item, index) => {
 							if (item.id === id2.id) {
-								console.log("找到了",index)
+								console.log("找到了",index);
 								newData.splice(index, 1);
 							}
 							return null;
 						});
 						console.log("删除", newData);
-						setdata(newData)
+						setdata(newData);
 					}}
 				>
           删除

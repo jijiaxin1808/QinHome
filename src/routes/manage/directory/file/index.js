@@ -1,78 +1,78 @@
 import React from "react";
 import styles from "./index.css";
 // import Link from "umi/link";
-import { Table,Input, Button, Popover, message } from "antd";
+import { Table, Button,  message } from "antd";
 import { useState, useEffect } from "react";
 // import fileData from "../../../../assets/fileData";
 import axios from "axios";
-import { Upload, Icon,  Row, Col } from 'antd';
+import { Upload, Icon,  Row, Col } from "antd";
 
 const { Dragger } = Upload;
 const fileList = [
-  // {
-  //   uid: '-1',
-  //   name: 'xxx.png',
-  //   status: 'done',
-  //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  //   thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  // },
-  // {
-  //   uid: '-2',
-  //   name: 'yyy.png',
-  //   status: 'done',
-  //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  //   thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  // },
+	// {
+	//   uid: '-1',
+	//   name: 'xxx.png',
+	//   status: 'done',
+	//   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+	//   thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+	// },
+	// {
+	//   uid: '-2',
+	//   name: 'yyy.png',
+	//   status: 'done',
+	//   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+	//   thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+	// },
 ];
 const props = {
-  headers: {
-    token:localStorage.getItem("token")
-  },
-  name: 'file',
-  multiple: true,
-  listType: 'picture',
-  defaultFileList: [...fileList],
-  action: 'http://yjxt.elatis.cn/file/upload',
-  onChange(info) {
-    console.log(info,"上传")
-    const { status } = info.file;
-    if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (status === 'done'&&info.file.response.code === 0) {
-      message.success(`${info.file.name}文件上传成功`);
-    } else if(status === 'done'&&info.file.response.code !== 0)  {
-      message.error(info.file.response.message);
-    }
-  },className: styles.upload,
+	headers: {
+		token:localStorage.getItem("token")
+	},
+	name: "file",
+	multiple: true,
+	listType: "picture",
+	defaultFileList: [...fileList],
+	action: "http://yjxt.elatis.cn/file/upload",
+	onChange(info) {
+		console.log(info,"上传");
+		const { status } = info.file;
+		if (status !== "uploading") {
+			console.log(info.file, info.fileList);
+		}
+		if (status === "done"&&info.file.response.code === 0) {
+			message.success(`${info.file.name}文件上传成功`);
+		} else if(status === "done"&&info.file.response.code !== 0)  {
+			message.error(info.file.response.message);
+		}
+	},className: styles.upload,
 };
 
 const CreateFile = ()=> {
-    return (
-        <Row type = "flex" justify = "center" style = {{overflow:"auto"}}> 
-        <Col span={12}>
-        <Dragger {...props}>
-        <p className="ant-upload-drag-icon">
-          <Icon type="inbox" />
-        </p>
-        <p className="ant-upload-text">点击或拖拽文件以上传</p>
-        <p className="ant-upload-hint">
+	return (
+		<Row type = "flex" justify = "center" style = {{overflow:"auto"}}> 
+			<Col span={12}>
+				<Dragger {...props}>
+					<p className="ant-upload-drag-icon">
+						<Icon type="inbox" />
+					</p>
+					<p className="ant-upload-text">点击或拖拽文件以上传</p>
+					<p className="ant-upload-hint">
           支持拖拽和点击上传
-        </p>
-      </Dragger>
-      </Col>
-      </Row>
-    )
-}
-
-const { Search } = Input;
-const getFileContent = (content)=>{
-	return(
-		<div className = { styles.fileContent }>
-			{content}
-		</div>
+					</p>
+				</Dragger>
+			</Col>
+		</Row>
 	);
 };
+
+// const { Search } = Input;
+// const getFileContent = (content)=>{
+// 	return(
+// 		<div className = { styles.fileContent }>
+// 			{content}
+// 		</div>
+// 	);
+// };
 const del = (id)=> {
 	axios({
 		method:"GET",
@@ -115,10 +115,10 @@ const columns = [
 			</div>
 		)
 	},{
-    title: "路径",
-    dataIndex: "uri",
-    key:"uri"
-  },
+		title: "路径",
+		dataIndex: "uri",
+		key:"uri"
+	},
 	{
 		title: "上传者",
 		dataIndex: "uploader",
@@ -131,19 +131,19 @@ const columns = [
 	},
 ];
 
-const rowSelection = {
-	onChange: (selectedRowKeys, selectedRows) => {
-		const selectedId = selectedRows.map((item)=>{
-			return item.id;
-		});
-		console.log(`selectedRowKeys: ${selectedRowKeys}`, "selectedRows: ", selectedId);
-		//这里获取了所以被选中的选项的id
-	},
-	getCheckboxProps: record => ({
-		disabled: record.name === "Disabled User", // Column configuration not to be checked
-		name: record.name,
-	}),
-};
+// const rowSelection = {
+// 	onChange: (selectedRowKeys, selectedRows) => {
+// 		const selectedId = selectedRows.map((item)=>{
+// 			return item.id;
+// 		});
+// 		console.log(`selectedRowKeys: ${selectedRowKeys}`, "selectedRows: ", selectedId);
+// 		//这里获取了所以被选中的选项的id
+// 	},
+// 	getCheckboxProps: record => ({
+// 		disabled: record.name === "Disabled User", // Column configuration not to be checked
+// 		name: record.name,
+// 	}),
+// };
 
 
 // const App = ()=> {
@@ -154,10 +154,10 @@ const rowSelection = {
 //     )
 // }
 const FileHeader = ()=> {
-	const [ isCreateShow,setisCreateShow ] = useState(false);
+	// const [ isCreateShow,setisCreateShow ] = useState(false);
 	return(
 		<div className = { styles.FileHeader }>
-      <div className={"title"}>
+			<div className={"title"}>
 				<span>文件管理</span>
 			</div>
             
@@ -205,23 +205,24 @@ const File = ()=> {
 	const  delSelected = (selectedId)=> {
 		selectedId.map((item)=> {
 			del(item);
+			return null ;
 		});
 	};
 	console.log(data);
-	const App = ()=> {
-		return(
-			<div>
-				<Table columns={columns} dataSource={data}  rowSelection={rowSelection}/>
-			</div>
-		);
-	};
+	// const App = ()=> {
+	// 	return(
+	// 		<div>
+	// 			<Table columns={columns} dataSource={data}  rowSelection={rowSelection}/>
+	// 		</div>
+	// 	);
+	// };
 	return (
       
       
       
 		<div>
 			<FileHeader />
-      <CreateFile />
+			<CreateFile />
 			<div className = {"buttonSbar"}>
 				<Button  onClick = {()=>{delSelected(selectedId);}} className = {"button"}>批量删除</Button>
 			</div>

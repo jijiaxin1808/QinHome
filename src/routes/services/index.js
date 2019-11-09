@@ -1,15 +1,15 @@
 /* eslint-disable linebreak-style */
 
 import React,{Component} from "react";
-import Footer from "../../components/footer";
-import Header from "../../components/header";
-import { Table, Divider, Tag ,Menu,Layout} from "antd";
+// import Footer from "../../components/footer";
+// import Header from "../../components/header";
+import { Menu,Layout} from "antd";
 import {Search,Message} from "./search";
 import WrappedNormalLoginForm from "./form";
 import Tousu from "./form/tousu";
-import axios from 'axios'
+import axios from "axios";
 import "./index.less";
-const { SubMenu } = Menu;
+// const { SubMenu } = Menu;
 const { Sider } = Layout;
 const columns = [
 	{
@@ -40,14 +40,14 @@ const columns = [
 	},
 ];
   
-let i
+let i;
 export default class Services extends Component{
 	constructor(props) {
 		super(props);
 		this.state={
 			key:"1",
 			data:[],
-			message:'',
+			message:"",
 			n:1
 		};
 	}
@@ -59,29 +59,29 @@ export default class Services extends Component{
 	}
 	shouldComponentUpdate(nextProps, nextState){
 	  if(this.state.key===nextState.key){
-		  return false
+		  return false;
 	  }else{
-		  return true
+		  return true;
 	  }
 	}
 	componentDidUpdate(){
 		axios({
-			url:'http://yjxt.elatis.cn/msgs/listMsgs?category=all&flag=1',
-			method:'GET',
+			url:"http://yjxt.elatis.cn/msgs/listMsgs?category=all&flag=1",
+			method:"GET",
 			headers:{
-				'Content-Type':'application/json'
+				"Content-Type":"application/json"
 			}
 		}).then(res=>{
 			if(res.data.code===0){
-				console.log("刷新了")
+				console.log("刷新了");
 				this.setState({
 					data:res.data.data
-				})
-				console.log("刷结束")
+				});
+				console.log("刷结束");
 			}
-		})
-		const ctx=this
-		 i=[...document.getElementsByClassName("ant-table-row-level-0")]
+		});
+		const ctx=this;
+		 i=[...document.getElementsByClassName("ant-table-row-level-0")];
 
 		if(i.length){			
 			i.map((item)=>{
@@ -90,14 +90,15 @@ export default class Services extends Component{
 					ctx.setState({
 						key:"XAS",
 						 message:ctx.state.data[item.getAttribute("data-row-key")]
-					})
-				})
+					});
+				});
+				return null;
 			});
 		}
-    }
+	}
 
 	render() {
-		console.log(this.state)
+		console.log(this.state);
 		return (
 			<div className="yj-services">
 				{/* <Header/> */}

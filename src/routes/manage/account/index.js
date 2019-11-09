@@ -403,7 +403,7 @@ class EditableTable extends React.Component {
   			cell: EditableCell,
   		},
 	  };
-	  const ctx=this;
+  	//   const ctx=this;
   	const columns = this.columns.map(col => {
   		if (!col.editable) {
   			return col;

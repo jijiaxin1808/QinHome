@@ -4,29 +4,10 @@ import "./index.less";
 // import Office from '/img/assest/Office.png'
 import Homecarousel from "../../components/home-carousel";
 import { Link } from "react-router-dom";
-import { Spin, Skeleton } from "antd";
+import {  Skeleton } from "antd";
 import axios from "axios";
 
-const data = [
-	"lalalalalalalalalalallalalalalalalalalalallalalalalalalalalalallalalalalalalalalalallalalalalalalalalalal",
-	"lalalalalalalalalalal",
-	"lalalalalalalalalalal",
-	"lalalalalalalalalalal",
-	"lalalalalalalalalalal",
-	"lalalalalalalalalalal",
-	"lalalalalalalalalalal",
-	"lalalalalalalalalalal"
-];
 
-const data1 = [
-	"lalalalalalalalalalallalalalalalalalalalallalalalalalalalalalallalalalalalalalalalallalalalalalalalalalal",
-	"lalalalalalalalalalal",
-	"lalalalalalalalalalal",
-	"lalalalalalalalalalal",
-	"lalalalalalalalalalal",
-	"lalalalalalalalalalal",
-	"lalalalalalalalalalal"
-];
 
 const NewsTopRight = (props) => {
 	return (
@@ -57,7 +38,7 @@ const NewsTopRight = (props) => {
 const NewsBottomLeft = (props)=> {
 	return (
 		<div className='NewsBottomLeft'>
-						<div className = "news-header">
+			<div className = "news-header">
 				<span>
 				行政许可
 				</span>
@@ -86,7 +67,7 @@ const NewsBottomLeft = (props)=> {
 const NewsBottomRight = (props) => {
 	return (
 		<div className='NewsBottomRight'>
-						<div className = "news-header">
+			<div className = "news-header">
 				<span>
 				行政执法
 				</span>

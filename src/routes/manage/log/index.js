@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Divider, Tag, Pagination } from "antd";
+import { Table  } from "antd";
 import axios from "axios";
 import qs from "qs";
 

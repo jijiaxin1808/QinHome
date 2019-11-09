@@ -1,5 +1,5 @@
 import React from "react";
-import {Table, Button,Divider,Modal,Input,message, Form} from "antd";
+import {Table, Button,Divider,Modal,Input,message} from "antd";
 import axios from "axios";
 const { TextArea } = Input;
 
@@ -29,8 +29,10 @@ class Reply extends React.Component{
     		data.map((item)=>{
     			if(item.category==="msg"){
     				item.category="局长信箱";
+    				return null;
     			}else{
     				item.category="投诉";
+    				return null;
     			}
     		});
     		this.setState({

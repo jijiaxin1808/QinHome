@@ -2,9 +2,9 @@ import React from "react";
 import { Router, Route, Switch ,Redirect} from "dva/router";
 import Login from "./routes/login";
 import MainApp from "./App";
-import Manage from "./routes/manage/main"
-import Services from "./routes/services"
-import PrivateRoute from "./utils/privateRouter"
+import Manage from "./routes/manage/main";
+// import Services from "./routes/services";
+import PrivateRoute from "./utils/privateRouter";
 
 function RouterConfig({ history }) {
 	return (

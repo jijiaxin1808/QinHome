@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 
 import React from "react";
-import {Form,Input,Icon,Button,Radio,message} from "antd";
+import {Form,Input,Button,Radio,message} from "antd";
 import axios from "axios";
 import "antd/dist/antd.css";
 import "./index.less";

@@ -1,12 +1,12 @@
 import React from "react";
-import { Menu, Icon, Layout, Input } from "antd";
+import {  Icon, Layout, Input } from "antd";
 import { Link } from "react-router-dom";
 import "./header.less";
 import { connect } from "dva";
-import axios from "axios";
+// import axios from "axios";
 
 const { Search } = Input;
-const SubMenu = Menu.SubMenu;
+// const SubMenu = Menu.SubMenu;
 const { Header } = Layout;
 class Top extends React.Component {
 	constructor(props) {

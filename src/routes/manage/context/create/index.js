@@ -1,12 +1,12 @@
 import "braft-editor/dist/index.css";
 import React,{ useEffect, useState , forwardRef} from "react";
 import BraftEditor from "braft-editor";
-import { Form, Input, Button,  Row, Col ,Cascader, Upload, Icon, Modal, Select, Card, Tag,message} from "antd";
+import { Form, Input, Button,  Row, Col ,Cascader,  message} from "antd";
 import "./index.css";
 import axios from "axios";
 
 
-const { Option } = Select;
+// const { Option } = Select;
 const formItemLayout = {
 	labelCol: { span: 4 },
 	wrapperCol: { span: 16 },
@@ -51,11 +51,11 @@ function FormDemo (props) {
 	}));
 
 
-	const handleOnChange = ({file}) => {
-		const { response = {}} = file;
-		console.log(response);
-		console.log(response.hash);
-	};
+	// const handleOnChange = ({file}) => {
+	// 	const { response = {}} = file;
+	// 	console.log(response);
+	// 	console.log(response.hash);
+	// };
 
 	const [state, setState] = useState("");
 	const judgeStateP = () => {
@@ -107,51 +107,51 @@ function FormDemo (props) {
 
 	};
 
-	const [userData, setUserData] = useState([]);
-	const [visible, setVisible] = useState(false);
-	const [confirmLoading, setConfirmLoading] = useState(false);
+	// const [userData, setUserData] = useState([]);
+	// const [visible, setVisible] = useState(false);
+	// const [confirmLoading, setConfirmLoading] = useState(false);
 
-	const showModal = () => {
-	  setVisible(true);
-		axios({
-			method: "get",
-			url:"http://yjxt.elatis.cn/users/getByRole",
-			headers: {
-				"content-type": "application/json",
-				"token": localStorage.getItem("token")
-			}
-		}).then(res=>{
-			console.log(res.data);
-			if(res.data.code === 0) {
-				console.log("success",res.data.data);
-				setUserData(res.data.data);
-			}
-		}).catch((err)=>{
-			console.log(err);
-		});
+	// const showModal = () => {
+	//   setVisible(true);
+	// 	axios({
+	// 		method: "get",
+	// 		url:"http://yjxt.elatis.cn/users/getByRole",
+	// 		headers: {
+	// 			"content-type": "application/json",
+	// 			"token": localStorage.getItem("token")
+	// 		}
+	// 	}).then(res=>{
+	// 		console.log(res.data);
+	// 		if(res.data.code === 0) {
+	// 			console.log("success",res.data.data);
+	// 			setUserData(res.data.data);
+	// 		}
+	// 	}).catch((err)=>{
+	// 		console.log(err);
+	// 	});
 
-	};
+	// };
 
-	const modalOptions = userData.map(item => ({
-		id: item.id,
-		number: item.number,
-		name: item.name,
-		section: item.section,
-	}));
+	// const modalOptions = userData.map(item => ({
+	// 	id: item.id,
+	// 	number: item.number,
+	// 	name: item.name,
+	// 	section: item.section,
+	// }));
 
 	// console.log("modal",modalOptions);
 
-	const handleOk = () => {
-	  setConfirmLoading(true);
-		setTimeout(() => {
-			setVisible(false);
-			setConfirmLoading(false);
-		}, 2000);
-	};
+	// const handleOk = () => {
+	//   setConfirmLoading(true);
+	// 	setTimeout(() => {
+	// 		setVisible(false);
+	// 		setConfirmLoading(false);
+	// 	}, 2000);
+	// };
 
-	const handleCancel = () => {
-	  setVisible(false);
-	};
+	// const handleCancel = () => {
+	//   setVisible(false);
+	// };
 	const onChange =(value) => {
 		console.log(value);
 	};
@@ -160,36 +160,36 @@ function FormDemo (props) {
   	const controls = ["font-size","bold", "italic", "underline", "text-color", "separator", "link",  "media" ];
   	// const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
 
-	const uploadHandler = (param) => {
-		if (!param.file) {
-			console.log("err");
-			return false;
-		}
-		// setEditorState({editorState: ContentUtils.insertMedias(editorState, [{
-		//   type: "IMAGE",
-		//   url: URL.createObjectURL
-		// }])
-		// });
-	};
-  	const extendControls =[
-		{
-			key: "antd-uploader",
-			type: "component",
-			component: (
-				<Upload
-					accept="image/*"
-					showUploadList={false}
-					customRequest={uploadHandler}
-					onChange={handleOnChange}
-				>
-					{/* 这里的按钮最好加上type="button"，以避免在表单容器中触发表单提交，用Antd的Button组件则无需如此 */}
-					<button type="button" className="control-item button upload-button" data-title="插入图片">
-						<Icon type="picture" theme="filled" />
-					</button>
-				</Upload>
-			)
-		}
-	];
+	// const uploadHandler = (param) => {
+	// 	if (!param.file) {
+	// 		console.log("err");
+	// 		return false;
+	// 	}
+	// 	// setEditorState({editorState: ContentUtils.insertMedias(editorState, [{
+	// 	//   type: "IMAGE",
+	// 	//   url: URL.createObjectURL
+	// 	// }])
+	// 	// });
+	// };
+  	// const extendControls =[
+	// 	{
+	// 		key: "antd-uploader",
+	// 		type: "component",
+	// 		component: (
+	// 			<Upload
+	// 				accept="image/*"
+	// 				showUploadList={false}
+	// 				customRequest={uploadHandler}
+	// 				onChange={handleOnChange}
+	// 			>
+	// 				{/* 这里的按钮最好加上type="button"，以避免在表单容器中触发表单提交，用Antd的Button组件则无需如此 */}
+	// 				<button type="button" className="control-item button upload-button" data-title="插入图片">
+	// 					<Icon type="picture" theme="filled" />
+	// 				</button>
+	// 			</Upload>
+	// 		)
+	// 	}
+	// ];
 
   	return (
   		<div className="demo-container">

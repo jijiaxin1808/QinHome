@@ -4,9 +4,9 @@ import axios from "axios";
 import urlHandle from "../../config/urlHandle";
 import { message, Spin } from "antd";
 
-const func = (data)=> {
-	return (data);
-};
+// const func = (data)=> {
+// 	return (data);
+// };
 
 const Article = () => {
 	const [data, setdata] = useState([]);

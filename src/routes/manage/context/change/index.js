@@ -2,12 +2,12 @@ import "braft-editor/dist/index.css";
 import React,{ useEffect, useState , forwardRef} from "react";
 import BraftEditor from "braft-editor";
 // import { ContentUtils } from "braft-utils";
-import { Form, Input, Button,  Row, Col ,Cascader, Upload, Icon, Select} from "antd";
-import { message } from "antd"
+import { Form, Input, Button,  Row, Col , Upload } from "antd";
+import { message } from "antd";
 import axios from "axios";
 
 
-const { Option } = Select;
+// const { Option } = Select;
 const formItemLayout = {
 	labelCol: { span: 4 },
 	wrapperCol: { span: 16 },
@@ -15,7 +15,7 @@ const formItemLayout = {
 
 
 const changeContext=(props)=>{
-  console.log(props.match.params.id)
+	console.log(props.match.params.id);
 	const { getFieldDecorator } = props.form;
 
 	useEffect(()=>{
@@ -28,6 +28,7 @@ const changeContext=(props)=>{
 
 
 	const [data, setData] = useState([]);
+	console.log(data);
 	useEffect(() =>{
 		axios({
 			method: "get",
@@ -41,14 +42,14 @@ const changeContext=(props)=>{
 			console.log(err);
 		});
 	}, []);
-	const options = data.map( item => ({
-		value: item.title,
-		label: item.title,
-		children: item.sec.map(item => ({
-			value: item.title,
-			label: item.title
-		}))
-	}));
+	// const options = data.map( item => ({
+	// 	value: item.title,
+	// 	label: item.title,
+	// 	children: item.sec.map(item => ({
+	// 		value: item.title,
+	// 		label: item.title
+	// 	}))
+	// }));
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		props.form.validateFields((error, values) => {
@@ -61,7 +62,7 @@ const changeContext=(props)=>{
 					content: values.content.toHTML()// or values.content.toHTML()
 				};
 				axios({
-					method: 'POST',
+					method: "POST",
 					url: "http://yjxt.elatis.cn/posts/alter",
 					headers: {
 						"Content-Type": "application/json",
@@ -69,7 +70,7 @@ const changeContext=(props)=>{
 					},
 					data: submitData
 				}).then( res => {
-					console.log(res)
+					console.log(res);
 					if(res.data.code ===0) {
 						message.success("修改成功");
 						window.location.href = "/manage/context";
@@ -86,10 +87,10 @@ const changeContext=(props)=>{
 
 	};
 
-	const [contextData, setContextData] = useState({})
+	const [contextData, setContextData] = useState({});
 
 	useEffect(()=> {
-    const id=props.match.params.id
+		const id=props.match.params.id;
 		axios({
 			method: "GET",
 			headers: {
@@ -99,7 +100,7 @@ const changeContext=(props)=>{
 			url: `http://yjxt.elatis.cn/posts/get?id=${id}`
 		}).then(res => {
 			if ( res.data.code === 0 ) {
-				console.log(res.data.data)
+				console.log(res.data.data);
 				setContextData(res.data.data);
 			}
 			console.log(res);
@@ -109,7 +110,7 @@ const changeContext=(props)=>{
 	},[]);
 
 	useEffect(()=> {
-		console.log('contextData',contextData.content)
+		console.log("contextData",contextData.content);
 		props.form.setFieldsValue({
 			title: contextData.title,
 			department: contextData.section,
@@ -118,11 +119,11 @@ const changeContext=(props)=>{
 	},[contextData]);
 
 
-	const onChange =(value) => {
-		console.log(value)
-	};
+	// const onChange =(value) => {
+	// 	console.log(value);
+	// };
 	const controls =["font-size","bold", "italic", "underline", "text-color", "separator", "link",  "media" ];
-	const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
+	// const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
 
 	const uploadHandler = (param) => {
 		if (!param.file) {
@@ -212,6 +213,6 @@ const changeContext=(props)=>{
 		</div>
 	);
 	// }
-}
+};
 
 export default Form.create()(forwardRef(changeContext));

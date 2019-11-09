@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import "./index.less";
 import axios from "axios";
-import { Table, Divider, Tag, Button, Modal, message, Skeleton, Switch } from "antd";
+import { Table,  Button, Modal, message, Skeleton } from "antd";
 import urlHandle from "../../../config/urlHandle";
 import {routerRedux} from "dva/router";
 import { connect } from "dva";
@@ -60,11 +60,11 @@ const  DeleteArticle  = (props)=> {
 const mapDispatchToProps = (dispatch)=> ({
 	reload() {
 		dispatch(routerRedux.push({
-			pathname: '/manage'
+			pathname: "/manage"
 		}));
 	}
-})
-const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle)
+});
+const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
 const alterAricle = (id)=> {
 	console.log(id);
 	window.location.href = `/manage/change/${id}`;
@@ -72,6 +72,7 @@ const alterAricle = (id)=> {
 const BmsSearch = (props)=> {
 	const [ data, setData ] = useState([]);
 	const [ key,setkey ] = useState(decodeURIComponent(urlHandle("key")));
+	console.log(setkey);
 	const columns = [
 	  {
 			title: "id",
@@ -136,7 +137,7 @@ const BmsSearch = (props)=> {
 			}).then(res=> {
 				if(res.data.code === 0) {
 					console.log("长度",res.data.data.length);
-					if(res.data.data.length ==0) {
+					if(res.data.data.length ===0) {
 						setData("empty");
 						console.log("empty");
 					}

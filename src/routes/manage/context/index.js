@@ -1,5 +1,5 @@
 import React,{ useState, useEffect } from "react";
-import { Table, Input,Button, Modal, message,Skeleton,Spin} from "antd";
+import { Table, Button, Modal, message } from "antd";
 // import contextData from "../../../assets/contextData";
 // import styles from "./index.css";
 import axios from "axios";
@@ -7,7 +7,7 @@ import {routerRedux} from "dva/router";
 import { connect } from "dva";
 import Loading from "../../../components/loading";
 
-const { Search } = Input;
+// const { Search } = Input;
 const alterAricle = (id)=> {
 	console.log(id);
 	window.location.href = `/manage/change/${id}`;
@@ -133,28 +133,28 @@ const columns = [
 const Context = (props)=> { 
 	const [ data, setData ] = useState([]);
 	const { reload } = props;
-	const [  Pagination, setPagination ] = useState({});
-	const changePage = (pagination)=> {
-		console.log("当前页码",pagination);
-		let P = { ...Pagination,				
-			results: pagination.pageSize,
-			page: pagination.current};
-		setPagination(P);
-		axios({
-			method:"GET",
-			url: "http://yjxt.elatis.cn/posts/listPosts",
-			params: {
-				flag: 2,
-			}
-		}).then(res=> {
-			if(res.data.code === 0) {
-				console.log("内容管理",res.data.data);
-				setData(res.data.data);
+	// const [  Pagination, setPagination ] = useState({});
+	// const changePage = (pagination)=> {
+	// 	console.log("当前页码",pagination);
+	// 	let P = { ...Pagination,				
+	// 		results: pagination.pageSize,
+	// 		page: pagination.current};
+	// 	setPagination(P);
+	// 	axios({
+	// 		method:"GET",
+	// 		url: "http://yjxt.elatis.cn/posts/listPosts",
+	// 		params: {
+	// 			flag: 2,
+	// 		}
+	// 	}).then(res=> {
+	// 		if(res.data.code === 0) {
+	// 			console.log("内容管理",res.data.data);
+	// 			setData(res.data.data);
 
 
-			}
-		});
-	}
+	// 		}
+	// 	});
+	// }
 	useEffect(()=>{
 		axios({
 			method:"GET",
@@ -166,9 +166,6 @@ const Context = (props)=> {
 			if(res.data.code === 0) {
 				console.log("内容管理",res.data.data);
 				setData(res.data.data);
-				let P = {...Pagination};
-				P.total =res.data.total
-				setPagination(P);
 			}
 		});
 	}
@@ -190,7 +187,7 @@ const Context = (props)=> {
 	}
 	else return (
 		<React.Fragment>
-		<Loading />
+			<Loading />
 		</React.Fragment>
 
 	);

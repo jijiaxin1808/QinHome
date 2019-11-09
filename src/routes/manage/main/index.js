@@ -4,13 +4,13 @@ import { Menu, Icon, Switch, Layout } from "antd";
 import { allMenu } from "../../../utils/menu";
 import Top from "./header";
 import Contents from "./content";
-import Footer from "./bottom";
+// import Footer from "./bottom";
 import  "./index.less";
-import createHistory from "history/createBrowserHistory";
+// import createHistory from "history/createBrowserHistory";
 
 const SubMenu = Menu.SubMenu;
 const { Sider } = Layout;
-const history=createHistory();
+// const history=createHistory();
 export default class Manage extends React.Component {
   state = {
   	theme: "light",

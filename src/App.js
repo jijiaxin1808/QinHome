@@ -1,5 +1,5 @@
 import React,{Suspense} from "react";
-import { Router, Route, Switch } from "dva/router";
+import {  Route } from "dva/router";
 import Loading from "./components/loading";
 import Home from "./routes/home";
 import News from "./routes/news";
@@ -66,5 +66,5 @@ export default function MainApp (props) {
 			</Suspense>
 			<Footer />
 		</div>
-	)
+	);
 }

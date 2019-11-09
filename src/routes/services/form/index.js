@@ -1,10 +1,10 @@
 /* eslint-disable linebreak-style */
 
 import React from "react";
-import {Form,Input,Icon,Button,Radio, message} from "antd";
+import {Form,Input,Button,Radio, message} from "antd";
 import "antd/dist/antd.css";
 import "./index.less";
-import { randomNum, calculateWidth } from "../../../utils/utils";
+import { randomNum  } from "../../../utils/utils";
 import axios from "axios";
 const {TextArea} = Input;
 

@@ -26,7 +26,7 @@ function  Header (props) {
     	<div className='home-header'>
   		<div style = {{width:1080, margin: "0 auto"}}>
   			<div className="wxn">
-  				<img src="/img/tu2.png"></img>
+  				<img src="/img/tu2.png" alt = ""></img>
   			</div>
     	<Search
     		placeholder='请输入搜索关键字'
@@ -42,7 +42,7 @@ function  Header (props) {
   		</div>
   	</div>
 
-  </div><div className='header-asss'>
+	</div><div className='header-asss'>
     	<ul className='header-bar'>
     		{
     			bardata.map((item, index) => {
@@ -55,7 +55,7 @@ function  Header (props) {
     			})
     		}
     	</ul>
-  </div></>
+	</div></>
 	);
 }
 const mapDispatchToProps = (dispatch)=> ({

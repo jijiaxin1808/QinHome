@@ -22,6 +22,7 @@ const FriendLink = () => {
 					friendlinkData.map((item, index) => {
 						return (
 						// eslint-disable-next-line react/react-in-jsx-scope
+							// eslint-disable-next-line react/jsx-no-target-blank
 							<a alt={item.name} key={index} href={item.href} target = "_blank">
 								{item.name}
 							</a>
@@ -86,7 +87,9 @@ const Home = () => {
 						_data.push(
 							<a title={item.title} href={`${item.href}`} style={{color: "#333", fontSize: "18px"}}>{item.title}</a>
 						);
+						return null;
 					}
+					return null;
 				});
 				setAnnouces(_data);
 				console.log("设置了数据",_data);

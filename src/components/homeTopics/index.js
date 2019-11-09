@@ -42,6 +42,7 @@ const HomeTopics = (props) => {
 				if(index>1){
 					return `/${item.title}/${item.sec[0].title}`;
 				}
+				return null;
 			});
 			const data1 = JSON.stringify({
 				limit:3,
@@ -62,6 +63,7 @@ const HomeTopics = (props) => {
 					if(index>1) {
 						return item.post;
 					}
+					return null;
 				});
 				console.log("newdata",newData);
 

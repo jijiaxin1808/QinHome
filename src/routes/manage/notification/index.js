@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./index.css";
+// import styles from "./index.css";
 import { Table, Button, message } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -63,7 +63,7 @@ const publish = (id)=> {
 		data: data1
 	}).then((res)=> {
 		if(res.data.code === 0) {
-			message.success("确认发布成功")
+			message.success("确认发布成功");
 		}
 	});
 };

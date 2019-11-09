@@ -6,12 +6,12 @@ import MessaegeContent from "./messageContent";
 import urlHandle from "../../config/urlHandle";
 import { connect } from "dva";
 import { Skeleton } from "antd";
-import axios from "axios";
 const  Message = (props) => {
 	// const type = props.location.search.split('=')[1]
 	const [id, setId] = useState(1);// 这里用于区别一级页面
 	const [type, setType] = useState(1);// 这里用于区别二级页面
 	// const [ messageData, setmessageData ] = useState("");
+	// eslint-disable-next-line no-unused-vars
 	const [ contentData, setContentData ] = useState([]);
 
 	useEffect(()=> {

@@ -6,10 +6,10 @@ import "./index.less";
 import axios from "axios";
 
 const MessageContent = (props)=> {
-	const isShow = (item)=> {
-		// console.log("当前文章发布状态")
-		return item.status === "publish";
-	};
+	// const isShow = (item)=> {
+	// 	// console.log("当前文章发布状态")
+	// 	return item.status === "publish";
+	// };
 	const limit = 15;
 	const [ data, setData ] = useState([]);
 	const [total, setTotal ] =useState();
@@ -59,7 +59,7 @@ const MessageContent = (props)=> {
 			}
 		});
 	};
-	if(data == "empty") {
+	if(data === "empty") {
 		return (
 			<div className = "message-none">
 				当前模块没有文章
@@ -93,7 +93,7 @@ const MessageContent = (props)=> {
 		);
 	}
 	else {
-		if(data == "empty") {
+		if(data === "empty") {
 			return (
 				<div className = "message-none">
 					当前模块没有文章
