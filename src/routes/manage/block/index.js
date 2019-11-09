@@ -1,7 +1,8 @@
 /* eslint-disable indent */
 /* eslint-disable react/jsx-no-target-blank */
 import React, { useEffect, useState, Fragment } from "react";
-// import styles from "./index.css";
+// import styles from "./index.css";\
+import "./index.css";
 import { Table, Button, Input, Switch, message, Upload, Modal } from "antd";
 import axios from "axios";
 

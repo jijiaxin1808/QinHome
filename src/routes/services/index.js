@@ -58,7 +58,7 @@ export default class Services extends Component{
 		});
 	}
 	shouldComponentUpdate(nextProps, nextState){
-	  if(this.state.key===nextState.key){
+	  if(this.state.key===nextState.key&&this.state.n==nextState.n){
 		  return false;
 	  }else{
 		  return true;
@@ -73,11 +73,10 @@ export default class Services extends Component{
 			}
 		}).then(res=>{
 			if(res.data.code===0){
-				console.log("刷新了");
 				this.setState({
-					data:res.data.data
+					data:res.data.data,
+					n:this.state.key+1
 				});
-				console.log("刷结束");
 			}
 		});
 		const ctx=this;

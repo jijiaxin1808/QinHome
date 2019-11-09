@@ -1,5 +1,5 @@
 import React, {useState,useEffect,useRef} from "react";
-import {Input,Icon,Table,Button,Menu,Switch,message,Tooltip} from "antd";
+import {Input,Table,Button,Menu,Switch,message,Tooltip} from "antd";
 import "./index.less";
 import axios from "axios";
 
@@ -21,6 +21,7 @@ export default function ColManage() {
 	const [editState, setEditState] = useState("二级");
 	// 二级文章列表是否处于编辑状态
 	const [edit, setEdit] = useState([]);
+	console.log(edit);
 	// 位于的某二级栏目
 	const [secCol, setSecCol] = useState("");
 	// 位于的某二级栏目标识key
@@ -101,7 +102,7 @@ export default function ColManage() {
 			).then(res => {
 
 				if(res.data.code === 0) {
-					console.log(res.data)
+					console.log(res.data);
 					setArticles((res.data.data)[0] === "empty" ? [] : res.data.data);
 					setEdit((res.data.data)[0] === "empty" ? [] : new Array(res.data.data.length).fill(false));
 				}
@@ -129,7 +130,7 @@ export default function ColManage() {
 				value: {
 					..._colsData,
 				}
-      });
+			});
 			axios({
 				method: "POST",
 				url: "http://yjxt.elatis.cn/options/update",
@@ -238,13 +239,13 @@ export default function ColManage() {
 			)
 		}
 	];
-	const handleNewBtn = () => {
-		setEditData([...editData,{key: `${editData.length+1}`, title: "新栏目", weight: 100, state: true, sec: []}]);
-	};
-	const handleDelBtn = (index) => {
-		editData.splice(index, 1);
-		setEditData([...editData]);
-	};
+	// const handleNewBtn = () => {
+	// 	setEditData([...editData,{key: `${editData.length+1}`, title: "新栏目", weight: 100, state: true, sec: []}]);
+	// };
+	// const handleDelBtn = (index) => {
+	// 	editData.splice(index, 1);
+	// 	setEditData([...editData]);
+	// };
 	const handleEditBtn = () => {
 		setEditState("一级");
 		setEditData([...colsData]);
@@ -329,17 +330,17 @@ export default function ColManage() {
 		let _newCol = {
 			[id]: _value
 		};
-    let _cols = [...editData];
-    let _col = {..._cols[index], ..._newCol};
+		let _cols = [...editData];
+		let _col = {..._cols[index], ..._newCol};
 		_cols.splice(index, 1, _col);
-    setEditData(_cols);
+		setEditData(_cols);
 	};
 	const handleSaveClick = () => {
 		setLoading(true);
 		if(editState === "二级") {
       
 		} else if(editState === "一级") {
-      setSaveClick(true);
+			setSaveClick(true);
 			setColsData(editData);
 		}
 	};

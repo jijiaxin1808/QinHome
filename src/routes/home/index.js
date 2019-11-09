@@ -111,7 +111,7 @@ const Home = () => {
 					</span>
 					{
 						annouces.length!==0 &&
-						<div style={{marginLeft:"-100px",width:"500px"}}>
+						<div style={{marginLeft:"-50px",width:"500px"}}>
 							<TextScroll 
 								mode="horizontal"
 								text={annouces}
