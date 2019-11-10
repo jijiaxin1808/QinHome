@@ -83,6 +83,7 @@ const del = (id)=> {
 	}).then((res)=>{
 		if(res.data.code === 0){
 			message.success("删除成功");
+		
 		}
 	});
 	console.log("永久删除",id);
@@ -100,7 +101,7 @@ const columns = [
 		key: "name",
 		render: (name,id) =>(
 			<div className = {styles.handle }>
-				<img src = { `http://yjxt.elatis.cn/${id.uri}`}  width = "126px" height = "126px" alt = ""/>
+				
 				<div>
 					<p>{  name } </p>
 					<div> 
@@ -117,7 +118,10 @@ const columns = [
 	},{
 		title: "路径",
 		dataIndex: "uri",
-		key:"uri"
+		key:"uri",
+		render:uri=> (
+			<a href = {`http://yjxt.elatis.cn/${uri}`} >{`http://yjxt.elatis.cn/${uri}`}</a>  
+		)
 	},
 	{
 		title: "上传者",

@@ -26,7 +26,7 @@ function  Header (props) {
     	<div className='home-header'>
   		<div style = {{width:1080, margin: "0 auto"}}>
   			<div className="wxn">
-  				<img src="/img/tu2.png" alt = ""></img>
+  				<img src="/img/TIM图片20191110185942.png"  alt = ""></img>
   			</div>
     	<Search
     		placeholder='请输入搜索关键字'

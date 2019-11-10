@@ -1,0 +1,18 @@
+.yj-services {
+  width: 100%;
+}
+.services {
+  display: flex;
+  justify-content: start;
+  width: 1080px;
+  margin: 0 auto;
+}
+.services-slider {
+  width: 200px;
+}
+.services-main {
+  margin-left: 100px;
+}
+.services-left {
+  width: 191px;
+}

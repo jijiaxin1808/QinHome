@@ -25,7 +25,7 @@ class Reply extends React.Component{
     		},
     		method:"GET"
     	}).then(res=>{
-    		let data=res.data.data.reverse();
+    		let data=res.data.data;
     		data.map((item)=>{
     			if(item.category==="msg"){
     				item.category="局长信箱";

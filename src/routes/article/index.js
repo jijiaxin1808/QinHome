@@ -62,7 +62,7 @@ const Article = () => {
 						<span>{`点击次数: ${data.clicked}`}</span>
 					</div>
 				</div>
-				<div className='article-content'>
+				<div >
 					{<p dangerouslySetInnerHTML={{ __html:data.content}}  />}
 				</div>
 			</div>

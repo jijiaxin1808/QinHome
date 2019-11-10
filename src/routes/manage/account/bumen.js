@@ -82,7 +82,7 @@ class EditableFormTable extends React.Component{
       render(){
       	const columns = [
       		{
-      			title: "部门名称",
+      			title: "权限组",
       			dataIndex: "section",
       			key: "name"
       		},
