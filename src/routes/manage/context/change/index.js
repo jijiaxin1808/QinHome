@@ -1,8 +1,8 @@
 import "braft-editor/dist/index.css";
 import React,{ useEffect, useState , forwardRef} from "react";
 import BraftEditor from "braft-editor";
-// import { ContentUtils } from "braft-utils";
-import { Form, Input, Button,  Row, Col , Upload } from "antd";
+import { ContentUtils } from "braft-utils";
+import { Form, Input, Button,  Row, Col , Upload ,Icon} from "antd";
 import { message } from "antd";
 import axios from "axios";
 
@@ -122,14 +122,32 @@ const changeContext=(props)=>{
 	// const onChange =(value) => {
 	// 	console.log(value);
 	// };
-	const controls =["font-size","bold", "italic", "underline", "text-color", "separator", "link",  "media" ];
+	const controls = ["font-size", "bold", "italic", "underline", "text-color", "separator", "link", {key: "media",title:"视频"}];
 	// const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
 
-	const uploadHandler = (param) => {
+	async function uploadHandler(param){
 		if (!param.file) {
 			console.log("err");
 			return false;
 		}
+		console.log(param.file)
+		const {
+			form: { getFieldValue, setFieldsValue }
+		  } = props;
+		//   const result=await getUrl(param.file)
+		//   console.log(getUrl(param.file))
+		let reader = new FileReader();
+		reader.readAsDataURL(param.file)
+		reader.onload=function (e) {
+			const editorStates = getFieldValue("content");
+			setFieldsValue({content: ContentUtils.insertMedias(editorStates, [{
+			  type: "IMAGE",
+			  url: e.target.result
+			}])
+			});	
+		}
+		  
+
 	};
 	const extendControls =[
 		{
@@ -141,6 +159,9 @@ const changeContext=(props)=>{
 					showUploadList={false}
 					customRequest={uploadHandler}
 				>
+				  <button type="button" className="control-item button upload-button" data-title="插入图片">
+						<Icon type="picture" theme="filled" />
+					</button>
 					{/* 这里的按钮最好加上type="button"，以避免在表单容器中触发表单提交，用Antd的Button组件则无需如此 */}
 				</Upload>
 			)
