@@ -195,9 +195,9 @@ const HeaderScroll = () => {
 					// });
 					setdata([...newData,{
 						id: data.length + 1,
-						"title": "省应急管理厅全面部署冬春受灾群众生活救助工作",
-						"href": "/index/article?id=258",
-						"isShow": 1
+						"title": "",
+						"href": "",
+						"isShow": 0
 					}]);
 					console.log(data);
 				}}>添加顶部滚动条</Button>
@@ -469,9 +469,9 @@ const Carousel = () => {
 						// });
 						setdata([...newData,{
 							id: data.length + 1,
-							href: "请输入跳转至的链接",
+							href: "",
 							picUrl: "",
-							title: "请输入标题",
+							title: "",
 							isShow: false,
 							key: "4",
 						}]);
