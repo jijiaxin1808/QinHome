@@ -1,7 +1,8 @@
 import "braft-editor/dist/index.css";
 import React,{ useEffect, useState , forwardRef} from "react";
 import BraftEditor from "braft-editor";
-import { Form, Input, Button,  Row, Col ,Cascader,  message} from "antd";
+import { ContentUtils } from "braft-utils"
+import { Form, Input, Button,  Row, Col ,Cascader,  message,Upload,Icon} from "antd";
 import "./index.css";
 import axios from "axios";
 
@@ -51,11 +52,12 @@ function FormDemo (props) {
 	}));
 
 
-	// const handleOnChange = ({file}) => {
-	// 	const { response = {}} = file;
-	// 	console.log(response);
-	// 	console.log(response.hash);
-	// };
+	const handleOnChange = ({file}) => {
+		console.log(file)
+		const { response = {}} = file;
+		console.log(response);
+		console.log(response.hash);
+	};
 
 	const [state, setState] = useState("");
 	const judgeStateP = () => {
@@ -155,39 +157,53 @@ function FormDemo (props) {
 	const onChange =(value) => {
 		console.log(value);
 	};
-  	const controls = ["font-size","bold", "italic", "underline", "text-color", "separator", "link",  "media" ];
-  	// const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
 
-	// const uploadHandler = (param) => {
-	// 	if (!param.file) {
-	// 		console.log("err");
-	// 		return false;
-	// 	}
-	// 	// setEditorState({editorState: ContentUtils.insertMedias(editorState, [{
-	// 	//   type: "IMAGE",
-	// 	//   url: URL.createObjectURL
-	// 	// }])
-	// 	// });
-	// };
-  	// const extendControls =[
-	// 	{
-	// 		key: "antd-uploader",
-	// 		type: "component",
-	// 		component: (
-	// 			<Upload
-	// 				accept="image/*"
-	// 				showUploadList={false}
-	// 				customRequest={uploadHandler}
-	// 				onChange={handleOnChange}
-	// 			>
-	// 				{/* 这里的按钮最好加上type="button"，以避免在表单容器中触发表单提交，用Antd的Button组件则无需如此 */}
-	// 				<button type="button" className="control-item button upload-button" data-title="插入图片">
-	// 					<Icon type="picture" theme="filled" />
-	// 				</button>
-	// 			</Upload>
-	// 		)
-	// 	}
-	// ];
+
+	const controls = ["font-size", "bold", "italic", "underline", "text-color", "separator", "link", {key: "media",title:"视频"}];
+	const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
+	async function uploadHandler(param){
+		if (!param.file) {
+			console.log("err");
+			return false;
+		}
+		console.log(param.file)
+		const {
+			form: { getFieldValue, setFieldsValue }
+		  } = props;
+		//   const result=await getUrl(param.file)
+		//   console.log(getUrl(param.file))
+		let reader = new FileReader();
+		reader.readAsDataURL(param.file)
+		reader.onload=function (e) {
+			const editorStates = getFieldValue("content");
+			setFieldsValue({content: ContentUtils.insertMedias(editorStates, [{
+			  type: "IMAGE",
+			  url: e.target.result
+			}])
+			});	
+		}
+		  
+
+	};
+  	const extendControls =[
+		{
+			key: "antd-uploader",
+			type: "component",
+			component: (
+				<Upload
+					accept="image/*"
+					showUploadList={false}
+					customRequest={uploadHandler}
+					onChange={handleOnChange}
+				>
+					{/* 这里的按钮最好加上type="button"，以避免在表单容器中触发表单提交，用Antd的Button组件则无需如此 */}
+					<button type="button" className="control-item button upload-button" data-title="插入图片">
+						<Icon type="picture" theme="filled" />
+					</button>
+				</Upload>
+			)
+		}
+	];
 
   	return (
   		<div className="demo-container">
@@ -239,7 +255,7 @@ function FormDemo (props) {
   							className="my-editor"
   							controls={controls}
   							placeholder="请输入正文内容"
-							// extendControls={extendControls}
+							extendControls={extendControls}
                 			// contentStyle={{height: 210, boxShadow: 'inset 0 1px 3px rgba(0,0,0,.1)'}}
   						/>
   					)}
