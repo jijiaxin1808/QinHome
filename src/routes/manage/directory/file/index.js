@@ -3,7 +3,7 @@ import styles from "./index.css";
 // import Link from "umi/link";
 import { Table, Button,  message } from "antd";
 import { useState, useEffect } from "react";
-// import fileData from "../../../../assets/fileData";
+import fileData from "../../../../assets/fileData";
 import axios from "axios";
 import { Upload, Icon,  Row, Col } from "antd";
 
@@ -103,6 +103,7 @@ const columns = [
 				<img src = { `http://yjxt.elatis.cn/${id.uri}`}  width = "126px" height = "126px" alt = ""/>
 				<div>
 					<p>{  name } </p>
+					<p> { `文件类型: ${id.type}` } </p>
 					<div> 
 						{/* <Button size = "small">编辑</Button>   */}
 						<Button size = "small" onClick = {()=>{ del(id.id); }} >永久删除</Button>  

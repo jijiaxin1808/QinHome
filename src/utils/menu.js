@@ -15,13 +15,7 @@ export const allMenu = [
 				name: "创建文章",
 				url: "manage/create"
 			}]
-	},
-	{
-		name:"文件管理",
-		url:"manage/file",
-		icon:"upload"
-	},
-	{
+	},{
 		name:"区块管理",
 		url:"manage/block",
 		icon:"setting"
