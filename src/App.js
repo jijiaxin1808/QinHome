@@ -10,6 +10,7 @@ import Message from "./routes/message";
 import headerData from "./config/headerData";
 import Search from "./routes/search";
 import Services from "./routes/services";
+import JJX from "./components/jjxnb";
 
 const routers= [
 	{
@@ -46,7 +47,13 @@ const routers= [
 		path: "/index/search",
 		component: Search,
 		key: 2
-	}
+	},
+	{
+		name: "jjx",
+		path: "/index/index/jjxnb",
+		component: JJX,
+		key: 0
+	},
 ];
 
 export default function MainApp (props) {

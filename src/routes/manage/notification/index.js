@@ -73,7 +73,7 @@ const handleFunc = (handle,id)=>{
 	if(handle === "确认发布") {
 		return(
 			<Button onClick = {()=>{ publish(id);}}>
-        确认发布
+        确认修改
 			</Button>
 		);
 	}
@@ -81,8 +81,6 @@ const handleFunc = (handle,id)=>{
 		<div>无可用操作</div>
 	);
 };
-
-
 
 const Message = ()=> {
 	const [ messageData,setmessageData ] = useState([]);
@@ -129,6 +127,37 @@ const Message = ()=> {
 			return null;
 		});
 	};
+	const deleteSet = ()=> {
+		
+		let data = qs.stringify({
+			idArray:selectedid
+		});
+		console.log(data)
+		axios({
+			method: "POST",
+			url: "http://yjxt.elatis.cn//messages/delete",
+			headers:{
+				"token":localStorage.getItem("token"),
+				"Content-Type": "application/x-www-form-urlencoded"
+			},
+			data:data
+		}).then(
+			(res)=> {
+				if(res.data.code === 0) {
+					message.success("删除成功");
+					window.location.reload();
+				}
+				else {
+					message.error(res.data.message);
+				}
+			}
+		);
+
+	}
+
+
+
+
 	const markAsUnRead = ()=> {
 		// console.log("标记为未读");
 		selectedid.map((item) =>{
@@ -190,6 +219,9 @@ const Message = ()=> {
 				</span>
 			</div>
 			<div className = {"buttonSbar"}>
+				<Button  onClick = {()=>{deleteSet();}} className = {"button"} >
+				批量删除
+				</Button>
 				<Button  onClick = {()=>{markAsRead();}} className = {"button"} >
                 标记为已读
 				</Button>

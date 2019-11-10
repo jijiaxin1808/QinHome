@@ -20,7 +20,7 @@ const RealFooter = () => {
 				<p>电话： 0335-3650560  <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13030202002230"  target = "_blank"
 					style={{fontSize:"15px",
 						color: "#FFFFFF"
-					}}>冀公网安备： 13030202002230</a>
+					}}><img src = "http://yjgl.hebei.gov.cn/portal/resources/images/nationalEmblem.png" width = "20px" height = "20px" target = "_blank"alt = ""/> 冀公网安备： 13030202002230</a>
 				<br/>网站标识码： 1303000020  邮政编码： 066001 
 				</p>
 				<p><a href="http://www.beian.miit.gov.cn/state/outPortal/loginPortal.action" target = "_blank"

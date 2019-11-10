@@ -12,12 +12,12 @@ import "./index.less";
 // const { SubMenu } = Menu;
 const { Sider } = Layout;
 const columns = [
-	{
-		title: "序号",
-		dataIndex: "id",
-		key: "id",
-		render: text => <a>{text}</a>,
-	},
+	// {
+	// 	title: "序号",
+	// 	dataIndex: "id",
+	// 	key: "id",
+	// 	render: text => <a>{text}</a>,
+	// },
 	{
 		title: "留言消息",
 		dataIndex: "title",
@@ -121,7 +121,7 @@ export default class Services extends Component{
 					</div>
 					<section className="services-main">
 						{
-							this.state.key==="1"?<WrappedNormalLoginForm/>:(this.state.key==="2"?<Search columns={columns} dataSource={this.state.data}/>:(this.state.key==="3"?<Tousu/>:<Message data={this.state.message}/>))
+							this.state.key==="1"?<WrappedNormalLoginForm/>:(this.state.key==="2"?<Search columns={columns} dataSource={this.state.data} showQuickJumper = {true}/>:(this.state.key==="3"?<Tousu/>:<Message data={this.state.message}/>))
 						}
 						{/* <Search columns={columns} dataSource={data}/> */}
 						{/* <Message /> */}

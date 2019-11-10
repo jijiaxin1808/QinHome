@@ -17,7 +17,10 @@ const columns = [
 	{
 		title: "所属级别",
 		dataIndex: "roles_id",
-		key: "roles_id",
+		key:"roles_id",
+		render:(roles_id,ID)=>(
+			<div>{ID.roles_id==1?"管理员":"普通用户"}</div>
+		)
 	},
 	{
 		title: "操作行为",

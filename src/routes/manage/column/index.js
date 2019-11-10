@@ -239,13 +239,13 @@ export default function ColManage() {
 			)
 		}
 	];
-	// const handleNewBtn = () => {
-	// 	setEditData([...editData,{key: `${editData.length+1}`, title: "新栏目", weight: 100, state: true, sec: []}]);
-	// };
-	// const handleDelBtn = (index) => {
-	// 	editData.splice(index, 1);
-	// 	setEditData([...editData]);
-	// };
+	const handleNewBtn = () => {
+		setEditData([...editData,{key: `${editData.length+1}`, title: "新栏目", weight: 100, state: true, sec: []}]);
+	};
+	const handleDelBtn = (index) => {
+		editData.splice(index, 1);
+		setEditData([...editData]);
+	};
 	const handleEditBtn = () => {
 		setEditState("一级");
 		setEditData([...colsData]);
@@ -353,8 +353,7 @@ export default function ColManage() {
         <><div className="title">
           	<span>
               栏目管理
-          	</span>
-        </div><div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px",marginBottom: "40px", paddingLeft: "250px"}}>
+			  </span></div><div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px",marginBottom: "40px", paddingLeft: "250px"}}>
           	<ul className="list">
           		{
           			data.map(item => (
@@ -370,7 +369,7 @@ export default function ColManage() {
           	>
               编辑栏目
           	</Button>
-        </div><div className="columnContainer">
+        	</div><div className="columnContainer">
           	{
           		editState === "二级" &&
               <Menu
@@ -421,7 +420,7 @@ export default function ColManage() {
           			loading={tableLoading}
           		/>
           	</div>
-        </div><div className="submitBtnContainer">
+        	</div><div className="submitBtnContainer">
           	<Button 
           		className="submitBtn"
           		loading = {loading}
@@ -429,7 +428,7 @@ export default function ColManage() {
           	>
               保存
           	</Button>
-        </div></>
+        	</div></>
 			}
 		</React.Fragment>
 	);

@@ -6,7 +6,7 @@ import "./index.less";
 export const Search = (props)=> {
 	return (
 		<div>
-			<Table columns={props.columns} dataSource={props.dataSource} style={{width:"800px",paddingTop:"30px"}}/>  
+			<Table columns={props.columns} dataSource={props.dataSource} style={{width:"800px",paddingTop:"30px"}} showQuickJumper = {}/>  
 		</div>
 	);
 };
