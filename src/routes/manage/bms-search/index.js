@@ -5,7 +5,6 @@ import { Table,  Button, Modal, message, Skeleton } from "antd";
 import urlHandle from "../../../config/urlHandle";
 import {routerRedux} from "dva/router";
 import { connect } from "dva";
-import Loading from "../../../components/loading";
 const  DeleteArticle  = (props)=> {
 	const [ visible, setVisible ] = useState(false);
 	const showModal = () => {
@@ -174,7 +173,7 @@ const BmsSearch = (props)=> {
 			);
 		}
 		else return (
-			<Loading />
+			<Skeleton />
 		);
 	}
 
