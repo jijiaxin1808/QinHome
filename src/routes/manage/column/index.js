@@ -55,8 +55,14 @@ export default function ColManage() {
 	useEffect(() => {
 		axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
 			if(res.data.code === 0) {
-				setArtiCategory(`/${res.data.data[0].title}/${(res.data.data[0].sec)[0].title}`);
-				setSecCol((res.data.data[0].sec)[0].title);
+				console.log(res.data);
+				if (res.data.data[0].sec) {
+					setArtiCategory(`/${res.data.data[0].title}/${(res.data.data[0].sec)[0].title}`);
+					setSecCol((res.data.data[0].sec)[0].title);
+				} else {
+					setArtiCategory(`/${res.data.data[0].title}/`);
+					setSecCol("");
+				}
 				let _weight = [];
 				let  _data = JSON.parse(JSON.stringify(res.data.data));
 				setColsData(_data);
@@ -66,7 +72,8 @@ export default function ColManage() {
 					setWeightIsNum(_weight);
 					return item;
 				}));
-				setCol((_data)[0].title);
+				console.log(_data);
+			    ((_data)[0]) && setCol((_data)[0].title);
 			}
 		}).catch(err => {
 			message.error(err);
@@ -74,6 +81,11 @@ export default function ColManage() {
 	}, []);
 
 	useEffect(() => {
+		if (!secCol) {
+			setArtiCategory(`/${col}/${secCol}`);
+			setTableLoading(false);
+			return;
+		}
 		setArtiCategory(`/${col}/${secCol}`);
 		setTableLoading(true);
 	}, [secCol]);
@@ -102,7 +114,7 @@ export default function ColManage() {
 			).then(res => {
 
 				if(res.data.code === 0) {
-					console.log(res.data);
+			
 					setArticles((res.data.data)[0] === "empty" ? [] : res.data.data);
 					setEdit((res.data.data)[0] === "empty" ? [] : new Array(res.data.data.length).fill(false));
 				}
@@ -113,6 +125,7 @@ export default function ColManage() {
 	useEffect(() => {
 		if(!saveClick) return;
 		if(colsData.length !== 0) {
+			console.log(colsData);
 			let _colsData = colsData.map(item => {
 				let _item = {...item, title: item.newCol || item.title};
 				if(!_item.sec) {
@@ -186,11 +199,6 @@ export default function ColManage() {
 			className: "column",
 			render: (text,record,index) => <Input placeholder="http://" onChange={(e) => handleColChange(e, "link", index)} defaultValue={record.link}/>
 		}
-		// {
-		// 	dataIndex: "delete",
-		// 	key: "delete",
-		// 	render: (text,record,index) => <a onClick={() => handleDelBtn(index)}><Icon type="delete" theme="twoTone" /></a>
-		// }
 	];
 	const secondaryColumn = [
 		{
@@ -239,26 +247,29 @@ export default function ColManage() {
 			)
 		}
 	];
-	const handleNewBtn = () => {
-		setEditData([...editData,{key: `${editData.length+1}`, title: "新栏目", weight: 100, state: true, sec: []}]);
-	};
-	const handleDelBtn = (index) => {
-		editData.splice(index, 1);
-		setEditData([...editData]);
-	};
+	// const handleNewBtn = () => {
+	// 	setEditData([...editData,{key: `${editData.length+1}`, title: "新栏目", weight: 100, state: true, sec: []}]);
+	// };
+	// const handleDelBtn = (index) => {
+	// 	editData.splice(index, 1);
+	// 	setEditData([...editData]);
+	// };
 	const handleEditBtn = () => {
 		setEditState("一级");
 		setEditData([...colsData]);
 	};
 	// 点击二级栏目
 	const handleSecColClick = ({item, key}) => {
-		// 需要后端文章数量的数据
-		setSecColKey(key);
-		setSecCol(item.props.children);
+		if(!tableLoading) {
+			setSecColKey(key);
+			setSecCol(item.props.children);
+		}
 	};
 	// 点击一级栏目
 	const handleColClick = (item) => {
-		setCol(item.title);
+		if(!tableLoading) {
+			setCol(item.title);
+		}
 	};
 	// 新增二级栏目
 	const handleAddSeColClick = () => {
@@ -338,7 +349,8 @@ export default function ColManage() {
 	const handleSaveClick = () => {
 		setLoading(true);
 		if(editState === "二级") {
-      
+			setSaveClick(true);
+			setColsData(colsData);
 		} else if(editState === "一级") {
 			setSaveClick(true);
 			setColsData(editData);
@@ -353,7 +365,8 @@ export default function ColManage() {
         <><div className="title">
           	<span>
               栏目管理
-			  </span></div><div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px",marginBottom: "40px", paddingLeft: "250px"}}>
+          	</span>
+        </div><div style={{display: "flex",flexFlow: "row nowrap",marginTop: "20px",marginBottom: "40px", paddingLeft: "250px"}}>
           	<ul className="list">
           		{
           			data.map(item => (
@@ -369,7 +382,7 @@ export default function ColManage() {
           	>
               编辑栏目
           	</Button>
-        	</div><div className="columnContainer">
+        </div><div className="columnContainer">
           	{
           		editState === "二级" &&
               <Menu
@@ -403,24 +416,35 @@ export default function ColManage() {
                 				<span style={{fontSize: "18px"}}>{secCol}</span>:
                 				<Input style={{width: 100}} ref={input} onChange={(e) => setSecCol(e.target.value)} onPressEnter={handleSurePressEnter} defaultValue={secCol}/>
                 		}
-                	</h2>
-                	<div className="col-oper">
-                		{
-                			!secColEdit ?
-                      <><Button className="btn" onClick={handleRenameClick}><span>重命名</span></Button><Button className="btn danger" onClick={DelSecCol}><span>删除</span></Button></>:
-                				<Button className="btn" onClick={handleRenameSureClick}><span>确定</span></Button>
-                		}
-                	</div>
+					</h2>
+					{	
+						secCols.length !== 0 &&
+						<div className="col-oper">
+							{
+								!secColEdit ?
+								<>
+								<Button className="btn" onClick={handleRenameClick}>
+									<span>重命名</span>
+								</Button>
+								<Button className="btn danger" onClick={DelSecCol}>
+									<span>删除</span>
+									</Button>
+								</> :
+								<Button className="btn" onClick={handleRenameSureClick}><span>确定</span></Button>
+							}
+                		</div>
+					}
+                	
                 </div>
           		}
           		<Table 
           			columns={editState === "二级" ? secondaryColumn : columns} 
-          			dataSource={editState === "二级" ? (tableLoading ? [] : articles) : editData} 
+          			dataSource={editState === "二级" ? (tableLoading || secCols.length === 0? [] : articles) : editData} 
           			pagination={true}
           			loading={tableLoading}
           		/>
           	</div>
-        	</div><div className="submitBtnContainer">
+        </div><div className="submitBtnContainer">
           	<Button 
           		className="submitBtn"
           		loading = {loading}
@@ -428,7 +452,7 @@ export default function ColManage() {
           	>
               保存
           	</Button>
-        	</div></>
+        </div></>
 			}
 		</React.Fragment>
 	);
