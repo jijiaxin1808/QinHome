@@ -1,7 +1,9 @@
 import React, {useState,useEffect,useRef} from "react";
-import {Input,Table,Button,Menu,Switch,message,Tooltip} from "antd";
+import {Input,Table,Button,Menu,Switch,message,Tooltip, Modal} from "antd";
 import "./index.less";
 import axios from "axios";
+import { connect } from "dva";
+import {routerRedux} from "dva/router";
 
 export default function ColManage() {
 	// 
@@ -104,10 +106,11 @@ export default function ColManage() {
 						"Content-Type": "application/json"
 					},
 					params: {
-						flag:1,
+						// flag:2,
+						flag:1 ,
 						category: artiCategory,
 						status: "publish",
-						limit: 5,
+						limit: 10000,
 						offset: 0
 					}
 				}
@@ -169,6 +172,72 @@ export default function ColManage() {
 		secCols.length ? setSecCol(secCols[0].title) : setSecCol("");
 		secCols[0] && setSecColKey(secCols[0].key);
 	}, [secCols, data]);
+const  DeleteArticle  = (props)=> {
+	const [ visible, setVisible ] = useState(false);
+	const showModal = () => {
+		setVisible(true);
+	};
+	const handleOk = e => {
+		setVisible(false);
+		console.log("确认删除");
+		axios({
+			method:"POST",
+			url: "http://yjxt.elatis.cn/posts/delete",
+			params: {
+				id:props.id
+			},
+			headers: {
+				"token":localStorage.getItem("token"),
+				"Content-Type": "application/json"
+			}
+		}).then(res=> {
+			if(res.data.code === 0 ) {
+				message.success("删除成功");
+				window.location.reload();
+				// setTimeout(()=>{},500)
+				// props.dispatch(routerRedux.push({
+				// 	pathname: '/index/index'
+				// }));
+				// props.reload();
+			}
+			else {
+				message.warn(res.data.message);
+			}
+		});
+	};
+	const handleCancel = e => {
+		setVisible(false);
+	};
+
+	return (
+
+
+
+
+		<div>
+			<Button  onClick={()=>{showModal();}}>
+          删除
+			</Button>
+			<Modal
+				visible={visible}
+				onOk={()=>{handleOk();}}
+				onCancel={()=>{handleCancel();}}
+				okText = "确认"
+				cancelText = "取消"
+			>
+				<p>确认删除?</p>
+			</Modal>
+		</div>
+	);
+};
+const mapDispatchToProps = (dispatch)=> ({
+	reload() {
+		dispatch(routerRedux.push({
+			pathname: "/manage/column"
+		}));
+	}
+});
+const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
 
 	const columns = [
 		{
@@ -245,6 +314,13 @@ export default function ColManage() {
 					}
 				</div>
 			)
+		}, {
+		title: "删除",
+		key: "delete",
+		dataIndex:"action",
+		render:(text,record)=> (
+			<Dle  id = {record.id} >删除文章</Dle >
+		)
 		}
 	];
 	// const handleNewBtn = () => {

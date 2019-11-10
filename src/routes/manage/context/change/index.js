@@ -2,7 +2,7 @@ import "braft-editor/dist/index.css";
 import React,{ useEffect, useState , forwardRef} from "react";
 import BraftEditor from "braft-editor";
 // import { ContentUtils } from "braft-utils";
-import { Form, Input, Button,  Row, Col , Upload } from "antd";
+import { Form, Input, Button,  Row, Col , Upload,Cascader} from "antd";
 import { message } from "antd";
 import axios from "axios";
 

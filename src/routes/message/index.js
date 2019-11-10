@@ -15,7 +15,12 @@ const  Message = (props) => {
 	const [ contentData, setContentData ] = useState([]);
 
 	useEffect(()=> {
-		urlHandle("id")&&setId(urlHandle("id"));
+		if(urlHandle("id")) {
+			setId(urlHandle("id"));
+		}
+		else {
+			setId(1)
+		}
 		setType(urlHandle("type"));
 	},[props]);
 	useEffect(()=> {	

@@ -155,8 +155,6 @@ function FormDemo (props) {
 	const onChange =(value) => {
 		console.log(value);
 	};
-
-
   	const controls = ["font-size","bold", "italic", "underline", "text-color", "separator", "link",  "media" ];
   	// const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
 

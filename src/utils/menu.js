@@ -38,10 +38,10 @@ export const allMenu = [
 		url:"manage/account",
 		icon:"menu",
 		children:[{
-			name:"账号权限",
+			name:"用户管理",
 			url:"manage/account",
 		},{
-			name:"部门权限",
+			name:"权限管理",
 			url:"manage/bumen",
 		}]
 	},{
