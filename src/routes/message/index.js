@@ -20,7 +20,7 @@ const  Message = (props) => {
 	},[props]);
 	useEffect(()=> {	
 	},[id,type,props]);
-	if(type&&props.home.columnData.length!==0&&type!==1) {
+	if(type&&props.home.columnData.length!==0) {
 		console.log("当前初始化数据",contentData);
 		return (
 			<div className='message'>

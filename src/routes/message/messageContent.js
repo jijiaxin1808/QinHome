@@ -87,7 +87,7 @@ const MessageContent = (props)=> {
 				</ul>
 
 				<Pagination  onChange={onChange} defaultCurrent={1}
-					defaultPageSize={limit} total={total} showQuickJumper  />
+					defaultPageSize={limit} total={total} showQuickJumper={true}  />
 			</div>
     
 		);
