@@ -20,13 +20,6 @@ export default function Safe () {
 				setAnnouces(res.data.data);
 			}
 		});
-		// setAnnouces([
-		//   '公告1公告1公告1公告1公告1公告1公告1公告1公告1公告1公告1公告1公告1公告1公告1公告1公告1公告1',
-		//   '公告2公告2公告2公告2公告2公告2',
-		//   '公告3公告3公告3公告3公告3公告3',
-		//   '公告4公告4公告4公告4公告4公告4',
-		//   '公告5公告5公告5公告5公告5公告5'
-		// ])
 		leftTimer = setTimer(setInterval(timerFunc, 20));
 	}, []);
 	useEffect(() => {
@@ -52,34 +45,34 @@ export default function Safe () {
 		setTimer(null);
 	};
 
-  const handleMouseLeave = () => {
-    console.log(leftTimer)
-    leftTimer && clearInterval(leftTimer)
-    setTimer(setInterval(timerFunc, 20))
-  }
+	const handleMouseLeave = () => {
+		console.log(leftTimer)
+		leftTimer && clearInterval(leftTimer)
+		setTimer(setInterval(timerFunc, 20))
+	}
 
-  return (
-    <div className='safe'>
-      <a>
-        <i />
-      </a>
-      <div className='aqts'>
-        <div className='temp-wrap'>
-          <ul className='aqtslist' ref={ref} style={style}>
-            {
-              annouces.map((item, index) => {
-                return (
+	return (
+		<div className='safe'>
+			<a>
+				<i />
+			</a>
+			<div className='aqts'>
+				<div className='temp-wrap'>
+					<ul className='aqtslist' ref={ref} style={style}>
+						{
+							annouces.map((item, index) => {
+								return (
 
-                  <li key={index} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                    <Link to={item.href}>{item.title}</Link>
-                  </li>
-                )
-              })
-            }
-          </ul>
-        </div>
-      </div>
-      <Weather />
-    </div>
-  )
+									<li key={index} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+										<Link to={item.href}>{item.title}</Link>
+									</li>
+								)
+							})
+						}
+					</ul>
+				</div>
+			</div>
+			<Weather />
+		</div>
+	)
 }

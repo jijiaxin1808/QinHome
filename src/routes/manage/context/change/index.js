@@ -2,10 +2,12 @@ import "braft-editor/dist/index.css";
 import React,{ useEffect, useState , forwardRef} from "react";
 import BraftEditor from "braft-editor";
 import { ContentUtils } from "braft-utils";
-import { Form, Input, Button,  Row, Col ,Cascader, Upload, Icon, Modal, Select, Card, Tag} from "antd";
+import { Form, Input, Button,  Row, Col , Upload ,Icon, Cascader} from "antd";
+import { message } from "antd";
 import axios from "axios";
 
-const { Option } = Select;
+
+// const { Option } = Select;
 const formItemLayout = {
 	labelCol: { span: 4 },
 	wrapperCol: { span: 16 },
@@ -13,19 +15,20 @@ const formItemLayout = {
 
 
 const changeContext=(props)=>{
-  console.log(props.match.params.id)
+	console.log(props.match.params.id);
 	const { getFieldDecorator } = props.form;
 
 	useEffect(()=>{
 		setTimeout(() => {
 			props.form.setFieldsValue({
-				content: BraftEditor.createEditorState("<p>Hello <b>World!</b></p>")
+				// content: BraftEditor.createEditorState("请输入文章内容")
 			});
 		}, 1000);
 	},[]);
 
 
 	const [data, setData] = useState([]);
+	console.log(data);
 	useEffect(() =>{
 		axios({
 			method: "get",
@@ -39,14 +42,14 @@ const changeContext=(props)=>{
 			console.log(err);
 		});
 	}, []);
-	const options = data.map( item => ({
-		value: item.title,
-		label: item.title,
-		children: item.sec.map(item => ({
-			value: item.title,
-			label: item.title
-		}))
-	}));
+	// const options = data.map( item => ({
+	// 	value: item.title,
+	// 	label: item.title,
+	// 	children: item.sec.map(item => ({
+	// 		value: item.title,
+	// 		label: item.title
+	// 	}))
+	// }));
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		props.form.validateFields((error, values) => {
@@ -54,21 +57,28 @@ const changeContext=(props)=>{
 				const submitData = {
 					title: values.title,
 					// department: values.department,
-          category: values.category[0]+ "/" +values.category[1],
-          id:props.match.params.id,
+          			category: "/"+values.category[0]+ "/" +values.category[1],
+          			id:props.match.params.id,
 					content: values.content.toHTML()// or values.content.toHTML()
 				};
 				axios({
-					method: 'post',
+					method: "POST",
 					url: "http://yjxt.elatis.cn/posts/alter",
 					headers: {
-						"content-type": "application/json",
+						"Content-Type": "application/json",
 						"token": localStorage.getItem("token")
 					},
 					data: submitData
-				}).then( res => [
-					console.log(res)
-				]).catch( err => {
+				}).then( res => {
+					console.log(res);
+					if(res.data.code ===0) {
+						message.success("修改成功");
+						window.location.href = "/manage/context";
+					}
+					else {
+						message.warn(res.data.message);
+					}
+				}).catch( err => {
 					console.log(err);
 				});
 				console.log("submitData",submitData);
@@ -77,10 +87,10 @@ const changeContext=(props)=>{
 
 	};
 
-	const [contextData, setContextData] = useState({})
+	const [contextData, setContextData] = useState({});
 
 	useEffect(()=> {
-    const id=props.match.params.id
+		const id=props.match.params.id;
 		axios({
 			method: "GET",
 			headers: {
@@ -90,36 +100,72 @@ const changeContext=(props)=>{
 			url: `http://yjxt.elatis.cn/posts/get?id=${id}`
 		}).then(res => {
 			if ( res.data.code === 0 ) {
-				console.log(res.data.data)
+				console.log(res.data.data);
 				setContextData(res.data.data);
+				console.log(res.data.data.category.split("/"),"changjjs")
 			}
 			console.log(res);
 		}).catch( err => {
 			console.log(err);
 		});
 	},[]);
-
+		const options = data.map( item => ({
+		value: item.title,
+		label: item.title,
+		children: item.sec.map(item => ({
+			value: item.title,
+			label: item.title
+		}))
+	}));
+		const onChange =(value) => {
+		console.log(value);
+	};
 	useEffect(()=> {
-		console.log('contextData',contextData.content)
+		console.log("contextData",contextData.content);
+		if(contextData.category) {
+		let defaultArray = [];
+		defaultArray.push(contextData.category.split("/")[1]);
+		defaultArray.push(contextData.category.split("/")[2]);
 		props.form.setFieldsValue({
 			title: contextData.title,
 			department: contextData.section,
-			content: BraftEditor.createEditorState(contextData.content)
+			content: BraftEditor.createEditorState(contextData.content),
+			category:defaultArray
 		});
+		}
+
 	},[contextData]);
 
 
-	const onChange =(value) => {
-		console.log(value)
-	};
-	const controls = ["bold", "italic", "underline", "text-color", "separator", "link", "separator", "media" ];
-	const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
+	// const onChange =(value) => {
+	// 	console.log(value);
+	// };
+	const controls = ["font-size", "bold", "italic", "underline", "text-color", "separator", "link", {key: "media",title:"视频"}];
+	// const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
 
-	const uploadHandler = (param) => {
+	async function uploadHandler(param){
 		if (!param.file) {
 			console.log("err");
 			return false;
 		}
+		console.log(param.file)
+		const {
+			form: { getFieldValue, setFieldsValue }
+		  } = props;
+		//   const result=await getUrl(param.file)
+		//   console.log(getUrl(param.file))
+		let reader = new FileReader();
+		reader.readAsDataURL(param.file)
+		reader.onload=function (e) {
+			const editorStates = getFieldValue("content");
+			setFieldsValue({content: ContentUtils.insertMedias(editorStates, [{
+			  type: "IMAGE",
+			  url: e.target.result
+			}])
+			});	
+		}
+		  
+
 	};
 	const extendControls =[
 		{
@@ -131,14 +177,15 @@ const changeContext=(props)=>{
 					showUploadList={false}
 					customRequest={uploadHandler}
 				>
-					{/* 这里的按钮最好加上type="button"，以避免在表单容器中触发表单提交，用Antd的Button组件则无需如此 */}
-					<button type="button" className="control-item button upload-button" data-title="插入图片">
+				  <button type="button" className="control-item button upload-button" data-title="插入图片">
 						<Icon type="picture" theme="filled" />
 					</button>
+					{/* 这里的按钮最好加上type="button"，以避免在表单容器中触发表单提交，用Antd的Button组件则无需如此 */}
 				</Upload>
 			)
 		}
 	];
+if(contextData.category&&data.length) {
 
 	return (
 		<div className="demo-container">
@@ -158,29 +205,22 @@ const changeContext=(props)=>{
 						<Input size="large" placeholder="请输入标题"/>
 					)}
 				</Form.Item>
-				<Form.Item {...formItemLayout} label="发布部门">
-					{getFieldDecorator("department", {
-						rules: [{
-							required: true,
-							message: "请填写发布部门",
-						}],
-					})(
-						<Input size="large" placeholder="请输入标题"/>
-					)}
-				</Form.Item>
-				<Form.Item {...formItemLayout} label="请选择文章路径">
-					{
-						getFieldDecorator("category",{
-							rules: [{
-								type: "array",
-								required: true,
-								message: "请填写发布分类"
-							}]
-						})(
-							<Cascader options={options} onChange={onChange} placeholder="Please select"/>
-						)
-					}
-				</Form.Item>
+  				<Form.Item {...formItemLayout} label="文章路径">
+  					{
+  						getFieldDecorator("category",{
+  							rules: [{
+  							  type: "array",
+  								required: true,
+  								message: "请填写发布分类"
+  							}]
+  						})(
+  								<Cascader options={options} 
+								//   defaultValue={defaultArray}
+								   onChange={onChange}  placeholder="请选择要发布的位置"/>
+  						)
+  					}
+  				</Form.Item>
+
 				<Form.Item {...formItemLayout} label="文章正文">
 					{getFieldDecorator("content", {
 						validateTrigger: "onBlur",
@@ -205,19 +245,19 @@ const changeContext=(props)=>{
 				</Form.Item>
 				<Form.Item {...formItemLayout}>
 
-					<Row>
-						<Col span={4} offset={4}>
+					<Row style = {{margin: "0 auto"}}>
+						<Col span={4} offset={16}>
 							<Button size="large" type="primary" htmlType="submit">确认发布</Button>
 						</Col>
-						<Col>
+						{/* <Col>
 							<Button>getData</Button>
-						</Col>
+						</Col> */}
 					</Row>
 				</Form.Item>
 			</Form>
 		</div>
 	);
 	// }
-}
+};}
 
 export default Form.create()(forwardRef(changeContext));

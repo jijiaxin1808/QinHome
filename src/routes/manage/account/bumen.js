@@ -1,44 +1,44 @@
-import React from "react"
-import { Table,Modal, Button, Select,Divider ,Tag, message} from "antd";
-import axios from "axios"
-import Modals from './modal'
+import React from "react";
+import { Table,Modal, Button, Select, message} from "antd";
+import axios from "axios";
+// import Modals from "./modal";
 const { Option } = Select;
 
 
 class EditableFormTable extends React.Component{
 	constructor(props){
-		super(props)
+		super(props);
 		this.state={
 			visible:false,
 			data:[],
 			power:[],
 			value:[],
-			key:''
-		}
+			key:""
+		};
 	}
 	componentDidMount(){
 		axios({
-			method:'GET',
+			method:"GET",
 			headers:{
 				"token":localStorage.getItem("token"),
 				"Content-Type":"application/json"
 			},
 			url:"http://yjxt.elatis.cn/powers/list"
 		}).then(res=>{
-			console.log(res)
+			console.log(res);
 			this.setState({
 				data:res.data.data,
 				power:res.data.power
-			})
-		})
+			});
+		});
 	}
     showModal = (e) => {
-    	const data=e.module.split('-')
+    	const data=e.module.split("-");
     	this.setState({
     		children:data,
     		visible: true,
     		key:e.id
-    	})
+    	});
     };
     
       handleOk = e => {
@@ -48,22 +48,22 @@ class EditableFormTable extends React.Component{
 		  });
 		  let data={
 			  id:this.state.key,
-			  module:this.state.children.join('-')
-		  }
-		  console.log(data)
+			  module:this.state.children.join("-")
+		  };
+		  console.log(data);
       	axios({
-      		method:'POST',
+      		method:"POST",
       		headers:{
-      			"Content-Type":'application/json',
+      			"Content-Type":"application/json",
       			"token":localStorage.getItem("token")
       		},
-      		url:'http://yjxt.elatis.cn/powers/alter',
+      		url:"http://yjxt.elatis.cn/powers/alter",
       		data:data
       	}).then(res=>{
       		if(res.data.code===0){
-				  message.success("修改成功")
+				  message.success("修改成功");
 			  }
-      	})
+      	});
       };
     
       handleCancel = e => {
@@ -73,16 +73,16 @@ class EditableFormTable extends React.Component{
       	});
       };
       handleChange= (value)=> {
-      	console.log(value)
+      	console.log(value);
       	this.setState({
       		children:value
-      	})
+      	});
       }
       
       render(){
       	const columns = [
       		{
-      			title: "部门名称",
+      			title: "权限组",
       			dataIndex: "section",
       			key: "name"
       		},
@@ -121,12 +121,12 @@ class EditableFormTable extends React.Component{
             			{this.state.power.map((item,index)=>{
             				return (
             					<Option key={index} value={item}>{item}</Option>
-            				)
+            				);
             			})}
             		</Select>,
               	</Modal>
             </div></>
-      	)
+      	);
       }
 }
-export default EditableFormTable
+export default EditableFormTable;

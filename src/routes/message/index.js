@@ -6,41 +6,26 @@ import MessaegeContent from "./messageContent";
 import urlHandle from "../../config/urlHandle";
 import { connect } from "dva";
 import { Skeleton } from "antd";
-import axios from "axios";
 const  Message = (props) => {
 	// const type = props.location.search.split('=')[1]
 	const [id, setId] = useState(1);// 这里用于区别一级页面
 	const [type, setType] = useState(1);// 这里用于区别二级页面
 	// const [ messageData, setmessageData ] = useState("");
+	// eslint-disable-next-line no-unused-vars
 	const [ contentData, setContentData ] = useState([]);
-	// const [total, settotal ] =useState("111"); 
-	// console.log("href",props);
-	// useEffect(() => {
-	// 	// props.home.columnData&&setmessageData(props.home.columnData);
-	// 	console.log(urlHandle("id"),"aaa", urlHandle("type"));
-	// }, [props.home.columnData]);
+
 	useEffect(()=> {
-		urlHandle("id")&&setId(urlHandle("id"));
+		if(urlHandle("id")) {
+			setId(urlHandle("id"));
+		}
+		else {
+			setId(1)
+		}
 		setType(urlHandle("type"));
 	},[props]);
-	useEffect(()=> {
-		// props.home.columnData.length!==0&&axios({
-		// 	method: "GET",
-		// 	url: "http://yjxt.elatis.cn/posts/listPosts",//这里触发了两次
-		// 	params: {
-		// 		status: "draft",
-		// 		limit: 1,
-		// 		offset: 0,
-		// 		category: `/${props.home.columnData[type-1].title}/${props.home.columnData[type-1].sec[id-1].title}`
-		// 	}
-		// }).then(res=> {
-		// 	if(res.data.code === 0) {
-		// 		console.log(res.data.data,"刷新了");
-		// 		setContentData(res.data.data);
-		// 	}
-		// });		
+	useEffect(()=> {	
 	},[id,type,props]);
-	if(type&&props.home.columnData.length!==0) {
+	if(type&&props.home.columnData.length!==0&&type!==1) {
 		console.log("当前初始化数据",contentData);
 		return (
 			<div className='message'>
@@ -54,9 +39,9 @@ const  Message = (props) => {
 						{props.home.columnData[type-1 ].title}>
 					</Link>
 					<span>
-						{props.home.columnData[type-1].sec[id ] && props.home.columnData[type - 1].sec[id - 1].title}
+						{props.home.columnData[type-1].sec[id-1 ] && props.home.columnData[type - 1].sec[id - 1].title}
 					</span>
-					<span className='message-header-paper' />
+					<span className='message-header-paper' >{props.home.columnData[type-1 ].title}</span>
 				</div>
 				<div className='message-content'>
 					<div className='message-sidebar'>

@@ -19,7 +19,7 @@ const HomeTopic = (props) => {
 						props.data.map((item, index) => {
 						  return (
 						    <li className='home-topic-li' key={index}>
-						      <Link to={`/index/article?id=${item.id}`}>
+						      <Link to={`/index/article?id=${item.id}`} style = {{paddingLeft:"5px"}}>
 						        {`${item.title}`}
 						      </Link>
 						    </li>
@@ -42,11 +42,12 @@ const HomeTopics = (props) => {
 				if(index>1){
 					return `/${item.title}/${item.sec[0].title}`;
 				}
+				return null;
 			});
 			const data1 = JSON.stringify({
 				limit:3,
 				moduleArray:sort,
-				status: "draft"
+				status: ""
 			});
 			console.log(sort,"发送了home请求");
 			axios({
@@ -62,6 +63,7 @@ const HomeTopics = (props) => {
 					if(index>1) {
 						return item.post;
 					}
+					return null;
 				});
 				console.log("newdata",newData);
 
@@ -84,8 +86,8 @@ const HomeTopics = (props) => {
 							return (
 								<HomeTopic 
 									title = {colsData[index].title} 
-									href = {`/index/message?type=${index+3}`} 
-									//  type =  { item.key } 
+									href = {`/index/message?type=${index+2}`} 
+									 type =  { index+1 } 
 									data = {item}
 								/>
 							);
@@ -105,6 +107,4 @@ const HomeTopics = (props) => {
 
 
 };
-
-
 export default HomeTopics;

@@ -1,11 +1,11 @@
 import React from "react";
-import styles from "./index.css";
+// import styles from "./index.css";
 import { Table, Button, message } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import qs from "qs";
 // import messageData from "../../../assets/messageData";
-const columns = [
+const columns = [	
 	{
 		title: "操作人",
 		dataIndex: "name",
@@ -33,10 +33,10 @@ const columns = [
 		title: "操作",
 		key: "operation",
 		dataIndex: "operation",
-		render: handle=>(
+		render: (text,record)=>(
 			<span>
 				{
-					handleFunc(handle)
+					handleFunc(record.operation,record.post_id)
 				}
 			</span>
 		)
@@ -51,16 +51,29 @@ const columns = [
 
 
 
-const publish = ()=> {
-	console.log("pub");
-	//在这里写确认发布的请求
+const publish = (id)=> {
+	const data1 = JSON.stringify({id:id, status: "publish"});
+	axios({
+		method: "post",
+		url: "http://yjxt.elatis.cn/posts/alter",
+		headers:{
+			"token":localStorage.getItem("token"),
+			"Content-Type":"application/json"
+		},
+		data: data1
+	}).then((res)=> {
+		if(res.data.code === 0) {
+			message.success("确认发布成功");
+		}
+	});
 };
 
-const handleFunc = (handle)=>{
+
+const handleFunc = (handle,id)=>{
 	if(handle === "确认发布") {
 		return(
-			<Button onClick = {()=>{ publish();}}>
-        确认发布
+			<Button onClick = {()=>{ publish(id);}}>
+        确认修改
 			</Button>
 		);
 	}
@@ -68,8 +81,6 @@ const handleFunc = (handle)=>{
 		<div>无可用操作</div>
 	);
 };
-
-
 
 const Message = ()=> {
 	const [ messageData,setmessageData ] = useState([]);
@@ -82,7 +93,6 @@ const Message = ()=> {
 			});
 			setselectedid(selectedId);
 			console.log(`selectedRowKeys: ${selectedRowKeys}`, "selectedRows: ", selectedId );
-
 		},
 		getCheckboxProps: record => ({
 			disabled: record.name === "Disabled User", // Column configuration not to be checked
@@ -117,6 +127,37 @@ const Message = ()=> {
 			return null;
 		});
 	};
+	const deleteSet = ()=> {
+		
+		let data = qs.stringify({
+			idArray:selectedid
+		});
+		console.log(data)
+		axios({
+			method: "POST",
+			url: "http://yjxt.elatis.cn//messages/delete",
+			headers:{
+				"token":localStorage.getItem("token"),
+				"Content-Type": "application/x-www-form-urlencoded"
+			},
+			data:data
+		}).then(
+			(res)=> {
+				if(res.data.code === 0) {
+					message.success("删除成功");
+					window.location.reload();
+				}
+				else {
+					message.error(res.data.message);
+				}
+			}
+		);
+
+	}
+
+
+
+
 	const markAsUnRead = ()=> {
 		// console.log("标记为未读");
 		selectedid.map((item) =>{
@@ -150,7 +191,7 @@ const Message = ()=> {
 	useEffect(()=>{
 		axios({
 			method:"GET",
-			url:"http://yjxt.elatis.cn/messages/getPageInfo?limit=10&offset=0",
+			url:"http://yjxt.elatis.cn/messages/getPageInfo",
 			headers: {
 				token:localStorage.getItem("token")
 			}
@@ -178,6 +219,9 @@ const Message = ()=> {
 				</span>
 			</div>
 			<div className = {"buttonSbar"}>
+				<Button  onClick = {()=>{deleteSet();}} className = {"button"} >
+				批量删除
+				</Button>
 				<Button  onClick = {()=>{markAsRead();}} className = {"button"} >
                 标记为已读
 				</Button>

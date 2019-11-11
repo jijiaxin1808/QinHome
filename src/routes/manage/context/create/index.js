@@ -1,16 +1,13 @@
 import "braft-editor/dist/index.css";
 import React,{ useEffect, useState , forwardRef} from "react";
 import BraftEditor from "braft-editor";
-import { ContentUtils } from "braft-utils";
-import { Form, Input, Button,  Row, Col ,Cascader, Upload, Icon, Modal, Select, Card, Tag} from "antd";
+import { ContentUtils } from "braft-utils"
+import { Form, Input, Button,  Row, Col ,Cascader,  message,Upload,Icon} from "antd";
 import "./index.css";
 import axios from "axios";
-import getToken from "./getToken";
 
-const QINIU_SERVER = "http://upload-z1.qiniup.com";
-const QINIU_PATH = "http://qiniu.waidzsalome.cn";
 
-const { Option } = Select;
+// const { Option } = Select;
 const formItemLayout = {
 	labelCol: { span: 4 },
 	wrapperCol: { span: 16 },
@@ -23,7 +20,7 @@ function FormDemo (props) {
 	useEffect(()=>{
 		setTimeout(() => {
 			props.form.setFieldsValue({
-				content: BraftEditor.createEditorState("<p>Hello <b>World!</b></p>")
+				content: BraftEditor.createEditorState("")
 			});
 		}, 1000);
 	},[]);
@@ -43,8 +40,6 @@ function FormDemo (props) {
 		}).catch(err => {
 			console.log(err);
 		});
-
-
 	}, []);
 
 	const options = data.map( item => ({
@@ -56,22 +51,26 @@ function FormDemo (props) {
 		}))
 	}));
 
-	const [token, setToken] = useState("");
-	const getUploadToken = () => {
-	  console.log(getToken());
-		setToken(getToken());
-	};
 
 	const handleOnChange = ({file}) => {
+		console.log(file)
 		const { response = {}} = file;
 		console.log(response);
 		console.log(response.hash);
 	};
 
+	const [state, setState] = useState("");
+	const judgeStateP = () => {
+	 setState("publish");
+	};
+
+	const judgeStateC = () =>{
+	  setState("create");
+	};
+
 	const handleSubmit = (event) => {
-
   	event.preventDefault();
-
+		console.log(state);
   	props.form.validateFields((error, values) => {
   		if (!error) {
   			const submitData = {
@@ -80,7 +79,9 @@ function FormDemo (props) {
 					category: "/"+values.category[0]+ "/" +values.category[1],
   				content: values.content.toHTML()// or values.content.toHTML()
   			};
-
+  			if (state === "publish") {
+					submitData.status = "publish";
+				}
   			axios({
 					method: "post",
 					url: "http://yjxt.elatis.cn/posts/create",
@@ -89,9 +90,17 @@ function FormDemo (props) {
 						"token": localStorage.getItem("token")
 					},
 					data: submitData
-				}).then( res => [
-					console.log(res)
-				]).catch( err => {
+				}).then( res => {
+					if(res.data.code === 0) {
+						if(state === "publish"){
+							message.success("发布成功");
+						}
+						else message.success("申请成功");
+					}
+					else message.warn("权限不足");
+				}
+					
+				).catch( err => {
 					console.log(err);
 				});
   			console.log("submitData",submitData);
@@ -100,67 +109,81 @@ function FormDemo (props) {
 
 	};
 
-	const [userData, setUserData] = useState([]);
-	const [visible, setVisible] = useState(false);
-	const [confirmLoading, setConfirmLoading] = useState(false);
+	// const [userData, setUserData] = useState([]);
+	// const [visible, setVisible] = useState(false);
+	// const [confirmLoading, setConfirmLoading] = useState(false);
 
-	const showModal = () => {
-	  setVisible(true);
-		axios({
-			method: "get",
-			url:"http://yjxt.elatis.cn/users/getByRole",
-			headers: {
-				"content-type": "application/json",
-				"token": localStorage.getItem("token")
-			}
-		}).then(res=>{
-			console.log(res.data);
-			if(res.data.code === 0) {
-				console.log("success",res.data.data);
-				setUserData(res.data.data);
-			}
-		}).catch((err)=>{
-			console.log(err);
-		});
+	// const showModal = () => {
+	//   setVisible(true);
+	// 	axios({
+	// 		method: "get",
+	// 		url:"http://yjxt.elatis.cn/users/getByRole",
+	// 		headers: {
+	// 			"content-type": "application/json",
+	// 			"token": localStorage.getItem("token")
+	// 		}
+	// 	}).then(res=>{
+	// 		console.log(res.data);
+	// 		if(res.data.code === 0) {
+	// 			console.log("success",res.data.data);
+	// 			setUserData(res.data.data);
+	// 		}
+	// 	}).catch((err)=>{
+	// 		console.log(err);
+	// 	});
 
-	};
+	// };
 
-	const modalOptions = userData.map(item => ({
-		id: item.id,
-		number: item.number,
-		name: item.name,
-		section: item.section,
-	}));
+	// const modalOptions = userData.map(item => ({
+	// 	id: item.id,
+	// 	number: item.number,
+	// 	name: item.name,
+	// 	section: item.section,
+	// }));
 
-	console.log("modal",modalOptions);
+	// console.log("modal",modalOptions);
 
-	const handleOk = () => {
-	  setConfirmLoading(true);
-		setTimeout(() => {
-			setVisible(false);
-			setConfirmLoading(false);
-		}, 2000);
-	};
+	// const handleOk = () => {
+	//   setConfirmLoading(true);
+	// 	setTimeout(() => {
+	// 		setVisible(false);
+	// 		setConfirmLoading(false);
+	// 	}, 2000);
+	// };
 
-	const handleCancel = () => {
-	  setVisible(false);
-	};
+	// const handleCancel = () => {
+	//   setVisible(false);
+	// };
 	const onChange =(value) => {
 		console.log(value);
 	};
-  	const controls = ["bold", "italic", "underline", "text-color", "separator", "link", "separator", "media" ];
-  	const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
 
-	const uploadHandler = (param) => {
+
+	const controls = ["font-size", "bold", "italic", "underline", "text-color", "separator", "link", {key: "media",title:"视频"}];
+	const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
+	async function uploadHandler(param){
 		if (!param.file) {
 			console.log("err");
 			return false;
 		}
-		// setEditorState({editorState: ContentUtils.insertMedias(editorState, [{
-		//   type: "IMAGE",
-		//   url: URL.createObjectURL
-		// }])
-		// });
+		console.log(param.file)
+		const {
+			form: { getFieldValue, setFieldsValue }
+		  } = props;
+		//   const result=await getUrl(param.file)
+		//   console.log(getUrl(param.file))
+		let reader = new FileReader();
+		reader.readAsDataURL(param.file)
+		reader.onload=function (e) {
+			const editorStates = getFieldValue("content");
+			setFieldsValue({content: ContentUtils.insertMedias(editorStates, [{
+			  type: "IMAGE",
+			  url: e.target.result
+			}])
+			});	
+		}
+		  
+
 	};
   	const extendControls =[
 		{
@@ -169,9 +192,6 @@ function FormDemo (props) {
 			component: (
 				<Upload
 					accept="image/*"
-					action={QINIU_SERVER}
-					data={{token: token}}
-					beforeUpload={getUploadToken}
 					showUploadList={false}
 					customRequest={uploadHandler}
 					onChange={handleOnChange}
@@ -200,20 +220,10 @@ function FormDemo (props) {
   							message: "请输入标题",
   						}],
   					})(
-  						<Input size="large" placeholder="请输入标题"/>
+  						<Input size="large" placeholder="请输入标题" />
   					)}
   				</Form.Item>
-  				<Form.Item {...formItemLayout} label="发布部门">
-  					{getFieldDecorator("department", {
-  						rules: [{
-  							required: true,
-  							message: "请填写发布部门",
-  						}],
-  					})(
-  						<Input size="large" placeholder="请输入标题"/>
-  					)}
-  				</Form.Item >
-  				<Form.Item {...formItemLayout} label="请选择文章路径">
+  				<Form.Item {...formItemLayout} label="文章路径">
   					{
   						getFieldDecorator("category",{
   							rules: [{
@@ -222,7 +232,7 @@ function FormDemo (props) {
   								message: "请填写发布分类"
   							}]
   						})(
-  								<Cascader options={options} onChange={onChange} placeholder="Please select"/>
+  								<Cascader options={options} onChange={onChange} placeholder="请选择要发布的位置"/>
   						)
   					}
   				</Form.Item>
@@ -241,10 +251,12 @@ function FormDemo (props) {
   						}],
   					})(
   						<BraftEditor
+
   							className="my-editor"
   							controls={controls}
   							placeholder="请输入正文内容"
-							  extendControls={extendControls}
+							extendControls={extendControls}
+                			// contentStyle={{height: 210, boxShadow: 'inset 0 1px 3px rgba(0,0,0,.1)'}}
   						/>
   					)}
   				</Form.Item>
@@ -252,59 +264,11 @@ function FormDemo (props) {
 
   					<Row>
   						<Col span={4} offset={4}>
-							<Button size="large"  htmlType="submit">保存草稿</Button>
+							<Button size="large"  htmlType="submit" onClick={judgeStateC}>保存草稿</Button>
   						</Col>
+  						
   						<Col span={4} offset={4}>
-  							<Button size="large"  htmlType="button" onClick={showModal}>预览发布</Button>
-							<Modal
-								title="请求发布"
-								visible={visible}
-								onOk={handleOk}
-								confirmLoading={confirmLoading}
-								onCancel={handleCancel}
-							>
-								<Row>
-									<Col span={10}>
-										<Card>
-											<h1 style={{textAlign: "center"}}>生成预览</h1>
-											<p>
-                          “秦皇岛市安全生产培训机构名单”
-											</p>
-											<Tag className="tag">
-                          https://gw6wov.axshare.com
-											</Tag>
-											<Button size="middle"  htmlType="button" block style={{marginBottom: "10px"}}>
-                          更新页面
-											</Button>
-											<Button size="middle" block>
-                          生成新地址
-											</Button>
-										</Card>
-									</Col>
-									<Col span={12} offset={2}>
-										<Select defaultValue="常用联系人" style={{width: 200}}>
-											{
-												modalOptions.map(item => (
-													<Option
-														key={item.id}
-														value={item.name}
-													>
-														{item.name}
-														{item.section}
-														{item.number}
-													</Option>
-												))
-											}
-										</Select>
-										<Button size="small"  htmlType="button" style={{marginTop: "50px"}}>
-                        发送申请
-										</Button>
-									</Col>
-								</Row>
-							</Modal>
-  						</Col>
-  						<Col span={4} offset={4}>
-  							<Button size="large"  htmlType="button">直接发布</Button>
+  							<Button size="large" type="primary" htmlType="submit" onClick={judgeStateP}>直接发布</Button>
   						</Col>
   					</Row>
   				</Form.Item>

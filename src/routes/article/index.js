@@ -4,9 +4,9 @@ import axios from "axios";
 import urlHandle from "../../config/urlHandle";
 import { message, Spin } from "antd";
 
-const func = (data)=> {
-	return (data);
-};
+// const func = (data)=> {
+// 	return (data);
+// };
 
 const Article = () => {
 	const [data, setdata] = useState([]);
@@ -41,7 +41,7 @@ const Article = () => {
 		window.location.href = "/index/index";
 		return null;
 	} 
-	else if (!(data.clicked&&data.section) ) {
+	else if (!data.section ) {
 		return(
 			<div className='article allCenter '>
 				<Spin size='large' />
@@ -57,12 +57,12 @@ const Article = () => {
 						{data.title}
 					</div>
 					<div className='article-info'>
-						<span>{`发布时间: ${data.createTime}`}</span>
+						<span>{`发布时间: ${data.created_at.slice(0,10)}`}</span>
 						<span>{`发布部门: ${data.section}`}</span>
 						<span>{`点击次数: ${data.clicked}`}</span>
 					</div>
 				</div>
-				<div className='article-content'>
+				<div >
 					{<p dangerouslySetInnerHTML={{ __html:data.content}}  />}
 				</div>
 			</div>

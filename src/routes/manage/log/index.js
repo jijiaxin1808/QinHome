@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Table, Divider, Tag, Pagination } from "antd";
-import logData from "../../../config/logData";
+import { Table  } from "antd";
 import axios from "axios";
 import qs from "qs";
-import styles from "./index.css";
 
 const columns = [
 	{
@@ -19,7 +17,10 @@ const columns = [
 	{
 		title: "所属级别",
 		dataIndex: "roles_id",
-		key: "roles_id",
+		key:"roles_id",
+		render:(roles_id,ID)=>(
+			<div>{ID.roles_id==1?"管理员":"普通用户"}</div>
+		)
 	},
 	{
 		title: "操作行为",

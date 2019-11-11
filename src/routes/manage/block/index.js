@@ -1,12 +1,9 @@
 /* eslint-disable indent */
 /* eslint-disable react/jsx-no-target-blank */
 import React, { useEffect, useState, Fragment } from "react";
-import styles from "./index.css";
+// import styles from "./index.css";\
+import "./index.css";
 import { Table, Button, Input, Switch, message, Upload, Modal } from "antd";
-// import * as blockData from '../../../assets/blockData';
-// import * as blockCol from '../../../assets/blockCol';
-// import * as blockData from "../../../config/blockData";
-// import * as blockCol from "../../../config/blockCol";
 import axios from "axios";
 
 const HeaderScroll = () => {
@@ -16,7 +13,6 @@ const HeaderScroll = () => {
 		const showModal = () => {
 			setVisible(true);
 		};
-	
 		const handleOk = e => {
 			setVisible(false);
 			console.log("保存的", data);
@@ -71,7 +67,7 @@ const HeaderScroll = () => {
 		{
 			title: "序号",
 			dataIndex: "id",
-			key: "id",
+			key: "idaa",
 		},
 		{
 			title: "内容",
@@ -140,7 +136,7 @@ const HeaderScroll = () => {
 							if (item.id === id.id) {
 								return {
 									...item,
-									isSHow: checked,
+									isShow: checked,
 								};
 							} else
 								return {
@@ -156,18 +152,20 @@ const HeaderScroll = () => {
 		{
 			title: "操作",
 			key: "id",
-			dataIndex: "id",
-			render: id => (
+			dataIndex: "idcv",
+			render: (id1,id2) => (
 				<Button
 					onClick={() => {
-						const newData = data;
+						const newData = [...data];
 						data.map((item, index) => {
-							if (item.id === id) {
+							if (item.id === id2.id) {
+								console.log("找到了",index);
 								newData.splice(index, 1);
 							}
 							return null;
 						});
 						console.log("删除", newData);
+						setdata(newData);
 					}}
 				>
           删除
@@ -185,7 +183,24 @@ const HeaderScroll = () => {
 				<span>顶部滚动条</span>
 			</div>
 			<div className={"buttonSbar"}>
-				<Button className={"button"}>添加顶部滚动条</Button>
+				<Button className={"button"} 					onClick={() => {
+					let newData = data;
+					// newData.push({
+					// 	id: data.length + 1,
+					// 	href: "请输入跳转至的链接",
+					// 	picUrl: "",
+					// 	title: "请输入标题",
+					// 	isShow: false,
+					// 	key: "4",
+					// });
+					setdata([...newData,{
+						id: data.length + 1,
+						"title": "",
+						"href": "",
+						"isShow": 0
+					}]);
+					console.log(data);
+				}}>添加顶部滚动条</Button>
 				<HeaderSave
 					className={"button"}
 				>
@@ -284,7 +299,7 @@ const Carousel = () => {
 			return (
 				<Fragment>
 					<a href={picUrl} target="_blank">
-						<Button>查看图片</Button>
+						<Button style = {{marginRight:"10px"}}>查看图片</Button>
 					</a>
 					<Upload
 						{...props}
@@ -409,19 +424,21 @@ const Carousel = () => {
 		},
 		{
 			title: "操作",
-			key: "id",
+			key: "action",
 			dataIndex: "id",
-			render: id => (
+			render: (id1,id2) => (
 				<Button
 					onClick={() => {
-						const newData = data;
+						const newData = [...data];
 						data.map((item, index) => {
-							if (item.id === id) {
+							if (item.id === id2.id) {
+								console.log("找到了",index);
 								newData.splice(index, 1);
 							}
 							return null;
 						});
 						console.log("删除", newData);
+						setdata(newData);
 					}}
 				>
           删除
@@ -452,9 +469,9 @@ const Carousel = () => {
 						// });
 						setdata([...newData,{
 							id: data.length + 1,
-							href: "请输入跳转至的链接",
+							href: "",
 							picUrl: "",
-							title: "请输入标题",
+							title: "",
 							isShow: false,
 							key: "4",
 						}]);
@@ -541,7 +558,7 @@ const HomeTopic = () => {
 		{
 			title: "id",
 			dataIndex: "id",
-			key: "id",
+			key: "idss",
 		},
 		{
 			title: "内容",
@@ -642,7 +659,7 @@ const HomeTopic = () => {
 			return (
 				<Fragment>
 					<a href={picUrl} target="_blank">
-						<Button>查看图片</Button>
+						<Button style = {{marginRight:"10px"}}>查看图片</Button>
 					</a>
 					<Upload
 						{...props}
@@ -776,7 +793,7 @@ const Background = () => {
 			return (
 				<Fragment>
 					<a href={picUrl} target="_blank">
-						<Button>查看图片</Button>
+						<Button style = {{marginRight:"10px"}}>查看图片</Button>
 					</a>
 					<Upload
 						{...props}

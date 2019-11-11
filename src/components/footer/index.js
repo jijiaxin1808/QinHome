@@ -11,19 +11,19 @@ const RealFooter = () => {
 	return (
 		<div className='footer'>
 			<div>
-				<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13030202002230">
-					<img src={require("../../assets/稿定设计导出-20191018-103434.png")}/>	
+				<a href="http://bszs.conac.cn/sitename?method=show&id=082080304EE01E77E053012819AC76B5" target = "_blank">
+					<img src={require("../../assets/稿定设计导出-20191018-103434.png")} alt = ""/>	
 				</a>
 			</div>
 			<div className='footer-info'>
 				<p>主办单位：秦皇岛市应急管理局  地址：秦皇岛市燕山大街109号</p>
-				<p>电话： 0335-3650560  <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13030202002230" 
+				<p>电话： 0335-3650560  <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13030202002230"  target = "_blank"
 					style={{fontSize:"15px",
 						color: "#FFFFFF"
-					}}>冀公网安备： 13030202002230</a>
+					}}><img src = "http://yjgl.hebei.gov.cn/portal/resources/images/nationalEmblem.png" width = "20px" height = "20px" target = "_blank"alt = ""/> 冀公网安备： 13030202002230</a>
 				<br/>网站标识码： 1303000020  邮政编码： 066001 
 				</p>
-				<p><a href="http://www.beian.miit.gov.cn/state/outPortal/loginPortal.action" 
+				<p><a href="http://www.beian.miit.gov.cn/state/outPortal/loginPortal.action" target = "_blank"
 					style={{fontSize:"15px",
 						color: "#FFFFFF"
 					}}>ICP备案号： 冀ICP备15003849号</a>  技术支持： 秦皇岛昊锐科技有限公司</p>

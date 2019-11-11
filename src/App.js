@@ -1,5 +1,5 @@
 import React,{Suspense} from "react";
-import { Router, Route, Switch } from "dva/router";
+import {  Route } from "dva/router";
 import Loading from "./components/loading";
 import Home from "./routes/home";
 import News from "./routes/news";
@@ -10,6 +10,7 @@ import Message from "./routes/message";
 import headerData from "./config/headerData";
 import Search from "./routes/search";
 import Services from "./routes/services";
+import JJX from "./components/jjxnb";
 
 const routers= [
 	{
@@ -46,11 +47,17 @@ const routers= [
 		path: "/index/search",
 		component: Search,
 		key: 2
-	}
+	},
+	{
+		name: "jjx",
+		path: "/index/index/jjxnb",
+		component: JJX,
+		key: 0
+	},
 ];
 
 export default function MainApp (props) {
-	console.log(window.location.pathname)
+	// console.log(window.location.pathname)
 	return (
 		<div>
 			<Header barData={headerData} />
@@ -66,5 +73,5 @@ export default function MainApp (props) {
 			</Suspense>
 			<Footer />
 		</div>
-	)
+	);
 }

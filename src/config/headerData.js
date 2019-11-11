@@ -24,5 +24,5 @@ const headerData = [
 		title: "社会化服务",
 		href: "society?type=fuxm"
 	}
-]
-export default headerData
+];
+export default headerData;

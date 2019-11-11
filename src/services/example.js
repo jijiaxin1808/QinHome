@@ -1,3 +1,5 @@
+/* eslint-disable linebreak-style */
+
 import request from '../utils/request';
 
 export function query() {

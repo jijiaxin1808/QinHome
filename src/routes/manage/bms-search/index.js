@@ -1,30 +1,33 @@
 import React, { useState,useEffect } from "react";
 import "./index.less";
 import axios from "axios";
-import { Table, Divider, Tag, Button, Modal, message, Skeleton, Switch } from "antd";
+import { Table,  Button, Modal, message, Skeleton } from "antd";
 import urlHandle from "../../../config/urlHandle";
+import {routerRedux} from "dva/router";
+import { connect } from "dva";
+import Loading from "../../../components/loading";
 const  DeleteArticle  = (props)=> {
 	const [ visible, setVisible ] = useState(false);
 	const showModal = () => {
 		setVisible(true);
 	};
-
 	const handleOk = e => {
 		setVisible(false);
 		console.log("确认删除");
 		axios({
-			method:"GET",
+			method:"POST",
 			url: "http://yjxt.elatis.cn/posts/delete",
 			params: {
 				id:props.id
 			},
-			Headers: {
+			headers: {
 				"token":localStorage.getItem("token"),
 				"Content-Type": "application/json"
 			}
 		}).then(res=> {
 			if(res.data.code === 0 ) {
 				message.success("删除成功");
+				window.location.reload();
 			}
 			else {
 				message.warn(res.data.message);
@@ -55,7 +58,14 @@ const  DeleteArticle  = (props)=> {
 	);
   
 };
-
+const mapDispatchToProps = (dispatch)=> ({
+	reload() {
+		dispatch(routerRedux.push({
+			pathname: "/manage"
+		}));
+	}
+});
+const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
 const alterAricle = (id)=> {
 	console.log(id);
 	window.location.href = `/manage/change/${id}`;
@@ -63,6 +73,7 @@ const alterAricle = (id)=> {
 const BmsSearch = (props)=> {
 	const [ data, setData ] = useState([]);
 	const [ key,setkey ] = useState(decodeURIComponent(urlHandle("key")));
+	console.log(setkey);
 	const columns = [
 	  {
 			title: "id",
@@ -73,6 +84,14 @@ const BmsSearch = (props)=> {
 			title: "文章名称",
 			dataIndex: "title",
 			key: "title",
+			render: title => (
+				<div style = {{   width:"500px",
+					whiteSpace:"nowrap",
+					overflow:"hidden",
+					 textOverflow:"ellipsis"}}>
+					{title}
+				</div>
+			)
 	  },
 	  {
 			title: "发布部门",
@@ -88,8 +107,8 @@ const BmsSearch = (props)=> {
 			title: "页面状态",
 			key: "action",
 			dataIndex:"action",
-			render:isShow=>(
-				<Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked = {isShow}  />
+			render:(text,record)=>(
+				<p>{record.status === "publish"?"已发布":"未发布"}</p>
 			),
 	  },{
 			title: "操作",
@@ -102,10 +121,9 @@ const BmsSearch = (props)=> {
 			title: "删除",
 			key: "action",
 			dataIndex:"action",
-			render: id=> (
-				<DeleteArticle  id = {id}>删除文章</DeleteArticle>
+			render:(text,record) => (
+				<Dle  id = {record.id}>删除文章</Dle>
 			)
-
 		},
 	];
 	useEffect(()=>{
@@ -120,7 +138,7 @@ const BmsSearch = (props)=> {
 			}).then(res=> {
 				if(res.data.code === 0) {
 					console.log("长度",res.data.data.length);
-					if(res.data.data.length ==0) {
+					if(res.data.data.length ===0) {
 						setData("empty");
 						console.log("empty");
 					}
@@ -164,7 +182,7 @@ const BmsSearch = (props)=> {
 			);
 		}
 		else return (
-			<Skeleton />
+			<Loading />
 		);
 	}
 
