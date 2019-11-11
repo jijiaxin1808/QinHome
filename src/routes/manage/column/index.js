@@ -45,7 +45,7 @@ export default function ColManage() {
 	useEffect(() => {
 
 		if(col && colsData.length!==0) {
-			let _cols = colsData;
+			var _cols = colsData;
 			let _col = _cols.find(item => {
 				return item.title === col;
 			});
