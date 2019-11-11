@@ -77,7 +77,7 @@ const MessageContent = (props)=> {
 							return (
 								<li className = "message-maincontent-li">
 									<Link to = {`/index/article?id=${item.id}`} className = "message-article"> 
-										{item.title}
+										<p>{item.title}</p> <span>{item.updated_at.slice(0,10)}</span>
 									</Link>
 								</li>
 							);

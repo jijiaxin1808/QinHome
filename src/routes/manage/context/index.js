@@ -100,7 +100,7 @@ const columns = [
 		key: "category",
 	},
 	{
-		title: "日期",
+		title: "创建日期",
 		key: "created_at",
 		dataIndex: "created_at"
 	},

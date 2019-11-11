@@ -58,7 +58,7 @@ export default function ColManage() {
 		axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
 			if(res.data.code === 0) {
 				console.log(res.data);
-				if (res.data.data[0].sec) {
+				if (res.data.data[0].sec.length!==0) {
 					setArtiCategory(`/${res.data.data[0].title}/${(res.data.data[0].sec)[0].title}`);
 					setSecCol((res.data.data[0].sec)[0].title);
 				} else {
@@ -193,7 +193,7 @@ const  DeleteArticle  = (props)=> {
 		}).then(res=> {
 			if(res.data.code === 0 ) {
 				message.success("删除成功");
-				window.location.reload();
+				// window.location.reload();
 				// setTimeout(()=>{},500)
 				// props.dispatch(routerRedux.push({
 				// 	pathname: '/index/index'
@@ -424,10 +424,42 @@ const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
 	};
 	const handleSaveClick = () => {
 		setLoading(true);
-		if(editState === "二级") {
-			setSaveClick(true);
-			setColsData(colsData);
-		} else if(editState === "一级") {
+
+		if (editState === "二级") {
+			if(colsData.length !== 0) {
+				let _colsData = colsData.map(item => {
+					let _item = {...item, title: item.newCol || item.title};
+					if(!_item.sec) {
+						_item = {..._item, sec: []};
+					}
+					delete _item.newCol;
+					delete _item.col;
+					return _item;
+				});
+				const _data = JSON.stringify({
+					name: "column",
+					value: {
+						..._colsData,
+					}
+				});
+				axios({
+					method: "POST",
+					url: "http://yjxt.elatis.cn/options/update",
+					headers: {
+						"token": localStorage.getItem("token"),
+						"Content-Type": "application/json"
+					},
+					data: _data
+				}).then(res => {
+					if(res.data.code === 0) {
+						setLoading(false);
+						message.success("保存成功");
+					}
+				}).catch(err => {
+					message.error(err);
+				});
+			}
+		} else if (editState === "一级") {
 			setSaveClick(true);
 			setColsData(editData);
 		}

@@ -41,7 +41,7 @@ const  Message = (props) => {
 					<span>
 						{props.home.columnData[type-1].sec[id-1 ] && props.home.columnData[type - 1].sec[id - 1].title}
 					</span>
-					<span className='message-header-paper' />
+					<span className='message-header-paper' >{props.home.columnData[type-1 ].title}</span>
 				</div>
 				<div className='message-content'>
 					<div className='message-sidebar'>
