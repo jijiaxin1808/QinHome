@@ -58,7 +58,7 @@ export default function ColManage() {
 		axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
 			if(res.data.code === 0) {
 				console.log(res.data);
-				if (res.data.data[0].sec) {
+				if (res.data.data[0].sec.length!==0) {
 					setArtiCategory(`/${res.data.data[0].title}/${(res.data.data[0].sec)[0].title}`);
 					setSecCol((res.data.data[0].sec)[0].title);
 				} else {
