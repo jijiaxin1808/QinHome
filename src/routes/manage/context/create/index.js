@@ -1,5 +1,5 @@
 import "braft-editor/dist/index.css";
-import React,{ useEffect, useState , forwardRef} from "react";
+import React,{ useEffect, useState , forwardRef,useRef} from "react";
 import BraftEditor from "braft-editor";
 import { ContentUtils } from "braft-utils"
 import { Form, Input, Button,  Row, Col ,Cascader,  message,Upload,Icon} from "antd";
@@ -185,6 +185,35 @@ function FormDemo (props) {
 		  
 
 	};
+	const imageControls = [
+		'float-left', // 设置图片左浮动
+		'float-right', // 设置图片右浮动
+		'align-left', // 设置图片居左
+		'align-center', // 设置图片居中
+		'align-right', // 设置图片居右
+		'link', // 设置图片超链接
+		'size', // 设置图片尺寸
+		'remove' // 删除图片
+	]
+	const uploadHandlers=(param)=>{
+		if (!param.file) {
+			console.log("err");
+			return false;
+		}
+		const {
+			form: { getFieldValue, setFieldsValue }
+		  } = props;
+		let reader= new  FileReader()
+		reader.readAsDataURL(param.file)
+		reader.onload = function (e) {
+			console.log(param.file)
+			const editorStates = getFieldValue("content");
+			setFieldsValue({
+				content: ContentUtils.insertHTML(editorStates,`<br/><a href="${e.target.result}">${param.file.name}</a>`)
+			})
+		}
+
+	};
   	const extendControls =[
 		{
 			key: "antd-uploader",
@@ -202,9 +231,24 @@ function FormDemo (props) {
 					</button>
 				</Upload>
 			)
+		},
+		{
+			key: "antd-uploads",
+			type: "component",
+			component: (
+				<Upload
+					showUploadList={false}
+					customRequest={uploadHandlers}
+					onChange={handleOnChange}
+				>
+					{/* 这里的按钮最好加上type="button"，以避免在表单容器中触发表单提交，用Antd的Button组件则无需如此 */}
+					<button type="button" className="control-item button upload-button" data-title="插入附件">
+						<Icon type="file" theme="filled" />
+					</button>
+				</Upload>
+			)
 		}
 	];
-
   	return (
   		<div className="demo-container">
   			<div className = "title">
@@ -256,6 +300,7 @@ function FormDemo (props) {
   							controls={controls}
   							placeholder="请输入正文内容"
 							extendControls={extendControls}
+							imageControls={imageControls}
                 			// contentStyle={{height: 210, boxShadow: 'inset 0 1px 3px rgba(0,0,0,.1)'}}
   						/>
   					)}

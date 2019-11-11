@@ -167,6 +167,26 @@ const changeContext=(props)=>{
 		  
 
 	};
+
+	const uploadHandlers=(param)=>{
+		if (!param.file) {
+			console.log("err");
+			return false;
+		}
+		const {
+			form: { getFieldValue, setFieldsValue }
+		  } = props;
+		let reader= new  FileReader()
+		reader.readAsDataURL(param.file)
+		reader.onload = function (e) {
+			console.log(param.file)
+			const editorStates = getFieldValue("content");
+			setFieldsValue({
+				content: ContentUtils.insertHTML(editorStates,`<br/><a href="${e.target.result}">${param.file.name}</a>`)
+			})
+		}
+
+	};
 	const extendControls =[
 		{
 			key: "antd-uploader",
@@ -181,6 +201,21 @@ const changeContext=(props)=>{
 						<Icon type="picture" theme="filled" />
 					</button>
 					{/* 这里的按钮最好加上type="button"，以避免在表单容器中触发表单提交，用Antd的Button组件则无需如此 */}
+				</Upload>
+			)
+		},
+		{
+			key: "antd-uploads",
+			type: "component",
+			component: (
+				<Upload
+					showUploadList={false}
+					customRequest={uploadHandlers}
+				>
+					{/* 这里的按钮最好加上type="button"，以避免在表单容器中触发表单提交，用Antd的Button组件则无需如此 */}
+					<button type="button" className="control-item button upload-button" data-title="插入附件">
+						<Icon type="file" theme="filled" />
+					</button>
 				</Upload>
 			)
 		}
