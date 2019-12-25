@@ -6,10 +6,6 @@ import "./index.less";
 import axios from "axios";
 
 const MessageContent = (props)=> {
-	// const isShow = (item)=> {
-	// 	// console.log("当前文章发布状态")
-	// 	return item.status === "publish";
-	// };
 	const limit = 15;
 	const [ data, setData ] = useState([]);
 	const [total, setTotal ] =useState();
@@ -40,8 +36,6 @@ const MessageContent = (props)=> {
 		});	
 
 	},[props]);
-
-
 	const onChange = (page, pageSize)=> {
 		props.home.columnData.length!==0&&axios({
 			method: "GET",

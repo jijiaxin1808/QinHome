@@ -62,8 +62,7 @@ const Log = ()=> {
 				console.log(resData);
 			}
 		});
-	}
-		,[]);
+	},[]);
 	return(
 		<div>
 			<div className = { "title" }>
