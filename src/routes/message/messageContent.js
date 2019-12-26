@@ -9,6 +9,7 @@ const MessageContent = (props)=> {
 	const limit = 15;
 	const [ data, setData ] = useState([]);
 	const [total, setTotal ] =useState();
+	const [oneMessage, setOneMessage] = useState();
 	useEffect(()=> {
 		axios({
 			method: "GET",
@@ -30,6 +31,17 @@ const MessageContent = (props)=> {
 					setData("empty");
 				}
 				else {
+					if(res.data.data.length===1){
+						axios({
+							method: "GET",
+							url: "http://yjxt.elatis.cn/posts/get",
+							params: {
+								id:res.data.data[0].id
+							}
+						}).then((res)=> {
+							setOneMessage(res.data);
+						})
+					}
 					setData(res.data.data);
 				}
 			}
@@ -61,32 +73,47 @@ const MessageContent = (props)=> {
 		);
 	}
 	else if(data.length !== 0&&total){
-		// console.log("total:" ,total,"data: ",data)
 		if(data.length===1) {
-			console.log("当前栏目直接展示文章");
-		}
-		return (
-			<div className = "message-maincontent">
-				<ul className = "message-ul" style  = {{minHeight : "500px"}}>
-					{
-						data.map((item,index)=> {
-							return (
-								<li className = "message-maincontent-li">
-									<Link to = {`/index/article?id=${item.id}`} className = "message-article"> 
-										<p>{item.title}</p> <span>{item.updated_at.slice(0,10)}</span>
-									</Link>
-								</li>
-							);
-        
-						})
-					}
-				</ul>
+			console.log("当前只展示一个",data[0].id)
 
-				<Pagination  onChange={onChange} defaultCurrent={1}
-					defaultPageSize={limit} total={total} showQuickJumper  />
-			</div>
-    
-		);
+			if(oneMessage) {
+				console.log("当前one",oneMessage)
+				return (
+					<div className = "oneMessage" >
+						{<p dangerouslySetInnerHTML={{ __html:oneMessage.data.content}}  />}
+					</div>
+				)
+			}
+			else return (
+				<Skeleton />
+			)
+
+		}
+		else {
+			return (
+				<div className = "message-maincontent">
+					<ul className = "message-ul" style  = {{minHeight : "500px"}}>
+						{
+							data.map((item,index)=> {
+								return (
+									<li className = "message-maincontent-li">
+										<Link to = {`/index/article?id=${item.id}`} className = "message-article"> 
+											<p>{item.title}</p> <span>{item.updated_at.slice(0,10)}</span>
+										</Link>
+									</li>
+								);
+			
+							})
+						}
+					</ul>
+	
+					<Pagination  onChange={onChange} defaultCurrent={1}
+						defaultPageSize={limit} total={total} showQuickJumper  />
+				</div>
+		
+			);
+		}
+
 	}
 	else {
 		if(data === "empty") {
