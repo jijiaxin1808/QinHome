@@ -7,10 +7,29 @@ import HomeCarousel from "../../components/home-carousel";
 import Weather from "./weather";
 import Tabs from "../../components/tabs";
 import { Link } from "react-router-dom";
-import { message } from "antd";
+import { message,Dropdown,Button,Menu, Select } from "antd";
 import friendlinkData from "../../config/friendlinkData";
 import axios from "axios";
 import TextScroll from "react-textscroll";
+import otherLinkData from "../../config/otherLink";
+
+const { Option } = Select
+const OtherLink = ()=> {
+	return (
+		<Select style = {{width:"250px",marginLeft:"20px"}}  onChange = {(value)=>{window.open(value)}} defaultValue = {"市直部门网站"}>
+		{
+			otherLinkData.map((item,index)=> {
+				return (
+					<Option value = {item.href}>
+						{item.title}
+				  </Option>
+				)
+
+			})
+		}
+	</Select>
+	)
+}
 
 const FriendLink = () => {
 	return (
@@ -29,6 +48,7 @@ const FriendLink = () => {
 						);
 					})
 				}
+				<OtherLink />
 			</div>
 		</div>
 	);
@@ -85,7 +105,7 @@ const Home = () => {
 					if(item.isShow) {
 						console.log("push了数据",item);
 						_data.push(
-							<a title={item.title} href={`${item.href}`} style={{color: "#333", fontSize: "18px"}}>{item.title}</a>
+							<a title={item.title} href={`${item.href}`} className = "safe-jjx-a" style={{color: "#333", fontSize: "18px"}}>{item.title}</a>
 						);
 						return null;
 					}
@@ -111,7 +131,7 @@ const Home = () => {
 					</span>
 					{
 						annouces.length!==0 &&
-						<div style={{marginLeft:"-50px",width:"500px"}}>
+						<div style={{marginLeft:"0px",width:"725px",marginRight:"20px"}}>
 							<TextScroll 
 								mode="horizontal"
 								text={annouces}

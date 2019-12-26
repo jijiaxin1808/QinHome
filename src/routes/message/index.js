@@ -48,13 +48,16 @@ const  Message = (props) => {
 						<ul>
 							{
 								props.home.columnData[type-1].sec.map((item, index) => {
-									return (
-										<li key={index}>
-											<Link to={`/index/message?type=${type}&id=${index + 1}`} className={id === item.key ? "clicked" : ""}>
-												{item.title}
-											</Link>
-										</li>
-									);
+									if(props.home.columnData[type-1].sec.length>1||props.home.columnData[type-1].title!==props.home.columnData[type-1].sec[0].title) {
+										return (
+											<li key={index}>
+												<Link to={`/index/message?type=${type}&id=${index + 1}`} className={id === item.key ? "clicked" : ""}>
+													{item.title}
+												</Link>
+											</li>
+										);
+									}
+									return null;
 								})
 							}
 						</ul>

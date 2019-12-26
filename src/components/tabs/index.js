@@ -13,7 +13,7 @@ const  Tabs =(props)=> {
 		if(props.home.columnData.length !==0) {
 			const sort = [];
 			props.home.columnData[1].sec.map((item,index) => {
-				if(index<=2) {
+				if(index<=0) {
 					sort.push(`/新闻中心/${item.title}`);
 					return null;
 				}

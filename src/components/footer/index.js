@@ -37,7 +37,7 @@ const RealFooter = () => {
 					src='/img/wechat-qrcode.jpg' alt='微信二维码'
 					width='80px' height='80px'
 				/>
-				<p>秦皇岛市应急管理部</p>
+				<p>秦皇岛市应急管理局</p>
 				<p>官方微信</p>
 				<span className='wechat-qrcode'>
 					{/* <img
@@ -52,7 +52,7 @@ const RealFooter = () => {
 				<a href='https://weibo.com/u/7269719941' target='_blank'>
 					<img width='56px' height='56px' src='/img/微博.png' alt='秦皇岛市应急管理部官方微博' />
 				</a>
-				<p>秦皇岛市应急管理部</p>
+				<p>秦皇岛市应急管理局</p>
 				<p>官方微博</p>
 			</div>
 		</div>
