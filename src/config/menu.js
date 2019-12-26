@@ -3,18 +3,31 @@ const menu =  [
 	{
 		name:"栏目管理",
 		url:"manage/column",
-		icon:"home"
+		icon:"home",
+		children: [
+			{
+				name: "一级栏目管理",
+				url: "manage/editFirst"
+			},{
+				name: "二级栏目管理",
+				url: "manage/editSecond"
+			}]
 	},{
 		name:"内容管理",
 		icon:"diff",
 		children: [
 			{
-				name: "管理文章",
+				name: "按时间管理文章",
 				url: "manage/context"
-			},{
+			},
+			{
+				name: "按栏目管理文章",
+				url: "manage/column"
+			},
+			{
 				name: "创建文章",
 				url: "manage/create"
-			}]
+			},]
 	},
 	{
 		name:"文件管理",

@@ -16,6 +16,8 @@ import BmsSearch from "../bms-search";
 import Bumen from "../account/bumen";
 import Reply from "../reply";
 import File from "../directory/file";
+import EditFirst from "../column/editFirst";
+import EditSecond from "../column/editSecond";
 
 const { Content } = Layout;
 export default class Contents extends React.Component {
@@ -36,6 +38,8 @@ export default class Contents extends React.Component {
 				<Route path="/manage/context" component={Context}/>
 				<Route path="/manage/reply" component={Reply}/>
 				<Route path="/manage/file" component={File}/>
+				<Route path="/manage/editFirst" component={EditFirst}/>
+				<Route path="/manage/editSecond" component={EditSecond}/>
 			</Content>
 		);
 	}

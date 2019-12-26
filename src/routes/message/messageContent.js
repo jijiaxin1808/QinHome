@@ -4,6 +4,7 @@ import { connect } from "dva";
 import { Link } from "react-router-dom";
 import "./index.less";
 import axios from "axios";
+import splice from "../../utils/params";
 
 const MessageContent = (props)=> {
 	const limit = 15;
@@ -11,6 +12,14 @@ const MessageContent = (props)=> {
 	const [total, setTotal ] =useState();
 	const [oneMessage, setOneMessage] = useState();
 	useEffect(()=> {
+		const params = {
+			status: "publish",
+			flag: 1,
+			limit: limit,
+			offset: 0,
+			category: props.category
+		}
+		console.log("splice",splice("aaaaa",params))
 		axios({
 			method: "GET",
 			url: "http://yjxt.elatis.cn/posts/listPosts",//这里触发了两次

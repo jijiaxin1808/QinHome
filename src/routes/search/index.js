@@ -1,11 +1,10 @@
-/* eslint-disable linebreak-style */
-
 import React,{useState, useEffect} from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import urlHandle from "../../utils/urlHandle";
 import {message, Spin, Pagination} from "antd";
 import "./index.less";
+import * as Front from "../../api/Front";
 
 export default function Search(props) {
 
@@ -34,8 +33,7 @@ export default function Search(props) {
 	}, [key]);
 
 	useEffect(() => {
-		key &&
-    axios.get("http://yjxt.elatis.cn/posts/searchTitle",{
+		key &&axios.get("http://yjxt.elatis.cn/posts/searchTitle",{
     	headers: {
     		"Content-Type": "application/json",
     	},

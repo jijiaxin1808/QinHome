@@ -11,6 +11,7 @@ import { message,Dropdown,Button,Menu, Select } from "antd";
 import {friendLink, otherLink }from "../../config/friendLink";
 import axios from "axios";
 import TextScroll from "react-textscroll";
+import * as Front from "../../api/Front";
 
 const { Option } = Select
 const OtherLink = ()=> {
@@ -54,7 +55,7 @@ const FriendLink = () => {
 const FooterTopic = () => {
 	const [topicData, setData] = useState([]);
 	useEffect(() => {
-		axios.get("http://yjxt.elatis.cn/options/name/topicCol").then((res) => {
+		Front.modelTopicCol().then((res) => {
 			if (res.data.code === 0) {
 				setData(res.data.data);
 			} else {
@@ -62,6 +63,7 @@ const FooterTopic = () => {
 			}
 		});
 	}, []);
+
 	return (
 		<div className='footer-topic'>
 			<div className='footer-topic-header'><span>专题专栏</span></div>
@@ -81,26 +83,25 @@ const FooterTopic = () => {
 		</div>
 	);
 };
+
 const Home = () => {
 	const [colsData, setColsData] = useState([]);
 	const [backgroundUrl, setbackgroundUrl] = useState("");
 	const [annouces, setAnnouces] = useState([]);
 
 	useEffect(() => {
-		axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
+		Front.modelCloumn().then(res => {
 			if (res.data.code === 0) {
 				setColsData(res.data.data);
 			}
 		}).catch(err => {
 			message.error(err);
 		});
-		axios.get("http://yjxt.elatis.cn/options/name/safe").then((res) => {
+		Front.modelSafe().then((res) => {
 			if (res.data.code === 0) {
-
 				let _data = [];
 				res.data.data.map(item => {
 					if(item.isShow) {
-						console.log("push了数据",item);
 						_data.push(
 							<a title={item.title} href={`${item.href}`} className = "safe-jjx-a" style={{color: "#333", fontSize: "18px"}}>{item.title}</a>
 						);
@@ -109,10 +110,9 @@ const Home = () => {
 					return null;
 				});
 				setAnnouces(_data);
-				console.log("设置了数据",_data);
 			}
 		});
-		axios.get("http://yjxt.elatis.cn/options/name/background").then((res) => {
+		Front.modelBackground().then((res) => {
 			if (res.data.code === 0) {
 				setbackgroundUrl(res.data.data[0].picUrl);
 			}

@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./index.less";
 import { Link } from "react-router-dom";
-// import Pagination from "../../components/pagination";
 import MessaegeContent from "./messageContent";
 import urlHandle from "../../utils/urlHandle";
 import { connect } from "dva";
 import { Skeleton } from "antd";
 const  Message = (props) => {
-	// const type = props.location.search.split('=')[1]
 	const [id, setId] = useState(1);// 这里用于区别一级页面
 	const [type, setType] = useState(1);// 这里用于区别二级页面
-	// const [ messageData, setmessageData ] = useState("");
-	// eslint-disable-next-line no-unused-vars
+
 	const [ contentData, setContentData ] = useState([]);
 
 	useEffect(()=> {
@@ -26,7 +23,6 @@ const  Message = (props) => {
 	useEffect(()=> {	
 	},[id,type,props]);
 	if(type&&props.home.columnData.length!==0&&type!==1) {
-		console.log("当前初始化数据",contentData);
 		return (
 			<div className='message'>
 				<div className='message-header'>

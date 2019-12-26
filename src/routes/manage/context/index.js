@@ -33,12 +33,6 @@ const  DeleteArticle  = (props)=> {
 		}).then(res=> {
 			if(res.data.code === 0 ) {
 				message.success("删除成功");
-				// window.location.reload();
-				// setTimeout(()=>{},500)
-				// props.dispatch(routerRedux.push({
-				// 	pathname: '/index/index'
-				// }));
-				// props.reload();
 			}
 			else {
 				message.warn(res.data.message);
