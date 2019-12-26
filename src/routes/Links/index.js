@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.less";
 import { Card } from "antd";
-import linkData from "../../config/link"; 
+import { links } from "../../config/friendLink";
 
 const FriendLinks = ()=> {
     return (
@@ -11,7 +11,7 @@ const FriendLinks = ()=> {
         </div>
         <div className = "links">
             {
-                linkData.map((item,index)=> {
+                links.map((item,index)=> {
                     return (
                         <Card hoverable  className = "link">
                             <a href = {item.href} className = "links-a">

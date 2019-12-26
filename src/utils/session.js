@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 const LOGIN_COOKIE_NAME = "localId";
 
 export function isAuthenticated () {

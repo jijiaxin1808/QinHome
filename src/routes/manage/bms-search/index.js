@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import "./index.less";
 import axios from "axios";
 import { Table,  Button, Modal, message, Skeleton } from "antd";
-import urlHandle from "../../../config/urlHandle";
+import urlHandle from "../../../utils/urlHandle";
 import {routerRedux} from "dva/router";
 import { connect } from "dva";
 import Loading from "../../../components/loading";

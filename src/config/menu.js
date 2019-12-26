@@ -1,5 +1,5 @@
-/* eslint-disable linebreak-style */
-export const allMenu = [
+//  这里是后台路由设置(menu)
+const menu =  [
 	{
 		name:"栏目管理",
 		url:"manage/column",
@@ -54,3 +54,4 @@ export const allMenu = [
 		icon:"user"
 	}
 ];
+export default menu;

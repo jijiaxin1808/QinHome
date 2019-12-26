@@ -3,7 +3,7 @@
 import React,{useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
-import urlHandle from "../../config/urlHandle";
+import urlHandle from "../../utils/urlHandle";
 import {message, Spin, Pagination} from "antd";
 import "./index.less";
 

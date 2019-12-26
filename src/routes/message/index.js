@@ -3,7 +3,7 @@ import "./index.less";
 import { Link } from "react-router-dom";
 // import Pagination from "../../components/pagination";
 import MessaegeContent from "./messageContent";
-import urlHandle from "../../config/urlHandle";
+import urlHandle from "../../utils/urlHandle";
 import { connect } from "dva";
 import { Skeleton } from "antd";
 const  Message = (props) => {

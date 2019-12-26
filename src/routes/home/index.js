@@ -8,17 +8,16 @@ import Weather from "./weather";
 import Tabs from "../../components/tabs";
 import { Link } from "react-router-dom";
 import { message,Dropdown,Button,Menu, Select } from "antd";
-import friendlinkData from "../../config/friendlinkData";
+import {friendLink, otherLink }from "../../config/friendLink";
 import axios from "axios";
 import TextScroll from "react-textscroll";
-import otherLinkData from "../../config/otherLink";
 
 const { Option } = Select
 const OtherLink = ()=> {
 	return (
 		<Select style = {{width:"250px",marginLeft:"20px"}}  onChange = {(value)=>{window.open(value)}} defaultValue = {"市直部门网站"}>
 		{
-			otherLinkData.map((item,index)=> {
+			otherLink.map((item,index)=> {
 				return (
 					<Option value = {item.href}>
 						{item.title}
@@ -38,10 +37,8 @@ const FriendLink = () => {
 
 			<div className='friendlink-link'>
 				{
-					friendlinkData.map((item, index) => {
+					friendLink.map((item, index) => {
 						return (
-						// eslint-disable-next-line react/react-in-jsx-scope
-							// eslint-disable-next-line react/jsx-no-target-blank
 							<a alt={item.name} key={index} href={item.href} target = "_blank">
 								{item.name}
 							</a>

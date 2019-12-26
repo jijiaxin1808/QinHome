@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./index.less";
 import axios from "axios";
-import urlHandle from "../../config/urlHandle";
+import urlHandle from "../../utils/urlHandle";
 import { message, Spin } from "antd";
 
 // const func = (data)=> {
