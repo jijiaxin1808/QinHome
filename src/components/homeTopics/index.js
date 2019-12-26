@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./index.less";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import * as Front  from "../../api/Front";
 import { Skeleton } from "antd";
 
 const HomeTopic = (props) => {
@@ -31,10 +31,10 @@ const HomeTopic = (props) => {
 		</div>
 	);
 };
+
 const HomeTopics = (props) => {
 	const { colsData } = props;
 	const [ topicData, setTopicData ] = useState([]);
-	console.log(colsData,"colData");
 
 	useEffect(()=> {
 		if(colsData.length !==0 ){
@@ -44,44 +44,29 @@ const HomeTopics = (props) => {
 				}
 				return null;
 			});
-			const data1 = JSON.stringify({
+			const data1 = {
 				limit:3,
 				moduleArray:sort,
 				status: ""
-			});
-			console.log(sort,"发送了home请求");
-			axios({
-				method:"POST",
-				url:"http://yjxt.elatis.cn/posts/listModulePost",
-				headers: {
-					"Content-Type":"application/json"
-				},
-				data: data1
-			}).then(res=> {
-				console.log(res.data,"topic数据");
+			}
+			Front.listModulePost(data1).then(res=> {
 				const newData = res.data.data.map((item,index)=>{
 					if(index>1) {
 						return item.post;
 					}
 					return null;
 				});
-				console.log("newdata",newData);
-
-
 				setTopicData(newData);
 			});
 		}
 	},[props.colsData]);
 	useEffect(()=> {
-		console.log(topicData);
 	},[topicData]);
 	if(topicData.length!== 0) {
-		console.log("现在的 col",topicData);
 		return (
 			<div className='home-topics'>
 				{
 					topicData.map((item, index) => {
-						console.log(item,"jjjjjjjjxjxj");
 						if(index>1){
 							return (
 								<HomeTopic 
@@ -93,7 +78,6 @@ const HomeTopics = (props) => {
 							);
 						}
 						else return null;
-
 					})
 				}
 			</div>
@@ -104,7 +88,5 @@ const HomeTopics = (props) => {
 			<Skeleton rows = {20} />
 		);
 	}
-
-
 };
 export default HomeTopics;
