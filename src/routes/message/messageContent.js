@@ -62,7 +62,9 @@ const MessageContent = (props)=> {
 	}
 	else if(data.length !== 0&&total){
 		// console.log("total:" ,total,"data: ",data)
-
+		if(data.length===1) {
+			console.log("当前栏目直接展示文章");
+		}
 		return (
 			<div className = "message-maincontent">
 				<ul className = "message-ul" style  = {{minHeight : "500px"}}>

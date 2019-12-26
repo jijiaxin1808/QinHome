@@ -11,6 +11,7 @@ import headerData from "./config/headerData";
 import Search from "./routes/search";
 import Services from "./routes/services";
 import JJX from "./components/jjxnb";
+import FriendLink from "./routes/Links";
 
 const routers= [
 	{
@@ -53,6 +54,12 @@ const routers= [
 		path: "/index/index/jjxnb",
 		component: JJX,
 		key: 0
+	},
+	{
+		name: "链接",
+		path: "/index/links",
+		component: FriendLink,
+		key: 2
 	},
 ];
 

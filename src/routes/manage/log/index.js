@@ -67,7 +67,7 @@ const Log = ()=> {
 		<div>
 			<div className = { "title" }>
 				<span>
-                 操作日志
+                操作日志
 				</span>
 			</div>
 			<Table columns={columns} dataSource={logdata} style = {{width:"80%",margin: "0 auto"}}  />
