@@ -13,16 +13,18 @@ const openNotification = message => {
 
 axios.interceptors.response.use(data=> {
     if (data.status && data.status == 200 && data.data.code!==0) {
-      message.error(data.data.data.message);
-      return;
+      message.error(data.data.message);
+      return Promise.reject();
     }
     return data;
   }, err=> {
     if (err.response.status == 504||err.response.status == 404) {
         openNotification('服务器出错了')
-    } else if (err.response.status == 403) {
+    } 
+    else if (err.response.status == 403) {
         openNotification('权限不足,请联系管理员!')
-    }else {
+    }
+    else {
         openNotification('未知错误!')
     }
     return Promise.reject(err);
@@ -48,7 +50,7 @@ function axiosB(url, data = null, method = "GET") {
         method,
         headers: {
             "Content-Type":"application/json",
-            "json": getCookie()
+            "token": getCookie()
         }
     })
 }

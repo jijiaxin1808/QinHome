@@ -2,7 +2,6 @@ import React from "react";
 import { Form, Icon, Input, Button,  message } from "antd";
 import { connect} from "dva";
 import "./index.less";
-import axios from "axios";
 import { routerRedux } from "dva/router";
 import { setCookie} from "../../utils/session";
 import * as Back from "../../api/Back";
@@ -17,19 +16,12 @@ class NormalLoginForm extends React.Component {
   	e.preventDefault();
   	this.props.form.validateFields((err, values) => {
   		if (!err) {
-  			const tmp = values;
-  			tmp.keep_alive = Number(values.keep_alive);
-  			axios({
-  				method:"post",
-  				url:"http://yjxt.elatis.cn/users/login",
-  				data: {
-					  ...tmp,
-					  keep_alive: 1
-  				},
-  				headers: {
-  					"content-type": "application/json"
-  				}
-  			}).then(data =>{
+			const tmp = values;
+			const data = {
+				...tmp,
+				keep_alive: 1
+			}
+			Back.login(data).then(data =>{
   				if (data.data.code === 0 ) {
   					message.success("登录成功");
   					setCookie(data.data.data.token);
@@ -39,12 +31,7 @@ class NormalLoginForm extends React.Component {
   						})
 					  );
   				}
-  				else {
-  					message.error(data.data.message);
-  				}
-  			}).catch(err => {
-  				console.log(err);
-  			});
+  			})
   		}
   	});
   };
@@ -69,7 +56,9 @@ class NormalLoginForm extends React.Component {
   				</Form.Item>
   				<Form.Item style = {{display:"flex",justifyContent:"center"}}>
   					{getFieldDecorator("password", {
-  						rules: [{ required: true, message: "请输入密码" }],
+						  rules: [{ required: true, message: "请输入密码" },
+						{ min: 6, message: "密码至少六位" }
+						],
   					})(
   						<Input
   							prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
