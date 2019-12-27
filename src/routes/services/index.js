@@ -1,23 +1,14 @@
-/* eslint-disable linebreak-style */
-
 import React,{Component} from "react";
-// import Footer from "../../components/footer";
-// import Header from "../../components/header";
 import { Menu,Layout} from "antd";
 import {Search,Message} from "./search";
 import WrappedNormalLoginForm from "./form";
 import Tousu from "./form/tousu";
 import axios from "axios";
 import "./index.less";
-// const { SubMenu } = Menu;
+import * as Front from "../../api/Front";
+
 const { Sider } = Layout;
 const columns = [
-	// {
-	// 	title: "序号",
-	// 	dataIndex: "id",
-	// 	key: "id",
-	// 	render: text => <a>{text}</a>,
-	// },
 	{
 		title: "留言消息",
 		dataIndex: "title",
@@ -39,7 +30,6 @@ const columns = [
 		dataIndex:"updated_at"
 	},
 ];
-  
 let i;
 export default class Services extends Component{
 	constructor(props) {
@@ -52,7 +42,6 @@ export default class Services extends Component{
 		};
 	}
 	handleClick =(e)=> {
-		console.log(e);
 		this.setState({
 			key:e.key
 		});
@@ -65,13 +54,11 @@ export default class Services extends Component{
 	  }
 	}
 	componentDidUpdate(){
-		axios({
-			url:"http://yjxt.elatis.cn/msgs/listMsgs?category=all&flag=1",
-			method:"GET",
-			headers:{
-				"Content-Type":"application/json"
-			}
-		}).then(res=>{
+		const params = {
+			category: "all",
+			flag: 1
+		}
+		Front.listMsgs(params).then(res=>{
 			if(res.data.code===0){
 				this.setState({
 					data:res.data.data,
@@ -85,7 +72,6 @@ export default class Services extends Component{
 		if(i.length){			
 			i.map((item)=>{
 				item.addEventListener("click",function () {
-					// console.log(item.getAttribute("data-row-key"))
 					ctx.setState({
 						key:"XAS",
 						 message:ctx.state.data[item.getAttribute("data-row-key")]
@@ -100,7 +86,6 @@ export default class Services extends Component{
 		console.log(this.state);
 		return (
 			<div className="yj-services">
-				{/* <Header/> */}
 				<div className="services">
 					<div className="services-slider">
 						<Layout >
@@ -123,13 +108,8 @@ export default class Services extends Component{
 						{
 							this.state.key==="1"?<WrappedNormalLoginForm/>:(this.state.key==="2"?<Search columns={columns} dataSource={this.state.data} showQuickJumper = {true}/>:(this.state.key==="3"?<Tousu/>:<Message data={this.state.message}/>))
 						}
-						{/* <Search columns={columns} dataSource={data}/> */}
-						{/* <Message /> */}
-						{/* <WrappedNormalLoginForm /> */}
-						{/* <Tousu /> */}
 					</section>   
 				</div>
-				{/* <Footer/> */}
 			</div>
 		);
 	}

@@ -1,5 +1,3 @@
-/* eslint-disable linebreak-style */
-
 import React from "react";
 import { Table} from "antd";
 import "./index.less";
@@ -11,7 +9,6 @@ export const Search = (props)=> {
 	);
 };
 export const Message = (props)=> {
-	console.log(props);
 	return (
 		<div className="zx-message">
 			<div className="zx-message-main">

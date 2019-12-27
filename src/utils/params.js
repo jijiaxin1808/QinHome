@@ -1,4 +1,4 @@
-function splice(url,params) {
+function spliceUrl(url,params) {
     const keys = Object.keys(params);
     const length = keys.length;
     for(let i = 0; i < length; i++) {
@@ -11,4 +11,4 @@ function splice(url,params) {
     }
     return url;
 }
-export default splice;
+export default spliceUrl;

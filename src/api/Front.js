@@ -1,4 +1,5 @@
 import { axiosF } from "../utils/axios";
+import spliceUrl from "../utils/params";
 
 function modelCloumn() {
     return axiosF("options/name/column");
@@ -22,12 +23,22 @@ function modelBackground() {
     return axiosF("options/name/background");
 }
 function listPosts(params) {
-    const { status, flag, limit, offset, category } = params;
-    return axiosF(`posts/listPosts?status=${status}&flag=${flag}&limit=${limit}&offset=${offset}&category=${category}`)
+    const url = "posts/listPosts";
+    const newUrl  = spliceUrl(url,params);
+    return axiosF(newUrl)
 }	
 function get(params) {
-    const { id } = params;
-    return axiosF(`http://yjxt.elatis.cn/posts/get?id=${id}`)
+    const url = "posts/get";
+    const newUrl = spliceUrl(url,params)
+    return axiosF(newUrl);
+}
+function listMsgs(params) {
+    const url = "msgs/listMsgs";
+    const newUrl = spliceUrl(url,params)
+    return axiosF(newUrl);
+}
+function create(data) {
+    return axiosF("msgs/create",data,"POST")
 }
 
 
@@ -35,4 +46,7 @@ function get(params) {
 
 
 
-export {modelCloumn, modelCarousel, listModulePost, getArticle, modelTopicCol, modelSafe, modelBackground, listPosts, get  }
+
+export {modelCloumn, modelCarousel, listModulePost, getArticle, modelTopicCol, modelSafe, modelBackground, listPosts, get,
+    listMsgs, create
+  }
