@@ -4,8 +4,8 @@ import { connect} from "dva";
 import "./index.less";
 import axios from "axios";
 import { routerRedux } from "dva/router";
-import {_setCookie} from "../../utils/session";
-// import { local } from 'inspector';
+import { setCookie} from "../../utils/session";
+import * as Back from "../../api/Back";
 
 @connect(
 	({login, loading}) => ({
@@ -17,10 +17,8 @@ class NormalLoginForm extends React.Component {
   	e.preventDefault();
   	this.props.form.validateFields((err, values) => {
   		if (!err) {
-
   			const tmp = values;
   			tmp.keep_alive = Number(values.keep_alive);
-  			console.log(tmp);
   			axios({
   				method:"post",
   				url:"http://yjxt.elatis.cn/users/login",
@@ -34,7 +32,7 @@ class NormalLoginForm extends React.Component {
   			}).then(data =>{
   				if (data.data.code === 0 ) {
   					message.success("登录成功");
-  					_setCookie(data.data.data.token);
+  					setCookie(data.data.data.token);
   					this.props.dispatch(
   						routerRedux.push({
   							pathname:"/manage/index"

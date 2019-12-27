@@ -6,7 +6,6 @@ import { message, Spin } from "antd";
 
 const Article = () => {
 	const [data, setdata] = useState([]);
-
 	useEffect(() => {
 		Front.getArticle(urlHandle("id"))
 			.then(res => {
@@ -20,8 +19,6 @@ const Article = () => {
 				setdata(["none"]);
 			}
 		});
-	}, []);
-	useEffect(() => {
 	}, []);
 	if (data[0] === "none") {
 		message.warn("所访问页面不存在");

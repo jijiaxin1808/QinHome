@@ -24,15 +24,20 @@ const  Tabs =(props)=> {
 				status: "publish"
 			};
 			Front.listModulePost(data1).then(res=> {
-				const newdata = res.data.data.map((item, index)=> {
-					return (
-						{
-							tab: props.home.columnData[1].sec[index].title,
-							Info: item.post
-						}
-					);
-				});
-				setData(newdata);
+				if(res) {
+					console.log(res,"9999999999999");
+					if(res.data.data.code === 200) {
+						const newdata = res.data.data.map((item, index)=> {
+							return (
+								{
+									tab: props.home.columnData[1].sec[index].title,
+									Info: item.post
+								}
+							);
+						});
+						setData(newdata);
+					}
+				}
 			});
 		}
 	},[props.home]);

@@ -1,4 +1,4 @@
-import axiosF from "../utils/axiosF";
+import { axiosF } from "../utils/axios";
 
 function modelCloumn() {
     return axiosF("options/name/column");
@@ -29,9 +29,7 @@ function get(params) {
     const { id } = params;
     return axiosF(`http://yjxt.elatis.cn/posts/get?id=${id}`)
 }
-// function searchTitle() {
-//     const {}
-// }
+
 
 
 

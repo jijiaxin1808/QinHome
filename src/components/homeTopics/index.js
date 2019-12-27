@@ -50,13 +50,15 @@ const HomeTopics = (props) => {
 				status: ""
 			}
 			Front.listModulePost(data1).then(res=> {
-				const newData = res.data.data.map((item,index)=>{
-					if(index>1) {
-						return item.post;
-					}
-					return null;
-				});
-				setTopicData(newData);
+				if(res.data.data.code === 200) {
+					const newData = res.data.data.map((item,index)=>{
+						if(index>1) {
+							return item.post;
+						}
+						return null;
+					});
+					setTopicData(newData);
+				}
 			});
 		}
 	},[props.colsData]);

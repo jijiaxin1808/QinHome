@@ -1,6 +1,6 @@
 import { Table, Input, InputNumber, Popconfirm, Form, Button, Modal } from 'antd';
 import React, {useState} from "react";
-import axiosF from '../../../utils/axiosF';
+// import axiosF from '../../../utils/axiosF';
 
 const data = [];
 for (let i = 0; i < 100; i++) {

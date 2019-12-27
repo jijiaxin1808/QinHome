@@ -16,10 +16,9 @@ const MessageContent = (props)=> {
 			status: "publish",
 			flag: 1,
 			limit: limit,
-			offset: 0,
-			category: props.category
+			first: props.category.split("/")[1],
+			second: props.category.split("/")[2]
 		}
-		console.log("splice",splice("aaaaa",params))
 		axios({
 			method: "GET",
 			url: "http://yjxt.elatis.cn/posts/listPosts",//这里触发了两次
@@ -28,15 +27,13 @@ const MessageContent = (props)=> {
 				flag: 1,
 				limit: limit,
 				offset: 0,
-				category: props.category
+				first: props.category.split("/")[1],
+				second: props.category.split("/")[2]
 			}
 		}).then(res=> {
 			if(res.data.code === 0) {
-				console.log(props.category,"当前分类初始化了",res.data.data,"ssss");
 				setTotal(res.data.total);
 				if(res.data.data[0] === "empty") {
-					
-					console.log("当前栏目没有文章");
 					setData("empty");
 				}
 				else {
@@ -58,21 +55,34 @@ const MessageContent = (props)=> {
 
 	},[props]);
 	const onChange = (page, pageSize)=> {
-		props.home.columnData.length!==0&&axios({
-			method: "GET",
-			url: "http://yjxt.elatis.cn/posts/listPosts",
-			params: {
+
+		
+		if(props.home.columnData.length!==0) {
+			const params = {
 				status: "publish",
 				limit: limit,
 				flag: 1,
 				offset: (page-1)*limit,
-				category: props.category
+				first: props.category.split("/")[1],
+				second: props.category.split("/")[2]
 			}
-		}).then(res=> {
-			if(res.data.code === 0) {
-				setData(res.data.data);
-			}
-		});
+			axios({
+				method: "GET",
+				url: "http://yjxt.elatis.cn/posts/listPosts",
+				params: {
+					status: "publish",
+					limit: limit,
+					flag: 1,
+					offset: (page-1)*limit,
+					first: props.category.split("/")[1],
+					second: props.category.split("/")[2]
+				}
+			}).then(res=> {
+				if(res.data.code === 0) {
+					setData(res.data.data);
+				}
+			});
+		}
 	};
 	if(data === "empty") {
 		return (
@@ -83,10 +93,7 @@ const MessageContent = (props)=> {
 	}
 	else if(data.length !== 0&&total){
 		if(data.length===1) {
-			console.log("当前只展示一个",data[0].id)
-
 			if(oneMessage) {
-				console.log("当前one",oneMessage)
 				return (
 					<div className = "oneMessage" >
 						{<p dangerouslySetInnerHTML={{ __html:oneMessage.data.content}}  />}
@@ -115,14 +122,11 @@ const MessageContent = (props)=> {
 							})
 						}
 					</ul>
-	
 					<Pagination  onChange={onChange} defaultCurrent={1}
 						defaultPageSize={limit} total={total} showQuickJumper  />
 				</div>
-		
 			);
 		}
-
 	}
 	else {
 		if(data === "empty") {
@@ -132,7 +136,6 @@ const MessageContent = (props)=> {
 				</div>
 			);
 		}
-		console.log("total:" ,total,"data: ",data);
 		return (
 			<Skeleton />
 		);
