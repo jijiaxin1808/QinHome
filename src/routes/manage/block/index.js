@@ -1,10 +1,9 @@
-/* eslint-disable indent */
-/* eslint-disable react/jsx-no-target-blank */
 import React, { useEffect, useState, Fragment } from "react";
-// import styles from "./index.css";\
 import "./index.css";
 import { Table, Button, Input, Switch, message, Upload, Modal } from "antd";
 import axios from "axios";
+import * as Back from "../../../api/Back";
+import * as Front from "../../../api/Front";
 
 const HeaderScroll = () => {
 	const [data, setdata] = useState([]);
@@ -15,16 +14,8 @@ const HeaderScroll = () => {
 		};
 		const handleOk = e => {
 			setVisible(false);
-			console.log("保存的", data);
-			axios({
-				method: "POST",
-				url: "http://yjxt.elatis.cn/options/update",
-				headers: {
-					token: localStorage.getItem("token"),
-					"Content-Type": "application/json",
-				},
-				data: JSONData,
-			}).then(res => {
+			Back.modelUpdate(data1)
+			.then(res => {
 				if (res.data.code === 0) {
 					message.success("保存成功");
 				} else {
@@ -54,9 +45,9 @@ const HeaderScroll = () => {
 	  
 	};
 	useEffect(() => {
-		axios.get("http://yjxt.elatis.cn/options/name/safe").then(res => {
+		Front.modelSafe()
+		.then(res => {
 			if (res.data.code === 0) {
-				console.log(res.data);
 				setdata(res.data.data);
 			} else {
 				message.error(res.data.message);
@@ -78,7 +69,6 @@ const HeaderScroll = () => {
 				defaultValue={content}
 					onChange={e => {
 						const newData = data.map(item => {
-							console.log(id.id, "id");
 							if (item.id === id.id) {
 								return {
 									...item,
@@ -89,7 +79,6 @@ const HeaderScroll = () => {
 									...item,
 								};
 						});
-						console.log(newData);
 						setdata(newData);
 					}}
 				/>
@@ -104,7 +93,6 @@ const HeaderScroll = () => {
 				defaultValue={href}
 					onChange={e => {
 						const newData = data.map(item => {
-							console.log(id.id, "id");
 							if (item.id === id.id) {
 								return {
 									...item,
@@ -115,7 +103,6 @@ const HeaderScroll = () => {
 									...item,
 								};
 						});
-						console.log(newData);
 						setdata(newData);
 					}}
 				/>
@@ -132,7 +119,6 @@ const HeaderScroll = () => {
 					defaultChecked={isShow}
 					onChange={checked => {
 						const newData = data.map(item => {
-							console.log(id.id, "id");
 							if (item.id === id.id) {
 								return {
 									...item,
@@ -143,7 +129,6 @@ const HeaderScroll = () => {
 									...item,
 								};
 						});
-						console.log(newData);
 						setdata(newData);
 					}}
 				/>
@@ -159,12 +144,10 @@ const HeaderScroll = () => {
 						const newData = [...data];
 						data.map((item, index) => {
 							if (item.id === id2.id) {
-								console.log("找到了",index);
 								newData.splice(index, 1);
 							}
 							return null;
 						});
-						console.log("删除", newData);
 						setdata(newData);
 					}}
 				>
@@ -173,33 +156,24 @@ const HeaderScroll = () => {
 			),
 		},
 	];
-	const JSONData = JSON.stringify({
+	const data1 = {
 		name: "safe",
 		value: data,
-	});
+	}
 	return (
 		<div>
 			<div className={"title"}>
 				<span>顶部滚动条</span>
 			</div>
 			<div className={"buttonSbar"}>
-				<Button className={"button"} 					onClick={() => {
+				<Button className={"button"} onClick={() => {
 					let newData = data;
-					// newData.push({
-					// 	id: data.length + 1,
-					// 	href: "请输入跳转至的链接",
-					// 	picUrl: "",
-					// 	title: "请输入标题",
-					// 	isShow: false,
-					// 	key: "4",
-					// });
 					setdata([...newData,{
 						id: data.length + 1,
 						"title": "",
 						"href": "",
 						"isShow": 0
 					}]);
-					console.log(data);
 				}}>添加顶部滚动条</Button>
 				<HeaderSave
 					className={"button"}
@@ -219,18 +193,10 @@ const Carousel = () => {
 		const showModal = () => {
 			setVisible(true);
 		};
-	
 		const handleOk = e => {
 			setVisible(false);
-			axios({
-				method: "POST",
-				url: "http://yjxt.elatis.cn/options/update",
-				headers: {
-					token: localStorage.getItem("token"),
-					"Content-Type": "application/json",
-				},
-				data: JSONData,
-			}).then(res => {
+			Back.modelUpdate(data1)
+			.then(res => {
 				if (res.data.code === 0) {
 					message.success("保存成功");
 				} else {
@@ -269,16 +235,11 @@ const Carousel = () => {
 	};
 	const onChange = (info, id) => {
 		if (info.file.status !== "uploading") {
-			console.log(info.file, info.fileList);
 		}
 		if (info.file.status === "done") {
 			message.success(`${info.file.name} 文件上传成功`);
-			console.log(info.file.response.data.url);
-			console.log(data, "data");
 			const newData = data.map(item => {
-				console.log(id.id, "id");
 				if (item.id === id.id) {
-					console.log("找到id了");
 					return {
 						...item,
 						picUrl: info.file.response.data.url,
@@ -289,7 +250,6 @@ const Carousel = () => {
 					};
 			});
 			setdata(newData);
-			console.log(newData, "newdata");
 		} else if (info.file.status === "error") {
 			message.error(`${info.file.name} 文件上传失败`);
 		}
@@ -321,9 +281,9 @@ const Carousel = () => {
 	</Upload>;
 	};
 	useEffect(() => {
-		axios.get("http://yjxt.elatis.cn/options/name/carousel").then(res => {
+		Front.modelCarousel()
+		.then(res => {
 			if (res.data.code === 0) {
-				console.log(res.data);
 				setdata(res.data.data);
 			} else {
 				message.error(res.data.message);
@@ -345,7 +305,6 @@ const Carousel = () => {
 				defaultValue={content}
 					onChange={e => {
 						const newData = data.map(item => {
-							console.log(id.id, "id");
 							if (item.id === id.id) {
 								return {
 									...item,
@@ -356,7 +315,6 @@ const Carousel = () => {
 									...item,
 								};
 						});
-						console.log(newData);
 						setdata(newData);
 					}}
 				/>
@@ -377,7 +335,6 @@ const Carousel = () => {
 				defaultValue={href}
 					onChange={e => {
 						const newData = data.map(item => {
-							console.log(id.id, "id");
 							if (item.id === id.id) {
 								return {
 									...item,
@@ -388,7 +345,6 @@ const Carousel = () => {
 									...item,
 								};
 						});
-						console.log(newData);
 						setdata(newData);
 					}}
 				/>
@@ -405,7 +361,6 @@ const Carousel = () => {
 					defaultChecked={isShow}
 					onChange={checked => {
 						const newData = data.map(item => {
-							console.log(id.id, "id");
 							if (item.id === id.id) {
 								return {
 									...item,
@@ -416,7 +371,6 @@ const Carousel = () => {
 									...item,
 								};
 						});
-						console.log(newData);
 						setdata(newData);
 					}}
 				/>
@@ -432,12 +386,10 @@ const Carousel = () => {
 						const newData = [...data];
 						data.map((item, index) => {
 							if (item.id === id2.id) {
-								console.log("找到了",index);
 								newData.splice(index, 1);
 							}
 							return null;
 						});
-						console.log("删除", newData);
 						setdata(newData);
 					}}
 				>
@@ -446,10 +398,10 @@ const Carousel = () => {
 			),
 		},
 	];
-	const JSONData = JSON.stringify({
+	const data1 = {
 		name: "carousel",
 		value: data,
-	});
+	}
 	return (
 		<div>
 			<div className={"title"}>
@@ -459,14 +411,6 @@ const Carousel = () => {
 				<Button
 					onClick={() => {
 						let newData = data;
-						// newData.push({
-						// 	id: data.length + 1,
-						// 	href: "请输入跳转至的链接",
-						// 	picUrl: "",
-						// 	title: "请输入标题",
-						// 	isShow: false,
-						// 	key: "4",
-						// });
 						setdata([...newData,{
 							id: data.length + 1,
 							href: "",
@@ -475,7 +419,6 @@ const Carousel = () => {
 							isShow: false,
 							key: "4",
 						}]);
-						console.log(data);
 					}}
 					className={"button"}
 				>
@@ -489,9 +432,8 @@ const Carousel = () => {
 			</div>
 			<Table
 				columns={carouselCol}
-				dataSource={/* blockData.carouselData   */ data}
+				dataSource={ data}
 				pagination={false}
-				// onChange = {()=>{}}
 			/>
 		</div>
 	);
@@ -507,15 +449,8 @@ const HomeTopic = () => {
 	
 		const handleOk = e => {
 			setVisible(false);
-			axios({
-				method: "POST",
-				url: "http://yjxt.elatis.cn/options/update",
-				headers: {
-					token: localStorage.getItem("token"),
-					"Content-Type": "application/json",
-				},
-				data: JSONData,
-			}).then(res => {
+			Back.modelUpdate(data1)
+			.then(res => {
 				if (res.data.code === 0) {
 					message.success("保存成功");
 				} else {
@@ -545,9 +480,9 @@ const HomeTopic = () => {
 	  
 	};
 	useEffect(() => {
-		axios.get("http://yjxt.elatis.cn/options/name/topicCol").then(res => {
+		Front.modelTopicCol()
+		.then(res => {
 			if (res.data.code === 0) {
-				console.log(res.data);
 				setdata(res.data.data);
 			} else {
 				message.error(res.data.message);
@@ -569,7 +504,6 @@ const HomeTopic = () => {
 				defaultValue={content}
 					onChange={e => {
 						const newData = data.map(item => {
-							console.log(id.id, "id");
 							if (item.id === id.id) {
 								return {
 									...item,
@@ -580,7 +514,6 @@ const HomeTopic = () => {
 									...item,
 								};
 						});
-						console.log(newData);
 						setdata(newData);
 					}}
 				/>
@@ -601,7 +534,6 @@ const HomeTopic = () => {
 				defaultValue={href}
 					onChange={e => {
 						const newData = data.map(item => {
-							console.log(id.id, "id");
 							if (item.id === id.id) {
 								return {
 									...item,
@@ -612,7 +544,6 @@ const HomeTopic = () => {
 									...item,
 								};
 						});
-						console.log(newData);
 						setdata(newData);
 					}}
 				/>
@@ -629,16 +560,11 @@ const HomeTopic = () => {
 	};
 	const onChange = (info, id) => {
 		if (info.file.status !== "uploading") {
-			console.log(info.file, info.fileList);
 		}
 		if (info.file.status === "done") {
 			message.success(`${info.file.name} 文件上传成功`);
-			console.log(info.file.response.data.url);
-			console.log(data, "data");
 			const newData = data.map(item => {
-				console.log(id.id, "id");
 				if (item.id === id.id) {
-					console.log("找到id了");
 					return {
 						...item,
 						picUrl: info.file.response.data.url,
@@ -649,7 +575,6 @@ const HomeTopic = () => {
 					};
 			});
 			setdata(newData);
-			// console.log(newData,"newdata");
 		} else if (info.file.status === "error") {
 			message.error(`${info.file.name} 文件上传失败`);
 		}
@@ -673,10 +598,10 @@ const HomeTopic = () => {
 			);
 		} else return <Button>添加图片</Button>;
 	};
-	const JSONData = JSON.stringify({
+	const data1 = {
 		name: "topicCol",
 		value: data,
-	});
+	}
 	
 	return (
 		<div>
@@ -702,19 +627,10 @@ const Background = () => {
 		const showModal = () => {
 			setVisible(true);
 		};
-	
 		const handleOk = e => {
 			setVisible(false);
-			console.log("保存的", data);
-			axios({
-				method: "POST",
-				url: "http://yjxt.elatis.cn/options/update",
-				headers: {
-					token: localStorage.getItem("token"),
-					"Content-Type": "application/json",
-				},
-				data: JSONData,
-			}).then(res => {
+			Back.modelUpdate(data1)
+			.then(res => {
 				if (res.data.code === 0) {
 					message.success("保存成功");
 				} else {
@@ -744,9 +660,9 @@ const Background = () => {
 	  
 	};
 	useEffect(() => {
-		axios.get("http://yjxt.elatis.cn/options/name/background").then(res => {
+		Front.modelBackground()
+		.then(res => {
 			if (res.data.code === 0) {
-				console.log(res.data);
 				setdata(res.data.data);
 			} else {
 				message.error(res.data.message);
@@ -763,16 +679,11 @@ const Background = () => {
 	};
 	const onChange = (info, id) => {
 		if (info.file.status !== "uploading") {
-			console.log(info.file, info.fileList);
 		}
 		if (info.file.status === "done") {
 			message.success(`${info.file.name} 文件上传成功`);
-			console.log(info.file.response.data.url);
-			console.log(data, "data");
 			const newData = data.map(item => {
-				console.log(id.id, "id");
 				if (item.id === id.id) {
-					console.log("找到id了");
 					return {
 						...item,
 						picUrl: info.file.response.data.url,
@@ -783,7 +694,6 @@ const Background = () => {
 					};
 			});
 			setdata(newData);
-			// console.log(newData,"newdata");
 		} else if (info.file.status === "error") {
 			message.error(`${info.file.name} 文件上传失败`);
 		}
@@ -807,10 +717,10 @@ const Background = () => {
 			);
 		} else return <Button>添加图片</Button>;
 	};
-	const JSONData = JSON.stringify({
+	const data1 = {
 		name: "background",
 		value: data,
-	});
+	}
 	const backgroundCol = [
 		{
 			title: "图片",
@@ -825,7 +735,6 @@ const Background = () => {
 				<span>背景图片</span>
 			</div>
 			<div className={"buttonSbar"}>
-			
 				<BackgroundSave
 					className={"button"}
 				>
@@ -838,11 +747,10 @@ const Background = () => {
 };
 const block = () => {
 	return (
-		<div /*className = {"block"}*/>
+		<div >
 			<HeaderScroll />
 			<Carousel />
 			<HomeTopic />
-			{/* <Public /> */}
 			<Background />
 		</div>
 	);

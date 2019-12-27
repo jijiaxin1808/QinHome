@@ -7,7 +7,6 @@ import "./index.css";
 import axios from "axios";
 
 
-// const { Option } = Select;
 const formItemLayout = {
 	labelCol: { span: 4 },
 	wrapperCol: { span: 16 },

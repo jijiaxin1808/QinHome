@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Menu, Input } from 'antd';
 import Link from 'umi/link'
-// import { NavLink } from 'react-router-dom'
 import MenuConfig from './../../../../assets/menuConfig'
 import styles from './index.css'
 const SubMenu = Menu.SubMenu;
@@ -26,7 +25,6 @@ function NavLeft() {
   const [menuTreeNode, setMenuTreeNode] = useState(null)
   useEffect(() => {
     setMenuTreeNode(renderMenu(MenuConfig))
-    // eslint-disable-next-line
   }, []);
   return (
     <div>

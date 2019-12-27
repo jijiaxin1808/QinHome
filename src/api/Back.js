@@ -33,6 +33,19 @@ function messagesDelete(data) {
 function getPageInfo() {
     return axiosB("messages/getPageInfo");
 }
-
-
-export { getPageInfo, messagesDelete, alterReadStatus, alter, login, alterPwd, tokenLogin, listMsgs, addReply, Msgdelete };
+function logs() {
+    return axiosB("logs");
+}
+function postsDelete(params) {
+    const url = "posts/delete";
+    const newUrl = spliceUrl(url,params)
+    return axiosB(newUrl,null,"POST");
+}
+function logOut() {
+    return axiosB("users/logout");
+}
+function modelUpdate(data) {
+    return axiosB("options/update",data,"POST");
+}
+//  upload()  函数的参数到时候自己到文件里去配置
+export { modelUpdate, logOut, postsDelete, logs, getPageInfo, messagesDelete, alterReadStatus, alter, login, alterPwd, tokenLogin, listMsgs, addReply, Msgdelete };
