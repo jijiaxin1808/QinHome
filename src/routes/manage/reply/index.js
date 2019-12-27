@@ -1,6 +1,8 @@
 import React from "react";
 import {Table, Button,Divider,Modal,Input,message} from "antd";
 import axios from "axios";
+import * as Back from "../../../api/Back";
+
 const { TextArea } = Input;
 
 class Reply extends React.Component{
@@ -17,14 +19,12 @@ class Reply extends React.Component{
 		 this.getData();
 	}
     getData=()=>{
-    	axios({
-    		url:"http://yjxt.elatis.cn/msgs/listMsgs?category=all&flag=2",
-    		headers:{
-    			"Content-Type":"application/json",
-    			"token":localStorage.getItem("token")
-    		},
-    		method:"GET"
-    	}).then(res=>{
+		const params = {
+			category: "all",
+			flag: 2
+		}
+		Back.listMsgs(params)
+		.then(res=>{
     		let data=res.data.data;
     		data.map((item)=>{
     			if(item.category==="msg"){
@@ -55,18 +55,12 @@ class Reply extends React.Component{
       			message.error("回复内容不能为空");
       			return;
       		}else{
-      			axios({
-      				url:"http://yjxt.elatis.cn/msgs/addReply",
-      				headers:{
-      					"token":localStorage.getItem("token"),
-      					"Content-Type":"application/json"
-      				},
-      				method:"POST",
-      				data:{
-      					reply:document.getElementById("reply-input").value,
-      					id:this.state.message.id
-      				}
-      			}).then(res=>{
+				const data = {
+					reply:document.getElementById("reply-input").value,
+					id:this.state.message.id
+				}
+				Back.addReply(data)
+				.then(res=>{
       				if(res.data.code===0){
       					message.success("回复成功");
       					this.setState({
@@ -87,27 +81,18 @@ class Reply extends React.Component{
       };
     
       handleCancel = e => {
-      	console.log(e);
       	this.setState({
       		visible: false,
       	});
       };
       handleChange=(e)=>{
-      	console.log(e);
       }
       handleDelete=(e)=>{
-      	console.log(e);
-      	axios({
-      		method:"POST",
-      		headers:{
-      			"token":localStorage.getItem("token"),
-      			"Content-Type":"application/json"
-      		},
-      		url:"http://yjxt.elatis.cn/msgs/delete",
-      		data:{
-      			id:e.id
-      		}
-      	}).then(res=>{
+		const data = {
+			id:e.id
+		}
+		Back.Msgdelete(data)
+		.then(res=>{
       		if(res.data.code===0){
       			message.success("删除成功");
       			this.getData();
