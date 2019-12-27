@@ -13,7 +13,6 @@ const  DeleteArticle  = (props)=> {
 	};
 	const handleOk = e => {
 		setVisible(false);
-		console.log("确认删除");
 		axios({
 			method:"POST",
 			url: "http://yjxt.elatis.cn/posts/delete",
@@ -67,13 +66,11 @@ const mapDispatchToProps = (dispatch)=> ({
 });
 const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
 const alterAricle = (id)=> {
-	console.log(id);
 	window.location.href = `/manage/change/${id}`;
 };
 const BmsSearch = (props)=> {
 	const [ data, setData ] = useState([]);
 	const [ key,setkey ] = useState(decodeURIComponent(urlHandle("key")));
-	console.log(setkey);
 	const columns = [
 	  {
 			title: "id",
@@ -137,10 +134,8 @@ const BmsSearch = (props)=> {
 				}
 			}).then(res=> {
 				if(res.data.code === 0) {
-					console.log("长度",res.data.data.length);
 					if(res.data.data.length ===0) {
 						setData("empty");
-						console.log("empty");
 					}
 					else {
 						setData(res.data.data);

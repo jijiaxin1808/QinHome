@@ -2,7 +2,6 @@ import React from "react";
 import { Table, Input, message, Popconfirm, Form, Button, Select } from "antd";
 import axios from "axios";
 import "./index.css";
-// import { EOVERFLOW } from "constants";
 const { Option } = Select;
 const EditableContext = React.createContext();
 class EditableCell extends React.Component {
