@@ -1,21 +1,17 @@
 import React from "react";
-// import styles from "./index.css";
 import { Table, Button, message } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import qs from "qs";
-// import messageData from "../../../assets/messageData";
+import * as Back from "../../../api/Back";
+
 const columns = [	
 	{
 		title: "操作人",
 		dataIndex: "name",
 		key: "name",
 	},
-	// {
-	//   title: '内容',
-	//   dataIndex: 'content',
-	//   key: 'content',
-	// },
+
 	{
 		title: "说明",
 		dataIndex: "explain",
@@ -52,16 +48,12 @@ const columns = [
 
 
 const publish = (id)=> {
-	const data1 = JSON.stringify({id:id, status: "publish"});
-	axios({
-		method: "post",
-		url: "http://yjxt.elatis.cn/posts/alter",
-		headers:{
-			"token":localStorage.getItem("token"),
-			"Content-Type":"application/json"
-		},
-		data: data1
-	}).then((res)=> {
+	const data = {
+		id:id,
+		status: "publish"
+	};
+	Back.alter(data)
+	.then((res)=> {
 		if(res.data.code === 0) {
 			message.success("确认发布成功");
 		}
@@ -92,7 +84,6 @@ const Message = ()=> {
 				return item.id;
 			});
 			setselectedid(selectedId);
-			console.log(`selectedRowKeys: ${selectedRowKeys}`, "selectedRows: ", selectedId );
 		},
 		getCheckboxProps: record => ({
 			disabled: record.name === "Disabled User", // Column configuration not to be checked
@@ -100,21 +91,13 @@ const Message = ()=> {
 		}),
 	};
 	const markAsRead = ()=> {
-		// console.log("标记为已读");
 		selectedid.map((item)=>{
-			let data = qs.stringify({
+			let data = {
 				status:1,
 				id:item
-			});
-			axios({
-				method: "POST",
-				url: "http://yjxt.elatis.cn/messages/alterReadStatus",
-				headers:{
-					"token":localStorage.getItem("token"),
-					"Content-Type": "application/x-www-form-urlencoded"
-				},
-				data:data
-			}).then(
+			};
+			Back.alterReadStatus(data)
+			.then(
 				(res)=> {
 					if(res.data.code === 0) {
 						message.success("修改成功");
@@ -129,19 +112,11 @@ const Message = ()=> {
 	};
 	const deleteSet = ()=> {
 		
-		let data = qs.stringify({
+		let data = {
 			idArray:selectedid
-		});
-		console.log(data)
-		axios({
-			method: "POST",
-			url: "http://yjxt.elatis.cn//messages/delete",
-			headers:{
-				"token":localStorage.getItem("token"),
-				"Content-Type": "application/x-www-form-urlencoded"
-			},
-			data:data
-		}).then(
+		}
+		Back.messagesDelete(data)
+		.then(
 			(res)=> {
 				if(res.data.code === 0) {
 					message.success("删除成功");
@@ -159,21 +134,13 @@ const Message = ()=> {
 
 
 	const markAsUnRead = ()=> {
-		// console.log("标记为未读");
 		selectedid.map((item) =>{
-			let data = qs.stringify({
+			let data = {
 				status:0,
 				id:item
-			});
-			axios({
-				method: "POST",
-				url: "http://yjxt.elatis.cn/messages/alterReadStatus",
-				headers:{
-					"token":localStorage.getItem("token"),
-					"Content-Type": "application/x-www-form-urlencoded"
-				},
-				data:data
-			}).then(
+			}
+			Back.alterReadStatus(data)
+			.then(
 				(res)=> {
 					if(res.data.code === 0) {
 						message.success("修改成功");
@@ -189,28 +156,20 @@ const Message = ()=> {
 	};
 
 	useEffect(()=>{
-		axios({
-			method:"GET",
-			url:"http://yjxt.elatis.cn/messages/getPageInfo",
-			headers: {
-				token:localStorage.getItem("token")
-			}
-		}).then(
+		Back.getPageInfo()
+		.then(
 			(res)=> {
 				if(res.data.code === 0) {
 					setmessageData(res.data.data);
-					console.log(res.data.data);
 				}
 				else {
 					message.error(res.data.message,"message");
 				}
 			}
 		).catch((error)=>{
-			console.log(error);
 		});
 	},[]);
   
-
 	return(
 		<div>
 			<div className = { "title" }>
