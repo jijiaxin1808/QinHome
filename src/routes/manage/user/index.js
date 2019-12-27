@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-// import styles from "./index.css";
-// import userData from "../../../config/userData";
 import { Form, Icon, Input, Button, message, Row, Col, Skeleton } from "antd";
 import axios from "axios";
 import qs from "qs";
-import { connect } from "../../../../node_modules/dva";
+import { connect } from "dva";
+import * as Back from "../../../api/Back";
 
 
 class NormalLoginForm extends React.Component {
@@ -16,22 +15,13 @@ class NormalLoginForm extends React.Component {
   				message.warn("两次输入的密码不一致");
   			}
   			else {
-  				const data1 = {
+  				const data = {
   					newPassword: values.newpassword2,
   					oldPassword: values.oldpassword
   				};
-  				const data = qs.stringify(data1);
-  				axios({
-  					method:"POST",
-  					url:"http://yjxt.elatis.cn/users/alterPwd",
-  					headers:{
-  						"token":localStorage.getItem("token"),
-  						"Content-Type":"application/x-www-form-urlencoded"
-  					},
-  					data: data
-  				})
+				Back.alterPwd(data)
   					.then(
-  						(res)=> {
+  						res => {
   							if(res.data.code === 0) {
   								message.success("修改成功");
   								localStorage.clear();
@@ -43,10 +33,7 @@ class NormalLoginForm extends React.Component {
   							}
 
   						}
-  					).catch((error)=>{
-  						console.log(error);
-  					});
-  				//这里写更改密码的请求
+  					)
   			}
   		}
   	});
@@ -106,14 +93,9 @@ class NormalLoginForm extends React.Component {
   				)}
   			</Form.Item>
   			<Form.Item className = {"user-alter"} style = {{display:"flex",justifyContent:"center"}}>
-  				{/* {getFieldDecorator('remember', {
-            valuePropName: 'checked',
-            initialValue: true,
-          })(<Checkbox>Remember me</Checkbox>)} */}
   				<Button htmlType="submit" style = {{margin: "0 auto"}}   >
             修改密码
   				</Button>
-				  
   			</Form.Item>
   		</Form>
   	);
@@ -125,13 +107,8 @@ const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(NormalLogin
 const User = (props)=> {
 	const [ userData,setUserData ] = useState([]);
 	useEffect(()=>{
-		axios({
-			method:"GET",
-			url: "http://yjxt.elatis.cn/users/tokenLogin",
-			headers: {
-				token: localStorage.getItem("token")
-			}
-		}).then(res=> {
+		Back.tokenLogin()
+		.then(res=> {
 			if(res.data.code === 0) {
 				setUserData(res.data.data);
 			}
@@ -149,16 +126,13 @@ const User = (props)=> {
 				
 					</div> 
 					<p style = {{fontSize:"18px",margin:"20px auto",width:"300px"}}>{ `用户: ${userData.name }`}</p>
-					{/* <p>{ `姓名： ${props.login.userName}`}</p> */}
 					<p style = {{fontSize:"18px",margin:"20px auto",width:"300px"}}>{ `部门: ${userData.section}`}</p>
 				</div>
-		
 				<Row >
 					<Col span = {12} offset = {6} >
 						<WrappedNormalLoginForm />
 					</Col>
 				</Row>
-
 			</div>
 		);
 	}
