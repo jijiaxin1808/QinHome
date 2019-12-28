@@ -15,20 +15,18 @@ export default function Search(props) {
 	const [key] = useState(decodeURIComponent(urlHandle("key")));
 
 	useEffect(() => {
-		key && 
-    axios.get("http://yjxt.elatis.cn/posts/searchTitle",{
-    	headers: {
-    		"Content-Type": "application/json",
-    	},
-    	params: {
-    		flag: 1,
-    		key: key,
-    	},
-    }).then(res => {
-    	if(res.data.code === 0) {
-    		setTotal(res.data.data.length);
-    	}
-    }).catch(err => message.error(err));
+		if(key) {
+			const params = {
+				flag: 1,
+				key: key,
+			}
+			Front.searchTitle(params)
+			.then(res => {
+				if(res.data.code === 0) {
+					setTotal(res.data.data.length);
+				}
+			});
+		}
 	}, [key]);
 
 	useEffect(() => {
