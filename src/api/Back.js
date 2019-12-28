@@ -50,6 +50,13 @@ function modelUpdate(data) {
 function create(data) {
     return axiosB("posts/create",data,"POST");
 }
-
+function fileDelete(params) {
+    const url = "file/delete";
+    const newUrl = spliceUrl(url,params)
+    return axiosB(newUrl,null,"POST");
+}
+function files() {
+    return axiosB("file/files")
+}
 //  upload()  函数的参数到时候自己到文件里去配置
-export { create, modelUpdate, logOut, postsDelete, logs, getPageInfo, messagesDelete, alterReadStatus, alter, login, alterPwd, tokenLogin, listMsgs, addReply, Msgdelete };
+export { files, fileDelete, create, modelUpdate, logOut, postsDelete, logs, getPageInfo, messagesDelete, alterReadStatus, alter, login, alterPwd, tokenLogin, listMsgs, addReply, Msgdelete };
