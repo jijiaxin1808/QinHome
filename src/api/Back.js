@@ -58,5 +58,22 @@ function fileDelete(params) {
 function files() {
     return axiosB("file/files")
 }
+function alterFirst(data) { //  修改一级栏目名
+    return axiosB("modules/alterFirst",data,"POST");
+}
+function alterFirstWeight(data) { //  修改一级权重
+    return axiosB("modules/alterFirstWeight",data,"POST");
+}
+function alterLink(data) {
+    return axiosB("modules/alterLink",data,"POST");
+}
+function alterOthers(data) {
+    return axiosB("modules/alterOthers",data,"POST");
+}
+function createModules(data) {
+    return axiosB("modules/create",data,"POST");
+}
+
 //  upload()  函数的参数到时候自己到文件里去配置
-export { files, fileDelete, create, modelUpdate, logOut, postsDelete, logs, getPageInfo, messagesDelete, alterReadStatus, alter, login, alterPwd, tokenLogin, listMsgs, addReply, Msgdelete };
+export { createModules, alterOthers, alterLink, alterFirstWeight, alterFirst, files, fileDelete, create, modelUpdate, logOut, postsDelete, logs, getPageInfo,
+messagesDelete, alterReadStatus, alter, login, alterPwd, tokenLogin, listMsgs, addReply, Msgdelete };

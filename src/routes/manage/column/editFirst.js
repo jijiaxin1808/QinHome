@@ -1,38 +1,7 @@
-import { Table, Input, InputNumber, Popconfirm, Form, Button, Modal } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, Button, Modal, message } from 'antd';
 import React, {useState} from "react";
-// import axiosF from '../../../utils/axiosF';
-
-const data = [];
-for (let i = 0; i < 100; i++) {
-  data.push({
-    key: i.toString(),
-    id: i,
-    firstName: `Edrward ${i}`,
-    address: `London Park no. ${i}`,
-    href:"www.baidu.com",
-    key:`Edrward ${i}`,
-    weight: i+2
-  });
-} 
-//  这里是往data里面添加数据
-// const handleAdd = ()=> {
-    // if(data.length<9) {
-    //     const newData = {
-    //         weight: data[-1].weight
-    //     }
-    // }
-    // else {
-    //     const newData = {
-    //         weight: data[7].weight
-    //     }
-    // }
-//     this.setState({
-//         data:[...data,newData];
-//     });
-    // axiosF({
-        
-    // })
-// }
+import * as Back from "../../../api/Back";
+import * as Front from "../../../api/Front";
 
 
 const  DeleteArticle  = (props)=> {
@@ -42,24 +11,6 @@ const  DeleteArticle  = (props)=> {
 	};
 	const handleOk = e => {
 		setVisible(false);
-		// axios({
-		// 	method:"POST",
-		// 	url: "http://yjxt.elatis.cn/posts/delete",
-		// 	params: {
-		// 		id:props.id
-		// 	},
-		// 	headers: {
-		// 		"token":localStorage.getItem("token"),
-		// 		"Content-Type": "application/json"
-		// 	}
-		// }).then(res=> {
-		// 	if(res.data.code === 0 ) {
-		// 		message.success("删除成功");
-		// 	}
-		// 	else {
-		// 		message.warn(res.data.message);
-		// 	}
-		// });
 	};
 	const handleCancel = e => {
 		setVisible(false);
@@ -113,7 +64,7 @@ class EditableCell extends React.Component {
               rules: [
                 {
                   required: true,
-                  message: `Please Input ${title}!`,
+                  message: `请输入 ${title}!`,
                 },
               ],
               initialValue: record[dataIndex],
@@ -134,23 +85,30 @@ class EditableCell extends React.Component {
 class EditableTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data, editingKey: '' };
+    this.state = { data:[], editingKey: '' };
+    Front.modelCloumn().then(res => {
+      if(res.data.code === 0 ) {
+        console.log("一级获取成功",res.data.data)
+        this.setState({data:res.data.data});
+      }
+    })
+
     this.columns = [
       {
         title: '栏目id',
-        dataIndex: 'id',
+        dataIndex: 'key',
         width: '10%',
         editable: false,
       },
       {
         title: '一级栏目名',
-        dataIndex: 'firstName',
+        dataIndex: 'title',
         width: '15%',
         editable: true,
       },
       {
         title: '状态',
-        dataIndex: 'firstName',
+        dataIndex: 'title',
         width: '15%',
         editable: false,
         render: (text,record,index) => {
@@ -164,7 +122,7 @@ class EditableTable extends React.Component {
       },
       {
         title: '链接地址',
-        dataIndex: 'href',
+        dataIndex: 'link',
         width: '25%',
         editable: true,
       },
@@ -224,14 +182,61 @@ class EditableTable extends React.Component {
     this.setState({ editingKey: '' });
   };
 
-  save(form, key) {
+  save(form, id) {
     form.validateFields((error, row) => {
       if (error) {
         return;
       }
+      console.log("87777",row," ",id);
+      this.state.data.map((item)=> {
+        console.log(item.key,"aaa",id)
+        if(item.key === id) {
+          console.log("找到了",row)
+          if(item.title !== row.title) {
+            console.log("名字变了");
+            const data = {
+              oldFirst: item.title,
+              newFirst: row.title
+            }
+            Back.alterFirst(data).then(res=> {
+              if(res.data.code === 0 ) {
+                if((item.weight !== row.weight)||(item.link !== row.link)) {
+                  console.log("link或weight改变了");
+                  const data = {
+                    oldFirst: row.title,
+                    weight: row.weight,
+                    link: row.link
+                  }
+                  Back.alterFirst(data).then(res=> {
+                    if(res.data.code === 0) {
+                      message.success("修改成功");
+                      window.location.reload();
+                    }
+                  })
+                }
+              }
 
+            })
+          }
+          else if((item.weight !== row.weight)||(item.link !== row.link)) {
+
+            const data = {
+              oldFirst: item.title,
+              weight: 111,
+              link: row.link
+            }
+            console.log("link或weight改变了",data);
+            Back.alterFirst(data).then(res=> {
+              if(res.data.code === 0) {
+                message.success("修改成功");
+                window.location.reload();
+              }
+            })
+          }
+        }
+      })
       const newData = [...this.state.data];
-      const index = newData.findIndex(item => key === item.key);
+      const index = newData.findIndex(item => id === item.id);
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, {
@@ -272,7 +277,21 @@ class EditableTable extends React.Component {
         }),
       };
     });
-
+    const addFirst =()=> {
+      const data = {
+        first:"新一级栏目1",
+        second:"",
+        weight:100,
+        link:"/index"
+      }
+      Back.createModules(data)
+      .then(res=> {
+        if(res.data.code === 0) {
+          message.success("添加成功");
+          window.location.reload();
+        }
+      })
+    }
     return (
       <EditableContext.Provider value={this.props.form}>
         <div className = { "title" } style = {{marginBottom:20}}>
@@ -284,7 +303,7 @@ class EditableTable extends React.Component {
             您可以通过改变权重来交换栏目的顺序，以改变其显示和隐藏的状态。
             权重越大，栏目越靠前。
             </p>
-            <Button type = "primary" style = {{marginTop: 20, marginLeft: 400}}>添加一级</Button>
+            <Button type = "primary" style = {{marginTop: 20, marginLeft: 400}} onClick = {()=>{addFirst()}}>添加一级</Button>
 		</div>
         <Table
           components={components}

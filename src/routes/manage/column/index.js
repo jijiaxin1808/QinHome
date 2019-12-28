@@ -54,7 +54,7 @@ export default function ColManage() {
 	}, [col, colsData, data]);
 
 	useEffect(() => {
-		axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
+		axios.get("http://yjxt.elatis.cn/modules/listModule").then(res => {
 			if(res.data.code === 0) {
 				if (res.data.data[0].sec.length!==0) {
 					setArtiCategory(`/${res.data.data[0].title}/${(res.data.data[0].sec)[0].title}`);
@@ -104,7 +104,8 @@ export default function ColManage() {
 					params: {
 						// flag:2,
 						flag:1 ,
-						category: artiCategory,
+						first: artiCategory.split("/")[1],
+						second: artiCategory.split("/")[2],
 						status: "publish",
 						limit: 10000,
 						offset: 0

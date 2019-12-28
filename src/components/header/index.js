@@ -13,8 +13,8 @@ function  Header (props) {
 	useEffect(() => {
 		Front.modelCloumn().then((res) => {
 			if (res.data.code === 0) {
-				setbardata(res.data.data);
-				props.save(res.data.data);
+				setbardata(res.data.data.slice(0,8));
+				props.save(res.data.data.slice(0,8));
 			}
 		});
 	}, []);

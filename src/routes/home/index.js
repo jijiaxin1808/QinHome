@@ -94,9 +94,7 @@ const Home = () => {
 			if (res.data.code === 0) {
 				setColsData(res.data.data);
 			}
-		}).catch(err => {
-			message.error(err);
-		});
+		})
 		Front.modelSafe().then((res) => {
 			if (res.data.code === 0) {
 				let _data = [];

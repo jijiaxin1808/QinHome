@@ -1,9 +1,13 @@
 import { axiosF } from "../utils/axios";
 import spliceUrl from "../utils/params";
 
+// function modelCloumn() {
+//     return axiosF("options/name/column");
+// }
 function modelCloumn() {
-    return axiosF("options/name/column");
+    return axiosF("modules/listModule");
 }
+
 function modelCarousel() {
     return axiosF("options/name/carousel");
 }
@@ -45,8 +49,6 @@ function searchTitle(params) {
     const newUrl = spliceUrl(url,params)
     return axiosF(newUrl);
 }
-
-
 
 
 

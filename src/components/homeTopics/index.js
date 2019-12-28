@@ -40,7 +40,10 @@ const HomeTopics = (props) => {
 		if(colsData.length !==0 ){
 			const sort = [...colsData].map((item,index)=> {
 				if(index>1){
-					return `/${item.title}/${item.sec[0].title}`;
+					if(item.sec.length) {
+						return `/${item.title}/${item.sec[0].title}`;
+					}
+
 				}
 				return null;
 			});

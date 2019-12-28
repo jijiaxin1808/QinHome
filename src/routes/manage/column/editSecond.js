@@ -1,29 +1,9 @@
-import { Table, Input, InputNumber, Popconfirm, Form, Button, Modal } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, Button, Modal, message, Select } from 'antd';
 import React, {useState} from "react";
-// import axiosF from '../../../utils/axiosF';
+import * as Back from "../../../api/Back";
+import * as Front from "../../../api/Front";
+const { Option } = Select;
 
-const data = [];
-for (let i = 0; i < 100; i++) {
-  data.push({
-    key: i.toString(),
-    id: i,
-    firstName: `Edrward ${i}`,
-    address: `London Park no. ${i}`,
-    href:"www.baidu.com",
-    key:`Edrward ${i}`,
-    weight: i+2
-  });
-} 
-//  这里是往data里面添加数据
-// const handleAdd = ()=> {
-//     const newData = {};
-//     this.setState({
-//         data:[...data,newData];
-//     });
-    // axiosF({
-        
-    // })
-// }
 
 
 const  DeleteArticle  = (props)=> {
@@ -125,17 +105,23 @@ class EditableCell extends React.Component {
 class EditableTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data, editingKey: '' };
+    this.state = { data:[], page:0,editingKey: '' };
+    Front.modelCloumn().then(res => {
+      if(res.data.code === 0 ) {
+        console.log("一级获取成功",res.data.data)
+        this.setState({data:res.data.data});
+      }
+    })
     this.columns = [
       {
         title: '栏目id',
-        dataIndex: 'id',
+        dataIndex: 'key',
         width: '10%',
         editable: false,
       },
       {
         title: '二级栏目名',
-        dataIndex: 'firstName',
+        dataIndex: 'title',
         width: '15%',
         editable: true,
       },
@@ -200,6 +186,27 @@ class EditableTable extends React.Component {
       if (error) {
         return;
       }
+      
+      this.state.data[this.state.page].sec.map((item)=> {
+        if(item.key === key) {
+          console.log("找到了",row)
+          if((item.weight !== row.weight)||(item.title !== row.title)) {
+            const data = {
+              id: item.key,
+              weight: row.weight,
+              second: row.title
+            }
+            console.log("link或weight改变了",data);
+            Back.alterOthers(data).then(res=> {
+              if(res.data.code === 0) {
+                message.success("修改成功");
+                window.location.reload();
+              }
+            })
+          }
+        }
+      })
+
       const newData = [...this.state.data];
       const index = newData.findIndex(item => key === item.key);
       if (index > -1) {
@@ -245,6 +252,21 @@ class EditableTable extends React.Component {
     // const handleChange = ()=> {
     //     this.setState({});
     // }
+//  这里是往data里面添加数据
+const handleAdd = ()=> {
+    const data = {
+      first: this.state.data[this.state.page].title,
+      second: "新建二级栏目",
+      weight: 100
+    };
+    Back.createModules(data)
+    .then(res=> {
+      if(res.data.code === 0) {
+        message.success("添加成功");
+        window.location.reload();
+      }
+    })
+}
     return (
       <EditableContext.Provider value={this.props.form}>
         <div className = { "title" } style = {{marginBottom:20}}>
@@ -254,30 +276,22 @@ class EditableTable extends React.Component {
             <p style = {{marginTop: 20, marginLeft: 45, fontSize: "16px"}}>
             您可以通过改变权重来交换栏目的顺序.权重越大，栏目越靠前。
             </p>
-            <Button type = "primary" style = {{marginTop: 20, marginLeft: 400}}>添加二级</Button>
+            <Button type = "primary" style = {{marginTop: 20, marginLeft: 400}} onClick = {()=>{handleAdd()}}>添加二级</Button>
 		</div> 
-        {/* <div>
-            {
-                data.map((item, index)=> {
-                    if(index<8) {
-                    return <Button>{item.title}</Button>
-                    } 
-                    else return (
-                        <Select defaultValue="lucy" style={{ width: 120 }} onChange={handleChange}>
-                            {
-                                data.slice(8).map((item)=> {
-                                <Option value = {item.title}>{item.title}</Option>
-                                })
-                            }
-                      </Select>
-                    )
+
+      
+            <Select defaultValue="请选择一级栏目" style={{ width: 120 }} onChange={(value)=>{this.setState({page:value})}}>
+              {
+                this.state.data.map((item,index)=> {
+                return  <Option value={index}>{item.title}</Option>
                 })
-            }
-        </div> */}
+              }
+          </Select>
+      
         <Table
           components={components}
         //   bordered
-          dataSource={this.state.data}
+          dataSource={this.state.data[this.state.page]?this.state.data[this.state.page].sec:[]}
           columns={columns}
           rowClassName="editable-row"
           pagination={{
