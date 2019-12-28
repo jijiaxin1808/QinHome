@@ -6,6 +6,8 @@ import urlHandle from "../../../utils/urlHandle";
 import {routerRedux} from "dva/router";
 import { connect } from "dva";
 import Loading from "../../../components/loading";
+import * as Back from "../../../api/Back";
+import * as Front from "../../../api/Front";
 const  DeleteArticle  = (props)=> {
 	const [ visible, setVisible ] = useState(false);
 	const showModal = () => {
@@ -13,17 +15,11 @@ const  DeleteArticle  = (props)=> {
 	};
 	const handleOk = e => {
 		setVisible(false);
-		axios({
-			method:"POST",
-			url: "http://yjxt.elatis.cn/posts/delete",
-			params: {
-				id:props.id
-			},
-			headers: {
-				"token":localStorage.getItem("token"),
-				"Content-Type": "application/json"
-			}
-		}).then(res=> {
+		const params = {
+			id: props.id
+		}
+		Back.postsDelete(params)
+		.then(res=> {
 			if(res.data.code === 0 ) {
 				message.success("删除成功");
 				window.location.reload();
@@ -34,11 +30,9 @@ const  DeleteArticle  = (props)=> {
 		});
 
 	};
-
 	const handleCancel = e => {
 		setVisible(false);
 	};
-
 	return (
 		<div>
 			<Button  onClick={()=>{showModal();}}>
@@ -125,14 +119,12 @@ const BmsSearch = (props)=> {
 	];
 	useEffect(()=>{
 		if(key.length !== 0 ){
-			axios({
-				method:"GET",
-				url: "http://yjxt.elatis.cn/posts/searchTitle",
-				params: {
-					flag: 2,
-					key : key
-				}
-			}).then(res=> {
+			const params = {
+				flag: 2,
+				key : key
+			}
+			Front.searchTitle(params)
+			.then(res=> {
 				if(res.data.code === 0) {
 					if(res.data.data.length ===0) {
 						setData("empty");
@@ -166,7 +158,6 @@ const BmsSearch = (props)=> {
 				</div>
 			);
 		}
-
 	}
 	else {
 		if(data === "empty") {
