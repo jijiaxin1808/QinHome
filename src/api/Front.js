@@ -40,13 +40,17 @@ function listMsgs(params) {
 function create(data) {
     return axiosF("msgs/create",data,"POST")
 }
+function searchTitle(params) {
+    const url = "posts/searchTitle";
+    const newUrl = spliceUrl(url,params)
+    return axiosF(newUrl);
+}
 
 
 
 
 
 
-
-export {modelCloumn, modelCarousel, listModulePost, getArticle, modelTopicCol, modelSafe, modelBackground, listPosts, get,
+export { searchTitle, modelCloumn, modelCarousel, listModulePost, getArticle, modelTopicCol, modelSafe, modelBackground, listPosts, get,
     listMsgs, create
   }

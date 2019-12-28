@@ -15,7 +15,6 @@ export default function Search(props) {
 	const [key] = useState(decodeURIComponent(urlHandle("key")));
 
 	useEffect(() => {
-
 		key && 
     axios.get("http://yjxt.elatis.cn/posts/searchTitle",{
     	headers: {
@@ -33,73 +32,66 @@ export default function Search(props) {
 	}, [key]);
 
 	useEffect(() => {
-		key &&axios.get("http://yjxt.elatis.cn/posts/searchTitle",{
-    	headers: {
-    		"Content-Type": "application/json",
-    	},
-    	params: {
-    		flag: 1,
-    		key: key,
-    		limit: 5,
-    		offset: (curPage-1) * 5,
-    	},
-    }).then(res => {
-    	if(!res.data.code) {
-    		setLoading(false);
-    		if(!res.data.data.length ) {
-    			setSearchList("none");
-    		} else {
-    			setSearchList(res.data.data);
-    		}
-        
-    	}
-    }).catch(err => message.error(err));
+		if(key) {
+			const params = {
+				flag: 1,
+				key: key,
+				limit: 5,
+				offset: (curPage-1) * 5,
+			}
+			Front.searchTitle(params)
+			.then(res => {
+				if(!res.data.code) {
+					setLoading(false);
+					if(!res.data.data.length ) {
+						setSearchList("none");
+					} else {
+						setSearchList(res.data.data);
+					}
+				}
+			})
+		}
+
 
 	}, [key, curPage]);
 
 	useEffect(() => {
-		!key &&
-    axios.get("http://yjxt.elatis.cn/posts/listPosts",{
-    	headers: {
-    		"Content-Type": "application/json",
-    	},
-    	params: {
-    		flag: 1,
-    		status: "publish"
-    	},
-    }).then(res => {
-    	if(!res.data.code) {
-    		setTotal(res.data.data.length);
-    	}
-    }).catch(err => {
-    	message.error(err);
-    });
+		if(!key) {
+			const params = {
+				flag: 1,
+				status: "publish"
+			}
+			Front.listPosts(params)
+			.then(res => {
+				if(!res.data.code) {
+					setTotal(res.data.data.length);
+				}
+			})
+		}
+
 	}, []);
 
 	useEffect(() => {
 		setLoading(true);
-		!key && axios.get("http://yjxt.elatis.cn/posts/listPosts",{
-			headers: {
-				"Content-Type": "application/json", 
-			},
-			params: {
+		if(!key) {
+			const params = {
 				flag: 1,
 				status: "publish",
 				limit: 5,
 				offset: (curPage-1) * 5,
-			}, 
-		}).then(res => {
-			if(!res.data.code) {
-				setLoading(false);
-				if(!res.data.data.length) {
-					setSearchList("none");
-				}
-				else 
-					setSearchList(res.data.data);
 			}
-		}).catch(err => {
-			message.error(err);
-		});
+			Front.listPosts(params)
+			.then(res => {
+				if(!res.data.code) {
+					setLoading(false);
+					if(!res.data.data.length) {
+						setSearchList("none");
+					}
+					else 
+						setSearchList(res.data.data);
+				}
+			})
+		}
 	}, [curPage]);
 
 	return (
