@@ -25,7 +25,6 @@ const  Tabs =(props)=> {
 			};
 			Front.listModulePost(data1).then(res=> {
 				if(res) {
-					console.log(res,"9999999999999");
 					if(res.data.data.code === 200) {
 						const newdata = res.data.data.map((item, index)=> {
 							return (

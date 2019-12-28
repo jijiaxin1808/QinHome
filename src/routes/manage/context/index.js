@@ -1,6 +1,5 @@
 import React,{ useState, useEffect } from "react";
 import { Table, Button, Modal, message } from "antd";
-import axios from "axios";
 import {routerRedux} from "dva/router";
 import { connect } from "dva";
 import Loading from "../../../components/loading";

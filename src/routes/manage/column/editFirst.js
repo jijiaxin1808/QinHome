@@ -226,7 +226,6 @@ class EditableTable extends React.Component {
 
   save(form, key) {
     form.validateFields((error, row) => {
-    console.log("修改了",row)
       if (error) {
         return;
       }

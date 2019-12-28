@@ -7,7 +7,6 @@ export default {
 	},
 	effects: {
 		// *login({ payload }, { call, put }){
-		// 	console.log("effects",payload, call, put);
 		// }
 	},
 	reducers: {

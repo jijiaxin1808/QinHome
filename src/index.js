@@ -6,7 +6,6 @@ import "./index.css";
 const app = dva({
 	history: createHistory(),
 	onError (error, dispatch) {
-		console.log(error);
 	}
 });
 

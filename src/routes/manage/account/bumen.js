@@ -25,7 +25,6 @@ class EditableFormTable extends React.Component{
 			},
 			url:"http://yjxt.elatis.cn/powers/list"
 		}).then(res=>{
-			console.log(res);
 			this.setState({
 				data:res.data.data,
 				power:res.data.power
@@ -50,7 +49,6 @@ class EditableFormTable extends React.Component{
 			  id:this.state.key,
 			  module:this.state.children.join("-")
 		  };
-		  console.log(data);
       	axios({
       		method:"POST",
       		headers:{
@@ -67,13 +65,11 @@ class EditableFormTable extends React.Component{
       };
     
       handleCancel = e => {
-      	console.log(e);
       	this.setState({
       		visible: false,
       	});
       };
       handleChange= (value)=> {
-      	console.log(value);
       	this.setState({
       		children:value
       	});

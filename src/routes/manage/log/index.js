@@ -49,7 +49,6 @@ const Log = ()=> {
 					};
 				});
 				setlogdata(resData);
-				console.log(resData);
 			}
 		});
 	},[]);

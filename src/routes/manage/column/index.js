@@ -23,7 +23,6 @@ export default function ColManage() {
 	const [editState, setEditState] = useState("二级");
 	// 二级文章列表是否处于编辑状态
 	const [edit, setEdit] = useState([]);
-	console.log(edit);
 	// 位于的某二级栏目
 	const [secCol, setSecCol] = useState("");
 	// 位于的某二级栏目标识key
@@ -57,7 +56,6 @@ export default function ColManage() {
 	useEffect(() => {
 		axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
 			if(res.data.code === 0) {
-				console.log(res.data);
 				if (res.data.data[0].sec.length!==0) {
 					setArtiCategory(`/${res.data.data[0].title}/${(res.data.data[0].sec)[0].title}`);
 					setSecCol((res.data.data[0].sec)[0].title);
@@ -74,14 +72,12 @@ export default function ColManage() {
 					setWeightIsNum(_weight);
 					return item;
 				}));
-				console.log(_data);
 			    ((_data)[0]) && setCol((_data)[0].title);
 			}
 		}).catch(err => {
 			message.error(err);
 		});
 	}, []);
-
 	useEffect(() => {
 		if (!secCol) {
 			setArtiCategory(`/${col}/${secCol}`);
@@ -128,7 +124,6 @@ export default function ColManage() {
 	useEffect(() => {
 		if(!saveClick) return;
 		if(colsData.length !== 0) {
-			console.log(colsData);
 			let _colsData = colsData.map(item => {
 				let _item = {...item, title: item.newCol || item.title};
 				if(!_item.sec) {
@@ -179,7 +174,6 @@ const  DeleteArticle  = (props)=> {
 	};
 	const handleOk = e => {
 		setVisible(false);
-		console.log("确认删除");
 		axios({
 			method:"POST",
 			url: "http://yjxt.elatis.cn/posts/delete",
@@ -193,12 +187,6 @@ const  DeleteArticle  = (props)=> {
 		}).then(res=> {
 			if(res.data.code === 0 ) {
 				message.success("删除成功");
-				// window.location.reload();
-				// setTimeout(()=>{},500)
-				// props.dispatch(routerRedux.push({
-				// 	pathname: '/index/index'
-				// }));
-				// props.reload();
 			}
 			else {
 				message.warn(res.data.message);
@@ -210,10 +198,6 @@ const  DeleteArticle  = (props)=> {
 	};
 
 	return (
-
-
-
-
 		<div>
 			<Button  onClick={()=>{showModal();}}>
           删除

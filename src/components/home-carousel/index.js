@@ -19,7 +19,6 @@ const HomeCarousel = (props) => {
 		<Carousel effect='fade' style={{ width: "540px", height: "374px" }} autoplay dotPosition='bottom'>
 			{
 				data.map((item, index) => {
-					console.log(item.picUrl);
 					if(item.isShow) {
 						return (
 							<a href={item.href} key={item}>

@@ -4,7 +4,6 @@ import { connect } from "dva";
 import { Link } from "react-router-dom";
 import "./index.less";
 import axios from "axios";
-import splice from "../../utils/params";
 
 const MessageContent = (props)=> {
 	const limit = 15;

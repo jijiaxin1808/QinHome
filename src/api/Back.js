@@ -47,5 +47,9 @@ function logOut() {
 function modelUpdate(data) {
     return axiosB("options/update",data,"POST");
 }
+function create(data) {
+    return axiosB("posts/create",data,"POST");
+}
+
 //  upload()  函数的参数到时候自己到文件里去配置
-export { modelUpdate, logOut, postsDelete, logs, getPageInfo, messagesDelete, alterReadStatus, alter, login, alterPwd, tokenLogin, listMsgs, addReply, Msgdelete };
+export { create, modelUpdate, logOut, postsDelete, logs, getPageInfo, messagesDelete, alterReadStatus, alter, login, alterPwd, tokenLogin, listMsgs, addReply, Msgdelete };
