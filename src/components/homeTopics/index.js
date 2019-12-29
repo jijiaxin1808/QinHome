@@ -9,7 +9,7 @@ const HomeTopic = (props) => {
 		<div className='home-topic'>
 			<div className='home-topic-header'>
 				<span>{props.title}</span>
-				<Link to={`/index/message?type=${props.type}`}>
+				<Link to={`/index/message?type=${props.type+2}`}>
                     更多 >>
 				</Link>
 			</div>
@@ -38,14 +38,12 @@ const HomeTopics = (props) => {
 
 	useEffect(()=> {
 		if(colsData.length !==0 ){
+			console.log(colsData,"8777777777")
 			const sort = [...colsData].map((item,index)=> {
-				if(index>1){
-					if(item.sec.length) {
+				if(index>1&&index<8){
 						return `${item.title}`;
-					}
-
 				}
-				return null;
+				else return null;
 			});
 			const data1 = {
 				limit:3,
@@ -55,10 +53,7 @@ const HomeTopics = (props) => {
 			Front.listModulePost(data1).then(res=> {
 				if(res.data.code === 0) {
 					const newData = res.data.data.map((item,index)=>{
-						// if(index>1) {
 							return item.post;
-						// }
-						// return null;
 					});
 					console.log("topics",newData)
 					setTopicData(newData);
@@ -66,19 +61,17 @@ const HomeTopics = (props) => {
 			});
 		}
 	},[props.colsData]);
-	useEffect(()=> {
-	},[topicData]);
 	if(topicData.length!== 0) {
 		return (
 			<div className='home-topics'>
 				{
 					topicData.map((item, index) => {
-						if(index>0){
+						if(index>=0){
 							return (
 								<HomeTopic 
-									title = {colsData[index+1].title} 
+									title = {colsData[index+2].title} 
 									href = {`/index/message?type=${index+2}`} 
-									 type =  { index+1 } 
+									type =  { index+1 } 
 									data = {item}
 								/>
 							);

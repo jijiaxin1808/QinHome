@@ -7,7 +7,7 @@ import { message } from "antd";
 import axios from "axios";
 import * as Front from "../../../../api/Front";
 import * as Back from "../../../../api/Back";
-
+import Loading from "../../../../components/loading";
 
 const formItemLayout = {
 	labelCol: { span: 4 },
@@ -30,7 +30,7 @@ const changeContext=(props)=>{
 				if ( res.data.code === 0 ) {
 					setData(res.data.data);
 					props.form.setFieldsValue({
-						content: res.data.data.content,
+						content: BraftEditor.createEditorState(res.data.data.content),
 						title: res.data.data.title,
 					});
 				}
@@ -46,8 +46,6 @@ const changeContext=(props)=>{
 			if (!error) {
 				const submitData = {
 					title: values.title,
-					first:values.category[0],
-					second:values.category[1],
           			id:props.match.params.id,
 					content: values.content.toHTML()// or values.content.toHTML()
 				};
@@ -182,7 +180,7 @@ if(data.length!==0) {
 
 					<Row style = {{margin: "0 auto"}}>
 						<Col span={4} offset={16}>
-							<Button size="large" type="primary" htmlType="submit">确认发布</Button>
+							<Button size="large" type="primary" htmlType="submit">确认修改</Button>
 						</Col>
 					</Row>
 				</Form.Item>
@@ -192,9 +190,8 @@ if(data.length!==0) {
 }
 else {
 	return (
-	<div>
-		"东西都丢了"
-	</div>)
+		<Loading />
+	)
 } 
 }
 

@@ -86,6 +86,7 @@ function FormDemo (props) {
 							message.success("发布成功");
 						}
 						else message.success("申请成功");
+						window.location.reload();
 					}
 					else message.warn("权限不足");
 				}
