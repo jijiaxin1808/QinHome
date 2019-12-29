@@ -24,16 +24,6 @@ const changeContext=(props)=>{
 	},[]);
 
 	const [data, setData] = useState([]);
-	useEffect(() =>{
-		Front.modelCloumn()
-		.then(res => {
-			if (res.data.code === 0) {
-				setData(res.data.data);
-			}
-		}).catch(err => {
-		});
-	}, []);
-
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		props.form.validateFields((error, values) => {
@@ -59,49 +49,7 @@ const changeContext=(props)=>{
 				});
 			}
 		});
-
 	};
-
-	const [contextData, setContextData] = useState({});
-
-	useEffect(()=> {
-		const id=props.match.params.id;
-		const params = {
-			id: id
-		}
-		Front.get(params)
-		.then(res => {
-			if ( res.data.code === 0 ) {
-				setContextData(res.data.data);
-			}
-		});
-	},[]);
-		const options = data.map( item => ({
-		value: item.title,
-		label: item.title,
-		children: item.sec.map(item => ({
-			value: item.title,
-			label: item.title
-		}))
-	}));
-		const onChange =(value) => {
-	};
-	useEffect(()=> {
-		console.log("contextData",contextData.content);
-		if(contextData.category) {
-		let defaultArray = [];
-		defaultArray.push(contextData.category.split("/")[1]);
-		defaultArray.push(contextData.category.split("/")[2]);
-		props.form.setFieldsValue({
-			title: contextData.title,
-			// department: contextData.section,
-			content: BraftEditor.createEditorState(contextData.content),
-			category:defaultArray
-		});
-		}
-
-	},[contextData]);
-
 
 	const controls = ["font-size", "bold", "italic", "underline", "text-color", "separator", "link", {key: "media",title:"视频"}];
 
@@ -139,7 +87,6 @@ const changeContext=(props)=>{
 				content: ContentUtils.insertHTML(editorStates,`<br/><a href="${e.target.result}">${param.file.name}</a>`)
 			})
 		}
-
 	};
 	const extendControls =[
 		{
@@ -174,7 +121,7 @@ const changeContext=(props)=>{
 			)
 		}
 	];
-if(contextData.title&&data.length) {
+if(data.length) {
 	return (
 		<div className="demo-container">
 			<div className = "title">
@@ -193,21 +140,6 @@ if(contextData.title&&data.length) {
 						<Input size="large" placeholder="请输入标题"/>
 					)}
 				</Form.Item>
-  				<Form.Item {...formItemLayout} label="文章路径">
-  					{
-  						getFieldDecorator("category",{
-  							rules: [{
-  							  type: "array",
-  								required: true,
-  								message: "请填写发布分类"
-  							}]
-  						})(
-  								<Cascader options={options} 
-								   onChange={onChange}  placeholder="请选择要发布的位置"/>
-  						)
-  					}
-  				</Form.Item>
-
 				<Form.Item {...formItemLayout} label="文章正文">
 					{getFieldDecorator("content", {
 						validateTrigger: "onBlur",
