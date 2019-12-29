@@ -281,13 +281,7 @@ const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
 			render: () => <span>{artiCategory}</span>
 		},
 		{
-			title: "状态",
-			dataIndex: "pageState",
-			key: "pageStates",
-			render: () => <Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked={true}/>
-		},
-		{
-			title: "",
+			title: "操作",
 			dataIndex: "oper",
 			key: "oper",
 			render: (text, record, index) => (
@@ -469,12 +463,7 @@ const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
           			))
           		}
           	</ul>
-          	<Button　
-          		className="editBtn"
-          		onClick={handleEditBtn}
-          	>
-              编辑栏目
-          	</Button>
+
         </div><div className="columnContainer">
           	{
           		editState === "二级" &&
@@ -493,9 +482,6 @@ const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
               		})
               	}
               	<div style={{textAlign: "left",padding: "0 5px", marginTop: 35}}>
-              		<Button style={{width: 85, marginBottom: 10, padding: 0}} onClick={handleAddSeColClick}>
-              			<span style={{fontSize: 12, color: "#1890ff"}}>新增二级栏目</span>
-              		</Button>
               	</div>
               </Menu>
           	}
@@ -510,23 +496,7 @@ const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
                 				<Input style={{width: 100}} ref={input} onChange={(e) => setSecCol(e.target.value)} onPressEnter={handleSurePressEnter} defaultValue={secCol}/>
                 		}
 					</h2>
-					{	
-						secCols.length !== 0 &&
-						<div className="col-oper">
-							{
-								!secColEdit ?
-								<>
-								<Button className="btn" onClick={handleRenameClick}>
-									<span>重命名</span>
-								</Button>
-								<Button className="btn danger" onClick={DelSecCol}>
-									<span>删除</span>
-									</Button>
-								</> :
-								<Button className="btn" onClick={handleRenameSureClick}><span>确定</span></Button>
-							}
-                		</div>
-					}
+
                 	
                 </div>
           		}
@@ -538,13 +508,6 @@ const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
           		/>
           	</div>
         </div><div className="submitBtnContainer">
-          	<Button 
-          		className="submitBtn"
-          		loading = {loading}
-          		onClick = {handleSaveClick}
-          	>
-              保存
-          	</Button>
         </div></>
 			}
 		</React.Fragment>

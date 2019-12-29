@@ -911,7 +911,7 @@ const HideBar = () => {
 	return (
 		<div>
 			<div className={"title"}>
-				<span>隐藏条</span>
+				<span>横幅</span>
 			</div>
 			<div className={"buttonSbar"}>
 				<HomeTopicSave

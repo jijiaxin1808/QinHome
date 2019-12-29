@@ -20,6 +20,7 @@ const  DeleteArticle  = (props)=> {
     Back.modulesDelete(data).then(res=> {
       if(res.data.code === 0 ) {
         message.success("删除成功")
+        window.location.reload();
       }
     })
 	};
@@ -40,7 +41,7 @@ const  DeleteArticle  = (props)=> {
                 cancelText = "取消"
                 okType = "default"
 			>
-				<p>确认删除?</p>
+				<p>警告： 当前操作会删除本栏目下全部文章 是否删除？</p>
 			</Modal>
 		</div>
 	);
@@ -75,7 +76,7 @@ class EditableCell extends React.Component {
               rules: [
                 {
                   required: true,
-                  message: `Please Input ${title}!`,
+                  message: `请输入 ${title}!`,
                 },
               ],
               initialValue: record[dataIndex],
@@ -96,7 +97,7 @@ class EditableCell extends React.Component {
 class EditableTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data:[], page:0,editingKey: '' };
+    this.state = { data:[], page:1,editingKey: '' };
     Front.modelCloumn().then(res => {
       if(res.data.code === 0 ) {
         console.log("一级获取成功",res.data.data)
@@ -141,7 +142,7 @@ class EditableTable extends React.Component {
                   </a>
                 )}
               </EditableContext.Consumer>
-              <Popconfirm title="确认取消?" onConfirm={() => this.cancel(record.key)}>
+              <Popconfirm title="确认取消?" onConfirm={() => this.cancel(record.key)} okText="确认" cancelText = "取消">
                 <a>取消</a>
               </Popconfirm>
             </span>
@@ -198,19 +199,19 @@ class EditableTable extends React.Component {
         }
       })
 
-      const newData = [...this.state.data];
-      const index = newData.findIndex(item => key === item.key);
-      if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, {
-          ...item,
-          ...row,
-        });
-        this.setState({ data: newData, editingKey: '' });
-      } else {
-        newData.push(row);
-        this.setState({ data: newData, editingKey: '' });
-      }
+      // const newData = [...this.state.data];
+      // const index = newData.findIndex(item => key === item.key);
+      // if (index > -1) {
+      //   const item = newData[index];
+      //   newData.splice(index, 1, {
+      //     ...item,
+      //     ...row,
+      //   });
+      //   this.setState({ data: newData, editingKey: '' });
+      // } else {
+      //   newData.push(row);
+        this.setState({  editingKey: '' });
+      // }
     });
   }
 
@@ -274,6 +275,9 @@ const handleAdd = ()=> {
             <Select defaultValue="请选择一级栏目" style={{ width: 120 }} onChange={(value)=>{this.setState({page:value})}}>
               {
                 this.state.data.map((item,index)=> {
+                  if(item.title === "首页") {
+                    return <Option value={index} disabled >{item.title}</Option>
+                  }
                 return  <Option value={index}>{item.title}</Option>
                 })
               }

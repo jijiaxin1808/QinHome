@@ -13,8 +13,8 @@ function  Header (props) {
 	useEffect(() => {
 		Front.modelCloumn().then((res) => {
 			if (res.data.code === 0) {
-				setbardata(res.data.data.slice(0,8));
-				props.save(res.data.data.slice(0,8));
+				setbardata(res.data.data);
+				props.save(res.data.data);
 			}
 		});
 	}, []);
@@ -41,11 +41,14 @@ function  Header (props) {
 				<ul className='header-bar'>
 					{
 						bardata.map((item, index) => {
-							return (
-								<li key={index} className={flag === item ? "active" : ""}>
-								{item.link==="/" ?<Link to={"/index/index"}>{item.title}</Link>:<Link to={`/index${item.link}`}>{item.title}</Link>}
-								</li>
-							);
+							if(index<8) {
+								return (
+									<li key={index} className={flag === item ? "active" : ""}>
+									{item.link==="/" ?<Link to={"/index/index"}>{item.title}</Link>:<Link to={`/index${item.link}`}>{item.title}</Link>}
+									</li>
+								);
+							}
+
 						})
 					}
 				</ul>

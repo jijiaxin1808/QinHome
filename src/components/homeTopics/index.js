@@ -41,7 +41,7 @@ const HomeTopics = (props) => {
 			const sort = [...colsData].map((item,index)=> {
 				if(index>1){
 					if(item.sec.length) {
-						return `/${item.title}/${item.sec[0].title}`;
+						return `${item.title}`;
 					}
 
 				}
@@ -49,17 +49,18 @@ const HomeTopics = (props) => {
 			});
 			const data1 = {
 				limit:3,
-				moduleArray:sort,
-				status: ""
+				firstArray:sort,
+				status: "publish"
 			}
 			Front.listModulePost(data1).then(res=> {
-				if(res.data.data.code === 200) {
+				if(res.data.code === 0) {
 					const newData = res.data.data.map((item,index)=>{
-						if(index>1) {
+						// if(index>1) {
 							return item.post;
-						}
-						return null;
+						// }
+						// return null;
 					});
+					console.log("topics",newData)
 					setTopicData(newData);
 				}
 			});
@@ -72,10 +73,10 @@ const HomeTopics = (props) => {
 			<div className='home-topics'>
 				{
 					topicData.map((item, index) => {
-						if(index>1){
+						if(index>0){
 							return (
 								<HomeTopic 
-									title = {colsData[index].title} 
+									title = {colsData[index+1].title} 
 									href = {`/index/message?type=${index+2}`} 
 									 type =  { index+1 } 
 									data = {item}

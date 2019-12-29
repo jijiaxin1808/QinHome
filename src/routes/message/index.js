@@ -8,7 +8,6 @@ import { Skeleton } from "antd";
 const  Message = (props) => {
 	const [id, setId] = useState(1);// 这里用于区别一级页面
 	const [type, setType] = useState(1);// 这里用于区别二级页面
-
 	const [ contentData, setContentData ] = useState([]);
 
 	useEffect(()=> {

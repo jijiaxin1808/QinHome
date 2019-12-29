@@ -34,8 +34,8 @@ export default function Search(props) {
 			const params = {
 				flag: 1,
 				key: key,
-				limit: 5,
-				offset: (curPage-1) * 5,
+				limit: 10,
+				offset: (curPage-1) * 10,
 			}
 			Front.searchTitle(params)
 			.then(res => {
@@ -75,8 +75,8 @@ export default function Search(props) {
 			const params = {
 				flag: 1,
 				status: "publish",
-				limit: 5,
-				offset: (curPage-1) * 5,
+				limit: 10,
+				offset: (curPage-1) * 10,
 			}
 			Front.listPosts(params)
 			.then(res => {
@@ -114,7 +114,7 @@ export default function Search(props) {
 					onChange={page => setCurPage(page)}
 					hideOnSinglePage
 					defaultCurrent={1}
-					pageSize={5}
+					pageSize={10}
 					showQuickJumper
 				/>
 			</div>
@@ -138,11 +138,10 @@ function renderSearchList(searchList, loading) {
 			<ul className="index-search-list">
 				{
 					searchList.map((item,index) => {
-						console.log(item.category.split("/")[2],"77777777");
 						return (
 							<li className="active" key={`${index}${item}`}>
 								<Link to={`/index/article?id=${item.id}`} className="arti-title">
-									<i>{`【${item.category.split("/")[2]}】  ${item.title}`}</i>
+									<i>{`  ${item.title}`}</i>
 									<span className="time">{item.created_at.slice(0,10)}</span>
 								</Link>
 							</li>

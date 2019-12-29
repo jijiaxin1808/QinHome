@@ -94,7 +94,7 @@ const changeContext=(props)=>{
 		defaultArray.push(contextData.category.split("/")[2]);
 		props.form.setFieldsValue({
 			title: contextData.title,
-			department: contextData.section,
+			// department: contextData.section,
 			content: BraftEditor.createEditorState(contextData.content),
 			category:defaultArray
 		});
@@ -174,7 +174,7 @@ const changeContext=(props)=>{
 			)
 		}
 	];
-if(contextData.category&&data.length) {
+if(contextData.title&&data.length) {
 	return (
 		<div className="demo-container">
 			<div className = "title">
@@ -241,7 +241,13 @@ if(contextData.category&&data.length) {
 			</Form>
 		</div>
 	);
-	// }
-};}
+}
+else {
+	return (
+	<div>
+		"东西都丢了"
+	</div>)
+} 
+}
 
 export default Form.create()(forwardRef(changeContext));

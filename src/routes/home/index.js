@@ -131,7 +131,7 @@ const Home = () => {
 							<TextScroll 
 								mode="horizontal"
 								text={annouces}
-								speed={6000}
+								speed={4000}
 							/>
 						</div>
 					}

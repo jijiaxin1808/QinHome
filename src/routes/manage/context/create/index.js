@@ -37,14 +37,20 @@ function FormDemo (props) {
 		});
 	}, []);
 
-	const options = data.map( item => ({
-		value: item.title,
-		label: item.title,
-		children: item.sec.map(item => ({
-			value: item.title,
-			label: item.title
-		}))
-	}));
+	const options = data.map( (item) => {
+		if(item.title!=="首页"){
+			return {
+				value: item.title,
+				label: item.title,
+				children: item.sec.map(item => ({
+					value: item.title,
+					label: item.title
+				}))
+			}
+		}
+		else 
+		return {};
+	});
 
 
 	const handleOnChange = ({file}) => {

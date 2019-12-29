@@ -18,6 +18,7 @@ const  DeleteArticle  = (props)=> {
     Back.modulesDelete(data).then(res=> {
       if(res.data.code === 0 ) {
         message.success("删除成功")
+        window.location.reload();
       }
     })
 	};
@@ -38,7 +39,7 @@ const  DeleteArticle  = (props)=> {
                 cancelText = "取消"
                 okType = "default"
 			>
-				<p>确认删除?</p>
+				<p>警告： 当前操作会删除本栏目下全部文章 是否删除？</p>
 			</Modal>
 		</div>
 	);
@@ -231,7 +232,7 @@ class EditableTable extends React.Component {
                   </a>
                 )}
               </EditableContext.Consumer>
-              <Popconfirm title="确认取消?" onConfirm={() => this.cancel(record.key)}>
+              <Popconfirm title="确认取消?" onConfirm={() => this.cancel(record.key)} okText="确认" cancelText = "取消">
                 <a>取消</a>
               </Popconfirm>
             </span>
@@ -275,7 +276,7 @@ class EditableTable extends React.Component {
           if(item.title !== row.title) {
             console.log("名字变了");
             const data = {
-              oldFirst: item.title,
+              first: item.title,
               newFirst: row.title
             }
             Back.alterFirst(data).then(res=> {
@@ -290,7 +291,7 @@ class EditableTable extends React.Component {
                   Back.alterWTAndLK(data).then(res=> {
                     if(res.data.code === 0) {
                       message.success("修改成功");
-                      // window.location.reload();
+                      window.location.reload();
                     }
                   })
                 }
@@ -303,32 +304,32 @@ class EditableTable extends React.Component {
 
             const data = {
               first: item.title,
-              weight: 111,
+              weight: row.weight,
               link: row.link
             }
             console.log("link或weight改变了",data);
             Back.alterWTAndLK(data).then(res=> {
               if(res.data.code === 0) {
                 message.success("修改成功");
-                // window.location.reload();
+                window.location.reload();
               }
             })
           }
         }
       })
-      const newData = [...this.state.data];
-      const index = newData.findIndex(item => id === item.id);
-      if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, {
-          ...item,
-          ...row,
-        });
-        this.setState({ data: newData, editingKey: '' });
-      } else {
-        newData.push(row);
-        this.setState({ data: newData, editingKey: '' });
-      }
+      // const newData = [...this.state.data];
+      // const index = newData.findIndex(item => id === item.id);
+      // if (index > -1) {
+      //   const item = newData[index];
+      //   newData.splice(index, 1, {
+      //     ...item,
+      //     ...row,
+      //   });
+      //   this.setState({ data: newData, editingKey: '' });
+      // } else {
+      //   newData.push(row);
+        this.setState({  editingKey: '' });
+      // }
     });
   }
 

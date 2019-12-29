@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react";
-import { Tabs as T,Skeleton } from "antd";
+import { Tabs as T,Skeleton, message } from "antd";
 import "./index.less";
 import { Link } from "react-router-dom";
 import { connect } from "dva";
 import * as Front  from "../../api/Front";
+import axios from "axios";
 
 const { TabPane } = T;
 const  Tabs =(props)=> {
@@ -13,19 +14,26 @@ const  Tabs =(props)=> {
 			const sort = [];
 			props.home.columnData[1].sec.map((item,index) => {
 				if(index<=0) {
-					sort.push(`/新闻中心/${item.title}`);
+					sort.push(`${props.home.columnData[1].title}`);
 					return null;
 				}
 				else return null;
 			});
 			const data1 = {
 				limit:7,
-				moduleArray:sort,
+				firstArray:sort,
 				status: "publish"
 			};
-			Front.listModulePost(data1).then(res=> {
+
+
+			axios({
+				method: "POST",
+				data: data1,
+				url: " http://yjxt.elatis.cn/posts/listModulePost"
+			}).then(res=> {
+				console.log("触发了then",res.data.data[0].post);
 				if(res) {
-					if(res.data.data.code === 200) {
+					if(res.data.code === 0) {
 						const newdata = res.data.data.map((item, index)=> {
 							return (
 								{
@@ -34,6 +42,7 @@ const  Tabs =(props)=> {
 								}
 							);
 						});
+						console.log(newdata,"tabeqdsadasbbfndsanbfsdafass");
 						setData(newdata);
 					}
 				}
@@ -44,7 +53,6 @@ const  Tabs =(props)=> {
 	const operations = <Link to = {"/index/message?type=2"}>更多>></Link>;
 	if(data.length !== 0){
 		return (
-
 			<T defaultActiveKey='1' tabBarExtraContent={operations}>
 				{
 					data.map((item, index) => {
