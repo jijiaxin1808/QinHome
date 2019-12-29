@@ -10,7 +10,16 @@ const  DeleteArticle  = (props)=> {
 		setVisible(true);
 	};
 	const handleOk = e => {
-		setVisible(false);
+    setVisible(false);
+    console.log("删除",props)
+    const data = {
+      first: props.firstName
+    }
+    Back.modulesDelete(data).then(res=> {
+      if(res.data.code === 0 ) {
+        message.success("删除成功")
+      }
+    })
 	};
 	const handleCancel = e => {
 		setVisible(false);
@@ -112,12 +121,7 @@ class EditableTable extends React.Component {
         width: '15%',
         editable: false,
         render: (text,record,index) => {
-            if(record.id <8) {
-                return <div>显示</div>
-            }
-            else return (
-                <div>隐藏</div>
-            )
+                return <div>显示</div>            
         }
       },
       {
@@ -169,7 +173,83 @@ class EditableTable extends React.Component {
         editable: false,
         render: (text, record) => {
             return (
-                <DeleteArticle />
+                <DeleteArticle firstName = {record.title} />
+            )
+        }
+      },
+    ];
+    this.hideColumns = [
+      {
+        title: '栏目id',
+        dataIndex: 'key',
+        width: '10%',
+        editable: false,
+      },
+      {
+        title: '一级栏目名',
+        dataIndex: 'title',
+        width: '15%',
+        editable: true,
+      },
+      {
+        title: '状态',
+        dataIndex: 'title',
+        width: '15%',
+        editable: false,
+        render: (text,record,index) => {
+                return <div>隐藏</div>            
+        }
+      },
+      {
+        title: '链接地址',
+        dataIndex: 'link',
+        width: '25%',
+        editable: true,
+      },
+      {
+        title: '权重',
+        dataIndex: 'weight',
+        width: '15%',
+        editable: true,
+      },
+      {
+        title: '操作',
+        dataIndex: 'operation',
+        width: '15%',
+        render: (text, record) => {
+          const { editingKey } = this.state;
+          const editable = this.isEditing(record);
+          return editable ? (
+            <span>
+              <EditableContext.Consumer>
+                {form => (
+                  <a
+                    onClick={() => this.save(form, record.key)}
+                    style={{ marginRight: 8 }}
+                  >
+                    保存
+                  </a>
+                )}
+              </EditableContext.Consumer>
+              <Popconfirm title="确认取消?" onConfirm={() => this.cancel(record.key)}>
+                <a>取消</a>
+              </Popconfirm>
+            </span>
+          ) : (
+            <a disabled={editingKey !== ''} onClick={() => this.edit(record.key)}>
+              修改
+            </a>
+          );
+        },
+      },
+      {
+        title: '删除',
+        dataIndex: 'weight',
+        width: '15%',
+        editable: false,
+        render: (text, record) => {
+            return (
+                <DeleteArticle  firstName = {record.title}/>
             )
         }
       },
@@ -203,17 +283,18 @@ class EditableTable extends React.Component {
                 if((item.weight !== row.weight)||(item.link !== row.link)) {
                   console.log("link或weight改变了");
                   const data = {
-                    oldFirst: row.title,
+                    first: row.title,
                     weight: row.weight,
                     link: row.link
                   }
-                  Back.alterFirst(data).then(res=> {
+                  Back.alterWTAndLK(data).then(res=> {
                     if(res.data.code === 0) {
                       message.success("修改成功");
-                      window.location.reload();
+                      // window.location.reload();
                     }
                   })
                 }
+                message.success("修改成功");
               }
 
             })
@@ -221,15 +302,15 @@ class EditableTable extends React.Component {
           else if((item.weight !== row.weight)||(item.link !== row.link)) {
 
             const data = {
-              oldFirst: item.title,
+              first: item.title,
               weight: 111,
               link: row.link
             }
             console.log("link或weight改变了",data);
-            Back.alterFirst(data).then(res=> {
+            Back.alterWTAndLK(data).then(res=> {
               if(res.data.code === 0) {
                 message.success("修改成功");
-                window.location.reload();
+                // window.location.reload();
               }
             })
           }
@@ -263,6 +344,21 @@ class EditableTable extends React.Component {
     };
 
     const columns = this.columns.map(col => {
+      if (!col.editable) {
+        return col;
+      }
+      return {
+        ...col,
+        onCell: record => ({
+          record,
+          inputType: col.dataIndex === 'age' ? 'number' : 'text',
+          dataIndex: col.dataIndex,
+          title: col.title,
+          editing: this.isEditing(record),
+        }),
+      };
+    });
+    const hideC =  this.hideColumns.map(col => {
       if (!col.editable) {
         return col;
       }
@@ -316,7 +412,7 @@ class EditableTable extends React.Component {
         <Table
           components={components}
           dataSource={this.state.data.slice(8)}
-          columns={columns}
+          columns={hideC}
           rowClassName="editable-row"
           pagination={{
             onChange: this.cancel,

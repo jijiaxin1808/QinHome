@@ -40,7 +40,8 @@ const changeContext=(props)=>{
 			if (!error) {
 				const submitData = {
 					title: values.title,
-          			category: "/"+values.category[0]+ "/" +values.category[1],
+					first:values.category[0],
+					second:values.category[1],
           			id:props.match.params.id,
 					content: values.content.toHTML()// or values.content.toHTML()
 				};

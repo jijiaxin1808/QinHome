@@ -745,12 +745,192 @@ const Background = () => {
 		</div>
 	);
 };
+
+
+const HideBar = () => {
+	const [data, setdata] = useState([]);
+	const  HomeTopicSave  = (props)=> {
+		const [ visible, setVisible ] = useState(false);
+		const showModal = () => {
+			setVisible(true);
+		};
+	
+		const handleOk = e => {
+			setVisible(false);
+			Back.modelUpdate(data1)
+			.then(res => {
+				if (res.data.code === 0) {
+					message.success("保存成功");
+				} else {
+					message.error(res.data.message);
+				}
+			});
+		};
+		const handleCancel = e => {
+			setVisible(false);
+		};
+		return (
+			<div>
+				<Button  onClick={()=>{showModal();}}>
+			  保存
+				</Button>
+				<Modal
+					visible={visible}
+					onOk={()=>{handleOk();}}
+					onCancel={()=>{handleCancel();}}
+					okText = "确认"
+					cancelText = "取消"
+				>
+					<p>确认保存?</p>
+				</Modal>
+			</div>
+		);
+	  
+	};
+	useEffect(() => {
+		Front.modelHideBar()
+		.then(res => {
+			if (res.data.code === 0) {
+				setdata(res.data.data);
+			} else {
+				message.error(res.data.message);
+			}
+		});
+	}, []);
+	const homeTopicCol = [
+		{
+			title: "图片",
+			dataIndex: "picUrl",
+			key: "picUrl",
+			render: (picUrl, id) => <div>{picUrlButton(picUrl, id)}</div>,
+		},
+		{
+			title: "链接地址",
+			dataIndex: "url",
+			key: "url",
+			render: (href, id) => (
+				<Input
+				defaultValue={href}
+					onChange={e => {
+						const newData = data.map(item => {
+							if (item.id === id.id) {
+								return {
+									...item,
+									url: e.target.value,
+								};
+							} else
+								return {
+									...item,
+								};
+						});
+						setdata(newData);
+					}}
+				/>
+			),
+		},
+		{
+			title: "状态",
+			key: "isShow",
+			dataIndex: "isShow",
+			render: (isShow, id) => (
+				<Switch
+					checkedChildren="显示"
+					unCheckedChildren="隐藏"
+					defaultChecked={isShow}
+					onChange={checked => {
+						const newData = data.map(item => {
+							if (item.id === id.id) {
+								return {
+									...item,
+									isShow: checked,
+								};
+							} else
+								return {
+									...item,
+								};
+						});
+						setdata(newData);
+					}}
+				/>
+			),
+		},
+	];
+	const props = {
+		name: "file",
+		action: "http://yjxt.elatis.cn/file/upload",
+		headers: {
+			authorization: "authorization-text",
+			token: localStorage.getItem("token"),
+		},
+	};
+	const onChange = (info, id) => {
+		if (info.file.status !== "uploading") {
+		}
+		if (info.file.status === "done") {
+			message.success(`${info.file.name} 文件上传成功`);
+			const newData = data.map(item => {
+				if (item.id === id.id) {
+					return {
+						...item,
+						picUrl: info.file.response.data.url,
+					};
+				} else
+					return {
+						...item,
+					};
+			});
+			setdata(newData);
+		} else if (info.file.status === "error") {
+			message.error(`${info.file.name} 文件上传失败`);
+		}
+	};
+	const picUrlButton = (picUrl, id) => {
+		if (picUrl) {
+			return (
+				<Fragment>
+					<a href={picUrl} target="_blank">
+						<Button style = {{marginRight:"10px"}}>查看图片</Button>
+					</a>
+					<Upload
+						{...props}
+						onChange={info => {
+							onChange(info, id);
+						}}
+					>
+						<Button>修改图片</Button>
+					</Upload>
+				</Fragment>
+			);
+		} else return <Button  onClick = {()=>{}}>添加图片</Button>;
+	};
+	const data1 = {
+		name: "hideBar",
+		value: data,
+	}
+	
+	return (
+		<div>
+			<div className={"title"}>
+				<span>隐藏条</span>
+			</div>
+			<div className={"buttonSbar"}>
+				<HomeTopicSave
+					className={"button"}
+				>
+          保存
+				</HomeTopicSave>
+			</div>
+			<Table columns={homeTopicCol} dataSource={data} pagination={false} />
+		</div>
+	);
+};
 const block = () => {
 	return (
 		<div >
 			<HeaderScroll />
 			<Carousel />
 			<HomeTopic />
+			<HideBar />
 			<Background />
 		</div>
 	);

@@ -12,25 +12,16 @@ const  DeleteArticle  = (props)=> {
 		setVisible(true);
 	};
 	const handleOk = e => {
-		setVisible(false);
-		// axios({
-		// 	method:"POST",
-		// 	url: "http://yjxt.elatis.cn/posts/delete",
-		// 	params: {
-		// 		id:props.id
-		// 	},
-		// 	headers: {
-		// 		"token":localStorage.getItem("token"),
-		// 		"Content-Type": "application/json"
-		// 	}
-		// }).then(res=> {
-		// 	if(res.data.code === 0 ) {
-		// 		message.success("删除成功");
-		// 	}
-		// 	else {
-		// 		message.warn(res.data.message);
-		// 	}
-		// });
+    setVisible(false);
+    const data = {
+      first: props.firstName,
+      second: props.secondName
+    }
+    Back.modulesDelete(data).then(res=> {
+      if(res.data.code === 0 ) {
+        message.success("删除成功")
+      }
+    })
 	};
 	const handleCancel = e => {
 		setVisible(false);
@@ -168,7 +159,7 @@ class EditableTable extends React.Component {
         editable: false,
         render: (text, record) => {
             return (
-                <DeleteArticle />
+                <DeleteArticle secondName = {record.title} firstName = {this.state.data[this.state.page].title} />
             )
         }
       },

@@ -11,6 +11,9 @@ function modelCloumn() {
 function modelCarousel() {
     return axiosF("options/name/carousel");
 }
+function modelHideBar() {
+    return axiosF("options/name/hideBar");
+}
 function listModulePost(data) {
     return axiosF("posts/listModulePost",data,"POST")
 }
@@ -53,6 +56,6 @@ function searchTitle(params) {
 
 
 
-export { searchTitle, modelCloumn, modelCarousel, listModulePost, getArticle, modelTopicCol, modelSafe, modelBackground, listPosts, get,
+export { modelHideBar, searchTitle, modelCloumn, modelCarousel, listModulePost, getArticle, modelTopicCol, modelSafe, modelBackground, listPosts, get,
     listMsgs, create
   }

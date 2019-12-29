@@ -12,6 +12,7 @@ import {friendLink, otherLink }from "../../config/friendLink";
 import axios from "axios";
 import TextScroll from "react-textscroll";
 import * as Front from "../../api/Front";
+import HideBar from "../../components/hideBar";
 
 const { Option } = Select
 const OtherLink = ()=> {
@@ -136,6 +137,7 @@ const Home = () => {
 					}
 					<Weather />
 				</div>
+				<HideBar />
 				<div className='container' style={{ display: "flex", flexFlow: "row nowrap", width: "1080px", margin: "0 auto" }}>
 					<HomeCarousel />
 					<Tabs />
