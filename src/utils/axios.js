@@ -12,7 +12,7 @@ const openNotification = message => {
 };
 
 axios.interceptors.response.use(data=> {
-    if (data.status && data.status == 200 && data.data.code!==0) {
+    if (data.status && data.status == 200 && (data.data.code!==0&&data.data.code)) {
         if(data.data.message) {
             message.error(data.data.message);
         }
