@@ -10,6 +10,4 @@ export default function Pagination(props) {
   )
 }
 
-function onChange (page) {
-  console.log(page)
-}
+

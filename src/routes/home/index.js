@@ -7,10 +7,29 @@ import HomeCarousel from "../../components/home-carousel";
 import Weather from "./weather";
 import Tabs from "../../components/tabs";
 import { Link } from "react-router-dom";
-import { message } from "antd";
-import friendlinkData from "../../config/friendlinkData";
+import { message,Dropdown,Button,Menu, Select } from "antd";
+import {friendLink, otherLink }from "../../config/friendLink";
 import axios from "axios";
 import TextScroll from "react-textscroll";
+import * as Front from "../../api/Front";
+import HideBar from "../../components/hideBar";
+
+const { Option } = Select
+const OtherLink = ()=> {
+	return (
+		<Select style = {{width:"250px",marginLeft:"20px"}}  onChange = {(value)=>{window.open(value)}} defaultValue = {"市直部门网站"}>
+		{
+			otherLink.map((item,index)=> {
+				return (
+					<Option value = {item.href}>
+						{item.title}
+				  </Option>
+				)
+			})
+		}
+	</Select>
+	)
+}
 
 const FriendLink = () => {
 	return (
@@ -19,16 +38,15 @@ const FriendLink = () => {
 
 			<div className='friendlink-link'>
 				{
-					friendlinkData.map((item, index) => {
+					friendLink.map((item, index) => {
 						return (
-						// eslint-disable-next-line react/react-in-jsx-scope
-							// eslint-disable-next-line react/jsx-no-target-blank
 							<a alt={item.name} key={index} href={item.href} target = "_blank">
 								{item.name}
 							</a>
 						);
 					})
 				}
+				<OtherLink />
 			</div>
 		</div>
 	);
@@ -37,7 +55,7 @@ const FriendLink = () => {
 const FooterTopic = () => {
 	const [topicData, setData] = useState([]);
 	useEffect(() => {
-		axios.get("http://yjxt.elatis.cn/options/name/topicCol").then((res) => {
+		Front.modelTopicCol().then((res) => {
 			if (res.data.code === 0) {
 				setData(res.data.data);
 			} else {
@@ -45,6 +63,7 @@ const FooterTopic = () => {
 			}
 		});
 	}, []);
+
 	return (
 		<div className='footer-topic'>
 			<div className='footer-topic-header'><span>专题专栏</span></div>
@@ -64,38 +83,34 @@ const FooterTopic = () => {
 		</div>
 	);
 };
+
 const Home = () => {
 	const [colsData, setColsData] = useState([]);
 	const [backgroundUrl, setbackgroundUrl] = useState("");
 	const [annouces, setAnnouces] = useState([]);
 
 	useEffect(() => {
-		axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
+		Front.modelCloumn().then(res => {
 			if (res.data.code === 0) {
 				setColsData(res.data.data);
 			}
-		}).catch(err => {
-			message.error(err);
-		});
-		axios.get("http://yjxt.elatis.cn/options/name/safe").then((res) => {
+		})
+		Front.modelSafe().then((res) => {
 			if (res.data.code === 0) {
-
 				let _data = [];
 				res.data.data.map(item => {
 					if(item.isShow) {
-						console.log("push了数据",item);
 						_data.push(
-							<a title={item.title} href={`${item.href}`} style={{color: "#333", fontSize: "18px"}}>{item.title}</a>
+							<a title={item.title} href={`${item.href}`} className = "safe-jjx-a" style={{color: "#333", fontSize: "18px"}}>{item.title}</a>
 						);
 						return null;
 					}
 					return null;
 				});
 				setAnnouces(_data);
-				console.log("设置了数据",_data);
 			}
 		});
-		axios.get("http://yjxt.elatis.cn/options/name/background").then((res) => {
+		Front.modelBackground().then((res) => {
 			if (res.data.code === 0) {
 				setbackgroundUrl(res.data.data[0].picUrl);
 			}
@@ -111,16 +126,17 @@ const Home = () => {
 					</span>
 					{
 						annouces.length!==0 &&
-						<div style={{marginLeft:"-50px",width:"500px"}}>
+						<div style={{marginLeft:"0px",width:"725px",marginRight:"20px"}}>
 							<TextScroll 
 								mode="horizontal"
 								text={annouces}
-								speed={6000}
+								speed={4000}
 							/>
 						</div>
 					}
 					<Weather />
 				</div>
+				<HideBar />
 				<div className='container' style={{ display: "flex", flexFlow: "row nowrap", width: "1080px", margin: "0 auto" }}>
 					<HomeCarousel />
 					<Tabs />

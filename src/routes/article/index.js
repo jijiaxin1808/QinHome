@@ -1,29 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./index.less";
-import axios from "axios";
-import urlHandle from "../../config/urlHandle";
+import * as Front from "../../api/Front";
+import urlHandle from "../../utils/urlHandle";
 import { message, Spin } from "antd";
-
-// const func = (data)=> {
-// 	return (data);
-// };
 
 const Article = () => {
 	const [data, setdata] = useState([]);
-	// const [id, setid] = useState([])
 	useEffect(() => {
-		axios({
-			method: "GET",
-			headers: {
-				"token":localStorage.getItem("token") ,
-				"Content-Type": "application/json"
-			},
-			url: `http://yjxt.elatis.cn/posts/get?id=${urlHandle("id")}`
-		}).then(res => {
+		Front.getArticle(urlHandle("id"))
+			.then(res => {
 			if (res.data.code === 0) {
-				// console.log(res.data);
 				setdata(res.data.data);
-				console.log(res.data.data);
 			} else {
 				setdata(["none"]);
 			}
@@ -32,9 +19,6 @@ const Article = () => {
 				setdata(["none"]);
 			}
 		});
-	}, []);
-	useEffect(() => {
-		console.log(urlHandle("id"));
 	}, []);
 	if (data[0] === "none") {
 		message.warn("所访问页面不存在");

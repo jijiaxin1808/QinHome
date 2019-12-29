@@ -1,15 +1,13 @@
 import React,{ useState, useEffect } from "react";
 import { Table, Button, Modal, message } from "antd";
-// import contextData from "../../../assets/contextData";
-// import styles from "./index.css";
-import axios from "axios";
 import {routerRedux} from "dva/router";
 import { connect } from "dva";
 import Loading from "../../../components/loading";
+import * as Front from "../../../api/Front";
+import * as Back from "../../../api/Back";
 
-// const { Search } = Input;
+
 const alterAricle = (id)=> {
-	console.log(id);
 	window.location.href = `/manage/change/${id}`;
 };
 const  DeleteArticle  = (props)=> {
@@ -19,26 +17,13 @@ const  DeleteArticle  = (props)=> {
 	};
 	const handleOk = e => {
 		setVisible(false);
-		console.log("确认删除");
-		axios({
-			method:"POST",
-			url: "http://yjxt.elatis.cn/posts/delete",
-			params: {
-				id:props.id
-			},
-			headers: {
-				"token":localStorage.getItem("token"),
-				"Content-Type": "application/json"
-			}
-		}).then(res=> {
+		const params = {
+			id: props.id
+		}
+		Back.postsDelete(params)
+		.then(res=> {
 			if(res.data.code === 0 ) {
 				message.success("删除成功");
-				// window.location.reload();
-				// setTimeout(()=>{},500)
-				// props.dispatch(routerRedux.push({
-				// 	pathname: '/index/index'
-				// }));
-				// props.reload();
 			}
 			else {
 				message.warn(res.data.message);
@@ -50,10 +35,6 @@ const  DeleteArticle  = (props)=> {
 	};
 
 	return (
-
-
-
-
 		<div>
 			<Button  onClick={()=>{showModal();}}>
           删除
@@ -133,38 +114,13 @@ const columns = [
 const Context = (props)=> { 
 	const [ data, setData ] = useState([]);
 	const { reload } = props;
-	// const [  Pagination, setPagination ] = useState({});
-	// const changePage = (pagination)=> {
-	// 	console.log("当前页码",pagination);
-	// 	let P = { ...Pagination,				
-	// 		results: pagination.pageSize,
-	// 		page: pagination.current};
-	// 	setPagination(P);
-	// 	axios({
-	// 		method:"GET",
-	// 		url: "http://yjxt.elatis.cn/posts/listPosts",
-	// 		params: {
-	// 			flag: 2,
-	// 		}
-	// 	}).then(res=> {
-	// 		if(res.data.code === 0) {
-	// 			console.log("内容管理",res.data.data);
-	// 			setData(res.data.data);
-
-
-	// 		}
-	// 	});
-	// }
 	useEffect(()=>{
-		axios({
-			method:"GET",
-			url: "http://yjxt.elatis.cn/posts/listPosts",
-			params: {
-				flag: 2
-			}
-		}).then(res=> {
+		const params = {
+			flag: 2
+		}
+		Front.listPosts(params)
+		.then(res=> {
 			if(res.data.code === 0) {
-				console.log("内容管理",res.data.data);
 				setData(res.data.data);
 			}
 		});
@@ -189,14 +145,8 @@ const Context = (props)=> {
 		<React.Fragment>
 			<Loading />
 		</React.Fragment>
-
 	);
-
-	
 };
-
-
-
 
 export default Context;
 

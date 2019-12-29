@@ -1,16 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Menu, Icon, Switch, Layout } from "antd";
-import { allMenu } from "../../../utils/menu";
+import allMenu from "../../../config/menu";
 import Top from "./header";
 import Contents from "./content";
-// import Footer from "./bottom";
 import  "./index.less";
-// import createHistory from "history/createBrowserHistory";
 
 const SubMenu = Menu.SubMenu;
 const { Sider } = Layout;
-// const history=createHistory();
 export default class Manage extends React.Component {
   state = {
   	theme: "light",
@@ -51,8 +48,6 @@ export default class Manage extends React.Component {
   				onCollapse={this.onCollapse}
   				className="leftMenu"
   			>
-  				{/* {this.state.theme === "light" ? <a href="https://github.com/YYL1999" target='_blank' rel='noopener noreferrer'><Icon type="github" className="github" /></a> :
-  					<a href="https://github.com/YYL1999" target='_blank' rel='noopener noreferrer'><Icon type="github" className="githubwhite" /></a> } */}
   				{ this.state.theme === "light" ? this.state.collapsed===false?<span className="author">应急管理</span> : "":<span className="authorwhite">应急管理</span> }
   				<Menu
   					theme={this.state.theme}
@@ -95,7 +90,6 @@ export default class Manage extends React.Component {
   			<Layout>
   				<Top toggle={this.toggle} collapsed={this.state.collapsed} clear={this.clear} />
   				<Contents />
-  				{/* <Footer /> */}
   			</Layout>
   		</Layout>
   	);

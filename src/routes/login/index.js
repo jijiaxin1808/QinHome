@@ -2,10 +2,9 @@ import React from "react";
 import { Form, Icon, Input, Button,  message } from "antd";
 import { connect} from "dva";
 import "./index.less";
-import axios from "axios";
 import { routerRedux } from "dva/router";
-import {_setCookie} from "../../utils/session";
-// import { local } from 'inspector';
+import { setCookie} from "../../utils/session";
+import * as Back from "../../api/Back";
 
 @connect(
 	({login, loading}) => ({
@@ -17,41 +16,22 @@ class NormalLoginForm extends React.Component {
   	e.preventDefault();
   	this.props.form.validateFields((err, values) => {
   		if (!err) {
-  			// console.log('Received values of form: ', values);
-  			// const { dispatch } = this.props;
-  			// dispatch({
-  			//   type: 'login/login',
-  			//   payload: { ...values }
-  			// })
-  			const tmp = values;
-  			tmp.keep_alive = Number(values.keep_alive);
-  			console.log(tmp);
-  			axios({
-  				method:"post",
-  				url:"http://yjxt.elatis.cn/users/login",
-  				data: {
-					  ...tmp,
-					  keep_alive: 1
-  				},
-  				headers: {
-  					"content-type": "application/json"
-  				}
-  			}).then(data =>{
+			const tmp = values;
+			const data = {
+				...tmp,
+				keep_alive: 1
+			}
+			Back.login(data).then(data =>{
   				if (data.data.code === 0 ) {
   					message.success("登录成功");
-  					_setCookie(data.data.data.token);
+  					setCookie(data.data.data.token);
   					this.props.dispatch(
   						routerRedux.push({
   							pathname:"/manage/index"
   						})
 					  );
   				}
-  				else {
-  					message.error(data.data.message);
-  				}
-  			}).catch(err => {
-  				console.log(err);
-  			});
+  			})
   		}
   	});
   };
@@ -76,7 +56,9 @@ class NormalLoginForm extends React.Component {
   				</Form.Item>
   				<Form.Item style = {{display:"flex",justifyContent:"center"}}>
   					{getFieldDecorator("password", {
-  						rules: [{ required: true, message: "请输入密码" }],
+						  rules: [{ required: true, message: "请输入密码" },
+						{ min: 6, message: "密码至少六位" }
+						],
   					})(
   						<Input
   							prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}

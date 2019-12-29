@@ -2,7 +2,6 @@ import React from 'react'
 import {Modal,Select} from 'antd'
 const { Option } = Select;
  export const Modals=(props)=>{
-     console.log(props)
      return (
         <Modal
         title="修改权限"

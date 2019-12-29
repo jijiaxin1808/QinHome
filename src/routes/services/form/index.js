@@ -1,11 +1,10 @@
-/* eslint-disable linebreak-style */
-
 import React from "react";
 import {Form,Input,Button,Radio, message} from "antd";
 import "antd/dist/antd.css";
 import "./index.less";
 import { randomNum  } from "../../../utils/utils";
-import axios from "axios";
+import * as Front from "../../../api/Front";
+
 const {TextArea} = Input;
 
 class Xx extends React.Component {
@@ -37,16 +36,8 @@ class Xx extends React.Component {
     					...values,
     					category:"msg"
     				};
-    				console.log(data);
     				delete data.code;
-    				axios({
-    					method:"POST",
-    					headers:{
-    						"Content-Type":"application/json"
-    					},
-    					url:"http://yjxt.elatis.cn/msgs/create",
-    					data:data
-    				}).then(res=>{
+					Front.create(data).then(res=>{
     					if(res.data.code===0){
     						message.success("提交成功");
     					}
@@ -100,10 +91,7 @@ class Xx extends React.Component {
   					{getFieldDecorator("title", {
   						rules: [{ required: true,message: "请输入标题" }],
   					})(
-  						<Input
-
-    							style={{width:"300px"}}
-  						/>,
+  						<Input style={{width:"300px"}}/>
   					)}
   				</Form.Item>
     				<Form.Item label="内容">

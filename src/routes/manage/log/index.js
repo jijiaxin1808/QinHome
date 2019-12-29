@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table  } from "antd";
-import axios from "axios";
 import qs from "qs";
+import * as Back from "../../../api/Back";
 
 const columns = [
 	{
@@ -35,21 +35,11 @@ const columns = [
 ];
 
 
-
 const Log = ()=> {
 	const [ logdata, setlogdata ] = useState([]);
 	useEffect(()=> {
-		let data = qs.stringify({
-		});
-		axios({
-			method:"GET",
-			url:"http://yjxt.elatis.cn/logs",
-			headers:{
-				"token": localStorage.getItem("token"),
-				"Content-Type":"application/x-www-form-urlencoded"
-			},
-			data:data
-		}).then((res)=> {
+		Back.logs()
+		.then((res)=> {
 			if(res.data.code === 0) {
         
 				let resData = res.data.data.data.map((item,index)=> { 
@@ -59,20 +49,17 @@ const Log = ()=> {
 					};
 				});
 				setlogdata(resData);
-				console.log(resData);
 			}
 		});
-	}
-		,[]);
+	},[]);
 	return(
 		<div>
 			<div className = { "title" }>
 				<span>
-                 操作日志
+                操作日志
 				</span>
 			</div>
 			<Table columns={columns} dataSource={logdata} style = {{width:"80%",margin: "0 auto"}}  />
-			{/* <Pagination defaultCurrent={1} total={50} pageSizeOptions = {["5"]} /> */}
 		</div>
 	);
 };

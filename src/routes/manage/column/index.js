@@ -23,7 +23,6 @@ export default function ColManage() {
 	const [editState, setEditState] = useState("二级");
 	// 二级文章列表是否处于编辑状态
 	const [edit, setEdit] = useState([]);
-	console.log(edit);
 	// 位于的某二级栏目
 	const [secCol, setSecCol] = useState("");
 	// 位于的某二级栏目标识key
@@ -55,9 +54,8 @@ export default function ColManage() {
 	}, [col, colsData, data]);
 
 	useEffect(() => {
-		axios.get("http://yjxt.elatis.cn/options/name/column").then(res => {
+		axios.get("http://yjxt.elatis.cn/modules/listModule").then(res => {
 			if(res.data.code === 0) {
-				console.log(res.data);
 				if (res.data.data[0].sec.length!==0) {
 					setArtiCategory(`/${res.data.data[0].title}/${(res.data.data[0].sec)[0].title}`);
 					setSecCol((res.data.data[0].sec)[0].title);
@@ -74,14 +72,12 @@ export default function ColManage() {
 					setWeightIsNum(_weight);
 					return item;
 				}));
-				console.log(_data);
 			    ((_data)[0]) && setCol((_data)[0].title);
 			}
 		}).catch(err => {
 			message.error(err);
 		});
 	}, []);
-
 	useEffect(() => {
 		if (!secCol) {
 			setArtiCategory(`/${col}/${secCol}`);
@@ -108,7 +104,8 @@ export default function ColManage() {
 					params: {
 						// flag:2,
 						flag:1 ,
-						category: artiCategory,
+						first: artiCategory.split("/")[1],
+						second: artiCategory.split("/")[2],
 						status: "publish",
 						limit: 10000,
 						offset: 0
@@ -128,7 +125,6 @@ export default function ColManage() {
 	useEffect(() => {
 		if(!saveClick) return;
 		if(colsData.length !== 0) {
-			console.log(colsData);
 			let _colsData = colsData.map(item => {
 				let _item = {...item, title: item.newCol || item.title};
 				if(!_item.sec) {
@@ -179,7 +175,6 @@ const  DeleteArticle  = (props)=> {
 	};
 	const handleOk = e => {
 		setVisible(false);
-		console.log("确认删除");
 		axios({
 			method:"POST",
 			url: "http://yjxt.elatis.cn/posts/delete",
@@ -193,12 +188,6 @@ const  DeleteArticle  = (props)=> {
 		}).then(res=> {
 			if(res.data.code === 0 ) {
 				message.success("删除成功");
-				// window.location.reload();
-				// setTimeout(()=>{},500)
-				// props.dispatch(routerRedux.push({
-				// 	pathname: '/index/index'
-				// }));
-				// props.reload();
 			}
 			else {
 				message.warn(res.data.message);
@@ -210,10 +199,6 @@ const  DeleteArticle  = (props)=> {
 	};
 
 	return (
-
-
-
-
 		<div>
 			<Button  onClick={()=>{showModal();}}>
           删除
@@ -296,13 +281,7 @@ const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
 			render: () => <span>{artiCategory}</span>
 		},
 		{
-			title: "状态",
-			dataIndex: "pageState",
-			key: "pageStates",
-			render: () => <Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked={true}/>
-		},
-		{
-			title: "",
+			title: "操作",
 			dataIndex: "oper",
 			key: "oper",
 			render: (text, record, index) => (
@@ -484,12 +463,7 @@ const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
           			))
           		}
           	</ul>
-          	<Button　
-          		className="editBtn"
-          		onClick={handleEditBtn}
-          	>
-              编辑栏目
-          	</Button>
+
         </div><div className="columnContainer">
           	{
           		editState === "二级" &&
@@ -508,9 +482,6 @@ const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
               		})
               	}
               	<div style={{textAlign: "left",padding: "0 5px", marginTop: 35}}>
-              		<Button style={{width: 85, marginBottom: 10, padding: 0}} onClick={handleAddSeColClick}>
-              			<span style={{fontSize: 12, color: "#1890ff"}}>新增二级栏目</span>
-              		</Button>
               	</div>
               </Menu>
           	}
@@ -525,23 +496,7 @@ const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
                 				<Input style={{width: 100}} ref={input} onChange={(e) => setSecCol(e.target.value)} onPressEnter={handleSurePressEnter} defaultValue={secCol}/>
                 		}
 					</h2>
-					{	
-						secCols.length !== 0 &&
-						<div className="col-oper">
-							{
-								!secColEdit ?
-								<>
-								<Button className="btn" onClick={handleRenameClick}>
-									<span>重命名</span>
-								</Button>
-								<Button className="btn danger" onClick={DelSecCol}>
-									<span>删除</span>
-									</Button>
-								</> :
-								<Button className="btn" onClick={handleRenameSureClick}><span>确定</span></Button>
-							}
-                		</div>
-					}
+
                 	
                 </div>
           		}
@@ -553,13 +508,6 @@ const Dle = connect(({home})=>({home}),mapDispatchToProps)(DeleteArticle);
           		/>
           	</div>
         </div><div className="submitBtnContainer">
-          	<Button 
-          		className="submitBtn"
-          		loading = {loading}
-          		onClick = {handleSaveClick}
-          	>
-              保存
-          	</Button>
         </div></>
 			}
 		</React.Fragment>

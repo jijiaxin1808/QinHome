@@ -2,19 +2,12 @@ import React from 'react'
 import styles from './index.css'
 import  Link  from "umi/link";
 import { Input, message } from "antd";
-import axios from "axios";
+import * as Back from "../../../../api/Back";
 const { Search } = Input;
 
 const logOut = ()=> {
-  console.log("logOut");
-  axios({
-    method:"GET",
-    url:"http://yjxt.elatis.cn/users/logout",
-    headers: {
-      "token": localStorage.getItem("token"),
-      "Content-Type": "application/x-www-form-urlencoded"
-    }
-  }).then((res)=> {
+  Back.logOut()
+  .then((res)=> {
     if(res.data.code === 0) {
       message.success("登出成功");
       localStorage.clear();

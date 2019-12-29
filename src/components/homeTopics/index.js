@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./index.less";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import * as Front  from "../../api/Front";
 import { Skeleton } from "antd";
 
 const HomeTopic = (props) => {
@@ -9,7 +9,7 @@ const HomeTopic = (props) => {
 		<div className='home-topic'>
 			<div className='home-topic-header'>
 				<span>{props.title}</span>
-				<Link to={`/index/message?type=${props.type}`}>
+				<Link to={`/index/message?type=${props.type+2}`}>
                     更多 >>
 				</Link>
 			</div>
@@ -31,69 +31,52 @@ const HomeTopic = (props) => {
 		</div>
 	);
 };
+
 const HomeTopics = (props) => {
 	const { colsData } = props;
 	const [ topicData, setTopicData ] = useState([]);
-	console.log(colsData,"colData");
 
 	useEffect(()=> {
 		if(colsData.length !==0 ){
+			console.log(colsData,"8777777777")
 			const sort = [...colsData].map((item,index)=> {
-				if(index>1){
-					return `/${item.title}/${item.sec[0].title}`;
+				if(index>1&&index<8){
+						return `${item.title}`;
 				}
-				return null;
+				else return null;
 			});
-			const data1 = JSON.stringify({
+			const data1 = {
 				limit:3,
-				moduleArray:sort,
-				status: ""
-			});
-			console.log(sort,"发送了home请求");
-			axios({
-				method:"POST",
-				url:"http://yjxt.elatis.cn/posts/listModulePost",
-				headers: {
-					"Content-Type":"application/json"
-				},
-				data: data1
-			}).then(res=> {
-				console.log(res.data,"topic数据");
-				const newData = res.data.data.map((item,index)=>{
-					if(index>1) {
-						return item.post;
-					}
-					return null;
-				});
-				console.log("newdata",newData);
-
-
-				setTopicData(newData);
+				firstArray:sort,
+				status: "publish"
+			}
+			Front.listModulePost(data1).then(res=> {
+				if(res.data.code === 0) {
+					const newData = res.data.data.map((item,index)=>{
+							return item.post;
+					});
+					console.log("topics",newData)
+					setTopicData(newData);
+				}
 			});
 		}
 	},[props.colsData]);
-	useEffect(()=> {
-		console.log(topicData);
-	},[topicData]);
 	if(topicData.length!== 0) {
-		console.log("现在的 col",topicData);
 		return (
 			<div className='home-topics'>
 				{
 					topicData.map((item, index) => {
-						console.log(item,"jjjjjjjjxjxj");
-						if(index>1){
+						if(index>=0){
 							return (
 								<HomeTopic 
-									title = {colsData[index].title} 
+									title = {colsData[index+2].title} 
 									href = {`/index/message?type=${index+2}`} 
-									 type =  { index+1 } 
+									type =  { index+1 } 
 									data = {item}
 								/>
 							);
 						}
 						else return null;
-
 					})
 				}
 			</div>
@@ -104,7 +87,5 @@ const HomeTopics = (props) => {
 			<Skeleton rows = {20} />
 		);
 	}
-
-
 };
 export default HomeTopics;

@@ -5,9 +5,9 @@ import { ContentUtils } from "braft-utils"
 import { Form, Input, Button,  Row, Col ,Cascader,  message,Upload,Icon} from "antd";
 import "./index.css";
 import axios from "axios";
+import * as Front from "../../../../api/Front";
+import * as Back from "../../../../api/Back";
 
-
-// const { Option } = Select;
 const formItemLayout = {
 	labelCol: { span: 4 },
 	wrapperCol: { span: 16 },
@@ -25,38 +25,36 @@ function FormDemo (props) {
 		}, 1000);
 	},[]);
 
-
 	const [data, setData] = useState([]);
 	useEffect(() =>{
-		axios({
-			method: "get",
-			url: "http://yjxt.elatis.cn/options/name/column"
-		}).then(res => {
+		Front.modelCloumn()
+		.then(res => {
 		  if (res.data.code === 0) {
 				setData(res.data.data);
-				console.log(res.data);
 			}
 
 		}).catch(err => {
-			console.log(err);
 		});
 	}, []);
 
-	const options = data.map( item => ({
-		value: item.title,
-		label: item.title,
-		children: item.sec.map(item => ({
-			value: item.title,
-			label: item.title
-		}))
-	}));
+	const options = data.map( (item) => {
+		if(item.title!=="首页"){
+			return {
+				value: item.title,
+				label: item.title,
+				children: item.sec.map(item => ({
+					value: item.title,
+					label: item.title
+				}))
+			}
+		}
+		else 
+		return {};
+	});
 
 
 	const handleOnChange = ({file}) => {
-		console.log(file)
 		const { response = {}} = file;
-		console.log(response);
-		console.log(response.hash);
 	};
 
 	const [state, setState] = useState("");
@@ -70,92 +68,35 @@ function FormDemo (props) {
 
 	const handleSubmit = (event) => {
   	event.preventDefault();
-		console.log(state);
   	props.form.validateFields((error, values) => {
   		if (!error) {
   			const submitData = {
   				title: values.title,
-					// department: values.department,
-					category: "/"+values.category[0]+ "/" +values.category[1],
+				first:values.category[0],
+				second:values.category[1],
   				content: values.content.toHTML()// or values.content.toHTML()
   			};
   			if (state === "publish") {
 					submitData.status = "publish";
 				}
-  			axios({
-					method: "post",
-					url: "http://yjxt.elatis.cn/posts/create",
-					headers: {
-						"content-type": "application/json",
-						"token": localStorage.getItem("token")
-					},
-					data: submitData
-				}).then( res => {
+				Back.create(submitData)
+				.then( res => {
 					if(res.data.code === 0) {
 						if(state === "publish"){
 							message.success("发布成功");
 						}
 						else message.success("申请成功");
+						window.location.reload();
 					}
 					else message.warn("权限不足");
 				}
 					
-				).catch( err => {
-					console.log(err);
-				});
-  			console.log("submitData",submitData);
+				);
   		}
   	});
-
 	};
 
-	// const [userData, setUserData] = useState([]);
-	// const [visible, setVisible] = useState(false);
-	// const [confirmLoading, setConfirmLoading] = useState(false);
-
-	// const showModal = () => {
-	//   setVisible(true);
-	// 	axios({
-	// 		method: "get",
-	// 		url:"http://yjxt.elatis.cn/users/getByRole",
-	// 		headers: {
-	// 			"content-type": "application/json",
-	// 			"token": localStorage.getItem("token")
-	// 		}
-	// 	}).then(res=>{
-	// 		console.log(res.data);
-	// 		if(res.data.code === 0) {
-	// 			console.log("success",res.data.data);
-	// 			setUserData(res.data.data);
-	// 		}
-	// 	}).catch((err)=>{
-	// 		console.log(err);
-	// 	});
-
-	// };
-
-	// const modalOptions = userData.map(item => ({
-	// 	id: item.id,
-	// 	number: item.number,
-	// 	name: item.name,
-	// 	section: item.section,
-	// }));
-
-	// console.log("modal",modalOptions);
-
-	// const handleOk = () => {
-	//   setConfirmLoading(true);
-	// 	setTimeout(() => {
-	// 		setVisible(false);
-	// 		setConfirmLoading(false);
-	// 	}, 2000);
-	// };
-
-	// const handleCancel = () => {
-	//   setVisible(false);
-	// };
 	const onChange =(value) => {
-		console.log(value);
 	};
 
 
@@ -163,15 +104,11 @@ function FormDemo (props) {
 	const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
 	async function uploadHandler(param){
 		if (!param.file) {
-			console.log("err");
 			return false;
 		}
-		console.log(param.file)
 		const {
 			form: { getFieldValue, setFieldsValue }
 		  } = props;
-		//   const result=await getUrl(param.file)
-		//   console.log(getUrl(param.file))
 		let reader = new FileReader();
 		reader.readAsDataURL(param.file)
 		reader.onload=function (e) {
@@ -182,8 +119,6 @@ function FormDemo (props) {
 			}])
 			});	
 		}
-		  
-
 	};
 	const imageControls = [
 		'float-left', // 设置图片左浮动
@@ -197,7 +132,6 @@ function FormDemo (props) {
 	]
 	const uploadHandlers=(param)=>{
 		if (!param.file) {
-			console.log("err");
 			return false;
 		}
 		const {
@@ -206,7 +140,6 @@ function FormDemo (props) {
 		let reader= new  FileReader()
 		reader.readAsDataURL(param.file)
 		reader.onload = function (e) {
-			console.log(param.file)
 			const editorStates = getFieldValue("content");
 			setFieldsValue({
 				content: ContentUtils.insertHTML(editorStates,`<br/><a href="${e.target.result}">${param.file.name}</a>`)
@@ -301,7 +234,6 @@ function FormDemo (props) {
   							placeholder="请输入正文内容"
 							extendControls={extendControls}
 							imageControls={imageControls}
-                			// contentStyle={{height: 210, boxShadow: 'inset 0 1px 3px rgba(0,0,0,.1)'}}
   						/>
   					)}
   				</Form.Item>

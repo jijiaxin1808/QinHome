@@ -3,10 +3,8 @@ import {  Icon, Layout, Input } from "antd";
 import { Link } from "react-router-dom";
 import "./header.less";
 import { connect } from "dva";
-// import axios from "axios";
 
 const { Search } = Input;
-// const SubMenu = Menu.SubMenu;
 const { Header } = Layout;
 class Top extends React.Component {
 	constructor(props) {
@@ -51,16 +49,10 @@ class Top extends React.Component {
     			}}/>
 				 </Link>
 				 <Link to = "notification" className = "header-icons" ><Icon type="message" /></Link>
-
     			<Link to = "/index/index" className = "header-icons" ><Icon type="home" /></Link>
-
-
-    			
     		</Header>
     	);
     }
 }
-
-
 
 export default connect(({login})=>({login}))(Top);

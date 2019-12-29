@@ -1,16 +1,14 @@
 import React,{Suspense} from "react";
-import {  Route } from "dva/router";
+import { Route } from "dva/router";
 import Loading from "./components/loading";
 import Home from "./routes/home";
-import News from "./routes/news";
 import Article from "./routes/article";
 import Footer from "./components/footer";
 import Header from "./components/header";
 import Message from "./routes/message";
-import headerData from "./config/headerData";
 import Search from "./routes/search";
 import Services from "./routes/services";
-import JJX from "./components/jjxnb";
+import Links from "./routes/Links";
 
 const routers= [
 	{
@@ -20,16 +18,10 @@ const routers= [
 		key: 0
 	},
 	{
-		name: "新闻中心",
-		path: "/index/news",
-		component: News,
-		key: 1
-	},
-	{
 		name: "文章",
 		path: "/index/article",
 		component: Article,
-		key: 2
+		key: 1
 	},
 	{
 		name: "栏目",
@@ -40,36 +32,34 @@ const routers= [
 		name: "栏目",
 		path: "/index/services",
 		component: Services,
-		key: 2
+		key: 3
 	},
 	{
 		name: "搜索",
 		path: "/index/search",
 		component: Search,
-		key: 2
+		key: 4
 	},
 	{
-		name: "jjx",
-		path: "/index/index/jjxnb",
-		component: JJX,
-		key: 0
-	},
+		name: "链接",
+		path: "/index/links",
+		component: Links,
+		key: 5
+	}
 ];
 
 export default function MainApp (props) {
-	// console.log(window.location.pathname)
 	return (
 		<div>
-			<Header barData={headerData} />
+			<Header  />
 			<Suspense fallback={<Loading />}>
-				{/* <Switch> */}
-				{routers.map(({ name, path, exact = true, component }) => {
-					return (
-						<Route path={path} exact={exact} component={component} key={name} />
-					);
-				})}
-				{/* {window.location.pathname ==="/index/index" || window.location.pathname==="/index/news"?null:<Message messageData={messageData} />} */}
-				{/* </Switch> */}
+				{
+					routers.map(({ name, path, exact = true, component }) => {
+						return (
+							<Route path={path} exact={exact} component={component} key={name} />
+						);
+					})
+				}
 			</Suspense>
 			<Footer />
 		</div>

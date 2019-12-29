@@ -1,69 +1,58 @@
-/* 首页tabs */
 import React, {useState, useEffect} from "react";
-import { Tabs as T,Skeleton } from "antd";
+import { Tabs as T,Skeleton, message } from "antd";
 import "./index.less";
 import { Link } from "react-router-dom";
 import { connect } from "dva";
+import * as Front  from "../../api/Front";
 import axios from "axios";
+
 const { TabPane } = T;
 const  Tabs =(props)=> {
 	const [ data, setData ] = useState([]);
-	// const [ flag, setFlag ] = useState(1);
 	useEffect(()=>{
 		if(props.home.columnData.length !==0) {
 			const sort = [];
 			props.home.columnData[1].sec.map((item,index) => {
-				if(index<=2) {
-					sort.push(`/新闻中心/${item.title}`);
+				if(index<=0) {
+					sort.push(`${props.home.columnData[1].title}`);
 					return null;
 				}
 				else return null;
 			});
-			const data1 = JSON.stringify({
+			const data1 = {
 				limit:7,
-				moduleArray:sort,
+				firstArray:sort,
 				status: "publish"
-			});
-			console.log("发送了 hometopic 请求",sort);
+			};
+
+
 			axios({
-				method:"POST",
-				url:"http://yjxt.elatis.cn/posts/listModulePost",
-				headers: {
-					"Content-Type":"application/json"
-				},
-				data: data1
+				method: "POST",
+				data: data1,
+				url: " http://yjxt.elatis.cn/posts/listModulePost"
 			}).then(res=> {
-				const newdata = res.data.data.map((item, index)=> {
-					return (
-						{
-							tab: props.home.columnData[1].sec[index].title,
-							Info: item.post
-						}
-					);
-				});
-				// console.log(res.data,"topic数据");
-				setData(newdata);
+				console.log("触发了then",res.data.data[0].post);
+				if(res) {
+					if(res.data.code === 0) {
+						const newdata = res.data.data.map((item, index)=> {
+							return (
+								{
+									tab: props.home.columnData[1].sec[index].title,
+									Info: item.post
+								}
+							);
+						});
+						console.log(newdata,"tabeqdsadasbbfndsanbfsdafass");
+						setData(newdata);
+					}
+				}
 			});
 		}
 	},[props.home]);
-	// useEffect(()=> {
-	// 	if(props.home.TabData.length&&props.home.TabData.length === 3 ) {
-	// 		setData(props.home.TabData);
-	// 		props.tabs([]);
-	// 	} 
-	// },[props.home.TabData])
-	// useEffect(()=> {
-	// 	console.log("检测到变化",data);
-	// 	if(data.length>0) {
-	// 		console.log("OKOKOKOKOKOKOKOKO");
-	// 		setFlag("ok");
-	// 	}
-	// },[data]);
 
 	const operations = <Link to = {"/index/message?type=2"}>更多>></Link>;
 	if(data.length !== 0){
 		return (
-
 			<T defaultActiveKey='1' tabBarExtraContent={operations}>
 				{
 					data.map((item, index) => {
@@ -72,11 +61,7 @@ const  Tabs =(props)=> {
 								<ul className='home-tabs'>
 									{
 										item.Info.map((item, index) => (
-	
 											<li key={index}>
-	
-												{/* <i className='tabs-i'>·</i>&nbsp;&nbsp;
-												{index + 1} */}
 												<Link to={`/index/article?id=${item.id}`}>
 													{item.title}
 												</Link>
@@ -92,7 +77,6 @@ const  Tabs =(props)=> {
 		);
 	}
 	else {
-		// setFlag("2");
 		return(
 			<Skeleton  paragraph={{ rows: 8 }}   style = {{width:"500px"}}/>
 		);

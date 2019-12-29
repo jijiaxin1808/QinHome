@@ -2,7 +2,6 @@ import React from "react";
 import { Table, Input, message, Popconfirm, Form, Button, Select } from "antd";
 import axios from "axios";
 import "./index.css";
-// import { EOVERFLOW } from "constants";
 const { Option } = Select;
 const EditableContext = React.createContext();
 class EditableCell extends React.Component {
@@ -23,7 +22,6 @@ class EditableCell extends React.Component {
 		});
 	}
   getInput = () => {
-	  console.log(this.props,"账号");
 	  if(this.props.inputTypes ==="select" ){
 		  if(this.props.dataIndex==="roles_id"){
 			  return (
@@ -194,7 +192,6 @@ class EditableTable extends React.Component {
 			},
 			url: "http://yjxt.elatis.cn/users/listUsers"
 		}).then(res=>{
-			console.log(res);
 			this.setState({
 				data:res.data.data
 			});
@@ -209,7 +206,6 @@ class EditableTable extends React.Component {
 			},
 			url:"http://yjxt.elatis.cn/users/listSection"
 		}).then(res=>{
-			console.log(res.data);
 			if(res.data.code===0){
 				this.setState({
 					bumen:res.data.data
@@ -228,7 +224,6 @@ class EditableTable extends React.Component {
 		});
 	}
 	confirm=(e)=> {
-		console.log(e);
 		axios({
 			method:"POST",
 			headers:{
@@ -252,7 +247,6 @@ class EditableTable extends React.Component {
 	  }
 	  
 	  cancels=(e) =>{
-	  	console.log(e);
 	  	message.error("取消成功");
 	  }
   isEditing = record => record.key === this.state.editingKey;
@@ -303,20 +297,17 @@ class EditableTable extends React.Component {
   		url:"http://yjxt.elatis.cn/users/alterOtherInfo",
   		data:{
   			id:item.key,
-			  // section:this.state.bm,
-			  section: row.section,
+			section: row.section,
   			roles_id:row.roles_id,
   			name:row.name
   		}
   	}).then(res=>{
-  		console.log(res);
   		if(res.data.code===0){
   			message.success("修改成功");
   		}
   	});
   }
   addMessage=(item,row)=>{
-	  console.log(item,row,this.state);
   	axios({
   		method:"POST",
   		headers:{
@@ -331,7 +322,6 @@ class EditableTable extends React.Component {
   			name:row.name
   		}
   	}).then(res=>{
-  		console.log(res);
   		if(res.data.code===0){
   			message.success("添加成功");
   		}
@@ -345,8 +335,6 @@ class EditableTable extends React.Component {
   		const newData = [...this.state.data];
 		  const index = newData.findIndex(item => key === item.key);
 		  const item=newData[index];
-		  console.log(row);
-		  console.log(type);
   		if(type){
   			this.addMessage(item,row);
   		}else{
@@ -374,7 +362,6 @@ class EditableTable extends React.Component {
 	  });
   }
   delete =(value)=>{
-	  console.log(value);
 	  axios({
 		  method:"POST",
 		  headers:{
@@ -386,7 +373,6 @@ class EditableTable extends React.Component {
 			  id:value.key
 		  }
 	  }).then(res=>{
-		  console.log(res);
 		 if(res.data.code===0){
 			 message.success("删除成功");
 			 this.getData();
@@ -403,7 +389,6 @@ class EditableTable extends React.Component {
   			cell: EditableCell,
   		},
 	  };
-  	//   const ctx=this;
   	const columns = this.columns.map(col => {
   		if (!col.editable) {
   			return col;

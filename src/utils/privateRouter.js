@@ -1,5 +1,3 @@
-/* eslint-disable linebreak-style */
-
 import React from "react";
 import { Route, Redirect, } from "react-router-dom";
 import { isAuthenticated } from "./session";

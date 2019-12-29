@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 export function isRepeat (arr) {
 	var hash = {};
 	for (var i in arr) {
@@ -9,7 +8,6 @@ export function isRepeat (arr) {
 	}
 	return false;
 }
-// eslint-disable-next-line linebreak-style
 export function randomNum(min, max) {
 	return Math.floor(Math.random() * (max - min) + min);
 }

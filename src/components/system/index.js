@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-target-blank */
 import React from "react";
 import "./index.less";
 import { Link } from "react-router-dom";
@@ -16,10 +15,10 @@ const System = () => {
 				</div>
 			</div>
 			<div className='Enforcement'>
-				<Link  to = "/index/services" className='Enforcement-top'><img src="/img/2.png" className='IntelligentSecurity-bottom-img' alt = "" />行政执法公示</Link>
+				<Link  to = "/index/links" className='Enforcement-top'><img src="/img/2.png" className='IntelligentSecurity-bottom-img' alt = "" />应用系统</Link>
 			</div>
 			<div className='Note'>
-				<Link to = "/index/services" className='Note-top'><img  alt = "" src="/img/3.png" className='IntelligentSecurity-bottom-img' />安监留言吧</Link>
+				<Link to = "/index/services" className='Note-top'><img  alt = "" src="/img/3.png" className='IntelligentSecurity-bottom-img' />留言栏</Link>
 			</div>
 		</div>
 	);

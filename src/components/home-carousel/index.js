@@ -1,12 +1,12 @@
 import "./index.less";
 import React, { useEffect, useState } from "react";
 import { Carousel, message } from "antd";
-import axios from "axios";
+import * as Front  from "../../api/Front";
 
 const HomeCarousel = (props) => {
 	const [data, setData] = useState([]);
 	useEffect(() => {
-		axios.get(" http://yjxt.elatis.cn/options/name/carousel").then((res) => {
+		Front.modelCarousel().then((res) => {
 			if (res.data.code === 0) {
 				setData(res.data.data);
 			} else {
@@ -14,11 +14,11 @@ const HomeCarousel = (props) => {
 			}
 		});
 	}, []);
+
 	return (
 		<Carousel effect='fade' style={{ width: "540px", height: "374px" }} autoplay dotPosition='bottom'>
 			{
 				data.map((item, index) => {
-					console.log(item.picUrl);
 					if(item.isShow) {
 						return (
 							<a href={item.href} key={item}>
@@ -34,10 +34,8 @@ const HomeCarousel = (props) => {
 						);
 					}
 					else return null;
-
 				})
 			}
-
 		</Carousel>
 	);
 };
