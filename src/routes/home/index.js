@@ -25,7 +25,6 @@ const OtherLink = ()=> {
 						{item.title}
 				  </Option>
 				)
-
 			})
 		}
 	</Select>
