@@ -32,7 +32,7 @@ export default class Weather extends React.Component {
 			<div className='Weather'>
 				<b>秦皇岛</b>&nbsp;
 				<WeatherIcon index={this.state.type} />
-				{this.state.high}~{this.state.low}&nbsp;|&nbsp; 空气质量:&nbsp;{this.state.weatherType}
+				&nbsp;&nbsp;{this.state.high}~{this.state.low}&nbsp;|&nbsp; 空气质量:&nbsp;{this.state.weatherType}
 			</div>
 		);
 	}
