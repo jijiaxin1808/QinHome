@@ -15,15 +15,31 @@ const formItemLayout = {
 };
 
 const changeContext=(props)=>{
+	const [data, setData] = useState([]);
 	const { getFieldDecorator } = props.form;
 	useEffect(()=>{
-		setTimeout(() => {
-			props.form.setFieldsValue({
-			});
-		}, 1000);
+			const id=props.match.params.id;
+			axios({
+				method: "GET",
+				headers: {
+					"token":localStorage.getItem("token") ,
+					"Content-Type": "application/json"
+				},
+				url: `http://yjxt.elatis.cn/posts/get?id=${id}`
+			}).then(res => {
+				if ( res.data.code === 0 ) {
+					setData(res.data.data);
+					props.form.setFieldsValue({
+						content: res.data.data.content,
+						title: res.data.data.title,
+					});
+				}
+				
+
+			})
+
 	},[]);
 
-	const [data, setData] = useState([]);
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		props.form.validateFields((error, values) => {
@@ -121,7 +137,7 @@ const changeContext=(props)=>{
 			)
 		}
 	];
-if(data.length) {
+if(data.length!==0) {
 	return (
 		<div className="demo-container">
 			<div className = "title">
