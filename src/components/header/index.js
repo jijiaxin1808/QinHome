@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./index.less";
-import { Input } from "antd";
+import { Input, Affix } from "antd";
 import { connect } from "dva";
 import { routerRedux } from "dva/router";
 import * as Front  from "../../api/Front";
@@ -37,22 +37,25 @@ function  Header (props) {
 					</div>
 				</div>
 			</div>
-			<div className='header-asss'>
-				<ul className='header-bar'>
-					{
-						bardata.map((item, index) => {
-							if(index<8) {
-								return (
-									<li key={index} className={flag === item ? "active" : ""}>
-									{item.link==="/" ?<Link to={"/index/index"}>{item.title}</Link>:<Link to={`/index${item.link}`}>{item.title}</Link>}
-									</li>
-								);
-							}
+			<Affix offsetTop={0}>
+				<div className='header-asss'>
+					<ul className='header-bar'>
+						{
+							bardata.map((item, index) => {
+								if(index<8) {
+									return (
+										<li key={index} className={flag === item ? "active" : ""}>
+										{item.link==="/" ?<Link to={"/index/index"}>{item.title}</Link>:<Link to={`/index${item.link}`}>{item.title}</Link>}
+										</li>
+									);
+								}
 
-						})
-					}
-				</ul>
-			</div>
+							})
+						}
+					</ul>
+				</div>
+        	</Affix>
+
 		</React.Fragment>
 	);
 }

@@ -924,6 +924,231 @@ const HideBar = () => {
 		</div>
 	);
 };
+
+const Links = () => {
+	const [data, setdata] = useState([]);
+	const  CarouselSave  = (props)=> {
+		const [ visible, setVisible ] = useState(false);
+		const showModal = () => {
+			setVisible(true);
+		};
+		const handleOk = e => {
+			setVisible(false);
+			Back.modelUpdate(data1)
+			.then(res => {
+				if (res.data.code === 0) {
+					message.success("保存成功");
+				} else {
+					message.error(res.data.message);
+				}
+			});
+		};
+		const handleCancel = e => {
+			setVisible(false);
+		};
+		return (
+			<div>
+				<Button  onClick={()=>{showModal();}}>
+			  保存
+				</Button>
+				<Modal
+					visible={visible}
+					onOk={()=>{handleOk();}}
+					onCancel={()=>{handleCancel();}}
+					okText = "确认"
+					cancelText = "取消"
+				>
+					<p>确认保存?</p>
+				</Modal>
+			</div>
+		);
+	  
+	};
+	const props = {
+		name: "file",
+		action: "http://yjxt.elatis.cn/file/upload",
+		headers: {
+			authorization: "authorization-text",
+			token:localStorage.getItem("token"),
+		},
+	};
+	const onChange = (info, id) => {
+		if (info.file.status !== "uploading") {
+		}
+		if (info.file.status === "done") {
+			message.success(`${info.file.name} 文件上传成功`);
+			const newData = data.map(item => {
+				if (item.id === id.id) {
+					return {
+						...item,
+						picUrl: info.file.response.data.url,
+					};
+				} else
+					return {
+						...item,
+					};
+			});
+			setdata(newData);
+		} else if (info.file.status === "error") {
+			message.error(`${info.file.name} 文件上传失败`);
+		}
+	};
+	const picUrlButton = (picUrl, id) => {
+		if (picUrl) {
+			return (
+				<Fragment>
+					<a href={picUrl} target="_blank">
+						<Button style = {{marginRight:"10px"}}>查看图片</Button>
+					</a>
+					<Upload
+						{...props}
+						onChange={info => {
+							onChange(info, id);
+						}}
+					>
+						<Button>修改图片</Button>
+					</Upload>
+				</Fragment>
+			);
+		} else return 					<Upload
+		{...props}
+		onChange={info => {
+			onChange(info, id);
+		}}
+	>
+		<Button>添加图片</Button>
+	</Upload>;
+	};
+	useEffect(() => {
+		Front.modelLinks()
+		.then(res => {
+			if (res.data.code === 0) {
+				setdata(res.data.data);
+			} else {
+				message.error(res.data.message);
+			}
+		});
+	}, []);
+	const carouselCol = [
+		{
+			title: "序号",
+			dataIndex: "id",
+			key: "id",
+		},
+		{
+			title: "标题",
+			dataIndex: "title",
+			key: "title",
+			render: (content, id) => (
+				<Input
+				defaultValue={content}
+					onChange={e => {
+						const newData = data.map(item => {
+							if (item.id === id.id) {
+								return {
+									...item,
+									title: e.target.value,
+								};
+							} else
+								return {
+									...item,
+								};
+						});
+						setdata(newData);
+					}}
+				/>
+			),
+		},
+		{
+			title: "图片",
+			dataIndex: "picUrl",
+			key: "picUrl",
+			render: (picUrl, id) => <div>{picUrlButton(picUrl, id)}</div>,
+		},
+		{
+			title: "链接地址",
+			dataIndex: "href",
+			key: "href",
+			render: (href, id) => (
+				<Input
+				defaultValue={href}
+					onChange={e => {
+						const newData = data.map(item => {
+							if (item.id === id.id) {
+								return {
+									...item,
+									href: e.target.value,
+								};
+							} else
+								return {
+									...item,
+								};
+						});
+						setdata(newData);
+					}}
+				/>
+			),
+		},
+		{
+			title: "操作",
+			key: "action",
+			dataIndex: "id",
+			render: (id1,id2) => (
+				<Button
+					onClick={() => {
+						const newData = [...data];
+						data.map((item, index) => {
+							if (item.id === id2.id) {
+								newData.splice(index, 1);
+							}
+							return null;
+						});
+						setdata(newData);
+					}}
+				>
+          删除
+				</Button>
+			),
+		},
+	];
+	const data1 = {
+		name: "links",
+		value: data,
+	}
+	return (
+		<div>
+			<div className={"title"}>
+				<span>应用系统</span>
+			</div>
+			<div className={"buttonSbar"}>
+				<Button
+					onClick={() => {
+						let newData = data;
+						setdata([...newData,{
+							id: data.length + 1,
+							title: "秦皇岛市智慧安监",
+							picUrl: "http://yjgl.hebei.gov.cn/portal/resources/images/sxlb.png",
+							href: "http://111.63.38.37:9000/qhdsafety/login/login.jsp"
+						}]);
+					}}
+					className={"button"}
+				>
+          添加相关链接
+				</Button>
+				<CarouselSave
+					className={"button"}
+				>
+          保存
+				</CarouselSave>
+			</div>
+			<Table
+				columns={carouselCol}
+				dataSource={ data}
+				pagination={false}
+			/>
+		</div>
+	);
+};
 const block = () => {
 	return (
 		<div >
@@ -931,6 +1156,7 @@ const block = () => {
 			<Carousel />
 			<HomeTopic />
 			<HideBar />
+			<Links />
 			<Background />
 		</div>
 	);

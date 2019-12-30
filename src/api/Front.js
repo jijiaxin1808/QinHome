@@ -8,8 +8,12 @@ function modelCloumn() {
     return axiosF("modules/listModule");
 }
 
+
 function modelCarousel() {
     return axiosF("options/name/carousel");
+}
+function modelLinks() {
+    return axiosF("options/name/links");
 }
 function modelHideBar() {
     return axiosF("options/name/hideBar");
@@ -56,6 +60,6 @@ function searchTitle(params) {
 
 
 
-export { modelHideBar, searchTitle, modelCloumn, modelCarousel, listModulePost, getArticle, modelTopicCol, modelSafe, modelBackground, listPosts, get,
+export { modelLinks, modelHideBar, searchTitle, modelCloumn, modelCarousel, listModulePost, getArticle, modelTopicCol, modelSafe, modelBackground, listPosts, get,
     listMsgs, create
   }

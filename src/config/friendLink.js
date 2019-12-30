@@ -151,31 +151,37 @@ const otherLink = [
 
 const links = [
     {
+		id : 1,
         title: "秦皇岛市智慧安监",
         picUrl: "http://yjgl.hebei.gov.cn/portal/resources/images/sxlb.png",
         href: "http://111.63.38.37:9000/qhdsafety/login/login.jsp"
     },
     {
+		id: 2,
         title: "秦皇岛市智慧安监",
         picUrl: "http://yjgl.hebei.gov.cn/portal/resources/images/sxlb.png",
         href: "http://111.63.38.37:9000/qhdsafety/login/login.jsp"
     },
     {
+		id: 3,
         title: "秦皇岛市智慧安监",
         picUrl: "http://yjgl.hebei.gov.cn/portal/resources/images/sxlb.png",
         href: "http://111.63.38.37:9000/qhdsafety/login/login.jsp"
     },
     {
+		id: 4,
         title: "秦皇岛市智慧安监",
         picUrl: "http://yjgl.hebei.gov.cn/portal/resources/images/sxlb.png",
         href: "http://111.63.38.37:9000/qhdsafety/login/login.jsp"
     },
     {
+		id: 5,
         title: "秦皇岛市智慧安监",
         picUrl: "http://yjgl.hebei.gov.cn/portal/resources/images/sxlb.png",
         href: "http://111.63.38.37:9000/qhdsafety/login/login.jsp"
     },
     {
+		id: 6,
         title: "秦皇岛市智慧安监",
         picUrl: "http://yjgl.hebei.gov.cn/portal/resources/images/sxlb.png",
         href: "http://111.63.38.37:9000/qhdsafety/login/login.jsp"
