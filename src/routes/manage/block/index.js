@@ -5,6 +5,16 @@ import axios from "axios";
 import * as Back from "../../../api/Back";
 import * as Front from "../../../api/Front";
 
+const Max = (array)=> {
+	let Max = -1;
+	for(let i = 0;i<array.length;i++) {
+		if(array[i]>Max) {
+			Max = array[i];
+		}
+	}
+	return Max 
+}
+
 const HeaderScroll = () => {
 	const [data, setdata] = useState([]);
 	const 	HeaderSave  = (props)=> {
@@ -168,8 +178,10 @@ const HeaderScroll = () => {
 			<div className={"buttonSbar"}>
 				<Button className={"button"} onClick={() => {
 					let newData = data;
+					const ids = data.map((item)=>{return item.id});
+							
 					setdata([...newData,{
-						id: data.length + 1,
+						id: Max(ids) + 1,
 						"title": "",
 						"href": "",
 						"isShow": 0
@@ -411,8 +423,10 @@ const Carousel = () => {
 				<Button
 					onClick={() => {
 						let newData = data;
+						const ids = data.map((item)=>{return item.id});
+							
 						setdata([...newData,{
-							id: data.length + 1,
+							id: Max(ids) + 1,
 							href: "",
 							picUrl: "",
 							title: "",
@@ -1124,8 +1138,9 @@ const Links = () => {
 				<Button
 					onClick={() => {
 						let newData = data;
+						const ids = data.map((item)=>{return item.id});
 						setdata([...newData,{
-							id: data.length + 1,
+							id: Max(ids) + 1,
 							title: "秦皇岛市智慧安监",
 							picUrl: "http://yjgl.hebei.gov.cn/portal/resources/images/sxlb.png",
 							href: "http://111.63.38.37:9000/qhdsafety/login/login.jsp"
