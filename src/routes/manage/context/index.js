@@ -19,7 +19,7 @@ const  DeleteArticle  = (props)=> {
 		setVisible(false);
 		const params = {
 			id: props.id
-		}
+		};
 		Back.postsDelete(params)
 		.then(res=> {
 			if(res.data.code === 0 ) {
@@ -117,7 +117,7 @@ const Context = (props)=> {
 	useEffect(()=>{
 		const params = {
 			flag: 2
-		}
+		};
 		Front.listPosts(params)
 		.then(res=> {
 			if(res.data.code === 0) {

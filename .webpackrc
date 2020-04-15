@@ -6,12 +6,5 @@
       "libraryDirectory": "es",
       "style": true
     }]
-  ],
-  "env": {
-    "development": {
-      "extraBabelPlugins": [
-        "dva-hmr"
-      ]
-    }
-  }
+  ]
 }

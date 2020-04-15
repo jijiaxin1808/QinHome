@@ -1,8 +1,8 @@
 import React,{useState, useEffect} from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import urlHandle from "../../utils/urlHandle";
-import {message, Spin, Pagination} from "antd";
+import {Spin, Pagination} from "antd";
 import "./index.less";
 import * as Front from "../../api/Front";
 
@@ -19,7 +19,7 @@ export default function Search(props) {
 			const params = {
 				flag: 1,
 				key: key,
-			}
+			};
 			Front.searchTitle(params)
 			.then(res => {
 				if(res.data.code === 0) {
@@ -36,7 +36,7 @@ export default function Search(props) {
 				key: key,
 				limit: 10,
 				offset: (curPage-1) * 10,
-			}
+			};
 			Front.searchTitle(params)
 			.then(res => {
 				if(!res.data.code) {
@@ -47,7 +47,7 @@ export default function Search(props) {
 						setSearchList(res.data.data);
 					}
 				}
-			})
+			});
 		}
 
 
@@ -58,13 +58,13 @@ export default function Search(props) {
 			const params = {
 				flag: 1,
 				status: "publish"
-			}
+			};
 			Front.listPosts(params)
 			.then(res => {
 				if(!res.data.code) {
 					setTotal(res.data.data.length);
 				}
-			})
+			});
 		}
 
 	}, []);
@@ -77,7 +77,7 @@ export default function Search(props) {
 				status: "publish",
 				limit: 10,
 				offset: (curPage-1) * 10,
-			}
+			};
 			Front.listPosts(params)
 			.then(res => {
 				if(!res.data.code) {
@@ -88,7 +88,7 @@ export default function Search(props) {
 					else 
 						setSearchList(res.data.data);
 				}
-			})
+			});
 		}
 	}, [curPage]);
 

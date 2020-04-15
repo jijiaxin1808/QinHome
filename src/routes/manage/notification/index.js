@@ -1,8 +1,8 @@
 import React from "react";
 import { Table, Button, message } from "antd";
-import axios from "axios";
+// import axios from "axios";
 import { useEffect, useState } from "react";
-import qs from "qs";
+// import qs from "qs";
 import * as Back from "../../../api/Back";
 
 const columns = [	
@@ -114,7 +114,7 @@ const Message = ()=> {
 		
 		let data = {
 			idArray:selectedid
-		}
+		};
 		Back.messagesDelete(data)
 		.then(
 			(res)=> {
@@ -128,7 +128,7 @@ const Message = ()=> {
 			}
 		);
 
-	}
+	};
 
 
 
@@ -138,7 +138,7 @@ const Message = ()=> {
 			let data = {
 				status:0,
 				id:item
-			}
+			};
 			Back.alterReadStatus(data)
 			.then(
 				(res)=> {

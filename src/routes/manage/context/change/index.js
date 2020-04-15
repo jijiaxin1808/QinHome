@@ -2,10 +2,10 @@ import "braft-editor/dist/index.css";
 import React,{ useEffect, useState , forwardRef} from "react";
 import BraftEditor from "braft-editor";
 import { ContentUtils } from "braft-utils";
-import { Form, Input, Button,  Row, Col , Upload ,Icon, Cascader} from "antd";
+import { Form, Input, Button,  Row, Col , Upload ,Icon} from "antd";
 import { message } from "antd";
 import axios from "axios";
-import * as Front from "../../../../api/Front";
+// import * as Front from "../../../../api/Front";
 import * as Back from "../../../../api/Back";
 import Loading from "../../../../components/loading";
 
@@ -36,7 +36,7 @@ const changeContext=(props)=>{
 				}
 				
 
-			})
+			});
 
 	},[]);
 
@@ -75,7 +75,7 @@ const changeContext=(props)=>{
 			form: { getFieldValue, setFieldsValue }
 		  } = props;
 		let reader = new FileReader();
-		reader.readAsDataURL(param.file)
+		reader.readAsDataURL(param.file);
 		reader.onload=function (e) {
 			const editorStates = getFieldValue("content");
 			setFieldsValue({content: ContentUtils.insertMedias(editorStates, [{
@@ -83,7 +83,7 @@ const changeContext=(props)=>{
 			  url: e.target.result
 			}])
 			});	
-		}
+		};
 	};
 
 	const uploadHandlers=(param)=>{
@@ -93,14 +93,14 @@ const changeContext=(props)=>{
 		const {
 			form: { getFieldValue, setFieldsValue }
 		  } = props;
-		let reader= new  FileReader()
-		reader.readAsDataURL(param.file)
+		let reader= new  FileReader();
+		reader.readAsDataURL(param.file);
 		reader.onload = function (e) {
 			const editorStates = getFieldValue("content");
 			setFieldsValue({
 				content: ContentUtils.insertHTML(editorStates,`<br/><a href="${e.target.result}">${param.file.name}</a>`)
-			})
-		}
+			});
+		};
 	};
 	const extendControls =[
 		{
@@ -191,8 +191,8 @@ if(data.length!==0) {
 else {
 	return (
 		<Loading />
-	)
+	);
 } 
-}
+};
 
 export default Form.create()(forwardRef(changeContext));

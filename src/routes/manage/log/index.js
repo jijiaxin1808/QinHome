@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table  } from "antd";
-import qs from "qs";
+// import qs from "qs";
 import * as Back from "../../../api/Back";
 
 const columns = [
@@ -19,7 +19,7 @@ const columns = [
 		dataIndex: "roles_id",
 		key:"roles_id",
 		render:(roles_id,ID)=>(
-			<div>{ID.roles_id==1?"管理员":"普通用户"}</div>
+			<div>{ID.roles_id===1?"管理员":"普通用户"}</div>
 		)
 	},
 	{

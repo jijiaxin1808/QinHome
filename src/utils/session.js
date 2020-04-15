@@ -1,4 +1,4 @@
-const LOGIN_COOKIE_NAME = "localId";
+// const LOGIN_COOKIE_NAME = "localId";
 
 export function isAuthenticated () {
 	return _getCookie();

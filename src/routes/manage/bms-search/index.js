@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import "./index.less";
-import axios from "axios";
-import { Table,  Button, Modal, message, Skeleton } from "antd";
+// import axios from "axios";
+import { Table,  Button, Modal, message } from "antd";
 import urlHandle from "../../../utils/urlHandle";
 import {routerRedux} from "dva/router";
 import { connect } from "dva";
@@ -17,7 +17,7 @@ const  DeleteArticle  = (props)=> {
 		setVisible(false);
 		const params = {
 			id: props.id
-		}
+		};
 		Back.postsDelete(params)
 		.then(res=> {
 			if(res.data.code === 0 ) {
@@ -64,6 +64,7 @@ const alterAricle = (id)=> {
 };
 const BmsSearch = (props)=> {
 	const [ data, setData ] = useState([]);
+	// eslint-disable-next-line no-unused-vars
 	const [ key,setkey ] = useState(decodeURIComponent(urlHandle("key")));
 	const columns = [
 	  {
@@ -122,7 +123,7 @@ const BmsSearch = (props)=> {
 			const params = {
 				flag: 2,
 				key : key
-			}
+			};
 			Front.searchTitle(params)
 			.then(res=> {
 				if(res.data.code === 0) {

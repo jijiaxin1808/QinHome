@@ -1,4 +1,4 @@
-import { Table, Input, InputNumber, Popconfirm, Form, Button, Modal, message, Select } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, Button, Modal, message, Select } from "antd";
 import React, {useState} from "react";
 import * as Back from "../../../api/Back";
 import * as Front from "../../../api/Front";
@@ -16,13 +16,13 @@ const  DeleteArticle  = (props)=> {
     const data = {
       first: props.firstName,
       second: props.secondName
-    }
+    };
     Back.modulesDelete(data).then(res=> {
       if(res.data.code === 0 ) {
-        message.success("删除成功")
+        message.success("删除成功");
         window.location.reload();
       }
-    })
+    });
 	};
 	const handleCancel = e => {
 		setVisible(false);
@@ -51,7 +51,7 @@ const EditableContext = React.createContext(); // 创建context
 
 class EditableCell extends React.Component {
   getInput = () => {
-    if (this.props.inputType === 'number') {
+    if (this.props.inputType === "number") {
       return <InputNumber />;
     }
     return <Input />;
@@ -97,36 +97,36 @@ class EditableCell extends React.Component {
 class EditableTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data:[], page:1,editingKey: '' };
+    this.state = { data:[], page:1,editingKey: "" };
     Front.modelCloumn().then(res => {
       if(res.data.code === 0 ) {
-        console.log("一级获取成功",res.data.data)
+        console.log("一级获取成功",res.data.data);
         this.setState({data:res.data.data});
       }
-    })
+    });
     this.columns = [
       {
-        title: '栏目id',
-        dataIndex: 'key',
-        width: '10%',
+        title: "栏目id",
+        dataIndex: "key",
+        width: "10%",
         editable: false,
       },
       {
-        title: '二级栏目名',
-        dataIndex: 'title',
-        width: '15%',
+        title: "二级栏目名",
+        dataIndex: "title",
+        width: "15%",
         editable: true,
       },
       {
-        title: '权重',
-        dataIndex: 'weight',
-        width: '15%',
+        title: "权重",
+        dataIndex: "weight",
+        width: "15%",
         editable: true,
       },
       {
-        title: '操作',
-        dataIndex: 'operation',
-        width: '15%',
+        title: "操作",
+        dataIndex: "operation",
+        width: "15%",
         render: (text, record) => {
           const { editingKey } = this.state;
           const editable = this.isEditing(record);
@@ -147,21 +147,21 @@ class EditableTable extends React.Component {
               </Popconfirm>
             </span>
           ) : (
-            <a disabled={editingKey !== ''} onClick={() => this.edit(record.key)}>
+            <a disabled={editingKey !== ""} onClick={() => this.edit(record.key)}>
               修改
             </a>
           );
         },
       },
       {
-        title: '删除',
-        dataIndex: 'weight',
-        width: '15%',
+        title: "删除",
+        dataIndex: "weight",
+        width: "15%",
         editable: false,
         render: (text, record) => {
             return (
                 <DeleteArticle secondName = {record.title} firstName = {this.state.data[this.state.page].title} />
-            )
+            );
         }
       },
     ];
@@ -170,7 +170,7 @@ class EditableTable extends React.Component {
   isEditing = record => record.key === this.state.editingKey;
 
   cancel = () => {
-    this.setState({ editingKey: '' });
+    this.setState({ editingKey: "" });
   };
 
   save(form, key) {
@@ -179,25 +179,28 @@ class EditableTable extends React.Component {
         return;
       }
       
+      // eslint-disable-next-line array-callback-return
       this.state.data[this.state.page].sec.map((item)=> {
         if(item.key === key) {
-          console.log("找到了",row)
+          console.log("找到了",row);
           if((item.weight !== row.weight)||(item.title !== row.title)) {
             const data = {
               id: item.key,
               weight: row.weight,
               second: row.title
-            }
+            };
             console.log("link或weight改变了",data);
             Back.alterOthers(data).then(res=> {
               if(res.data.code === 0) {
                 message.success("修改成功");
                 window.location.reload();
               }
-            })
+            });
           }
         }
-      })
+        else 
+        return null;
+      });
 
       // const newData = [...this.state.data];
       // const index = newData.findIndex(item => key === item.key);
@@ -210,7 +213,7 @@ class EditableTable extends React.Component {
       //   this.setState({ data: newData, editingKey: '' });
       // } else {
       //   newData.push(row);
-        this.setState({  editingKey: '' });
+        this.setState({  editingKey: "" });
       // }
     });
   }
@@ -234,7 +237,7 @@ class EditableTable extends React.Component {
         ...col,
         onCell: record => ({
           record,
-          inputType: col.dataIndex === 'age' ? 'number' : 'text',
+          inputType: col.dataIndex === "age" ? "number" : "text",
           dataIndex: col.dataIndex,
           title: col.title,
           editing: this.isEditing(record),
@@ -257,8 +260,8 @@ const handleAdd = ()=> {
         message.success("添加成功");
         window.location.reload();
       }
-    })
-}
+    });
+};
     return (
       <EditableContext.Provider value={this.props.form}>
         <div className = { "title" } style = {{marginBottom:20}}>
@@ -268,17 +271,17 @@ const handleAdd = ()=> {
             <p style = {{marginTop: 20, marginLeft: 45, fontSize: "16px"}}>
             您可以通过改变权重来交换栏目的顺序.权重越大，栏目越靠前。
             </p>
-            <Button type = "primary" style = {{marginTop: 20, marginLeft: 400}} onClick = {()=>{handleAdd()}}>添加二级</Button>
+            <Button type = "primary" style = {{marginTop: 20, marginLeft: 400}} onClick = {()=>{handleAdd();}}>添加二级</Button>
 		</div> 
 
       
-            <Select defaultValue="请选择一级栏目" style={{ width: 120 }} onChange={(value)=>{this.setState({page:value})}}>
+            <Select defaultValue="请选择一级栏目" style={{ width: 120 }} onChange={(value)=>{this.setState({page:value});}}>
               {
                 this.state.data.map((item,index)=> {
                   if(item.title === "首页") {
-                    return <Option value={index} disabled >{item.title}</Option>
+                    return <Option value={index} disabled >{item.title}</Option>;
                   }
-                return  <Option value={index}>{item.title}</Option>
+                return  <Option value={index}>{item.title}</Option>;
                 })
               }
           </Select>

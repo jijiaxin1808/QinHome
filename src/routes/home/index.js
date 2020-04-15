@@ -7,9 +7,9 @@ import HomeCarousel from "../../components/home-carousel";
 import Weather from "./weather";
 import Tabs from "../../components/tabs";
 import { Link } from "react-router-dom";
-import { message,Dropdown,Button,Menu, Select } from "antd";
+import { message, Select } from "antd";
 import {friendLink, otherLink }from "../../config/friendLink";
-import axios from "axios";
+// import axios from "axios";
 import TextScroll from "react-textscroll";
 import * as Front from "../../api/Front";
 import HideBar from "../../components/hideBar";
@@ -40,6 +40,7 @@ const FriendLink = () => {
 				{
 					friendLink.map((item, index) => {
 						return (
+							// eslint-disable-next-line react/jsx-no-target-blank
 							<a alt={item.name} key={index} href={item.href} target = "_blank">
 								{item.name}
 							</a>

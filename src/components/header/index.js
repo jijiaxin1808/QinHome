@@ -49,6 +49,7 @@ function  Header (props) {
 										</li>
 									);
 								}
+								else return null;
 
 							})
 						}

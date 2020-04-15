@@ -49,7 +49,7 @@ const CreateFile = ()=> {
 const del = (id)=> {
 	const params = {
 		id: id
-	}
+	};
 	Back.fileDelete(params)
 	.then((res)=>{
 		if(res.data.code === 0){

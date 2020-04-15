@@ -12,7 +12,7 @@ function tokenLogin() {
 }
 function listMsgs(params) {
     const url = "msgs/listMsgs";
-    const newUrl = spliceUrl(url,params)
+    const newUrl = spliceUrl(url,params);
     return axiosB(newUrl);
 }
 function addReply(data) {
@@ -38,7 +38,7 @@ function logs() {
 }
 function postsDelete(params) {
     const url = "posts/delete";
-    const newUrl = spliceUrl(url,params)
+    const newUrl = spliceUrl(url,params);
     return axiosB(newUrl,null,"POST");
 }
 function logOut() {
@@ -52,11 +52,11 @@ function create(data) {
 }
 function fileDelete(params) {
     const url = "file/delete";
-    const newUrl = spliceUrl(url,params)
+    const newUrl = spliceUrl(url,params);
     return axiosB(newUrl,null,"POST");
 }
 function files() {
-    return axiosB("file/files")
+    return axiosB("file/files");
 }
 function alterFirst(data) { //  修改一级栏目名
     return axiosB("modules/alterFirst",data,"POST");

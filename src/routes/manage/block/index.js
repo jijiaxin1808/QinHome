@@ -1,7 +1,8 @@
+/* eslint-disable react/jsx-no-target-blank */
 import React, { useEffect, useState, Fragment } from "react";
 import "./index.css";
 import { Table, Button, Input, Switch, message, Upload, Modal } from "antd";
-import axios from "axios";
+// import axios from "axios";
 import * as Back from "../../../api/Back";
 import * as Front from "../../../api/Front";
 
@@ -12,8 +13,8 @@ const Max = (array)=> {
 			Max = array[i];
 		}
 	}
-	return Max 
-}
+	return Max; 
+};
 
 const HeaderScroll = () => {
 	const [data, setdata] = useState([]);
@@ -169,7 +170,7 @@ const HeaderScroll = () => {
 	const data1 = {
 		name: "safe",
 		value: data,
-	}
+	};
 	return (
 		<div>
 			<div className={"title"}>
@@ -178,7 +179,7 @@ const HeaderScroll = () => {
 			<div className={"buttonSbar"}>
 				<Button className={"button"} onClick={() => {
 					let newData = data;
-					const ids = data.map((item)=>{return item.id});
+					const ids = data.map((item)=>{return item.id;});
 							
 					setdata([...newData,{
 						id: Max(ids) + 1,
@@ -413,7 +414,7 @@ const Carousel = () => {
 	const data1 = {
 		name: "carousel",
 		value: data,
-	}
+	};
 	return (
 		<div>
 			<div className={"title"}>
@@ -423,7 +424,7 @@ const Carousel = () => {
 				<Button
 					onClick={() => {
 						let newData = data;
-						const ids = data.map((item)=>{return item.id});
+						const ids = data.map((item)=>{return item.id;});
 							
 						setdata([...newData,{
 							id: Max(ids) + 1,
@@ -615,7 +616,7 @@ const HomeTopic = () => {
 	const data1 = {
 		name: "topicCol",
 		value: data,
-	}
+	};
 	
 	return (
 		<div>
@@ -734,7 +735,7 @@ const Background = () => {
 	const data1 = {
 		name: "background",
 		value: data,
-	}
+	};
 	const backgroundCol = [
 		{
 			title: "图片",
@@ -920,7 +921,7 @@ const HideBar = () => {
 	const data1 = {
 		name: "hideBar",
 		value: data,
-	}
+	};
 	
 	return (
 		<div>
@@ -1128,7 +1129,7 @@ const Links = () => {
 	const data1 = {
 		name: "links",
 		value: data,
-	}
+	};
 	return (
 		<div>
 			<div className={"title"}>
@@ -1138,7 +1139,7 @@ const Links = () => {
 				<Button
 					onClick={() => {
 						let newData = data;
-						const ids = data.map((item)=>{return item.id});
+						const ids = data.map((item)=>{return item.id;});
 						setdata([...newData,{
 							id: Max(ids) + 1,
 							title: "秦皇岛市智慧安监",

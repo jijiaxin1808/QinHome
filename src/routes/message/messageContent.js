@@ -11,13 +11,13 @@ const MessageContent = (props)=> {
 	const [total, setTotal ] =useState();
 	const [oneMessage, setOneMessage] = useState();
 	useEffect(()=> {
-		const params = {
-			status: "publish",
-			flag: 1,
-			limit: limit,
-			first: props.category.split("/")[1],
-			second: props.category.split("/")[2]
-		}
+		// const params = {
+		// 	status: "publish",
+		// 	flag: 1,
+		// 	limit: limit,
+		// 	first: props.category.split("/")[1],
+		// 	second: props.category.split("/")[2]
+		// };
 		axios({
 			method: "GET",
 			url: "http://yjxt.elatis.cn/posts/listPosts",//这里触发了两次
@@ -45,7 +45,7 @@ const MessageContent = (props)=> {
 							}
 						}).then((res)=> {
 							setOneMessage(res.data);
-						})
+						});
 					}
 					setData(res.data.data);
 				}
@@ -57,14 +57,14 @@ const MessageContent = (props)=> {
 
 		
 		if(props.home.columnData.length!==0) {
-			const params = {
-				status: "publish",
-				limit: limit,
-				flag: 1,
-				offset: (page-1)*limit,
-				first: props.category.split("/")[1],
-				second: props.category.split("/")[2]
-			}
+			// const params = {
+			// 	status: "publish",
+			// 	limit: limit,
+			// 	flag: 1,
+			// 	offset: (page-1)*limit,
+			// 	first: props.category.split("/")[1],
+			// 	second: props.category.split("/")[2]
+			// };
 			axios({
 				method: "GET",
 				url: "http://yjxt.elatis.cn/posts/listPosts",
@@ -97,11 +97,11 @@ const MessageContent = (props)=> {
 					<div className = "oneMessage" >
 						{<p dangerouslySetInnerHTML={{ __html:oneMessage.data.content}}  />}
 					</div>
-				)
+				);
 			}
 			else return (
 				<Skeleton />
-			)
+			);
 
 		}
 		else {

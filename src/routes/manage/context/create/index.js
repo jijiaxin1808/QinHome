@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 import "braft-editor/dist/index.css";
-import React,{ useEffect, useState , forwardRef,useRef} from "react";
+import React,{ useEffect, useState , forwardRef} from "react";
 import BraftEditor from "braft-editor";
-import { ContentUtils } from "braft-utils"
+import { ContentUtils } from "braft-utils";
 import { Form, Input, Button,  Row, Col ,Cascader,  message,Upload,Icon} from "antd";
 import "./index.css";
-import axios from "axios";
+// import axios from "axios";
 import * as Front from "../../../../api/Front";
 import * as Back from "../../../../api/Back";
 
@@ -46,7 +47,7 @@ function FormDemo (props) {
 					value: item.title,
 					label: item.title
 				}))
-			}
+			};
 		}
 		else 
 		return {};
@@ -110,7 +111,7 @@ function FormDemo (props) {
 			form: { getFieldValue, setFieldsValue }
 		  } = props;
 		let reader = new FileReader();
-		reader.readAsDataURL(param.file)
+		reader.readAsDataURL(param.file);
 		reader.onload=function (e) {
 			const editorStates = getFieldValue("content");
 			setFieldsValue({content: ContentUtils.insertMedias(editorStates, [{
@@ -118,18 +119,18 @@ function FormDemo (props) {
 			  url: e.target.result
 			}])
 			});	
-		}
+		};
 	};
 	const imageControls = [
-		'float-left', // 设置图片左浮动
-		'float-right', // 设置图片右浮动
-		'align-left', // 设置图片居左
-		'align-center', // 设置图片居中
-		'align-right', // 设置图片居右
-		'link', // 设置图片超链接
-		'size', // 设置图片尺寸
-		'remove' // 删除图片
-	]
+		"float-left", // 设置图片左浮动
+		"float-right", // 设置图片右浮动
+		"align-left", // 设置图片居左
+		"align-center", // 设置图片居中
+		"align-right", // 设置图片居右
+		"link", // 设置图片超链接
+		"size", // 设置图片尺寸
+		"remove" // 删除图片
+	];
 	const uploadHandlers=(param)=>{
 		if (!param.file) {
 			return false;
@@ -137,14 +138,14 @@ function FormDemo (props) {
 		const {
 			form: { getFieldValue, setFieldsValue }
 		  } = props;
-		let reader= new  FileReader()
-		reader.readAsDataURL(param.file)
+		let reader= new  FileReader();
+		reader.readAsDataURL(param.file);
 		reader.onload = function (e) {
 			const editorStates = getFieldValue("content");
 			setFieldsValue({
 				content: ContentUtils.insertHTML(editorStates,`<br/><a href="${e.target.result}">${param.file.name}</a>`)
-			})
-		}
+			});
+		};
 
 	};
   	const extendControls =[

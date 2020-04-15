@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import axios from "axios";
 import baseUrl from "../config/baseUrl";
 import { notification, message } from "antd";
@@ -5,7 +6,7 @@ import { getCookie } from "../utils/session";
 
 const openNotification = message => {
     notification.info({
-    message: `出错了`,
+    message: "出错了",
     description: message,
     placement: "topLeft"
     });
@@ -21,16 +22,16 @@ axios.interceptors.response.use(data=> {
     return data;
   }, err=> {
     if (err.response.status == 504||err.response.status == 404) {
-        openNotification('服务器出错了')
+        openNotification("服务器出错了");
     } 
     else if (err.response.status == 403) {
-        openNotification('权限不足,请联系管理员!')
+        openNotification("权限不足,请联系管理员!");
     }
     else {
-        openNotification('未知错误!')
+        openNotification("未知错误!");
     }
     return Promise.reject(err);
-  })
+  });
 
 function axiosF(url, data = null, method = "GET") {
     const data1 = JSON.stringify(data);
@@ -41,7 +42,7 @@ function axiosF(url, data = null, method = "GET") {
         headers: {
             "Content-Type":"application/json"
         }
-    })
+    });
 }
 
 function axiosB(url, data = null, method = "GET") {
@@ -54,7 +55,7 @@ function axiosB(url, data = null, method = "GET") {
             "Content-Type":"application/json",
             "token": getCookie()
         }
-    })
+    });
 }
 
 

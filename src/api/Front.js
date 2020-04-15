@@ -19,10 +19,10 @@ function modelHideBar() {
     return axiosF("options/name/hideBar");
 }
 function listModulePost(data) {
-    return axiosF("posts/listModulePost",data,"POST")
+    return axiosF("posts/listModulePost",data,"POST");
 }
 function getArticle(id) {
-    return axiosF(`posts/get?id=${id}`)
+    return axiosF(`posts/get?id=${id}`);
 }
 function modelTopicCol() {
     return axiosF("options/name/topicCol");
@@ -36,24 +36,24 @@ function modelBackground() {
 function listPosts(params) {
     const url = "posts/listPosts";
     const newUrl  = spliceUrl(url,params);
-    return axiosF(newUrl)
+    return axiosF(newUrl);
 }	
 function get(params) {
     const url = "posts/get";
-    const newUrl = spliceUrl(url,params)
+    const newUrl = spliceUrl(url,params);
     return axiosF(newUrl);
 }
 function listMsgs(params) {
     const url = "msgs/listMsgs";
-    const newUrl = spliceUrl(url,params)
+    const newUrl = spliceUrl(url,params);
     return axiosF(newUrl);
 }
 function create(data) {
-    return axiosF("msgs/create",data,"POST")
+    return axiosF("msgs/create",data,"POST");
 }
 function searchTitle(params) {
     const url = "posts/searchTitle";
-    const newUrl = spliceUrl(url,params)
+    const newUrl = spliceUrl(url,params);
     return axiosF(newUrl);
 }
 
@@ -62,4 +62,4 @@ function searchTitle(params) {
 
 export { modelLinks, modelHideBar, searchTitle, modelCloumn, modelCarousel, listModulePost, getArticle, modelTopicCol, modelSafe, modelBackground, listPosts, get,
     listMsgs, create
-  }
+  };

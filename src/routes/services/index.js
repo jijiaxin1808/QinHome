@@ -3,7 +3,7 @@ import { Menu,Layout} from "antd";
 import {Search,Message} from "./search";
 import WrappedNormalLoginForm from "./form";
 import Tousu from "./form/tousu";
-import axios from "axios";
+// import axios from "axios";
 import "./index.less";
 import * as Front from "../../api/Front";
 
@@ -47,7 +47,7 @@ export default class Services extends Component{
 		});
 	}
 	shouldComponentUpdate(nextProps, nextState){
-	  if(this.state.key===nextState.key&&this.state.n==nextState.n){
+	  if(this.state.key===nextState.key&&this.state.n===nextState.n){
 		  return false;
 	  }else{
 		  return true;
@@ -57,7 +57,7 @@ export default class Services extends Component{
 		const params = {
 			category: "all",
 			flag: 1
-		}
+		};
 		Front.listMsgs(params).then(res=>{
 			if(res.data.code===0){
 				this.setState({

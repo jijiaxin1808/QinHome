@@ -19,7 +19,7 @@ return (
                     return (
                         <div className = "hide-bar">
                             <Link to = {item.link}>
-                                <img width = "1080px" height = "100px" src = {item.picUrl}/>
+                                <img width = "1080px" height = "100px" src = {item.picUrl} alt = ""/>
                             </Link>
                         </div>
                     )

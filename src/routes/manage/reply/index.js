@@ -1,6 +1,6 @@
 import React from "react";
 import {Table, Button,Divider,Modal,Input,message} from "antd";
-import axios from "axios";
+// import axios from "axios";
 import * as Back from "../../../api/Back";
 
 const { TextArea } = Input;
@@ -22,7 +22,7 @@ class Reply extends React.Component{
 		const params = {
 			category: "all",
 			flag: 2
-		}
+		};
 		Back.listMsgs(params)
 		.then(res=>{
     		let data=res.data.data;
@@ -58,7 +58,7 @@ class Reply extends React.Component{
 				const data = {
 					reply:document.getElementById("reply-input").value,
 					id:this.state.message.id
-				}
+				};
 				Back.addReply(data)
 				.then(res=>{
       				if(res.data.code===0){
@@ -90,7 +90,7 @@ class Reply extends React.Component{
       handleDelete=(e)=>{
 		const data = {
 			id:e.id
-		}
+		};
 		Back.Msgdelete(data)
 		.then(res=>{
       		if(res.data.code===0){

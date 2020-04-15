@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Icon, Input, Button, message, Row, Col, Skeleton } from "antd";
-import axios from "axios";
-import qs from "qs";
+// import axios from "axios";
+// import qs from "qs";
 import { connect } from "dva";
 import * as Back from "../../../api/Back";
 
@@ -33,7 +33,7 @@ class NormalLoginForm extends React.Component {
   							}
 
   						}
-  					)
+  					);
   			}
   		}
   	});

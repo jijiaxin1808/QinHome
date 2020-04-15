@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, {useState,useEffect,useRef} from "react";
-import {Input,Table,Button,Menu,Switch,message,Tooltip, Modal} from "antd";
+import {Input,Table,Button,Menu,message,Tooltip, Modal} from "antd";
 import "./index.less";
 import axios from "axios";
 import { connect } from "dva";

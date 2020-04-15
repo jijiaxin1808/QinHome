@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
-import { Tabs as T,Skeleton, message } from "antd";
+import { Tabs as T,Skeleton } from "antd";
 import "./index.less";
 import { Link } from "react-router-dom";
 import { connect } from "dva";
-import * as Front  from "../../api/Front";
+// import * as Front  from "../../api/Front";
 import axios from "axios";
 
 const { TabPane } = T;

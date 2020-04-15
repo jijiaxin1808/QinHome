@@ -38,7 +38,7 @@ const HomeTopics = (props) => {
 
 	useEffect(()=> {
 		if(colsData.length !==0 ){
-			console.log(colsData,"8777777777")
+			console.log(colsData,"8777777777");
 			const sort = [...colsData].map((item,index)=> {
 				if(index>1&&index<8){
 						return `${item.title}`;
@@ -49,13 +49,13 @@ const HomeTopics = (props) => {
 				limit:3,
 				firstArray:sort,
 				status: "publish"
-			}
+			};
 			Front.listModulePost(data1).then(res=> {
 				if(res.data.code === 0) {
 					const newData = res.data.data.map((item,index)=>{
 							return item.post;
 					});
-					console.log("topics",newData)
+					console.log("topics",newData);
 					setTopicData(newData);
 				}
 			});

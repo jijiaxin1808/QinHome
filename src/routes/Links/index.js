@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./index.less";
 import { Card } from "antd";
-import { links } from "../../config/friendLink";
+// import { links } from "../../config/friendLink";
 import  * as Front from "../../api/Front";
 import Loading from "../../components/loading";
 
@@ -12,8 +12,8 @@ const FriendLinks = ()=> {
             if(res.data.code === 0) {
                 setData(res.data.data);
             }
-        })
-    },[])
+        });
+    },[]);
     if(data.length!==0) {
         return (
             <React.Fragment>
@@ -26,20 +26,20 @@ const FriendLinks = ()=> {
                         return (
                             <Card hoverable  className = "link">
                                 <a href = {item.href} className = "links-a">
-                                    <img src = {item.picUrl} width = "150px" style = {{marginBottom: "20px"}}/>
+                                    <img src = {item.picUrl} width = "150px" style = {{marginBottom: "20px"}} alt = ""/>
                                     {item.title}
                                 </a>
                             </Card>
-                        )
+                        );
                     })
                 }
     
             </div>
             </React.Fragment>
-        )
+        );
     }
     else return (
         <Loading />
-    )
-}
+    );
+};
 export default FriendLinks;

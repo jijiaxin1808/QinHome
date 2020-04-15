@@ -1,5 +1,6 @@
-import React,{Suspense} from "react";
+import React,{Suspense, lazy} from "react";
 import { Route } from "dva/router";
+import Links from "./routes/Links";
 import Loading from "./components/loading";
 import Home from "./routes/home";
 import Article from "./routes/article";
@@ -8,7 +9,15 @@ import Header from "./components/header";
 import Message from "./routes/message";
 import Search from "./routes/search";
 import Services from "./routes/services";
-import Links from "./routes/Links";
+// const Loading = lazy(() => import("./components/loading"));
+// const Home = lazy(() => import("./routes/home"));
+// const Article = lazy(() => import("./routes/article"));
+// const Footer = lazy(() => import("./components/footer"));
+// const Header = lazy(() => import("./components/header"));
+// const Message = lazy(() => import("./routes/message"));
+// const Search = lazy(() => import("./routes/search"));
+// const Services = lazy(() => import("./routes/services"));
+
 
 const routers= [
 	{

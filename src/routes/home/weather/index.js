@@ -18,7 +18,7 @@ export default class Weather extends React.Component {
 			};
 			this.setState(weatherContain);
 		}).catch(()=>{
-			message.error("天气出错")
+			message.error("天气出错");
 		});
 		axios.get("https://www.tianqiapi.com/api/?version=v6&city=秦皇岛&appid=68261499&appsecret=IfTIll7V").then(res=>{ 
 			const weatherContain = {

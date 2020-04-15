@@ -12,21 +12,21 @@
   "browser": true
 },
 "rules": {
-  "indent": [
-      "warn",
-      "tab"
-  ],
-  "linebreak-style": [
-      "warn",
-      "unix"
-  ],
-  "quotes": [
-      "warn",
-      "double"
-  ],
-  "semi": [
-      "warn",
-      "always"
-  ]
+  // "indent": [
+  //     "warn",
+  //     "tab"
+  // ],
+  // "linebreak-style": [
+  //     "warn",
+  //     "unix"
+  // ],
+  // "quotes": [
+  //     "warn",
+  //     "double"
+  // ],
+  // "semi": [
+  //     "warn",
+  //     "always"
+  // ]
 }
 }

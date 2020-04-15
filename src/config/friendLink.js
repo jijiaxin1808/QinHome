@@ -147,7 +147,7 @@ const otherLink = [
 		title: "秦皇岛市税务局",
 		href: "http://www.he-n-tax.gov.cn/qhdsw/"
 	}
-]
+];
 
 const links = [
     {
@@ -186,6 +186,6 @@ const links = [
         picUrl: "http://yjgl.hebei.gov.cn/portal/resources/images/sxlb.png",
         href: "http://111.63.38.37:9000/qhdsafety/login/login.jsp"
     }
-]
+];
 
 export {friendLink, otherLink, links};

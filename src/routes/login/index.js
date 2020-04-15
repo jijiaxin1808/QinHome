@@ -20,7 +20,7 @@ class NormalLoginForm extends React.Component {
 			const data = {
 				...tmp,
 				keep_alive: 1
-			}
+			};
 			Back.login(data).then(data =>{
   				if (data.data.code === 0 ) {
   					message.success("登录成功");
@@ -31,7 +31,7 @@ class NormalLoginForm extends React.Component {
   						})
 					  );
   				}
-  			})
+  			});
   		}
   	});
   };
